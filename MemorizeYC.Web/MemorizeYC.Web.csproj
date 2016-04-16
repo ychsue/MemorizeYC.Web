@@ -22,16 +22,35 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.css" />
     <Content Include="index.html" />
+    <Content Include="PlayPage\PlayOneCategoryPage.html" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\btest.exi" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\fish.box" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\MYCategory.json" />
     <None Include="Scripts\jquery-2.2.2.intellisense.js" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\ABlueRightTriangle.png" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\AGreenRectangle.png" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\AnIndigoParallelogram.png" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\AnOrangeCircle.png" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\APurpleTrapezoid.png" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\ARedOval.png" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\AVioletTrapezoid.png" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\AYellowSquare.png" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\BoxFiles\A yellow trapezoid.jpg" />
+    <Content Include="Samples\MYContainer\ShapeAndColor\秉燭夜遊.txt" />
     <Content Include="Scripts\jquery-2.2.2.js" />
     <Content Include="Scripts\jquery-2.2.2.min.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="GlobalVariables\GlobalVariables.ts" />
+    <TypeScriptCompile Include="Helpers\CardsHelper.ts" />
+    <TypeScriptCompile Include="Helpers\mathhelper.ts" />
+    <TypeScriptCompile Include="Helpers\MyFileHelper.ts" />
+    <TypeScriptCompile Include="Models\EachDescription.ts" />
+    <TypeScriptCompile Include="PlayPage\PlayOneCategoryPage.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="UserControls\WCard.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -72,6 +91,18 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptOutFile>
+    </TypeScriptOutFile>
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>

@@ -1,0 +1,19 @@
+﻿{
+  "Cards": [
+    { "FileName": "ABlueRightTriangle.png" },
+    { "FileName": "AGreenRectangle.png" },
+    { "FileName": "AnIndigoParallelogram.png" },
+    { "FileName": "AnOrangeCircle.png" },
+    {
+      "FileName": "APurpleTrapezoid.png",
+      "Size": [ 100, 150 ]
+    },
+    { "FileName": "ARedOval.png" },
+    { "FileName": "atest.json" },
+    { "FileName": "AVioletTrapezoid.png" },
+    { "FileName": "AYellowSquare.png" },
+    { "FileName": "秉燭夜遊.txt" },
+    { "FileName": "btest.exi" },
+    { "FileName": "fish.box" }
+  ]
+}
