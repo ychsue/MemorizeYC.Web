@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -22,12 +22,17 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
     <Content Include="PlayPage\PlayOneCategoryPage.html" />
     <Content Include="Samples\MYContainer\ShapeAndColor\btest.exi" />
     <Content Include="Samples\MYContainer\ShapeAndColor\fish.box" />
     <Content Include="Samples\MYContainer\ShapeAndColor\MYCategory.json" />
-    <None Include="Scripts\jquery-2.2.2.intellisense.js" />
     <Content Include="Samples\MYContainer\ShapeAndColor\ABlueRightTriangle.png" />
     <Content Include="Samples\MYContainer\ShapeAndColor\AGreenRectangle.png" />
     <Content Include="Samples\MYContainer\ShapeAndColor\AnIndigoParallelogram.png" />
@@ -38,29 +43,81 @@
     <Content Include="Samples\MYContainer\ShapeAndColor\AYellowSquare.png" />
     <Content Include="Samples\MYContainer\ShapeAndColor\BoxFiles\A yellow trapezoid.jpg" />
     <Content Include="Samples\MYContainer\ShapeAndColor\秉燭夜遊.txt" />
-    <Content Include="Scripts\jquery-2.2.2.js" />
-    <Content Include="Scripts\jquery-2.2.2.min.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Samples\健康操\低頭族需要的簡易運動\s01. 第一招，按摩頸部肌肉，雙手各十下。.png" />
+    <Content Include="Samples\健康操\低頭族需要的簡易運動\s02. 第二招，矯正錯誤姿勢：雙手按、縮下巴，分三次，每次五秒.png" />
+    <Content Include="Samples\健康操\低頭族需要的簡易運動\s03. 第三招，伸展後頸肌肉。一手按下巴，另一手按頭頂點頭，分三次，每次三秒.png" />
+    <Content Include="Samples\健康操\眼睛操\s01. 第一招，轉換焦點.gif" />
+    <Content Include="Samples\健康操\眼睛操\s02. 第二招，讓視線上下移動.gif" />
+    <Content Include="Samples\健康操\眼睛操\s03. 第三招，讓視線左右移動.gif" />
+    <Content Include="Samples\健康操\眼睛操\s04. 第四招，瞇眼睛.gif" />
+    <Content Include="Samples\健康操\眼睛操\s05. 第五招，用目光畫正方形.gif" />
+    <Content Include="Samples\健康操\眼睛操\s06. 第六招，眨眼睛.gif" />
+    <Content Include="Samples\健康操\眼睛操\s07. 第七招，用眼睛畫出圓圈.png" />
+    <Content Include="Samples\健康操\眼睛操\s08. 第八招，把雙手搓熱，然後按在眼睛上.gif" />
+    <Content Include="Scripts\angular-animate.js" />
+    <Content Include="Scripts\angular-animate.min.js" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-route.js" />
+    <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Samples\健康操\低頭族需要的簡易運動\MYC.level" />
+    <Content Include="Samples\健康操\眼睛操\MYC.level" />
+    <Content Include="Samples\健康操\眼睛操\MYCategory.json" />
+    <Content Include="Samples\健康操\低頭族需要的簡易運動\MYCategory.json" />
+    <None Include="Scripts\jquery-2.2.3.intellisense.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-2.2.3.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="App.ts" />
     <TypeScriptCompile Include="GlobalVariables\GlobalVariables.ts" />
     <TypeScriptCompile Include="Helpers\CardsHelper.ts" />
     <TypeScriptCompile Include="Helpers\mathhelper.ts" />
     <TypeScriptCompile Include="Helpers\MyFileHelper.ts" />
     <TypeScriptCompile Include="Models\EachDescription.ts" />
     <TypeScriptCompile Include="PlayPage\PlayOneCategoryPage.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-mocks.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-resource.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-route.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="UserControls\WCard.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Scripts\jquery-2.2.2.min.map" />
+    <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GSPages\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
@@ -92,10 +149,11 @@
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptTarget>ES5</TypeScriptTarget>
-    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
-    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptModuleKind>
+    </TypeScriptModuleKind>
     <TypeScriptOutFile>
     </TypeScriptOutFile>
     <TypeScriptOutDir />
@@ -103,6 +161,8 @@
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
+    <DefineConstants>
+    </DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>

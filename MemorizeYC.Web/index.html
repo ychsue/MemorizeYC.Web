@@ -3,12 +3,26 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <base href="/" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
+
+    <script src="Helpers/mathhelper.js"></script>
+    <script src="Helpers/MyFileHelper.js"></script>
+    <script src="Models/EachDescription.js"></script>
+    <script src="GlobalVariables/GlobalVariables.js"></script>
+    <script src="UserControls/WCard.js"></script>
+    <script src="Helpers/CardsHelper.js"></script>
+    <script src="PlayPage/PlayOneCategoryPage.js"></script>
+
+    <script src="App.js"></script>
+
     <title>TypeScript HTML App</title>
 </head>
-<body>
-    <h1>TypeScript HTML App</h1>
-
-    <div id="content"></div>
-    <a href="PlayPage/PlayOneCategoryPage.html">Play One Category</a>
+<body ng-app="MYCWeb">
+    <div ng-view></div>
 </body>
 </html>

@@ -2,15 +2,16 @@
 /// <reference path="../globalvariables/globalvariables.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
 
-window.onload = function PlayOneCategoryPageOnload (ev) {
-    
-    var mainFolder: string = "/Samples/MYContainer"; //: TODO: These two will be fed from outside this web page.
-    var categoryFolder: string = "ShapeAndColor";
+function PlayOneCategoryPageController($routeParams) {
     var Cards: WCard[] = new Array();
 
-    GlobalVariables.currentMainFolder = mainFolder;
-    GlobalVariables.currentCategoryFolder = categoryFolder;
-    
+    if($routeParams["Container"] != undefined)
+        GlobalVariables.currentMainFolder = $routeParams["Container"];
+    if ($routeParams["CFolder"] != undefined)
+        GlobalVariables.currentCategoryFolder = $routeParams["CFolder"];
+    var mainFolder: string = GlobalVariables.currentMainFolder; 
+    var categoryFolder: string = GlobalVariables.currentCategoryFolder;
+
     MyFileHelper.FeedTextFromTxtFileToACallBack(
         CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, mainFolder, categoryFolder),
         Cards,
