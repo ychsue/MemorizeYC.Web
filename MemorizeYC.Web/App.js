@@ -2,14 +2,20 @@
 /// <reference path="scripts/typings/angularjs/angular-route.d.ts" />
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
 var app = angular.module('MYCWeb', ['ngRoute']);
-//Controller
+//Controllers
 app.controller('PlayOneCategoryPageController', ['$routeParams', PlayOneCategoryPageController]);
+app.controller('ChooseAContainerPageController', ['$scope', ChooseAContainerPageController]);
 //Config
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/Play', {
         templateUrl: '/PlayPage/PlayOneCategoryPage.html',
         controller: 'PlayOneCategoryPageController'
+    })
+        .when('/', {
+        templateUrl: '/GSPages/ChooseAContainerPage.html',
+        controller: 'ChooseAContainerPageController',
+        controllerAs: 'ctrl'
     });
     //$locationProvider.html5Mode(true);
 });
