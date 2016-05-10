@@ -2,13 +2,13 @@
 /// <reference path="../models/eachdescription.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
 class CardsHelper {
-    public static RearrangeCards(wcards: WCard[], nCol: number = 4, isRandom:boolean=true) {
+    public static RearrangeCards(wcards: WCard[], nCol: number = 5, isRandom:boolean=false) {
         if (!wcards || wcards.length === 0)
             return;
-        var wWidth: number = window.innerWidth;
-        var wHeight: number = window.innerHeight;
         var topOfTop: number = 50;
         var currentPosition: number[] = [0, topOfTop];
+        var wWidth: number = window.innerWidth;
+        var wHeight: number = window.innerHeight - topOfTop; //For bottom bar
 
         //* [2016-03-16 13:59] get the order of cards.
         if (isRandom)
@@ -17,6 +17,15 @@ class CardsHelper {
         for (var i1: number = 0; i1 < wcards.length; i1++) {
             var card: WCard = wcards[i1];
             var size = [wWidth / nCol, wHeight / nCol];
+            //* [2016-05-05 20:05] Initialize card.viewWHRatio
+            if (!card.viewWHRatio)
+                card.viewWHRatio = new Array();
+            if (card.cCards!=undefined && card.cCards[card.boxIndex] != undefined && isNaN(card.viewWHRatio[card.boxIndex])) {
+                var nWidth = card.cCards[card.boxIndex]["naturalWidth"];
+                var nHeight = card.cCards[card.boxIndex]["naturalHeight"];
+                if (nWidth != undefined && nWidth > 0 && nHeight > 0)
+                    card.viewWHRatio[card.boxIndex] = nWidth / nHeight;  
+            }
             if (card.viewWHRatio && !isNaN(card.viewWHRatio[card.boxIndex])) {
                 size[1] = size[0] / card.viewWHRatio[card.boxIndex];
             }

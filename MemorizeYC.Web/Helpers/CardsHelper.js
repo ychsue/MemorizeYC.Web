@@ -5,14 +5,14 @@ var CardsHelper = (function () {
     function CardsHelper() {
     }
     CardsHelper.RearrangeCards = function (wcards, nCol, isRandom) {
-        if (nCol === void 0) { nCol = 4; }
-        if (isRandom === void 0) { isRandom = true; }
+        if (nCol === void 0) { nCol = 5; }
+        if (isRandom === void 0) { isRandom = false; }
         if (!wcards || wcards.length === 0)
             return;
-        var wWidth = window.innerWidth;
-        var wHeight = window.innerHeight;
         var topOfTop = 50;
         var currentPosition = [0, topOfTop];
+        var wWidth = window.innerWidth;
+        var wHeight = window.innerHeight - topOfTop; //For bottom bar
         //* [2016-03-16 13:59] get the order of cards.
         if (isRandom)
             MathHelper.Permute(wcards);
@@ -20,6 +20,15 @@ var CardsHelper = (function () {
         for (var i1 = 0; i1 < wcards.length; i1++) {
             var card = wcards[i1];
             var size = [wWidth / nCol, wHeight / nCol];
+            //* [2016-05-05 20:05] Initialize card.viewWHRatio
+            if (!card.viewWHRatio)
+                card.viewWHRatio = new Array();
+            if (card.cCards != undefined && card.cCards[card.boxIndex] != undefined && isNaN(card.viewWHRatio[card.boxIndex])) {
+                var nWidth = card.cCards[card.boxIndex]["naturalWidth"];
+                var nHeight = card.cCards[card.boxIndex]["naturalHeight"];
+                if (nWidth != undefined && nWidth > 0 && nHeight > 0)
+                    card.viewWHRatio[card.boxIndex] = nWidth / nHeight;
+            }
             if (card.viewWHRatio && !isNaN(card.viewWHRatio[card.boxIndex])) {
                 size[1] = size[0] / card.viewWHRatio[card.boxIndex];
             }

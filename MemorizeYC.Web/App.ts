@@ -5,7 +5,7 @@
 var app = angular.module('MYCWeb', ['ngRoute']);
 
 //Controllers
-app.controller('PlayOneCategoryPageController', ['$routeParams', PlayOneCategoryPageController]);
+app.controller('PlayOneCategoryPageController', ['$scope','$routeParams', PlayOneCategoryPageController]);
 app.controller('ChooseAContainerPageController', ['$scope',ChooseAContainerPageController]);
 
 //Config
@@ -13,7 +13,8 @@ app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/Play', {
             templateUrl: '/PlayPage/PlayOneCategoryPage.html',
-            controller: 'PlayOneCategoryPageController'
+            controller: 'PlayOneCategoryPageController',
+            controllerAs: 'ctrl'
         })
         .when('/', {
             templateUrl: '/GSPages/ChooseAContainerPage.html',

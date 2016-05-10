@@ -32,6 +32,32 @@ var WCard = (function () {
         this.mainFolder = mainFolder;
         this.categoryFolder = categoryFolder;
         this.IniCard(cardInfo);
+        var viewCard = this.viewCard;
+        //viewCard.WCard = this; // This one cannot pass the 'Build'.
+        $(viewCard).on('click', function (ev) {
+            GlobalVariables.numCardClick++;
+            GlobalVariables.clickedViewCard = this; // it is declared by $(viewCard)
+            if (!isNaN(GlobalVariables.timerCardClickId))
+                clearTimeout(GlobalVariables.timerCardClickId);
+            GlobalVariables.timerCardClickId = setTimeout(function () {
+                var num = GlobalVariables.numCardClick;
+                var clickedViewCard = GlobalVariables.clickedViewCard;
+                if (num == 1) {
+                    //* [2016-05-10 11:46] for single click
+                    $(clickedViewCard).trigger(GlobalVariables.onSingleClick); //TODO: What I really want is triggering its parent, WCard.
+                }
+                else if (num == 2) {
+                    //* [2016-05-10 11:53] for double click
+                    $(clickedViewCard).trigger(GlobalVariables.onDoubleClick); //TODO: What I really want is triggering its parent, WCard.
+                }
+                else
+                    ;
+                //* [2016-05-10 11:56] Initialize them
+                GlobalVariables.numCardClick = 0;
+                GlobalVariables.timerCardClickId = Number.NaN;
+                console.log("Click num =" + num);
+            }, 300);
+        });
     }
     Object.defineProperty(WCard.prototype, "viewSize", {
         get: function () { return this._viewSize; },
@@ -79,7 +105,7 @@ var WCard = (function () {
                 this.viewCard.removeChild(oldCards[0]);
             if (!this.cCards[value]) {
                 //** [2016-03-17 11:23] If this card does not exist, create it.
-                this.cCards[value] = this.GetcCardFromPath(this.cardsPath[value], true);
+                this.cCards[value] = this.GetcCardFromPath.call(this, this.cardsPath[value], true);
                 if (!this.cCards[value]) {
                     this.cCards[value] = this.CardForMessage(WCard.cardMainKey, this.cardsPath[value] + " cannot be opened.");
                 }
@@ -123,7 +149,8 @@ var WCard = (function () {
     WCard.prototype.IniCard = function (cardInfo) {
         this.cardInfo = cardInfo;
         var fileName = cardInfo.FileName;
-        var theCard = this.GetcCardFromPath(fileName);
+        //var theCard: HTMLElement = this.GetcCardFromPath(fileName);
+        var theCard = this.GetcCardFromPath.call(this, fileName);
         if (theCard) {
             if (!this.cCards)
                 this.cCards = new Array(1);
@@ -264,4 +291,4 @@ var WCard = (function () {
     WCard.btRightClickKey = "btRightClick";
     return WCard;
 }());
-//# sourceMappingURL=wcard.js.map
+//# sourceMappingURL=WCard.js.map

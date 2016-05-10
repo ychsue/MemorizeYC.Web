@@ -13,7 +13,8 @@ class FileTypeEnum {
 // Wrap of a Card.
 class WCard {
     //The view for HTML
-    viewCard: HTMLDivElement = document.createElement("div"); 
+    public viewCard: HTMLDivElement = document.createElement("div");
+
     //#region    viewSize Property
     _viewSize: number[]=[100,100];
     get viewSize() { return this._viewSize; }
@@ -31,7 +32,7 @@ class WCard {
     }
     //#endregion viewSize Property
     //#region    viewPosition Property
-    _viewPosition: number[] = [100, 100];
+    private _viewPosition: number[] = [100, 100];
     get viewPosition() { return this._viewPosition; }
     set viewPosition(value: number[]) {
         this._viewPosition = value;
@@ -46,10 +47,10 @@ class WCard {
             }
     }
     //#endregion viewPosition Property
-    viewWHRatio: number[];
+    public viewWHRatio: number[];
 
-    cCards: HTMLElement[];
-    cardInfo: EachDescription;
+    public cCards: HTMLElement[];
+    public cardInfo: EachDescription;
     
     //#region boxIndex. It will set a new Image or textarea
     _boxIndex: number = 0;
@@ -66,7 +67,7 @@ class WCard {
 
         if (!this.cCards[value]) {
             //** [2016-03-17 11:23] If this card does not exist, create it.
-            this.cCards[value] = this.GetcCardFromPath(this.cardsPath[value], true);
+            this.cCards[value] = this.GetcCardFromPath.call(this, this.cardsPath[value], true);
             if (!this.cCards[value]) {
                 this.cCards[value] = this.CardForMessage(WCard.cardMainKey, this.cardsPath[value] + " cannot be opened.");
             }
@@ -102,9 +103,9 @@ class WCard {
         this._categoryFolder = (value.length != 0 && value.charAt(value.length - 1) === '/') ? value.substr(0, value.length - 1) : value; //Take out unnecessary '/'
     }
     //#endregion mainFolder & categoryFolder property
-    cardsPath: string[];
-    cardsHyperLink: string[];
-    cardsDescription: string[];
+    public cardsPath: string[];
+    public cardsHyperLink: string[];
+    public cardsDescription: string[];
 
     static cardMainKey: string = "cardMain";
     static btLeftClickKey: string = "btLeftClick";
@@ -114,6 +115,33 @@ class WCard {
         this.mainFolder = mainFolder;
         this.categoryFolder = categoryFolder;
         this.IniCard(cardInfo);
+        var viewCard = this.viewCard;
+        //viewCard.WCard = this; // This one cannot pass the 'Build'.
+        $(viewCard).on('click', function (ev) { 
+            GlobalVariables.numCardClick++;
+            GlobalVariables.clickedViewCard = this; // it is declared by $(viewCard)
+            if (!isNaN(GlobalVariables.timerCardClickId))
+                clearTimeout(GlobalVariables.timerCardClickId);
+
+            GlobalVariables.timerCardClickId = setTimeout(function () {
+                var num: number = GlobalVariables.numCardClick;
+                var clickedViewCard: HTMLDivElement = GlobalVariables.clickedViewCard;
+                if (num == 1) {
+                    //* [2016-05-10 11:46] for single click
+                    $(clickedViewCard).trigger(GlobalVariables.onSingleClick); //TODO: What I really want is triggering its parent, WCard.
+                }
+                else if (num == 2) {
+                    //* [2016-05-10 11:53] for double click
+                    $(clickedViewCard).trigger(GlobalVariables.onDoubleClick); //TODO: What I really want is triggering its parent, WCard.
+                }
+                else
+                    ;
+                //* [2016-05-10 11:56] Initialize them
+                GlobalVariables.numCardClick = 0;
+                GlobalVariables.timerCardClickId = Number.NaN;
+                console.log("Click num =" + num);
+            },300);
+        });
     }
 
     //#region   public IniCard(pathOrUrl: string). Initialize this Card
@@ -121,7 +149,8 @@ class WCard {
         this.cardInfo = cardInfo;
 
         var fileName = cardInfo.FileName;
-        var theCard: HTMLElement = this.GetcCardFromPath(fileName);
+        //var theCard: HTMLElement = this.GetcCardFromPath(fileName);
+        var theCard: HTMLElement = this.GetcCardFromPath.call(this,fileName);
         if (theCard) {
             if (!this.cCards)
                 this.cCards = new Array(1);

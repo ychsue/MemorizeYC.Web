@@ -1,1 +1,25 @@
-﻿    <div class="cvMain"></div>
+﻿<nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
+    <div class="container-fluid">
+        <div class="row">
+            <button class="col-xs-1 btn btn-default">
+                <span class="glyphicon glyphicon-eye-open"/>
+            </button>
+            <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
+            <button class="col-xs-1 btn btn-default">right</button>
+        </div>
+    </div>
+</nav>
+<div class="cvMain"></div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <button class="col-xs-1 btn btn-default" >
+                <span class="glyphicon glyphicon-play"/>
+            </button>
+            <button class="col-xs-1 btn btn-default">
+                <span class="glyphicon glyphicon-step-forward"/>
+            </button>
+            <div class="col-xs-10" ng-bind="ctrl.selWCard.cardInfo.FileName"></div>
+        </div>
+    </div>
+</nav>
