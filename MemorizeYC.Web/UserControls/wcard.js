@@ -42,13 +42,14 @@ var WCard = (function () {
             GlobalVariables.timerCardClickId = setTimeout(function () {
                 var num = GlobalVariables.numCardClick;
                 var clickedViewCard = GlobalVariables.clickedViewCard;
+                var thisWCard = WCard.FindWCardFromViewCard(clickedViewCard);
                 if (num == 1) {
                     //* [2016-05-10 11:46] for single click
-                    $(clickedViewCard).trigger(GlobalVariables.onSingleClick); //TODO: What I really want is triggering its parent, WCard.
+                    $(thisWCard).trigger(GlobalVariables.onSingleClick); //TODO: What I really want is triggering its parent, WCard.
                 }
                 else if (num == 2) {
                     //* [2016-05-10 11:53] for double click
-                    $(clickedViewCard).trigger(GlobalVariables.onDoubleClick); //TODO: What I really want is triggering its parent, WCard.
+                    $(thisWCard).trigger(GlobalVariables.onDoubleClick); //TODO: What I really want is triggering its parent, WCard.
                 }
                 else
                     ;
@@ -80,8 +81,10 @@ var WCard = (function () {
         get: function () { return this._viewPosition; },
         set: function (value) {
             this._viewPosition = value;
-            this.viewCard.style.left = value[0].toString() + "px";
-            this.viewCard.style.top = value[1].toString() + "px";
+            $(this.viewCard).animate({
+                left: value[0].toString() + "px",
+                top: value[1].toString() + "px"
+            });
             if (this.cCards)
                 for (var i0 = 0; i0 < this.cCards.length; i0++) {
                     if (this.cCards[i0]) {
@@ -162,6 +165,7 @@ var WCard = (function () {
         else
             this.viewSize = [200, 200];
         this.viewCard.style.position = "absolute";
+        $(this.viewCard).addClass("WCard");
     };
     //#endregion   public IniCard(pathOrUrl: string). Initialize this Card
     //#region public IniBox(stContent:string). Initial box... fields
@@ -286,9 +290,34 @@ var WCard = (function () {
         var resObj;
         return resObj;
     };
+    WCard.CleanWCards = function () {
+        while (WCard.WCards.length > 0) {
+            WCard.WCards[0].RemoveThisWCard();
+        }
+    };
+    WCard.prototype.RemoveThisWCard = function () {
+        var self = this;
+        if (!self)
+            return;
+        self.viewCard.parentNode.removeChild(self.viewCard);
+        for (var i0 = 0; i0 < WCard.WCards.length; i0++) {
+            if (self === WCard.WCards[i0]) {
+                WCard.WCards.splice(i0);
+                break;
+            }
+        }
+    };
+    WCard.FindWCardFromViewCard = function (viewCard) {
+        for (var i0 = 0; i0 < WCard.WCards.length; i0++) {
+            if (viewCard === WCard.WCards[i0].viewCard) {
+                return WCard.WCards[i0];
+            }
+        }
+    };
+    WCard.WCards = new Array();
     WCard.cardMainKey = "cardMain";
     WCard.btLeftClickKey = "btLeftClick";
     WCard.btRightClickKey = "btRightClick";
     return WCard;
 }());
-//# sourceMappingURL=WCard.js.map
+//# sourceMappingURL=wcard.js.map

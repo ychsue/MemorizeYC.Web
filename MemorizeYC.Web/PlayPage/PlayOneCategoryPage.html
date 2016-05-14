@@ -1,25 +1,89 @@
-﻿<nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
+﻿<nav class="navbar navbar-default navbar-fixed-bottom" id="bottomNavbar">
     <div class="container-fluid">
         <div class="row">
             <button class="col-xs-1 btn btn-default">
-                <span class="glyphicon glyphicon-eye-open"/>
-            </button>
-            <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
-            <button class="col-xs-1 btn btn-default">right</button>
-        </div>
-    </div>
-</nav>
-<div class="cvMain"></div>
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="row">
-            <button class="col-xs-1 btn btn-default" >
-                <span class="glyphicon glyphicon-play"/>
+                <span class="glyphicon glyphicon-play" />
             </button>
             <button class="col-xs-1 btn btn-default">
-                <span class="glyphicon glyphicon-step-forward"/>
+                <span class="glyphicon glyphicon-step-forward" />
             </button>
             <div class="col-xs-10" ng-bind="ctrl.selWCard.cardInfo.FileName"></div>
         </div>
     </div>
 </nav>
+
+<nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="dropdown">
+                <button class="col-xs-1 btn btn-default dropdown-toggle" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="glyphicon glyphicon-menu-hamburger" />
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuPlayPageSettings">
+                    <li class="container">
+                        <div class="row">
+                            <button class="WCard col-sm-6" style="margin:20px;" ng-style="ctrl.defaultCardStyle">
+                                <h3>
+                                    Rest: <br />
+                                    <span class="badge">3</span>
+                                </h3>
+                            </button>
+                            <div class="col-sm-6">
+                                Show <input type="number" style="width:24px" /> cards each time
+                                <button class="glyphicon glyphicon-ok"></button>
+                                <div>
+                                    Resize: 
+                                    <button class="glyphicon glyphicon-triangle-left"></button>
+                                    <button class="glyphicon glyphicon-triangle-right"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li class="container">
+                        <div class="row">
+                            <div class="dropdown-header col-xs-4">Type</div>
+                            <div class="radio col-xs-4">
+                                <label>
+                                    <input type="radio" name="gameType" value="syn" checked />
+                                    Click <span class="glyphicon glyphicon-play"></span>
+                                </label>
+                            </div><span></span>
+                            <div class="radio col-xs-4">
+                                <label>
+                                    <input type="radio" name="gameType" value="rec" />
+                                    Typeing
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keyboard-icon_Wikipedians.svg/800px-Keyboard-icon_Wikipedians.svg.png" style="height:20px" alt="key in answer" />
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Actions</li>
+                    <li class="container">
+                        <div class="row">
+                            <div class="checkbox col-sm-3">
+                                <label>
+                                    <input type="checkbox" name="cbMoveable" value="" /> Moveable.
+                                </label>
+                            </div>
+                            <div class="col-sm-3"><button>Rearrange</button></div>
+                            <div class="col-sm-3"><button>Random Rearrange</button></div>
+                            <div class="col-sm-3"><button>Accumulate</button></div>
+                        </div>
+                    </li>
+
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Actions</li>
+                    <li><a class="btn">HyperLink</a></li>
+                </ul>
+            </div>
+            <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
+            <button class="col-xs-1 btn btn-default">right</button>
+        </div>
+    </div>
+</nav>
+
+
+<div class="cvMain"></div>

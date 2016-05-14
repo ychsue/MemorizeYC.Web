@@ -1,7 +1,7 @@
 /// <reference path="playpage/playonecategorypage.ts" />
 /// <reference path="scripts/typings/angularjs/angular-route.d.ts" />
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
-var app = angular.module('MYCWeb', ['ngRoute']);
+var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 //Controllers
 app.controller('PlayOneCategoryPageController', ['$scope', '$routeParams', PlayOneCategoryPageController]);
 app.controller('ChooseAContainerPageController', ['$scope', ChooseAContainerPageController]);

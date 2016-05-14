@@ -3,16 +3,24 @@
 /// <reference path="../usercontrols/wcard.ts" />
 
 class PlayOneCategoryPageController{
-    public Cards: WCard[] = new Array();
     public Container: string;
     public CFolder: string;
     public selWCard: WCard;
+
+    public topNavbarHeight: number;
+    public bottomNavbarHeight: number;
+    public oneOverNWindow: number = 5;
+    public defaultCardWidth: number;
+    public defaultCardHeight: number;
+    public defaultCardStyle: Object;
+
     public static Current: PlayOneCategoryPageController;
     public static scope;
 
     constructor($scope, $routeParams) {
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
+        WCard.CleanWCards();
 
         if ($routeParams["Container"] != undefined)
             GlobalVariables.currentMainFolder = $routeParams["Container"];
@@ -21,14 +29,24 @@ class PlayOneCategoryPageController{
         this.Container = GlobalVariables.currentMainFolder;
         this.CFolder = GlobalVariables.currentCategoryFolder;
 
+        this.topNavbarHeight = $("#topNavbar").height();
+        this.bottomNavbarHeight = $("#bottomNavbar").height();
+
         MyFileHelper.FeedTextFromTxtFileToACallBack(
             CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder),
-            this.Cards,
+            WCard.WCards,
             ShowWCardsAndEventsCallback);
 
         $(window).on("resize", function (ev) {
-            var cards = PlayOneCategoryPageController.Current.Cards;
-            CardsHelper.RearrangeCards(cards);
+            CardsHelper.RearrangeCards(WCard.WCards, PlayOneCategoryPageController.Current.oneOverNWindow);
+
+            PlayOneCategoryPageController.scope.$apply(function () {
+                if (WCard.WCards.length > 0) {
+                    PlayOneCategoryPageController.Current.defaultCardHeight = WCard.WCards[0].viewCard.clientHeight;
+                    PlayOneCategoryPageController.Current.defaultCardWidth = WCard.WCards[0].viewCard.clientWidth;
+                    PlayOneCategoryPageController.Current.defaultCardStyle = {width : WCard.WCards[0].viewCard.clientWidth + "px", height: WCard.WCards[0].viewCard.clientHeight + "px"};
+                }
+            });
         });
     }
 }
@@ -37,22 +55,27 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, cards: WCard[]) {
     for (var i0 = 0; i0 < cards.length; i0++) {
         $(cards[i0].viewCard).appendTo(".cvMain");
 
-        $(cards[i0].viewCard).on('click', viewCard_Click);
+        //* [2016-05-10 17:23] For singleClick   :TODO:
+        $(cards[i0]).on(GlobalVariables.onSingleClick, { thisWCard: cards[i0] }, function (ev) {
+            PlayOneCategoryPageController.scope.$apply(function () {
+                PlayOneCategoryPageController.Current.selWCard = ev.data.thisWCard;
+            });
+        });
+
+        //* [2016-05-10 17:23] For doubleClick   :TODO:
+        $(cards[i0]).on(GlobalVariables.onDoubleClick, { thisWCard: cards[i0] }, function (ev) {
+            PlayOneCategoryPageController.scope.$apply(function () {
+                PlayOneCategoryPageController.Current.selWCard = ev.data.thisWCard;
+            });
+        });
+
     }
     CardsHelper.RearrangeCards(cards);
-}
 
-function viewCard_Click(ev) {
-    var wCards = PlayOneCategoryPageController.Current.Cards;
-    var wCard: WCard;
-    for (var i0: number = 0; i0 < wCards.length; i0++) {
-        if (wCards[i0].viewCard == this) {
-            wCard = wCards[i0];
-            break;
-        }
+    //* [2016-05-12 17:09] Set the default width and height of a card
+    if (cards.length > 0) {
+        PlayOneCategoryPageController.Current.defaultCardHeight = cards[0].viewCard.clientHeight;
+        PlayOneCategoryPageController.Current.defaultCardWidth = cards[0].viewCard.clientWidth;
+        PlayOneCategoryPageController.Current.defaultCardStyle = { width: cards[0].viewCard.clientWidth + "px", height: cards[0].viewCard.clientHeight + "px" };
     }
-
-    PlayOneCategoryPageController.scope.$apply(function () {
-        PlayOneCategoryPageController.Current.selWCard = wCard;
-    });
 }

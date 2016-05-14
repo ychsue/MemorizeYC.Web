@@ -12,6 +12,7 @@ class FileTypeEnum {
 
 // Wrap of a Card.
 class WCard {
+    public static WCards: WCard[] = new Array();
     //The view for HTML
     public viewCard: HTMLDivElement = document.createElement("div");
 
@@ -36,8 +37,11 @@ class WCard {
     get viewPosition() { return this._viewPosition; }
     set viewPosition(value: number[]) {
         this._viewPosition = value;
-        this.viewCard.style.left = value[0].toString() + "px";
-        this.viewCard.style.top = value[1].toString() + "px";
+        $(this.viewCard).animate({
+            left: value[0].toString() + "px",
+            top: value[1].toString()+"px"
+        });
+
         if (this.cCards)
             for (var i0: number = 0; i0 < this.cCards.length; i0++) {
                 if (this.cCards[i0]) {
@@ -126,13 +130,14 @@ class WCard {
             GlobalVariables.timerCardClickId = setTimeout(function () {
                 var num: number = GlobalVariables.numCardClick;
                 var clickedViewCard: HTMLDivElement = GlobalVariables.clickedViewCard;
+                var thisWCard = WCard.FindWCardFromViewCard(clickedViewCard);
                 if (num == 1) {
                     //* [2016-05-10 11:46] for single click
-                    $(clickedViewCard).trigger(GlobalVariables.onSingleClick); //TODO: What I really want is triggering its parent, WCard.
+                    $(thisWCard).trigger(GlobalVariables.onSingleClick); //TODO: What I really want is triggering its parent, WCard.
                 }
                 else if (num == 2) {
                     //* [2016-05-10 11:53] for double click
-                    $(clickedViewCard).trigger(GlobalVariables.onDoubleClick); //TODO: What I really want is triggering its parent, WCard.
+                    $(thisWCard).trigger(GlobalVariables.onDoubleClick); //TODO: What I really want is triggering its parent, WCard.
                 }
                 else
                     ;
@@ -163,6 +168,7 @@ class WCard {
         else
             this.viewSize = [200, 200];
         this.viewCard.style.position = "absolute";
+        $(this.viewCard).addClass("WCard");
     }
     //#endregion   public IniCard(pathOrUrl: string). Initialize this Card
     
@@ -300,5 +306,33 @@ class WCard {
         var resObj: HTMLElement;
 
         return resObj;
+    }
+
+    public static CleanWCards() { //: TODO:
+        while (WCard.WCards.length > 0) {
+            WCard.WCards[0].RemoveThisWCard();
+        }
+    }
+
+    public RemoveThisWCard() {
+        var self = this as WCard;
+        if (!self)
+            return;
+
+        self.viewCard.parentNode.removeChild(self.viewCard);
+        for (var i0: number = 0; i0 < WCard.WCards.length; i0++) {
+            if (self === WCard.WCards[i0]) {
+                WCard.WCards.splice(i0);
+                break;
+            }
+        }
+    }
+
+    public static FindWCardFromViewCard(viewCard: HTMLDivElement): WCard {
+        for (var i0: number = 0; i0 < WCard.WCards.length; i0++) {
+            if (viewCard === WCard.WCards[i0].viewCard) {
+                return WCard.WCards[i0];
+            }
+        }
     }
 }
