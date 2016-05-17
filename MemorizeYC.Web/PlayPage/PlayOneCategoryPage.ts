@@ -9,13 +9,32 @@ class PlayOneCategoryPageController{
 
     public topNavbarHeight: number;
     public bottomNavbarHeight: number;
-    public oneOverNWindow: number = 5;
     public defaultCardWidth: number;
     public defaultCardHeight: number;
     public defaultCardStyle: Object;
 
     public static Current: PlayOneCategoryPageController;
     public static scope;
+    public static oneOverNWindow: number = 5;
+
+    //#region numWCardShown
+    public static numWCardShown: number;
+    get numWCardShown():number {
+        return PlayOneCategoryPageController.numWCardShown;
+    }
+    set numWCardShown(value: number) {
+        PlayOneCategoryPageController.numWCardShown = value;
+    }
+    //#endregion numWCardShown
+    //#region PickWCardsRandomly
+    public static isPickWCardsRandomly: boolean;
+    get isPickWCardsRandomly(): boolean {
+        return PlayOneCategoryPageController.isPickWCardsRandomly;
+    }
+    set isPickWCardsRandomly(value: boolean) {
+        PlayOneCategoryPageController.isPickWCardsRandomly = value;
+    }
+    //#endregion PickWCardsRandomly
 
     constructor($scope, $routeParams) {
         PlayOneCategoryPageController.Current = this;
@@ -32,13 +51,16 @@ class PlayOneCategoryPageController{
         this.topNavbarHeight = $("#topNavbar").height();
         this.bottomNavbarHeight = $("#bottomNavbar").height();
 
+        this.numWCardShown = 6;
+        this.isPickWCardsRandomly = true;
+
         MyFileHelper.FeedTextFromTxtFileToACallBack(
             CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder),
             WCard.WCards,
             ShowWCardsAndEventsCallback);
 
         $(window).on("resize", function (ev) {
-            CardsHelper.RearrangeCards(WCard.WCards, PlayOneCategoryPageController.Current.oneOverNWindow);
+            CardsHelper.RearrangeCards(WCard.WCards, PlayOneCategoryPageController.oneOverNWindow);
 
             PlayOneCategoryPageController.scope.$apply(function () {
                 if (WCard.WCards.length > 0) {
@@ -70,7 +92,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, cards: WCard[]) {
         });
 
     }
-    CardsHelper.RearrangeCards(cards);
+    CardsHelper.RearrangeCards(cards, PlayOneCategoryPageController.oneOverNWindow);
 
     //* [2016-05-12 17:09] Set the default width and height of a card
     if (cards.length > 0) {

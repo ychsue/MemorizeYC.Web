@@ -2,8 +2,8 @@
 /// <reference path="../globalvariables/globalvariables.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
 var PlayOneCategoryPageController = (function () {
+    //#endregion PickWCardsRandomly
     function PlayOneCategoryPageController($scope, $routeParams) {
-        this.oneOverNWindow = 5;
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
@@ -15,9 +15,11 @@ var PlayOneCategoryPageController = (function () {
         this.CFolder = GlobalVariables.currentCategoryFolder;
         this.topNavbarHeight = $("#topNavbar").height();
         this.bottomNavbarHeight = $("#bottomNavbar").height();
+        this.numWCardShown = 6;
+        this.isPickWCardsRandomly = true;
         MyFileHelper.FeedTextFromTxtFileToACallBack(CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder), WCard.WCards, ShowWCardsAndEventsCallback);
         $(window).on("resize", function (ev) {
-            CardsHelper.RearrangeCards(WCard.WCards, PlayOneCategoryPageController.Current.oneOverNWindow);
+            CardsHelper.RearrangeCards(WCard.WCards, PlayOneCategoryPageController.oneOverNWindow);
             PlayOneCategoryPageController.scope.$apply(function () {
                 if (WCard.WCards.length > 0) {
                     PlayOneCategoryPageController.Current.defaultCardHeight = WCard.WCards[0].viewCard.clientHeight;
@@ -27,6 +29,27 @@ var PlayOneCategoryPageController = (function () {
             });
         });
     }
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "numWCardShown", {
+        get: function () {
+            return PlayOneCategoryPageController.numWCardShown;
+        },
+        set: function (value) {
+            PlayOneCategoryPageController.numWCardShown = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "isPickWCardsRandomly", {
+        get: function () {
+            return PlayOneCategoryPageController.isPickWCardsRandomly;
+        },
+        set: function (value) {
+            PlayOneCategoryPageController.isPickWCardsRandomly = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    PlayOneCategoryPageController.oneOverNWindow = 5;
     return PlayOneCategoryPageController;
 }());
 function ShowWCardsAndEventsCallback(jsonTxt, cards) {
@@ -46,7 +69,7 @@ function ShowWCardsAndEventsCallback(jsonTxt, cards) {
             });
         });
     }
-    CardsHelper.RearrangeCards(cards);
+    CardsHelper.RearrangeCards(cards, PlayOneCategoryPageController.oneOverNWindow);
     //* [2016-05-12 17:09] Set the default width and height of a card
     if (cards.length > 0) {
         PlayOneCategoryPageController.Current.defaultCardHeight = cards[0].viewCard.clientHeight;
