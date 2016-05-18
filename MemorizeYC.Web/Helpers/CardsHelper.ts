@@ -73,4 +73,26 @@ class CardsHelper {
         }
     }
 
+    public static MoveArrayElements(from: Array<Object>, to: Array<Object>, numToMove: number, isRandomly: boolean = false, myAppendTo:JQuery = null) {
+        var i0: number = 0;
+        while (i0 < numToMove && from.length > 0) {
+            i0++;
+            var ith: number = (isRandomly) ?
+                Math.round(Math.random() * (from.length - 0.1) - 0.49) :
+                0;
+            to.push(from[ith]);
+            if (myAppendTo) { // Append it to a HTMLElement
+                var shWCard: WCard = from[ith] as WCard;
+                if(shWCard)
+                    $(shWCard.viewCard).appendTo(myAppendTo); 
+            }
+            else {              // Take it off from a HTMLElement
+                var wcard = from[ith] as WCard;
+                if (wcard && wcard.viewCard.parentNode) {
+                    wcard.viewCard.parentNode.removeChild(wcard.viewCard);
+                }
+            }
+            from.splice(ith, 1);
+        }
+    }
 }

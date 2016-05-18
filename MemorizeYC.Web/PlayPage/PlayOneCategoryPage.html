@@ -22,10 +22,10 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuPlayPageSettings">
                     <li class="container">
                         <div class="row">
-                            <button class="WCard col-sm-6" style="margin:20px;" ng-style="ctrl.defaultCardStyle">
+                            <button class="WCard col-sm-6" style="margin:20px;" ng-style="ctrl.defaultCardStyle" ng-click="ctrl.ShowNewWCards_Click()" ng-disabled="ctrl.numRestWCards.length==0">
                                 <h3>
                                     Rest: <br />
-                                    <span class="badge">3</span>
+                                    <span class="badge">{{ctrl.numRestWCards}}</span>
                                 </h3>
                             </button>
                             <div class="col-sm-6">

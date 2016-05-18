@@ -12,7 +12,9 @@ class FileTypeEnum {
 
 // Wrap of a Card.
 class WCard {
-    public static WCards: WCard[] = new Array();
+    //public static WCards: WCard[] = new Array();
+    public static showedWCards: WCard[] = new Array();
+    public static restWCards: WCard[] = new Array();
     //The view for HTML
     public viewCard: HTMLDivElement = document.createElement("div");
 
@@ -309,29 +311,42 @@ class WCard {
     }
 
     public static CleanWCards() { //: TODO:
-        while (WCard.WCards.length > 0) {
-            WCard.WCards[0].RemoveThisWCard();
+        while (WCard.showedWCards.length > 0) {
+            WCard.showedWCards[0].RemoveThisWCard();
+        }
+        while (WCard.restWCards.length > 0) {
+            WCard.restWCards[0].RemoveThisWCard();
         }
     }
 
     public RemoveThisWCard() {
+        var isShown: boolean;
+        var wcards: WCard[];
         var self = this as WCard;
         if (!self)
             return;
+        
+        isShown = (self.viewCard.parentNode != null) ? true : false;
+        if (isShown) {
+            self.viewCard.parentNode.removeChild(self.viewCard);
+            wcards = WCard.showedWCards;
+        }
+        else
+            wcards = WCard.restWCards;
 
-        self.viewCard.parentNode.removeChild(self.viewCard);
-        for (var i0: number = 0; i0 < WCard.WCards.length; i0++) {
-            if (self === WCard.WCards[i0]) {
-                WCard.WCards.splice(i0);
+        for (var i0: number = 0; i0 < wcards.length; i0++) {
+            if (self === wcards[i0]) {
+                wcards.splice(i0,1);
                 break;
             }
         }
     }
 
     public static FindWCardFromViewCard(viewCard: HTMLDivElement): WCard {
-        for (var i0: number = 0; i0 < WCard.WCards.length; i0++) {
-            if (viewCard === WCard.WCards[i0].viewCard) {
-                return WCard.WCards[i0];
+        var wcards: WCard[] = WCard.showedWCards;
+        for (var i0: number = 0; i0 < wcards.length; i0++) {
+            if (viewCard === wcards[i0].viewCard) {
+                return wcards[i0];
             }
         }
     }

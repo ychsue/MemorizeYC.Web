@@ -291,30 +291,44 @@ var WCard = (function () {
         return resObj;
     };
     WCard.CleanWCards = function () {
-        while (WCard.WCards.length > 0) {
-            WCard.WCards[0].RemoveThisWCard();
+        while (WCard.showedWCards.length > 0) {
+            WCard.showedWCards[0].RemoveThisWCard();
+        }
+        while (WCard.restWCards.length > 0) {
+            WCard.restWCards[0].RemoveThisWCard();
         }
     };
     WCard.prototype.RemoveThisWCard = function () {
+        var isShown;
+        var wcards;
         var self = this;
         if (!self)
             return;
-        self.viewCard.parentNode.removeChild(self.viewCard);
-        for (var i0 = 0; i0 < WCard.WCards.length; i0++) {
-            if (self === WCard.WCards[i0]) {
-                WCard.WCards.splice(i0);
+        isShown = (self.viewCard.parentNode != null) ? true : false;
+        if (isShown) {
+            self.viewCard.parentNode.removeChild(self.viewCard);
+            wcards = WCard.showedWCards;
+        }
+        else
+            wcards = WCard.restWCards;
+        for (var i0 = 0; i0 < wcards.length; i0++) {
+            if (self === wcards[i0]) {
+                wcards.splice(i0, 1);
                 break;
             }
         }
     };
     WCard.FindWCardFromViewCard = function (viewCard) {
-        for (var i0 = 0; i0 < WCard.WCards.length; i0++) {
-            if (viewCard === WCard.WCards[i0].viewCard) {
-                return WCard.WCards[i0];
+        var wcards = WCard.showedWCards;
+        for (var i0 = 0; i0 < wcards.length; i0++) {
+            if (viewCard === wcards[i0].viewCard) {
+                return wcards[i0];
             }
         }
     };
-    WCard.WCards = new Array();
+    //public static WCards: WCard[] = new Array();
+    WCard.showedWCards = new Array();
+    WCard.restWCards = new Array();
     WCard.cardMainKey = "cardMain";
     WCard.btLeftClickKey = "btLeftClick";
     WCard.btRightClickKey = "btRightClick";

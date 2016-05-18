@@ -72,6 +72,30 @@ var CardsHelper = (function () {
                 cards.push(card);
         }
     };
+    CardsHelper.MoveArrayElements = function (from, to, numToMove, isRandomly, myAppendTo) {
+        if (isRandomly === void 0) { isRandomly = false; }
+        if (myAppendTo === void 0) { myAppendTo = null; }
+        var i0 = 0;
+        while (i0 < numToMove && from.length > 0) {
+            i0++;
+            var ith = (isRandomly) ?
+                Math.round(Math.random() * (from.length - 0.1) - 0.49) :
+                0;
+            to.push(from[ith]);
+            if (myAppendTo) {
+                var shWCard = from[ith];
+                if (shWCard)
+                    $(shWCard.viewCard).appendTo(myAppendTo);
+            }
+            else {
+                var wcard = from[ith];
+                if (wcard && wcard.viewCard.parentNode) {
+                    wcard.viewCard.parentNode.removeChild(wcard.viewCard);
+                }
+            }
+            from.splice(ith, 1);
+        }
+    };
     return CardsHelper;
 }());
 //# sourceMappingURL=CardsHelper.js.map
