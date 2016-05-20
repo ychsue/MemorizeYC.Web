@@ -28,11 +28,13 @@
 <nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
     <div class="container-fluid">
         <div class="row">
+            <button class="col-xs-1 btn btn-default">right</button>
+            <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
             <div class="dropdown">
-                <button class="col-xs-1 btn btn-default dropdown-toggle" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <button class="btn btn-default dropdown-toggle col-xs-1" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span class="glyphicon glyphicon-menu-hamburger" />
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuPlayPageSettings">
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPlayPageSettings">
                     <!--1. For cards' size, shown-->
                     <li class="container">
                         <div class="row">
@@ -80,27 +82,21 @@
                     </li>
 
                     <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">Actions</li>
+                    <li class="dropdown-header">Arrangement</li>
                     <li class="container">
                         <div class="row">
-                            <div class="checkbox col-sm-3">
-                                <label>
-                                    <input type="checkbox" name="cbMoveable" value="" /> Moveable.
-                                </label>
-                            </div>
-                            <div class="col-sm-3"><button>Rearrange</button></div>
-                            <div class="col-sm-3"><button>Random Rearrange</button></div>
-                            <div class="col-sm-3"><button>Accumulate</button></div>
+                            <div class="col-xs-4"><button class="glyphicon glyphicon-th" ng-click="ctrl.Arrange_Click(false)"></button></div>
+                            <div class="col-xs-4"><button class="glyphicon glyphicon-random" ng-click="ctrl.Arrange_Click(true)"></button></div>
                         </div>
                     </li>
 
                     <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">Actions</li>
-                    <li><a class="btn">HyperLink</a></li>
+                    <li class="dropdown-header">HyperLinks</li>
+                    <li>
+                        <button class="btn btn-default" ng-click="ctrl.OpenHyperLink_Click()" ng-show="ctrl.hyperLink">my link</button>
+                    </li>
                 </ul>
             </div>
-            <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
-            <button class="col-xs-1 btn btn-default">right</button>
         </div>
     </div>
 </nav>

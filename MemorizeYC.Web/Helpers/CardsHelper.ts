@@ -2,7 +2,7 @@
 /// <reference path="../models/eachdescription.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
 class CardsHelper {
-    public static RearrangeCards(wcards: WCard[], nCol: number = 5, isRandom:boolean=false) {
+    public static RearrangeCards(wcards: WCard[], nCol: number = 5, isRandom:boolean=false, isOptimizeSize:boolean = true) {
         if (!wcards || wcards.length === 0)
             return;
         var topOfTop: number = 50;
@@ -14,6 +14,7 @@ class CardsHelper {
         if (isRandom)
             MathHelper.Permute(wcards);
         //* [2016-03-16 14:06] Rearrange the cards.
+        var maxWidth: number = 0;
         for (var i1: number = 0; i1 < wcards.length; i1++) {
             var card: WCard = wcards[i1];
             var size = [wWidth / nCol, wHeight / nCol];
@@ -29,17 +30,20 @@ class CardsHelper {
             if (card.viewWHRatio && !isNaN(card.viewWHRatio[card.boxIndex])) {
                 size[1] = size[0] / card.viewWHRatio[card.boxIndex];
             }
-            card.viewSize = size; //This step will reset its size.
-            var predictTop = currentPosition[1] + size[1] + 20;
+            if(isOptimizeSize)
+                card.viewSize = size; //This step will reset its size.
+            maxWidth = Math.max(maxWidth, card.viewSize[0]);
+            var predictTop = currentPosition[1] + card.viewSize[1] + 20;
             if (predictTop > wHeight) {
-                currentPosition = [currentPosition[0] + wWidth / nCol + 20, topOfTop];
+                currentPosition = [currentPosition[0] + maxWidth + 20, topOfTop];
+                maxWidth = 0;
             }
             card.viewPosition = currentPosition;
             //* [2016-03-16 14:52] Renew its position for next one
             if (predictTop < wHeight)
                 currentPosition[1] = predictTop;
             else
-                currentPosition[1] += size[1] + 20;
+                currentPosition[1] += card.viewSize[1] + 20;
         }
     }
 

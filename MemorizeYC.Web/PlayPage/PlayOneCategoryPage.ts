@@ -7,6 +7,7 @@ class PlayOneCategoryPageController{
     public Container: string;
     public CFolder: string;
     public selWCard: WCard;
+    public hyperLink: string;
 
     public topNavbarHeight: number;
     public bottomNavbarHeight: number;
@@ -67,7 +68,7 @@ class PlayOneCategoryPageController{
         this.topNavbarHeight = $("#topNavbar").height();
         this.bottomNavbarHeight = $("#bottomNavbar").height();
 
-        this.numWCardShown = 4;
+        this.numWCardShown = 8;
         this.isPickWCardsRandomly = true;
 
         MyFileHelper.FeedTextFromTxtFileToACallBack(
@@ -124,12 +125,24 @@ class PlayOneCategoryPageController{
         CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
     };
     //#endregion **resize WCards
+    public Arrange_Click = function (isRandomly: boolean) {
+        CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, isRandomly, false);
+    };
+
+    public OpenHyperLink_Click = function () {
+        if (PlayOneCategoryPageController.Current.hyperLink)
+            window.open(PlayOneCategoryPageController.Current.hyperLink);
+    }
     //#endregion *EVENTS
 }
 function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     var showedWcards: WCard[] = WCard.showedWCards;
     var ith: number = 0;
+    //* [2016-05-20 16:03] Initialize hyperLink & WCards
     CardsHelper.GetWCardsCallback(jsonTxt, restWcards);
+    PlayOneCategoryPageController.Current.hyperLink = JSON.parse(jsonTxt)["Link"];
+
+
     for (var i0 = 0; i0 < restWcards.length; i0++) {
 
         //* [2016-05-10 17:23] For singleClick   :TODO:
@@ -150,6 +163,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         $(restWcards[i0].viewCard).draggable();
         $(restWcards[i0].viewCard).resizable();
         $(restWcards[i0].viewCard).on("resize", function (ev, ui) {
+            ev.bubbles = false;
             var thisWCard = WCard.FindWCardFromViewCard(this);
             thisWCard.viewSize = [ui.size.width, ui.size.height];
         });

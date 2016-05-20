@@ -4,9 +4,10 @@
 var CardsHelper = (function () {
     function CardsHelper() {
     }
-    CardsHelper.RearrangeCards = function (wcards, nCol, isRandom) {
+    CardsHelper.RearrangeCards = function (wcards, nCol, isRandom, isOptimizeSize) {
         if (nCol === void 0) { nCol = 5; }
         if (isRandom === void 0) { isRandom = false; }
+        if (isOptimizeSize === void 0) { isOptimizeSize = true; }
         if (!wcards || wcards.length === 0)
             return;
         var topOfTop = 50;
@@ -17,6 +18,7 @@ var CardsHelper = (function () {
         if (isRandom)
             MathHelper.Permute(wcards);
         //* [2016-03-16 14:06] Rearrange the cards.
+        var maxWidth = 0;
         for (var i1 = 0; i1 < wcards.length; i1++) {
             var card = wcards[i1];
             var size = [wWidth / nCol, wHeight / nCol];
@@ -32,17 +34,20 @@ var CardsHelper = (function () {
             if (card.viewWHRatio && !isNaN(card.viewWHRatio[card.boxIndex])) {
                 size[1] = size[0] / card.viewWHRatio[card.boxIndex];
             }
-            card.viewSize = size; //This step will reset its size.
-            var predictTop = currentPosition[1] + size[1] + 20;
+            if (isOptimizeSize)
+                card.viewSize = size; //This step will reset its size.
+            maxWidth = Math.max(maxWidth, card.viewSize[0]);
+            var predictTop = currentPosition[1] + card.viewSize[1] + 20;
             if (predictTop > wHeight) {
-                currentPosition = [currentPosition[0] + wWidth / nCol + 20, topOfTop];
+                currentPosition = [currentPosition[0] + maxWidth + 20, topOfTop];
+                maxWidth = 0;
             }
             card.viewPosition = currentPosition;
             //* [2016-03-16 14:52] Renew its position for next one
             if (predictTop < wHeight)
                 currentPosition[1] = predictTop;
             else
-                currentPosition[1] += size[1] + 20;
+                currentPosition[1] += card.viewSize[1] + 20;
         }
     };
     CardsHelper.GetTreatablePath = function (cardPath, mainFolder, categoryFolder) {

@@ -32,6 +32,14 @@ var PlayOneCategoryPageController = (function () {
             PlayOneCategoryPageController.oneOverNWindow /= 1.2;
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
         };
+        //#endregion **resize WCards
+        this.Arrange_Click = function (isRandomly) {
+            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, isRandomly, false);
+        };
+        this.OpenHyperLink_Click = function () {
+            if (PlayOneCategoryPageController.Current.hyperLink)
+                window.open(PlayOneCategoryPageController.Current.hyperLink);
+        };
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
@@ -44,7 +52,7 @@ var PlayOneCategoryPageController = (function () {
         this.CFolder = GlobalVariables.currentCategoryFolder;
         this.topNavbarHeight = $("#topNavbar").height();
         this.bottomNavbarHeight = $("#bottomNavbar").height();
-        this.numWCardShown = 4;
+        this.numWCardShown = 8;
         this.isPickWCardsRandomly = true;
         MyFileHelper.FeedTextFromTxtFileToACallBack(CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder), WCard.restWCards, ShowWCardsAndEventsCallback);
         $(window).on("resize", function (ev) {
@@ -112,7 +120,9 @@ var PlayOneCategoryPageController = (function () {
 function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
     var showedWcards = WCard.showedWCards;
     var ith = 0;
+    //* [2016-05-20 16:03] Initialize hyperLink & WCards
     CardsHelper.GetWCardsCallback(jsonTxt, restWcards);
+    PlayOneCategoryPageController.Current.hyperLink = JSON.parse(jsonTxt)["Link"];
     for (var i0 = 0; i0 < restWcards.length; i0++) {
         //* [2016-05-10 17:23] For singleClick   :TODO:
         $(restWcards[i0]).on(GlobalVariables.onSingleClick, { thisWCard: restWcards[i0] }, function (ev) {
@@ -130,6 +140,7 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
         $(restWcards[i0].viewCard).draggable();
         $(restWcards[i0].viewCard).resizable();
         $(restWcards[i0].viewCard).on("resize", function (ev, ui) {
+            ev.bubbles = false;
             var thisWCard = WCard.FindWCardFromViewCard(this);
             thisWCard.viewSize = [ui.size.width, ui.size.height];
         });
