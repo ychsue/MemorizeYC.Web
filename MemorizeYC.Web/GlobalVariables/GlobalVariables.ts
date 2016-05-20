@@ -1,4 +1,6 @@
-﻿class GlobalVariables {
+﻿/// <reference path="../models/enums.ts" />
+
+class GlobalVariables {
     public static categoryListFileName: string = "MYCategory.json";
     public static containerListFileName: string = "MYContainer.json";
 
@@ -10,4 +12,7 @@
     public static numCardClick: number = 0;
     public static timerCardClickId: number = Number.NaN;
     public static clickedViewCard: HTMLDivElement = null;
+    public static PlayType = PlayTypeEnum.syn;
+
+    public static currentDocumentSize: number[] = [0,0];
 }

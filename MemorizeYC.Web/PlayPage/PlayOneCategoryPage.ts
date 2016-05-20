@@ -1,6 +1,7 @@
 ﻿/// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../globalvariables/globalvariables.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
+/// <reference path="../scripts/typings/jqueryui/jqueryui.d.ts" />
 
 class PlayOneCategoryPageController{
     public Container: string;
@@ -41,11 +42,20 @@ class PlayOneCategoryPageController{
     }
     //public numRestWCards: number=8; //: TODO: 
     //#endregion numRestWCards
+    //#region PlayType
+    get playType(): string {
+        return GlobalVariables.PlayType;
+    }
+    set playType(value: string) {
+        GlobalVariables.PlayType = value;
+    }
+    //#endregion PlayType
 
     constructor($scope, $routeParams) {
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
+        GlobalVariables.currentDocumentSize = [$(document).innerWidth(), $(document).innerHeight()];
 
         if ($routeParams["Container"] != undefined)
             GlobalVariables.currentMainFolder = $routeParams["Container"];
@@ -66,6 +76,12 @@ class PlayOneCategoryPageController{
             ShowWCardsAndEventsCallback);
 
         $(window).on("resize", function (ev) {
+            //* [2016-05-20 11:40] Resize only when the document's size is changed.
+            if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
+                return;
+            GlobalVariables.currentDocumentSize[0] = $(document).innerWidth();
+            GlobalVariables.currentDocumentSize[1] = $(document).innerHeight();
+
             var wcards = WCard.showedWCards;
             CardsHelper.RearrangeCards(wcards, PlayOneCategoryPageController.oneOverNWindow);
 
@@ -79,7 +95,7 @@ class PlayOneCategoryPageController{
         });
     }
 
-    //#region EVENTS
+    //#region *EVENTS
     public ShowNewWCards_Click = function () {
         //* [2016-05-17 15:55] Move them
         var bufWCards: WCard[] = new Array();
@@ -98,7 +114,17 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.Current.numRestWCards;
         CardsHelper.RearrangeCards(shWCards, PlayOneCategoryPageController.oneOverNWindow);        
     };
-    //#endregion EVENTS
+    //#region **resize WCards
+    public Smaller_Click = function () {
+        PlayOneCategoryPageController.oneOverNWindow *= 1.2;
+        CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+    };
+    public Larger_Click = function () {
+        PlayOneCategoryPageController.oneOverNWindow /= 1.2;
+        CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+    };
+    //#endregion **resize WCards
+    //#endregion *EVENTS
 }
 function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     var showedWcards: WCard[] = WCard.showedWCards;
@@ -120,6 +146,15 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             });
         });
 
+        //* [2016-05-19 20:02] Make it resizable
+        $(restWcards[i0].viewCard).draggable();
+        $(restWcards[i0].viewCard).resizable();
+        $(restWcards[i0].viewCard).on("resize", function (ev, ui) {
+            var thisWCard = WCard.FindWCardFromViewCard(this);
+            thisWCard.viewSize = [ui.size.width, ui.size.height];
+        });
+        restWcards[i0].viewCard.style.msTouchAction = "none";
+        restWcards[i0].viewCard.style.touchAction = "none";
     }
 
     //* [2016-05-17 15:35] Just show some wcards

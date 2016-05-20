@@ -1,11 +1,11 @@
 /// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../globalvariables/globalvariables.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
+/// <reference path="../scripts/typings/jqueryui/jqueryui.d.ts" />
 var PlayOneCategoryPageController = (function () {
-    //public numRestWCards: number=8; //: TODO: 
-    //#endregion numRestWCards
+    //#endregion PlayType
     function PlayOneCategoryPageController($scope, $routeParams) {
-        //#region EVENTS
+        //#region *EVENTS
         this.ShowNewWCards_Click = function () {
             //* [2016-05-17 15:55] Move them
             var bufWCards = new Array();
@@ -23,9 +23,19 @@ var PlayOneCategoryPageController = (function () {
             PlayOneCategoryPageController.Current.numRestWCards;
             CardsHelper.RearrangeCards(shWCards, PlayOneCategoryPageController.oneOverNWindow);
         };
+        //#region **resize WCards
+        this.Smaller_Click = function () {
+            PlayOneCategoryPageController.oneOverNWindow *= 1.2;
+            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+        };
+        this.Larger_Click = function () {
+            PlayOneCategoryPageController.oneOverNWindow /= 1.2;
+            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+        };
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
+        GlobalVariables.currentDocumentSize = [$(document).innerWidth(), $(document).innerHeight()];
         if ($routeParams["Container"] != undefined)
             GlobalVariables.currentMainFolder = $routeParams["Container"];
         if ($routeParams["CFolder"] != undefined)
@@ -38,6 +48,11 @@ var PlayOneCategoryPageController = (function () {
         this.isPickWCardsRandomly = true;
         MyFileHelper.FeedTextFromTxtFileToACallBack(CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder), WCard.restWCards, ShowWCardsAndEventsCallback);
         $(window).on("resize", function (ev) {
+            //* [2016-05-20 11:40] Resize only when the document's size is changed.
+            if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
+                return;
+            GlobalVariables.currentDocumentSize[0] = $(document).innerWidth();
+            GlobalVariables.currentDocumentSize[1] = $(document).innerHeight();
             var wcards = WCard.showedWCards;
             CardsHelper.RearrangeCards(wcards, PlayOneCategoryPageController.oneOverNWindow);
             PlayOneCategoryPageController.scope.$apply(function () {
@@ -78,6 +93,19 @@ var PlayOneCategoryPageController = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "playType", {
+        //public numRestWCards: number=8; //: TODO: 
+        //#endregion numRestWCards
+        //#region PlayType
+        get: function () {
+            return GlobalVariables.PlayType;
+        },
+        set: function (value) {
+            GlobalVariables.PlayType = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     PlayOneCategoryPageController.oneOverNWindow = 5;
     return PlayOneCategoryPageController;
 }());
@@ -98,6 +126,15 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
                 PlayOneCategoryPageController.Current.selWCard = ev.data.thisWCard;
             });
         });
+        //* [2016-05-19 20:02] Make it resizable
+        $(restWcards[i0].viewCard).draggable();
+        $(restWcards[i0].viewCard).resizable();
+        $(restWcards[i0].viewCard).on("resize", function (ev, ui) {
+            var thisWCard = WCard.FindWCardFromViewCard(this);
+            thisWCard.viewSize = [ui.size.width, ui.size.height];
+        });
+        restWcards[i0].viewCard.style.msTouchAction = "none";
+        restWcards[i0].viewCard.style.touchAction = "none";
     }
     //* [2016-05-17 15:35] Just show some wcards
     while (ith < PlayOneCategoryPageController.numWCardShown && restWcards.length > 0) {
