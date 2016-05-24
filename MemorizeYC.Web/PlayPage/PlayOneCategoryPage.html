@@ -1,25 +1,32 @@
 ﻿<nav class="navbar navbar-default navbar-fixed-bottom" id="bottomNavbar">
     <div class="container-fluid" ng-show="ctrl.playType==='syn'">
         <div class="row">
-            <button class="col-xs-1 btn btn-default">
+            <button class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()">
                 <span class="glyphicon glyphicon-play" />
             </button>
-            <button class="col-xs-1 btn btn-default">
+            <button class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click()">
                 <span class="glyphicon glyphicon-step-forward" />
             </button>
-            <div class="col-xs-10" ng-bind="ctrl.selWCard.cardInfo.FileName"></div>
+            <div class="col-xs-10" ng-bind="ctrl.synAnsWCard.cardInfo.Dictate"></div>
         </div>
     </div>
 
     <div class="container-fluid" ng-show="ctrl.playType==='rec'">
         <div class="row">
-            <button class="col-xs-1 btn btn-default">
-                <img src="https://openclipart.org/image/2400px/svg_to_png/34345/signore-architetto-fran-01r.png" alt="microphone" style="height:32px"/>
-            </button>
-            <div class="col-xs-10" ng-bind="ctrl.selWCard.cardInfo.FileName"></div>
-            <button class="col-xs-1 btn btn-default">
-                <span class="glyphicon glyphicon-export" />
-            </button>
+            <form ng-submit="ctrl.recCheckAnswer_Click()">
+                <button class="col-xs-1 btn btn-default">
+                    <img src="https://openclipart.org/image/2400px/svg_to_png/34345/signore-architetto-fran-01r.png" alt="microphone" style="height:32px" />
+                </button>
+                <input type="text" name="tbRecSentence" class="col-xs-10" ng-model="ctrl.recInputSentence" />
+                <input type="image" class="col-xs-1 btn btn-default" src="http://news.toyark.com/wp-content/uploads/sites/4/2013/08/New-52-Green-Arrow-07.jpg" style="height:44px; width:auto"/>
+            </form>
+        </div>
+    </div>
+
+    <div class="container-fluid" ng-show="ctrl.playType==='hint'">
+        <div class="row">
+            <div class="col-xs-1 glyphicon glyphicon-exclamation-sign" style="font-size:large"></div>
+            <div class="col-xs-11 text-center" style="display:table-cell; vertical-align:central">{{ctrl.selWCard.cardInfo.Dictate}}</div>
         </div>
     </div>
 
@@ -28,8 +35,8 @@
 <nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
     <div class="container-fluid">
         <div class="row">
-            <button class="col-xs-1 btn btn-default">right</button>
-            <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
+            <!--<button class="col-xs-1 btn btn-default">right</button>-->
+            <h4 class="col-xs-11 text-center">{{ctrl.CFolder}}</h4>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle col-xs-1" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span class="glyphicon glyphicon-menu-hamburger" />
@@ -45,7 +52,7 @@
                                 </h3>
                             </button>
                             <div class="col-sm-6">
-                                Show <input type="number" style="width:24px" ng-model="ctrl.numWCardShown" /> cards each time.
+                                Show <input type="number" style="width:24px" ng-model="ctrl.numWCardShown" min="1" /> cards each time.
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="cbPickRandomly" value="" ng-model="ctrl.isPickWCardsRandomly" />
@@ -62,20 +69,26 @@
                     </li>
                     <li role="separator" class="divider"></li>
                     <!--2. For Play Type-->
+                    <li class="dropdown-header">Type</li>
                     <li class="container">
                         <div class="row">
-                            <div class="dropdown-header col-xs-4">Type</div>
-                            <div class="radio col-xs-4">
+                            <div class="radio col-xs-4" style="margin-top:auto">
+                                <label>
+                                    <input type="radio" name="gameType" value="hint" ng-model="ctrl.playType"/>
+                                    Hint <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                </label>
+                            </div>
+                            <div class="radio col-xs-4" style="margin-top:auto">
                                 <label>
                                     <input type="radio" name="gameType" value="syn" ng-model="ctrl.playType" /> <!--Definded in PlayTypeEnum-->
-                                    Click <span class="glyphicon glyphicon-play"></span>
+                                    Click <span class="glyphicon glyphicon-play"></span>  <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-modal-window"></span>
                                 </label>
                             </div><span></span>
-                            <div class="radio col-xs-4">
+                            <div class="radio col-xs-4" style="margin-top:auto">
                                 <label>
                                     <input type="radio" name="gameType" value="rec" ng-model="ctrl.playType" />
-                                    Typeing
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keyboard-icon_Wikipedians.svg/800px-Keyboard-icon_Wikipedians.svg.png" style="height:20px" alt="key in answer" />
+                                    KeyIn
+                                    <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span>   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keyboard-icon_Wikipedians.svg/800px-Keyboard-icon_Wikipedians.svg.png" style="height:20px" alt="key in answer" />
                                 </label>
                             </div>
                         </div>

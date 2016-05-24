@@ -3,3 +3,44 @@
     -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+    .WCard.selWCard {
+        border: thin dashed red;
+
+        -moz-animation: breathBorder alternate 0.3s infinite;
+        -o-animation: breathBorder alternate 0.3s infinite;
+        -webkit-animation: breathBorder alternate 0.3s infinite;
+        animation: breathBorder alternate 0.3s infinite;
+    }
+
+/*#region keyframes breathBoder*/
+@keyframes breathBorder {
+    from {
+        border: thin dashed red;
+    }
+
+    to {
+        border: medium solid yellow;
+    }
+}
+
+@-moz-keyframes breathBorder {
+    from {
+        border: thin dashed red;
+    }
+
+    to {
+        border: medium solid yellow;
+    }
+}
+
+@-webkit-keyframes breathBorder {
+    from {
+        border: thin dashed red;
+    }
+
+    to {
+        border: medium solid yellow;
+    }
+}
+/*#endregion keyframes breathBoder*/

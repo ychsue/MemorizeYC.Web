@@ -71,9 +71,18 @@ class CardsHelper {
         var des: Array<EachDescription> = jObj["Cards"];
         for (var i0 = 0; i0 < des.length;i0++) {
             var eachDescription: EachDescription = des[i0] as EachDescription;
+            CardsHelper.UpdateEachDescription(des[i0]);
             var card: WCard = new WCard(eachDescription, GlobalVariables.currentMainFolder, GlobalVariables.currentCategoryFolder);
             if (card)
                 cards.push(card);
+        }
+    }
+
+    public static UpdateEachDescription(des: EachDescription) {
+        if (!des.Dictate && des.FileName) {
+            var iDot: number = des.FileName.lastIndexOf('.');
+            if (iDot > 0)
+                des.Dictate = decodeURIComponent( des.FileName.substring(0, iDot));
         }
     }
 
@@ -82,7 +91,7 @@ class CardsHelper {
         while (i0 < numToMove && from.length > 0) {
             i0++;
             var ith: number = (isRandomly) ?
-                Math.round(Math.random() * (from.length - 0.1) - 0.49) :
+                MathHelper.MyRandomN(0,from.length-1) :
                 0;
             to.push(from[ith]);
             if (myAppendTo) { // Append it to a HTMLElement

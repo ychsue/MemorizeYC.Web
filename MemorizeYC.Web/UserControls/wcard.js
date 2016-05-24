@@ -35,6 +35,12 @@ var WCard = (function () {
         var viewCard = this.viewCard;
         //viewCard.WCard = this; // This one cannot pass the 'Build'.
         $(viewCard).on('click', function (ev) {
+            //* [2016-05-24 15:18] To exclude the case of dragging a card
+            var mouseDownTime = WCard.mouseDownTime;
+            WCard.mouseDownTime = Date.now();
+            if (GlobalVariables.numCardClick === 0 && WCard.mouseDownTime - mouseDownTime > 200)
+                return;
+            //* [2016-05-24 15:03] Start to catch its clicking
             GlobalVariables.numCardClick++;
             GlobalVariables.clickedViewCard = this; // it is declared by $(viewCard)
             if (!isNaN(GlobalVariables.timerCardClickId))
@@ -58,6 +64,9 @@ var WCard = (function () {
                 GlobalVariables.timerCardClickId = Number.NaN;
                 console.log("Click num =" + num);
             }, 300);
+        });
+        $(viewCard).on('mousedown', function () {
+            WCard.mouseDownTime = Date.now();
         });
     }
     Object.defineProperty(WCard.prototype, "viewSize", {
@@ -197,7 +206,7 @@ var WCard = (function () {
                 thisWCard.cardsDescription.push("");
         }
         //* [2016-03-17 10:39] Show a card randomly
-        thisWCard.boxIndex = Math.round((thisWCard.cardsPath.length - 2e-10) * Math.random() - 0.5 + 1e-10);
+        thisWCard.boxIndex = MathHelper.MyRandomN(0, thisWCard.cardsPath.length - 1);
         //* [2016-03-21 15:17] Embeded in two buttons: btLeft & btRight
         if (thisWCard.cardsPath.length > 1 && document.getElementsByClassName("btLeft").length === 0) {
             var tbIth = document.createElement('div');

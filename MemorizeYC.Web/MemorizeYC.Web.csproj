@@ -53,19 +53,43 @@
     <Content Include="GSPages\ChooseAContainerPage.html" />
     <Content Include="index.html" />
     <Content Include="PlayPage\PlayOneCategoryPage.html" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\btest.exi" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\fish.box" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\MYCategory.json" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\ABlueRightTriangle.png" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\AGreenRectangle.png" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\AnIndigoParallelogram.png" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\AnOrangeCircle.png" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\APurpleTrapezoid.png" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\ARedOval.png" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\AVioletTrapezoid.png" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\AYellowSquare.png" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\BoxFiles\A yellow trapezoid.jpg" />
-    <Content Include="Samples\MYContainer\ShapeAndColor\秉燭夜遊.txt" />
+    <Content Include="Samples\MYContainer\Shape and color\btest.exi">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\fish.box">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\A blue right triangle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\A green rectangle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\An indigo parallelogram.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\An orange circle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\A purple trapezoid.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\A red oval.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\A violet trapezoid.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\A yellow square.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MYContainer\Shape and color\BoxFiles\A yellow trapezoid.jpg" />
+    <Content Include="Samples\MYContainer\Shape and color\秉燭夜遊.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -98,7 +122,9 @@
     <Content Include="Samples\健康操\眼睛操\MYCategory.json" />
     <Content Include="Samples\健康操\低頭族需要的簡易運動\MYCategory.json" />
     <Content Include="Samples\健康操\MYContainer.json" />
-    <Content Include="Samples\MYContainer\MYContainer.json" />
+    <Content Include="Samples\MYContainer\MYContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />

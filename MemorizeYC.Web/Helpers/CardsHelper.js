@@ -72,9 +72,17 @@ var CardsHelper = (function () {
         var des = jObj["Cards"];
         for (var i0 = 0; i0 < des.length; i0++) {
             var eachDescription = des[i0];
+            CardsHelper.UpdateEachDescription(des[i0]);
             var card = new WCard(eachDescription, GlobalVariables.currentMainFolder, GlobalVariables.currentCategoryFolder);
             if (card)
                 cards.push(card);
+        }
+    };
+    CardsHelper.UpdateEachDescription = function (des) {
+        if (!des.Dictate && des.FileName) {
+            var iDot = des.FileName.lastIndexOf('.');
+            if (iDot > 0)
+                des.Dictate = decodeURIComponent(des.FileName.substring(0, iDot));
         }
     };
     CardsHelper.MoveArrayElements = function (from, to, numToMove, isRandomly, myAppendTo) {
@@ -84,7 +92,7 @@ var CardsHelper = (function () {
         while (i0 < numToMove && from.length > 0) {
             i0++;
             var ith = (isRandomly) ?
-                Math.round(Math.random() * (from.length - 0.1) - 0.49) :
+                MathHelper.MyRandomN(0, from.length - 1) :
                 0;
             to.push(from[ith]);
             if (myAppendTo) {
