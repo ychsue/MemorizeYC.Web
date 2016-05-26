@@ -132,7 +132,7 @@ var WCard = (function () {
             this.viewCard.appendChild(this.cCards[value]);
             var tbIth = this.viewCard.getElementsByClassName('tbIth')[0];
             if (tbIth)
-                tbIth.innerText = value.toString() + "/" + this.cCards.length.toString();
+                tbIth.innerText = (value + 1).toString() + "/" + this.cCards.length.toString();
         },
         enumerable: true,
         configurable: true
@@ -227,9 +227,11 @@ var WCard = (function () {
             tbIth.style.position = "absolute";
             btLeft.addEventListener('click', function (ev) {
                 thisWCard.boxIndex = (thisWCard.boxIndex == 0) ? thisWCard.cCards.length - 1 : thisWCard.boxIndex - 1;
+                ev.stopPropagation();
             });
             btRight.addEventListener('click', function (ev) {
                 thisWCard.boxIndex = (thisWCard.boxIndex == (thisWCard.cCards.length - 1)) ? 0 : thisWCard.boxIndex + 1;
+                ev.stopPropagation();
             });
             thisWCard.viewCard.appendChild(btLeft);
             thisWCard.viewCard.appendChild(btRight);

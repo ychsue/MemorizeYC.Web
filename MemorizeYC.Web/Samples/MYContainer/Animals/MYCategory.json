@@ -1,0 +1,29 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "It is a baboon.box",
+      "AudioFilePathOrUri": "http://www.freeinfosociety.com/media/sounds/274.mp3"
+    },
+    {
+      "FileName": "It is a bear.box",
+      "AudioFilePathOrUri": "http://www.freeinfosociety.com/media/sounds/4927.mp3"
+    },
+    {
+      "FileName": "It is a camel.box",
+      "AudioFilePathOrUri": "http://www.freeinfosociety.com/media/sounds/4931.mp3"
+    },
+    {
+      "FileName": "It is a horse.box",
+      "AudioFilePathOrUri": "http://www.w3schools.com/tags/horse.mp3"
+    },
+    {
+      "FileName": "It is a lion.box",
+      "AudioFilePathOrUri": "http://www.freeinfosociety.com/media/sounds/4947.mp3"
+    },
+    {
+      "FileName": "It is an eagle.box",
+      "AudioFilePathOrUri": "http://www.freeinfosociety.com/media/sounds/4940.mp3"
+    }
+  ],
+  "Link": "http://www.freeinfosociety.com/media_index.php?cat=20&type=3"
+}

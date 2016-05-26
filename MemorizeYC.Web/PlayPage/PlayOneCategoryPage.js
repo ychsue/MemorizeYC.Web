@@ -5,6 +5,10 @@
 var PlayOneCategoryPageController = (function () {
     //#endregion PlayType
     function PlayOneCategoryPageController($scope, $routeParams) {
+        this.meCardsAudio = document.getElementById('meCardsAudio');
+        this.dlDblClickWCard = document.getElementById('dlDblClickWCard');
+        //#region rate2PowN
+        this._rate2PowN = 0;
         //#region *EVENTS
         this.ShowNewWCards_Click = function () {
             //* [2016-05-24 14:46] Remove the style of animation
@@ -43,13 +47,27 @@ var PlayOneCategoryPageController = (function () {
             if (PlayOneCategoryPageController.Current.hyperLink)
                 window.open(PlayOneCategoryPageController.Current.hyperLink);
         };
+        /**
+         * Play an audio
+        **/
         this.synPlay_Click = function () {
+            //* [2016-05-25 14:29] If there is no synAnsWCard is selected, take one of them
             if (!PlayOneCategoryPageController.Current.synAnsWCard) {
                 PlayOneCategoryPageController.Current.synPlayNext_Click();
-                return;
             }
-            //: TODO:
+            //* [2016-05-25 14:30] After updating, it should have gotten one
+            if (PlayOneCategoryPageController.Current.synAnsWCard) {
+                var synAnsWCard = PlayOneCategoryPageController.Current.synAnsWCard;
+                if (synAnsWCard.cardInfo.AudioFilePathOrUri) {
+                    var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
+                    meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri, this.Container, this.CFolder);
+                    meAud.play();
+                }
+            }
         };
+        /**
+         * Choose next one to play
+        **/
         this.synPlayNext_Click = function () {
             var wcards = WCard.showedWCards;
             //* [2016-05-23 14:57] If there is no WCard, renew it
@@ -64,6 +82,7 @@ var PlayOneCategoryPageController = (function () {
             //* [2016-05-23 14:59] Since wcards.length!=0, choose one WCard randomly.
             var ith = MathHelper.MyRandomN(0, wcards.length - 1);
             PlayOneCategoryPageController.Current.synAnsWCard = wcards[ith];
+            PlayOneCategoryPageController.Current.synPlay_Click();
         };
         this.recCheckAnswer_Click = function () {
             if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence && PlayOneCategoryPageController.Current.selWCard.cardInfo.Dictate.trim().
@@ -92,6 +111,7 @@ var PlayOneCategoryPageController = (function () {
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
         GlobalVariables.currentDocumentSize = [$(document).innerWidth(), $(document).innerHeight()];
+        $(this.dlDblClickWCard).dialog({ autoOpen: false, modal: true });
         if ($routeParams["Container"] != undefined)
             GlobalVariables.currentMainFolder = $routeParams["Container"];
         if ($routeParams["CFolder"] != undefined)
@@ -120,6 +140,18 @@ var PlayOneCategoryPageController = (function () {
             });
         });
     }
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "rate2PowN", {
+        get: function () {
+            return this._rate2PowN;
+        },
+        set: function (value) {
+            var meAud = this.meCardsAudio;
+            meAud.defaultPlaybackRate = Math.pow(2, value);
+            this._rate2PowN = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(PlayOneCategoryPageController.prototype, "numWCardShown", {
         get: function () {
             return PlayOneCategoryPageController.numWCardShown;
@@ -236,6 +268,8 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
             PlayOneCategoryPageController.scope.$apply(function () {
                 PlayOneCategoryPageController.Current.selWCard = ev.data.thisWCard;
             });
+            var selWCard = PlayOneCategoryPageController.Current.selWCard;
+            CardsHelper.ShowHLinkAndDesDialog(selWCard, PlayOneCategoryPageController.Current.dlDblClickWCard);
         });
         //* [2016-05-19 20:02] Make it resizable
         $(restWcards[i0].viewCard).draggable();

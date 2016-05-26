@@ -89,7 +89,7 @@ class WCard {
         this.viewCard.appendChild(this.cCards[value]);
         var tbIth: HTMLDivElement = this.viewCard.getElementsByClassName('tbIth')[0] as HTMLDivElement;
         if (tbIth)
-            tbIth.innerText = value.toString() + "/" + this.cCards.length.toString();
+            tbIth.innerText = (value+1).toString() + "/" + this.cCards.length.toString();
     }
     //#endregion boxIndex. It will set a new Image or textarea
     
@@ -241,9 +241,11 @@ class WCard {
 
             btLeft.addEventListener('click', (ev) => {
                 thisWCard.boxIndex = (thisWCard.boxIndex == 0) ? thisWCard.cCards.length - 1 : thisWCard.boxIndex - 1;
+                ev.stopPropagation();
             });
             btRight.addEventListener('click', (ev) => {
                 thisWCard.boxIndex = (thisWCard.boxIndex == (thisWCard.cCards.length - 1)) ? 0 : thisWCard.boxIndex + 1;
+                ev.stopPropagation();
             });
             thisWCard.viewCard.appendChild(btLeft);
             thisWCard.viewCard.appendChild(btRight);

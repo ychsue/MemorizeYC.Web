@@ -10,6 +10,8 @@ class PlayOneCategoryPageController{
     public synAnsWCard: WCard;
     public hyperLink: string;
     public recInputSentence: string;
+    public meCardsAudio: HTMLAudioElement = document.getElementById('meCardsAudio') as HTMLAudioElement;
+    public dlDblClickWCard: HTMLDivElement = document.getElementById('dlDblClickWCard') as HTMLDivElement;
 
     public topNavbarHeight: number;
     public bottomNavbarHeight: number;
@@ -22,6 +24,17 @@ class PlayOneCategoryPageController{
     public static oneOverNWindow: number = 5;
     public static styleSelWCard: string = "selWCard";
 
+    //#region rate2PowN
+    private _rate2PowN: number = 0;
+    get rate2PowN(): number {
+        return this._rate2PowN;
+    }
+    set rate2PowN(value: number) {
+        var meAud = this.meCardsAudio;
+        meAud.defaultPlaybackRate = Math.pow(2, value);
+        this._rate2PowN = value;
+    }
+    //#endregion rate2PowN
     //#region numWCardShown
     public static numWCardShown: number;
     get numWCardShown():number {
@@ -65,6 +78,7 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
         GlobalVariables.currentDocumentSize = [$(document).innerWidth(), $(document).innerHeight()];
+        $(this.dlDblClickWCard).dialog({ autoOpen: false, modal: true });
 
         if ($routeParams["Container"] != undefined)
             GlobalVariables.currentMainFolder = $routeParams["Container"];
@@ -145,13 +159,27 @@ class PlayOneCategoryPageController{
             window.open(PlayOneCategoryPageController.Current.hyperLink);
     }
 
+    /**
+     * Play an audio
+    **/
     public synPlay_Click = function () {
+        //* [2016-05-25 14:29] If there is no synAnsWCard is selected, take one of them
         if (!PlayOneCategoryPageController.Current.synAnsWCard) {
             PlayOneCategoryPageController.Current.synPlayNext_Click();
-            return;
         }
-        //: TODO:
+        //* [2016-05-25 14:30] After updating, it should have gotten one
+        if (PlayOneCategoryPageController.Current.synAnsWCard) {
+            var synAnsWCard = PlayOneCategoryPageController.Current.synAnsWCard;
+            if (synAnsWCard.cardInfo.AudioFilePathOrUri) {
+                var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
+                meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri, this.Container, this.CFolder);
+                meAud.play();
+            }
+        }
     };
+    /**
+     * Choose next one to play
+    **/
     public synPlayNext_Click = function () {
         var wcards = WCard.showedWCards;
         //* [2016-05-23 14:57] If there is no WCard, renew it
@@ -166,6 +194,7 @@ class PlayOneCategoryPageController{
         //* [2016-05-23 14:59] Since wcards.length!=0, choose one WCard randomly.
         var ith: number = MathHelper.MyRandomN(0, wcards.length - 1);
         PlayOneCategoryPageController.Current.synAnsWCard = wcards[ith];
+        PlayOneCategoryPageController.Current.synPlay_Click();
     };
 
     public recCheckAnswer_Click = function () {
@@ -264,6 +293,9 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             PlayOneCategoryPageController.scope.$apply(function () {
                 PlayOneCategoryPageController.Current.selWCard = ev.data.thisWCard;
             });
+            var selWCard = PlayOneCategoryPageController.Current.selWCard;
+
+            CardsHelper.ShowHLinkAndDesDialog(selWCard, PlayOneCategoryPageController.Current.dlDblClickWCard);
         });
 
         //* [2016-05-19 20:02] Make it resizable

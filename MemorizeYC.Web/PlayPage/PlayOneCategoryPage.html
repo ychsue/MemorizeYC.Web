@@ -1,4 +1,8 @@
-﻿<nav class="navbar navbar-default navbar-fixed-bottom" id="bottomNavbar">
+﻿<audio id="meCardsAudio" preload="none"/>
+<div id="dlDblClickWCard" title="Double clicked">
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom" id="bottomNavbar">
     <div class="container-fluid" ng-show="ctrl.playType==='syn'">
         <div class="row">
             <button class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()">
@@ -68,13 +72,14 @@
                         </div>
                     </li>
                     <li role="separator" class="divider"></li>
+
                     <!--2. For Play Type-->
                     <li class="dropdown-header">Type</li>
                     <li class="container">
                         <div class="row">
                             <div class="radio col-xs-4" style="margin-top:auto">
                                 <label>
-                                    <input type="radio" name="gameType" value="hint" ng-model="ctrl.playType"/>
+                                    <input type="radio" name="gameType" value="hint" ng-model="ctrl.playType" />
                                     Hint <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-exclamation-sign"></span>
                                 </label>
                             </div>
@@ -93,13 +98,23 @@
                             </div>
                         </div>
                     </li>
-
                     <li role="separator" class="divider"></li>
+
+                    <!--3. For arrangement-->
                     <li class="dropdown-header">Arrangement</li>
                     <li class="container">
                         <div class="row">
                             <div class="col-xs-4"><button class="glyphicon glyphicon-th" ng-click="ctrl.Arrange_Click(false)"></button></div>
                             <div class="col-xs-4"><button class="glyphicon glyphicon-random" ng-click="ctrl.Arrange_Click(true)"></button></div>
+                        </div>
+                    </li>
+                    <li role="separator" class="divider"></li>
+
+                    <!--4. Audio rate-->
+                    <li class="dropdown-header">Audio rate</li>
+                    <li class="container">
+                        <div class="col-xs-12">
+                            <input type="range" id="rgAudioRate" ng-model="ctrl.rate2PowN" min="-2" max="2"/>
                         </div>
                     </li>
 

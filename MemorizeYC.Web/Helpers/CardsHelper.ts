@@ -32,11 +32,14 @@ class CardsHelper {
             }
             if(isOptimizeSize)
                 card.viewSize = size; //This step will reset its size.
-            maxWidth = Math.max(maxWidth, card.viewSize[0]);
+
             var predictTop = currentPosition[1] + card.viewSize[1] + 20;
             if (predictTop > wHeight) {
                 currentPosition = [currentPosition[0] + maxWidth + 20, topOfTop];
-                maxWidth = 0;
+                maxWidth = card.viewSize[0];
+            }
+            else {
+                maxWidth = Math.max(maxWidth, card.viewSize[0]);
             }
             card.viewPosition = currentPosition;
             //* [2016-03-16 14:52] Renew its position for next one
@@ -106,6 +109,64 @@ class CardsHelper {
                 }
             }
             from.splice(ith, 1);
+        }
+    }
+
+    public static ShowHLinkAndDesDialog(wcard: WCard, diEle: HTMLDivElement) {
+        var btns = new Array();
+        var isLinking = false;
+        var isDescripted = false;
+        var inStr1, inStr2: string;
+        //* [2016-05-26 10:18] Check whether it has a link
+        if (wcard.cardInfo.Link) {
+            inStr1 = wcard.cardInfo.Link;
+            isLinking = true;
+        }
+        else if (wcard.cardsHyperLink && wcard.boxIndex>=0 && wcard.cardsHyperLink[wcard.boxIndex]) {
+            inStr1 = wcard.cardsHyperLink[wcard.boxIndex];
+            isLinking = true;
+        }
+        else
+            isLinking = false;
+
+        if (isLinking) {
+            btns.push({
+                text: 'Link',
+                click: function () {
+                    window.open(inStr1);
+                    $(diEle).dialog('close');
+                }
+            });
+        }
+
+        //* [2016-05-26 10:23] Check whether it has a description
+        if (wcard.cardInfo.Description) {
+            inStr2 = wcard.cardInfo.Description;
+            isDescripted = true;
+        }
+        else if (wcard.cardsDescription && wcard.boxIndex>=0 && wcard.cardsDescription[wcard.boxIndex]) {
+            inStr2 = wcard.cardsDescription[wcard.boxIndex];
+            isDescripted = true;
+        }
+        else
+            isDescripted = false;
+
+        if (isDescripted) {
+            btns.push({
+                text: 'Description',
+                click: function () {
+                    window.alert(inStr2);
+                    $(diEle).dialog('close');
+                }
+            });
+        }
+
+        //* [2016-05-26 10:23] Open the dialog
+        if (isLinking || isDescripted) {
+            $(diEle).dialog({
+                buttons: btns
+            });
+            $(diEle).dialog('open');
         }
     }
 }

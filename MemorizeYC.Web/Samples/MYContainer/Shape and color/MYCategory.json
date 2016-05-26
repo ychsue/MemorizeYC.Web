@@ -1,6 +1,10 @@
 ﻿{
   "Cards": [
-    { "FileName": "A blue right triangle.png" },
+    {
+      "FileName": "A blue right triangle.png",
+      "Link": "http://bing.com/translator?text=triangle",
+      "Description": "藍色直角三角形\nA blue right triangle"
+    },
     { "FileName": "A green rectangle.png" },
     { "FileName": "An indigo parallelogram.png" },
     { "FileName": "An orange circle.png" },
