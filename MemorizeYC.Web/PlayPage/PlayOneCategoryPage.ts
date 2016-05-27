@@ -12,12 +12,31 @@ class PlayOneCategoryPageController{
     public recInputSentence: string;
     public meCardsAudio: HTMLAudioElement = document.getElementById('meCardsAudio') as HTMLAudioElement;
     public dlDblClickWCard: HTMLDivElement = document.getElementById('dlDblClickWCard') as HTMLDivElement;
+    public ddSettings: HTMLElement = document.getElementById('ddSettings') as HTMLElement;
 
     public topNavbarHeight: number;
     public bottomNavbarHeight: number;
     public defaultCardWidth: number;
     public defaultCardHeight: number;
     public defaultCardStyle: Object;
+
+    //* [2016-05-27 16:01] Timer for scores
+    //#region totalScore
+    public _totalScore: number;
+    get totalScore(): number {
+        return this._totalScore;
+    }
+    set totalScore(value: number) {
+        this._totalScore = (value >= 0) ? value : 0;
+        $(this.pgScore).css('width', Math.floor(value / this.glScore * 100).toString() + "%");
+    }
+    //#endregion totalScore
+
+    public glScore: number;
+    public localMinusScore: number;
+    public scoreTimerId: number;
+    public maxDelScore: number = 20;
+    public pgScore: HTMLDivElement = document.getElementById('pgScore') as HTMLDivElement;
 
     public static Current: PlayOneCategoryPageController;
     public static scope;
@@ -65,7 +84,19 @@ class PlayOneCategoryPageController{
     }
     set playType(value: string) {
         if (GlobalVariables.PlayType != value) {
+            if (value === PlayTypeEnum.rec) {
+                if (PlayOneCategoryPageController.Current.scoreTimerId) {
+                    clearInterval(PlayOneCategoryPageController.Current.scoreTimerId);
+                    PlayOneCategoryPageController.Current.scoreTimerId = null;
+                    PlayOneCategoryPageController.Current.localMinusScore = 0;
+                }
+            }
+            else if (value === PlayTypeEnum.hint) {
+                PlayOneCategoryPageController.Current.totalScore -= PlayOneCategoryPageController.Current.maxDelScore;
+            }
+            
             GlobalVariables.PlayType = value;
+            //* [2016-05-27] Change the state of the card.
             if (PlayOneCategoryPageController.Current.selWCard) {
                 $(PlayOneCategoryPageController.Current.selWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
             }
@@ -79,6 +110,7 @@ class PlayOneCategoryPageController{
         WCard.CleanWCards();
         GlobalVariables.currentDocumentSize = [$(document).innerWidth(), $(document).innerHeight()];
         $(this.dlDblClickWCard).dialog({ autoOpen: false, modal: true });
+        $(document).tooltip();
 
         if ($routeParams["Container"] != undefined)
             GlobalVariables.currentMainFolder = $routeParams["Container"];
@@ -167,13 +199,33 @@ class PlayOneCategoryPageController{
         if (!PlayOneCategoryPageController.Current.synAnsWCard) {
             PlayOneCategoryPageController.Current.synPlayNext_Click();
         }
-        //* [2016-05-25 14:30] After updating, it should have gotten one
+        //* [2016-05-25 14:30] After updating, it should have gotten one synAnsWCard
         if (PlayOneCategoryPageController.Current.synAnsWCard) {
             var synAnsWCard = PlayOneCategoryPageController.Current.synAnsWCard;
             if (synAnsWCard.cardInfo.AudioFilePathOrUri) {
                 var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
                 meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri, this.Container, this.CFolder);
                 meAud.play();
+            }
+
+            //* [2016-05-27 17:40] Update a timer
+            if (!PlayOneCategoryPageController.Current.scoreTimerId) {
+                PlayOneCategoryPageController.Current.localMinusScore = 0;
+                PlayOneCategoryPageController.Current.scoreTimerId = setInterval(function () {
+                    if ($(PlayOneCategoryPageController.Current.ddSettings).css('display') != 'none')
+                        return;
+                    PlayOneCategoryPageController.Current.localMinusScore++;
+                    var score = PlayOneCategoryPageController.Current.localMinusScore;
+                    if (score > PlayOneCategoryPageController.Current.maxDelScore) {
+                        clearInterval(PlayOneCategoryPageController.Current.scoreTimerId);
+                        PlayOneCategoryPageController.Current.scoreTimerId = null;
+                    }
+                    else {
+                        PlayOneCategoryPageController.scope.$apply(function () {
+                            PlayOneCategoryPageController.Current.totalScore--;
+                        });
+                    }
+                }, 1000);
             }
         }
     };
@@ -217,10 +269,23 @@ class PlayOneCategoryPageController{
             });
         }
         else {
-            alert("Your answer is wrong.");
+            if (PlayOneCategoryPageController.Current.selWCard) {
+                alert("Your answer is wrong.");
+                PlayOneCategoryPageController.Current.totalScore -= 3;
+            }
+            else {
+                alert("Click a card at first.");
+            }
         }
     };
     //#endregion *EVENTS
+
+    //#region For Score
+    public SetGlobalScore(wcards: WCard[]) {
+        this.glScore = this.maxDelScore * wcards.length;
+        this.totalScore = this.glScore;
+    }
+    //#endregion For Score
 }
 function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     var showedWcards: WCard[] = WCard.showedWCards;
@@ -228,7 +293,8 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     //* [2016-05-20 16:03] Initialize hyperLink & WCards
     CardsHelper.GetWCardsCallback(jsonTxt, restWcards);
     PlayOneCategoryPageController.Current.hyperLink = JSON.parse(jsonTxt)["Link"];
-
+    //* [2016-05-27 16:07] Set the global Score
+    PlayOneCategoryPageController.Current.SetGlobalScore(restWcards);
 
     for (var i0 = 0; i0 < restWcards.length; i0++) {
 
@@ -242,6 +308,12 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             //* [2016-05-23 15:45] If it is under synthesizer mode
             if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.syn) {
                 if (selWCard === PlayOneCategoryPageController.Current.synAnsWCard) {
+                    //** [2016-05-27 16:21] Stop the timer
+                    if (PlayOneCategoryPageController.Current.scoreTimerId) {
+                        clearInterval(PlayOneCategoryPageController.Current.scoreTimerId);
+                        PlayOneCategoryPageController.Current.scoreTimerId = null;
+                    }
+                    //** [2016-05-23] Show animation to annihilate the card
                     $(selWCard.viewCard).animate({ opacity: 0.1 }, {
                         duration: 200,
                         step: function (now, fx) {
@@ -258,6 +330,26 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
                     });
                 }
                 else {
+                    //** [2016-05-27 16:35] If no synAnsWCard, show a popup to warn the user that they didn't click the play yet.
+                    if (!PlayOneCategoryPageController.Current.synAnsWCard) {
+                        $('#btSynPlay').tooltip({
+                            content: "You need to click this button at first!"
+                        })
+                            .tooltip('open');
+
+                        return;
+                    }
+
+                    //** [2016-05-27 16:25] Take some score if the user click the wrong wcard
+                    if (PlayOneCategoryPageController.Current.scoreTimerId) {
+                        var delScore = 2;
+                        if (PlayOneCategoryPageController.Current.localMinusScore + 2 > PlayOneCategoryPageController.Current.maxDelScore) {
+                            delScore = Math.max(0, PlayOneCategoryPageController.Current.maxDelScore - PlayOneCategoryPageController.Current.localMinusScore);
+                        }
+                        PlayOneCategoryPageController.Current.totalScore -= delScore;
+                        PlayOneCategoryPageController.Current.localMinusScore += 2;
+                    }
+                    //** [2016-05-23] Show animation to show that the user choose a wrong answer
                     $(selWCard.viewCard).animate({ opacity: 0.5 }, {
                         duration: 100,
                         step: function (now, fx) {
