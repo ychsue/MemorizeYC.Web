@@ -66,12 +66,13 @@ var CardsHelper = (function () {
             newPath = mainFolder + "/" + categoryFolder + "/" + cardPath.replace('\\', '/');
         return newPath;
     };
-    CardsHelper.GetWCardsCallback = function (jsonTxt, cards) {
+    CardsHelper.GetWCardsCallback = function (jObj, cards) {
         //* [2016-04-01 16:31] Decipher the jsonTxt
-        var jObj = JSON.parse(jsonTxt);
         if (!jObj)
             return;
         var des = jObj["Cards"];
+        if (!des)
+            return;
         for (var i0 = 0; i0 < des.length; i0++) {
             var eachDescription = des[i0];
             CardsHelper.UpdateEachDescription(des[i0]);

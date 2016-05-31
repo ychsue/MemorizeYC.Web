@@ -6,6 +6,7 @@ var PlayOneCategoryPageController = (function () {
     //#endregion PlayType
     function PlayOneCategoryPageController($scope, $routeParams) {
         this.meCardsAudio = document.getElementById('meCardsAudio');
+        this.meBackground = document.getElementById('meBackground');
         this.dlDblClickWCard = document.getElementById('dlDblClickWCard');
         this.ddSettings = document.getElementById('ddSettings');
         this.maxDelScore = 20;
@@ -263,9 +264,18 @@ var PlayOneCategoryPageController = (function () {
 function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
     var showedWcards = WCard.showedWCards;
     var ith = 0;
-    //* [2016-05-20 16:03] Initialize hyperLink & WCards
-    CardsHelper.GetWCardsCallback(jsonTxt, restWcards);
-    PlayOneCategoryPageController.Current.hyperLink = JSON.parse(jsonTxt)["Link"];
+    //* [2016-05-20 16:03] Initialize hyperLink & WCards & Background
+    var jObj = JSON.parse(jsonTxt);
+    CardsHelper.GetWCardsCallback(jObj, restWcards); //Get WCards
+    PlayOneCategoryPageController.Current.hyperLink = jObj["Link"]; //Get HyperLink
+    if (jObj["Background"]) {
+        if (jObj["Background"]["ImgStyle"])
+            $(".cvMain").css(jObj["Background"]["ImgStyle"]); //Get Background Image
+        if (jObj["Background"]["AudioProperties"]) {
+            $(PlayOneCategoryPageController.Current.meBackground).prop(jObj["Background"]["AudioProperties"]);
+            PlayOneCategoryPageController.Current.meBackground.play();
+        }
+    }
     //* [2016-05-27 16:07] Set the global Score
     PlayOneCategoryPageController.Current.SetGlobalScore(restWcards);
     for (var i0 = 0; i0 < restWcards.length; i0++) {

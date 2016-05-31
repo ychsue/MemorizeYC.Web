@@ -25,5 +25,20 @@
       "AudioFilePathOrUri": "http://www.freeinfosociety.com/media/sounds/4940.mp3"
     }
   ],
-  "Link": "http://www.freeinfosociety.com/media_index.php?cat=20&type=3"
+  "Link": "http://www.freeinfosociety.com/media_index.php?cat=20&type=3",
+  "Background": 
+  {
+    "ImgStyle": {
+      "height": "800px",
+      "opacity": "0.3",
+      "background": "url(http://www.publicdomainpictures.net/pictures/120000/t2/rural-landscape-1432032406Jkz.jpg)",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    },
+    "AudioProperties": {
+      "src": "http://www.freeinfosociety.com/media/sounds/4154.mp3",
+      "loop": "true",
+      "volume": "0.2"
+    }
+  }
 }

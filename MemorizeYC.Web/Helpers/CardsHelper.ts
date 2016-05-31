@@ -65,13 +65,15 @@ class CardsHelper {
         return newPath;
     }
 
-    public static GetWCardsCallback(jsonTxt: string, cards: WCard[]) {
+    public static GetWCardsCallback(jObj: Object, cards: WCard[]) {
         //* [2016-04-01 16:31] Decipher the jsonTxt
-        var jObj = JSON.parse(jsonTxt);
         if (!jObj)
             return;
 
         var des: Array<EachDescription> = jObj["Cards"];
+        if (!des)
+            return;
+
         for (var i0 = 0; i0 < des.length;i0++) {
             var eachDescription: EachDescription = des[i0] as EachDescription;
             CardsHelper.UpdateEachDescription(des[i0]);

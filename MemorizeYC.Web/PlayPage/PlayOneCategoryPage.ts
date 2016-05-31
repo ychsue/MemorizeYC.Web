@@ -11,6 +11,7 @@ class PlayOneCategoryPageController{
     public hyperLink: string;
     public recInputSentence: string;
     public meCardsAudio: HTMLAudioElement = document.getElementById('meCardsAudio') as HTMLAudioElement;
+    public meBackground: HTMLAudioElement = document.getElementById('meBackground') as HTMLAudioElement;
     public dlDblClickWCard: HTMLDivElement = document.getElementById('dlDblClickWCard') as HTMLDivElement;
     public ddSettings: HTMLElement = document.getElementById('ddSettings') as HTMLElement;
 
@@ -290,9 +291,18 @@ class PlayOneCategoryPageController{
 function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     var showedWcards: WCard[] = WCard.showedWCards;
     var ith: number = 0;
-    //* [2016-05-20 16:03] Initialize hyperLink & WCards
-    CardsHelper.GetWCardsCallback(jsonTxt, restWcards);
-    PlayOneCategoryPageController.Current.hyperLink = JSON.parse(jsonTxt)["Link"];
+    //* [2016-05-20 16:03] Initialize hyperLink & WCards & Background
+    var jObj = JSON.parse(jsonTxt);
+    CardsHelper.GetWCardsCallback(jObj, restWcards); //Get WCards
+    PlayOneCategoryPageController.Current.hyperLink = jObj["Link"]; //Get HyperLink
+    if (jObj["Background"]) {
+        if(jObj["Background"]["ImgStyle"])
+            $(".cvMain").css(jObj["Background"]["ImgStyle"]); //Get Background Image
+        if (jObj["Background"]["AudioProperties"]) {
+            $(PlayOneCategoryPageController.Current.meBackground).prop(jObj["Background"]["AudioProperties"]);
+            PlayOneCategoryPageController.Current.meBackground.play();
+        }
+    }
     //* [2016-05-27 16:07] Set the global Score
     PlayOneCategoryPageController.Current.SetGlobalScore(restWcards);
 
