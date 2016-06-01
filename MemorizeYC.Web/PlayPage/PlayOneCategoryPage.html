@@ -1,6 +1,9 @@
 ﻿<audio id="meCardsAudio" preload="none"/>
 <audio id="meBackground" preload="none"/>
-<div id="dlDblClickWCard" title="Double clicked">
+<div id="dlDblClickWCard" title="Double clicked"></div>
+<div id="dlFinish" title="All Done!">
+    <h2>Your Score Is {{ctrl.totalScore}}/{{ctrl.glScore}}</h2>
+    <h1>Your Level is {{ctrl.level}}</h1>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom" id="bottomNavbar">
@@ -40,8 +43,8 @@
 <nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
     <div class="container-fluid">
         <div class="row">
-            <!--<button class="col-xs-1 btn btn-default">right</button>-->
-            <h4 class="col-xs-11 text-center">{{ctrl.CFolder}}</h4>
+            <a href="http://memorizeyc.azurewebsites.net" class="col-xs-1 btn btn-default">©</a>
+            <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle col-xs-1" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span class="glyphicon glyphicon-menu-hamburger" />
@@ -131,7 +134,9 @@
 </nav>
 
 
-<div class="cvMain"></div>
+<div class="cvMain">
+    <div id="imgBackground"></div>
+</div>
 
 <div class="progress navbar-fixed-bottom" style="bottom: 32px; width:100%">
     <div id="pgScore" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 100%; position:absolute; right:0">

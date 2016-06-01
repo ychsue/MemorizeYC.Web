@@ -12,12 +12,12 @@ app.controller('ChooseAContainerPageController', ['$scope',ChooseAContainerPageC
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/Play', {
-            templateUrl: '/PlayPage/PlayOneCategoryPage.html',
+            templateUrl: GlobalVariables.rootDir + 'PlayPage/PlayOneCategoryPage.html',
             controller: 'PlayOneCategoryPageController',
             controllerAs: 'ctrl'
         })
         .when('/', {
-            templateUrl: '/GSPages/ChooseAContainerPage.html',
+            templateUrl: GlobalVariables.rootDir + 'GSPages/ChooseAContainerPage.html',
             controller: 'ChooseAContainerPageController',
             controllerAs: 'ctrl'
         });

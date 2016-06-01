@@ -4,7 +4,8 @@ class GlobalVariables {
     public static categoryListFileName: string = "MYCategory.json";
     public static containerListFileName: string = "MYContainer.json";
 
-    public static currentMainFolder: string = "/Samples/MYContainer";
+    public static rootDir: string = "/";
+    public static currentMainFolder: string = GlobalVariables.rootDir + "Samples/MYContainer";
     public static currentCategoryFolder: string = "ShapeAndColor";
 
     public static onSingleClick: string = "onSingleClick";

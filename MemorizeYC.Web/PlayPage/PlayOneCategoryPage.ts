@@ -13,13 +13,16 @@ class PlayOneCategoryPageController{
     public meCardsAudio: HTMLAudioElement = document.getElementById('meCardsAudio') as HTMLAudioElement;
     public meBackground: HTMLAudioElement = document.getElementById('meBackground') as HTMLAudioElement;
     public dlDblClickWCard: HTMLDivElement = document.getElementById('dlDblClickWCard') as HTMLDivElement;
+    public dlFinish: HTMLDivElement = document.getElementById('dlFinish') as HTMLDivElement;
     public ddSettings: HTMLElement = document.getElementById('ddSettings') as HTMLElement;
+    public imgBackground: HTMLDivElement = document.getElementById('imgBackground') as HTMLDivElement;
 
     public topNavbarHeight: number;
     public bottomNavbarHeight: number;
     public defaultCardWidth: number;
     public defaultCardHeight: number;
     public defaultCardStyle: Object;
+    public level: number;
 
     //* [2016-05-27 16:01] Timer for scores
     //#region totalScore
@@ -111,6 +114,16 @@ class PlayOneCategoryPageController{
         WCard.CleanWCards();
         GlobalVariables.currentDocumentSize = [$(document).innerWidth(), $(document).innerHeight()];
         $(this.dlDblClickWCard).dialog({ autoOpen: false, modal: true });
+        $(this.dlFinish).dialog({
+            autoOpen: false, modal: true, dialogClass: "no-close",
+            buttons: [{
+                text: "OK",
+                click: function () {
+                    history.back();
+                    $(PlayOneCategoryPageController.Current.dlFinish).dialog('close');
+                }
+            }]
+        });
         $(document).tooltip();
 
         if ($routeParams["Container"] != undefined)
@@ -242,7 +255,9 @@ class PlayOneCategoryPageController{
         }
         //* [2016-05-23 14:57] After renewing, if there is still no WCard, back to previous page
         if (wcards.length === 0) {
-            history.back();
+            //history.back();
+            PlayOneCategoryPageController.Current.ShowdlFinish();
+            return;
         }
         //* [2016-05-23 14:59] Since wcards.length!=0, choose one WCard randomly.
         var ith: number = MathHelper.MyRandomN(0, wcards.length - 1);
@@ -264,8 +279,11 @@ class PlayOneCategoryPageController{
                     PlayOneCategoryPageController.Current.selWCard = null;
                     if (WCard.showedWCards.length === 0)
                         PlayOneCategoryPageController.Current.ShowNewWCards_Click();
-                    if (WCard.showedWCards.length === 0)
-                        history.back();
+                    if (WCard.showedWCards.length === 0) {
+                        //history.back();
+                        PlayOneCategoryPageController.Current.ShowdlFinish();
+                        return;
+                    }
                 }
             });
         }
@@ -287,6 +305,18 @@ class PlayOneCategoryPageController{
         this.totalScore = this.glScore;
     }
     //#endregion For Score
+
+    public ShowdlFinish() {
+        var nFinal = PlayOneCategoryPageController.Current.totalScore;
+        var nAll = PlayOneCategoryPageController.Current.glScore;
+        PlayOneCategoryPageController.scope.$apply(function () {
+            PlayOneCategoryPageController.Current.level = Math.max(0, Math.round(
+                (nFinal / nAll - 0.5) * 20
+            ));
+        });
+        $(PlayOneCategoryPageController.Current.dlFinish).dialog('open');
+        PlayOneCategoryPageController.Current.meBackground.pause();
+    }
 }
 function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     var showedWcards: WCard[] = WCard.showedWCards;
@@ -297,7 +327,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     PlayOneCategoryPageController.Current.hyperLink = jObj["Link"]; //Get HyperLink
     if (jObj["Background"]) {
         if(jObj["Background"]["ImgStyle"])
-            $(".cvMain").css(jObj["Background"]["ImgStyle"]); //Get Background Image
+            $(PlayOneCategoryPageController.Current.imgBackground).css(jObj["Background"]["ImgStyle"]); //Get Background Image
         if (jObj["Background"]["AudioProperties"]) {
             $(PlayOneCategoryPageController.Current.meBackground).prop(jObj["Background"]["AudioProperties"]);
             PlayOneCategoryPageController.Current.meBackground.play();

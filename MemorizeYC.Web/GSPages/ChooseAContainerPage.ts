@@ -4,8 +4,8 @@
 
 function ChooseAContainerPageController($scope) {
     var self = this;
-    self.containers = [new AContainer("/Samples/MYContainer"),
-        new AContainer("/Samples/健康操")];
+    self.containers = [new AContainer(GlobalVariables.rootDir+"Samples/MYContainer"),
+        new AContainer(GlobalVariables.rootDir+"Samples/健康操")];
     self.selContainer=self.containers[0];
     self.categories;
     self.selCategory;
