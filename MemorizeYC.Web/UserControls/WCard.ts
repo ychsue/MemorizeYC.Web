@@ -296,9 +296,10 @@ class WCard {
                 resObj = tbArea;
                 break;
             case (FileTypeEnum.Box):
-                if(!isInsideBox)
-                    MyFileHelper.FeedTextFromTxtFileToACallBack(CardsHelper.GetTreatablePath(cardPath, this.mainFolder, this.categoryFolder)
-                         , this, this.IniBox);
+                if (!isInsideBox) {
+                    var pathOrUri: string = CardsHelper.GetTreatablePath(cardPath, this.mainFolder, this.categoryFolder);
+                    MyFileHelper.FeedTextFromTxtFileToACallBack(pathOrUri, this, this.IniBox);
+                }
                 break;
             case (FileTypeEnum.Undefined):
                 break;

@@ -3,6 +3,9 @@
 class GlobalVariables {
     public static categoryListFileName: string = "MYCategory.json";
     public static containerListFileName: string = "MYContainer.json";
+    public static isHostNameShown: boolean = true;
+    public static isDebug = false; //Turn it off when you published it.
+    public static isIOS: boolean = /iP/i.test(navigator.userAgent);
 
     public static rootDir: string = "/";
     public static currentMainFolder: string = GlobalVariables.rootDir + "Samples/MYContainer";

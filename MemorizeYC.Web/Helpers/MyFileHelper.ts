@@ -13,6 +13,10 @@
         var request = new XMLHttpRequest();
         request.open("GET", pathOrUrl, true);
         request.onloadend = function (ev) {
+            if (GlobalVariables.isDebug) {
+                alert(request);
+            }
+
             callback(request.responseText, thisCard);
         }
         request.send();

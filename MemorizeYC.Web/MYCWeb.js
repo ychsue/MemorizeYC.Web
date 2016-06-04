@@ -11,6 +11,9 @@ var GlobalVariables = (function () {
     }
     GlobalVariables.categoryListFileName = "MYCategory.json";
     GlobalVariables.containerListFileName = "MYContainer.json";
+    GlobalVariables.isHostNameShown = true;
+    GlobalVariables.isDebug = false;
+    GlobalVariables.isIOS = /iP/i.test(navigator.userAgent);
     GlobalVariables.rootDir = "/";
     GlobalVariables.currentMainFolder = GlobalVariables.rootDir + "Samples/MYContainer";
     GlobalVariables.currentCategoryFolder = "ShapeAndColor";
@@ -38,6 +41,9 @@ var MyFileHelper = (function () {
         var request = new XMLHttpRequest();
         request.open("GET", pathOrUrl, true);
         request.onloadend = function (ev) {
+            if (GlobalVariables.isDebug) {
+                alert(request);
+            }
             callback(request.responseText, thisCard);
         };
         request.send();
@@ -294,8 +300,10 @@ var WCard = (function () {
                 resObj = tbArea;
                 break;
             case (FileTypeEnum.Box):
-                if (!isInsideBox)
-                    MyFileHelper.FeedTextFromTxtFileToACallBack(CardsHelper.GetTreatablePath(cardPath, this.mainFolder, this.categoryFolder), this, this.IniBox);
+                if (!isInsideBox) {
+                    var pathOrUri = CardsHelper.GetTreatablePath(cardPath, this.mainFolder, this.categoryFolder);
+                    MyFileHelper.FeedTextFromTxtFileToACallBack(pathOrUri, this, this.IniBox);
+                }
                 break;
             case (FileTypeEnum.Undefined):
                 break;
@@ -366,6 +374,8 @@ var PlayOneCategoryPageController = (function () {
         this.dlFinish = document.getElementById('dlFinish');
         this.ddSettings = document.getElementById('ddSettings');
         this.imgBackground = document.getElementById('imgBackground');
+        this.btSynPlay = document.getElementById('btSynPlay');
+        this.isBackAudioStartLoad = false;
         this.maxDelScore = 20;
         this.pgScore = document.getElementById('pgScore');
         this._rate2PowN = 0;
@@ -383,13 +393,23 @@ var PlayOneCategoryPageController = (function () {
             PlayOneCategoryPageController.Current.numRestWCards;
             CardsHelper.RearrangeCards(shWCards, PlayOneCategoryPageController.oneOverNWindow);
         };
-        this.Smaller_Click = function () {
+        this.Smaller_Click = function (ev) {
             PlayOneCategoryPageController.oneOverNWindow *= 1.2;
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+            PlayOneCategoryPageController.Current.defaultCardStyle = {
+                width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+                height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+            };
+            ev.stopPropagation();
         };
-        this.Larger_Click = function () {
+        this.Larger_Click = function (ev) {
             PlayOneCategoryPageController.oneOverNWindow /= 1.2;
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+            PlayOneCategoryPageController.Current.defaultCardStyle = {
+                width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+                height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+            };
+            ev.stopPropagation();
         };
         this.Arrange_Click = function (isRandomly) {
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, isRandomly, false);
@@ -398,15 +418,16 @@ var PlayOneCategoryPageController = (function () {
             if (PlayOneCategoryPageController.Current.hyperLink)
                 window.open(PlayOneCategoryPageController.Current.hyperLink);
         };
-        this.synPlay_Click = function () {
+        this.synPlay_Click = function (ev) {
             if (!PlayOneCategoryPageController.Current.synAnsWCard) {
-                PlayOneCategoryPageController.Current.synPlayNext_Click();
+                PlayOneCategoryPageController.Current.synPlayNext_Click(null);
             }
             if (PlayOneCategoryPageController.Current.synAnsWCard) {
                 var synAnsWCard = PlayOneCategoryPageController.Current.synAnsWCard;
                 if (synAnsWCard.cardInfo.AudioFilePathOrUri) {
                     var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
                     meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri, this.Container, this.CFolder);
+                    meAud.load();
                     meAud.play();
                 }
                 if (!PlayOneCategoryPageController.Current.scoreTimerId) {
@@ -429,7 +450,7 @@ var PlayOneCategoryPageController = (function () {
                 }
             }
         };
-        this.synPlayNext_Click = function () {
+        this.synPlayNext_Click = function (ev) {
             var wcards = WCard.showedWCards;
             if (wcards.length === 0) {
                 PlayOneCategoryPageController.Current.ShowNewWCards_Click();
@@ -441,7 +462,7 @@ var PlayOneCategoryPageController = (function () {
             }
             var ith = MathHelper.MyRandomN(0, wcards.length - 1);
             PlayOneCategoryPageController.Current.synAnsWCard = wcards[ith];
-            PlayOneCategoryPageController.Current.synPlay_Click();
+            PlayOneCategoryPageController.Current.synPlay_Click(ev);
         };
         this.recCheckAnswer_Click = function () {
             if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence && PlayOneCategoryPageController.Current.selWCard.cardInfo.Dictate.trim().
@@ -477,6 +498,9 @@ var PlayOneCategoryPageController = (function () {
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
+        if (GlobalVariables.isIOS)
+            $(PlayOneCategoryPageController.Current.imgBackground).css('cursor', 'pointer');
+        this.btSynPlay.addEventListener("click", this.synPlay_Click);
         GlobalVariables.currentDocumentSize = [$(document).innerWidth(), $(document).innerHeight()];
         $(this.dlDblClickWCard).dialog({ autoOpen: false, modal: true });
         $(this.dlFinish).dialog({
@@ -500,7 +524,10 @@ var PlayOneCategoryPageController = (function () {
         this.bottomNavbarHeight = $("#bottomNavbar").height();
         this.numWCardShown = 8;
         this.isPickWCardsRandomly = true;
-        MyFileHelper.FeedTextFromTxtFileToACallBack(CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder), WCard.restWCards, ShowWCardsAndEventsCallback);
+        var pathOrUri = CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder);
+        if (GlobalVariables.isDebug)
+            alert(pathOrUri);
+        MyFileHelper.FeedTextFromTxtFileToACallBack(pathOrUri, WCard.restWCards, ShowWCardsAndEventsCallback);
         $(window).on("resize", function (ev) {
             if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
                 return;
@@ -510,9 +537,10 @@ var PlayOneCategoryPageController = (function () {
             CardsHelper.RearrangeCards(wcards, PlayOneCategoryPageController.oneOverNWindow);
             PlayOneCategoryPageController.scope.$apply(function () {
                 if (wcards.length > 0) {
-                    PlayOneCategoryPageController.Current.defaultCardHeight = wcards[0].viewCard.clientHeight;
-                    PlayOneCategoryPageController.Current.defaultCardWidth = wcards[0].viewCard.clientWidth;
-                    PlayOneCategoryPageController.Current.defaultCardStyle = { width: wcards[0].viewCard.clientWidth + "px", height: wcards[0].viewCard.clientHeight + "px" };
+                    PlayOneCategoryPageController.Current.defaultCardStyle = {
+                        width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+                        height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+                    };
                 }
             });
         });
@@ -620,7 +648,10 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
             $(PlayOneCategoryPageController.Current.imgBackground).css(jObj["Background"]["ImgStyle"]);
         if (jObj["Background"]["AudioProperties"]) {
             $(PlayOneCategoryPageController.Current.meBackground).prop(jObj["Background"]["AudioProperties"]);
-            PlayOneCategoryPageController.Current.meBackground.play();
+            $(document).one("click", function (ev) {
+                PlayOneCategoryPageController.Current.meBackground.load();
+                PlayOneCategoryPageController.Current.meBackground.play();
+            });
         }
     }
     PlayOneCategoryPageController.Current.SetGlobalScore(restWcards);
@@ -645,7 +676,7 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
                         complete: function () {
                             PlayOneCategoryPageController.Current.selWCard.RemoveThisWCard();
                             PlayOneCategoryPageController.Current.synAnsWCard = null;
-                            PlayOneCategoryPageController.Current.synPlayNext_Click();
+                            PlayOneCategoryPageController.Current.synPlayNext_Click(null);
                             PlayOneCategoryPageController.scope.$apply(function () {
                                 PlayOneCategoryPageController.Current.synAnsWCard;
                             });
@@ -723,9 +754,10 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
     });
     CardsHelper.RearrangeCards(showedWcards, PlayOneCategoryPageController.oneOverNWindow);
     if (showedWcards.length > 0) {
-        PlayOneCategoryPageController.Current.defaultCardHeight = showedWcards[0].viewCard.clientHeight;
-        PlayOneCategoryPageController.Current.defaultCardWidth = showedWcards[0].viewCard.clientWidth;
-        PlayOneCategoryPageController.Current.defaultCardStyle = { width: showedWcards[0].viewCard.clientWidth + "px", height: showedWcards[0].viewCard.clientHeight + "px" };
+        PlayOneCategoryPageController.Current.defaultCardStyle = {
+            width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+            height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+        };
     }
 }
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
@@ -745,16 +777,29 @@ app.config(function ($routeProvider, $locationProvider) {
     });
 });
 function ChooseAContainerPageController($scope) {
+    if (GlobalVariables.isDebug) {
+        console.log("ChooseAContainerPageController in");
+        console.log(location.origin);
+    }
     var self = this;
     self.containers = [new AContainer(GlobalVariables.rootDir + "Samples/MYContainer"),
         new AContainer(GlobalVariables.rootDir + "Samples/健康操")];
     self.selContainer = self.containers[0];
     self.categories;
     self.selCategory;
+    self.GetPath = function () {
+        var pathOrUrl = self.selContainer.itsLocation + "/" + GlobalVariables.containerListFileName;
+        if (GlobalVariables.isHostNameShown)
+            pathOrUrl = location.origin + pathOrUrl;
+        return pathOrUrl;
+    };
     self.onConChange = function onContainerChange() {
-        MyFileHelper.FeedTextFromTxtFileToACallBack(self.selContainer.itsLocation + "/" + GlobalVariables.containerListFileName, self.categories, self.UpdateCategories);
+        MyFileHelper.FeedTextFromTxtFileToACallBack(self.GetPath(), self.categories, self.UpdateCategories);
     };
     self.UpdateCategories = function (jsonTxt, categories) {
+        if (GlobalVariables.isDebug) {
+            alert(jsonTxt);
+        }
         var obj = JSON.parse(jsonTxt);
         self.categories = [];
         categories = [];
@@ -843,19 +888,29 @@ var CardsHelper = (function () {
             else
                 currentPosition[1] += card.viewSize[1] + 20;
         }
+        PlayOneCategoryPageController.Current.defaultCardHeight = wcards[0].viewCard.clientHeight;
+        PlayOneCategoryPageController.Current.defaultCardWidth = wcards[0].viewCard.clientWidth;
     };
     CardsHelper.GetTreatablePath = function (cardPath, mainFolder, categoryFolder) {
         if (mainFolder === void 0) { mainFolder = ""; }
         if (categoryFolder === void 0) { categoryFolder = ""; }
         var newPath;
+        var hasProtocol = true;
         if (cardPath.toLowerCase().indexOf("http://") === 0 || cardPath.toLowerCase().indexOf("https://") === 0)
             newPath = cardPath;
         else if (cardPath.toLowerCase().indexOf("file://") === 0)
             newPath = cardPath;
-        else if (cardPath.charAt(0) === '/' || cardPath.charAt(0) === '\\')
-            newPath = mainFolder + "/" + cardPath.replace('\\', '/');
-        else
+        else if (cardPath.charAt(0) === '/' || cardPath.charAt(0) === '\\') {
+            newPath = mainFolder + cardPath.replace('\\', '/');
+            hasProtocol = false;
+        }
+        else {
             newPath = mainFolder + "/" + categoryFolder + "/" + cardPath.replace('\\', '/');
+            hasProtocol = false;
+        }
+        if (!hasProtocol && GlobalVariables.isHostNameShown) {
+            newPath = location.origin + newPath;
+        }
         return newPath;
     };
     CardsHelper.GetWCardsCallback = function (jObj, cards) {

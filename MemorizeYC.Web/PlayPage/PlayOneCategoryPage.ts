@@ -16,6 +16,8 @@ class PlayOneCategoryPageController{
     public dlFinish: HTMLDivElement = document.getElementById('dlFinish') as HTMLDivElement;
     public ddSettings: HTMLElement = document.getElementById('ddSettings') as HTMLElement;
     public imgBackground: HTMLDivElement = document.getElementById('imgBackground') as HTMLDivElement;
+    public btSynPlay: HTMLButtonElement = document.getElementById('btSynPlay') as HTMLButtonElement;
+    public isBackAudioStartLoad: boolean = false;
 
     public topNavbarHeight: number;
     public bottomNavbarHeight: number;
@@ -112,6 +114,12 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
+
+        if (GlobalVariables.isIOS)
+            $(PlayOneCategoryPageController.Current.imgBackground).css('cursor', 'pointer');
+
+        this.btSynPlay.addEventListener("click", this.synPlay_Click); // For iPhone
+
         GlobalVariables.currentDocumentSize = [$(document).innerWidth(), $(document).innerHeight()];
         $(this.dlDblClickWCard).dialog({ autoOpen: false, modal: true });
         $(this.dlFinish).dialog({
@@ -138,9 +146,11 @@ class PlayOneCategoryPageController{
 
         this.numWCardShown = 8;
         this.isPickWCardsRandomly = true;
-
+        var pathOrUri: string = CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder);
+        if (GlobalVariables.isDebug)
+            alert(pathOrUri);
         MyFileHelper.FeedTextFromTxtFileToACallBack(
-            CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder),
+            pathOrUri,
             WCard.restWCards,
             ShowWCardsAndEventsCallback);
 
@@ -156,9 +166,10 @@ class PlayOneCategoryPageController{
 
             PlayOneCategoryPageController.scope.$apply(function () {
                 if (wcards.length > 0) {
-                    PlayOneCategoryPageController.Current.defaultCardHeight = wcards[0].viewCard.clientHeight;
-                    PlayOneCategoryPageController.Current.defaultCardWidth = wcards[0].viewCard.clientWidth;
-                    PlayOneCategoryPageController.Current.defaultCardStyle = {width : wcards[0].viewCard.clientWidth + "px", height: wcards[0].viewCard.clientHeight + "px"};
+                    PlayOneCategoryPageController.Current.defaultCardStyle = {
+                        width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+                        height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+                    };
                 }
             });
         });
@@ -187,13 +198,24 @@ class PlayOneCategoryPageController{
         CardsHelper.RearrangeCards(shWCards, PlayOneCategoryPageController.oneOverNWindow);        
     };
     //#region **resize WCards
-    public Smaller_Click = function () {
+    public Smaller_Click = function (ev:Event) {
         PlayOneCategoryPageController.oneOverNWindow *= 1.2;
         CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+        PlayOneCategoryPageController.Current.defaultCardStyle = {
+            width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+            height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+        };
+
+        ev.stopPropagation();
     };
-    public Larger_Click = function () {
+    public Larger_Click = function (ev: Event) {
         PlayOneCategoryPageController.oneOverNWindow /= 1.2;
         CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+        PlayOneCategoryPageController.Current.defaultCardStyle = {
+            width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+            height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+        };
+        ev.stopPropagation();
     };
     //#endregion **resize WCards
     public Arrange_Click = function (isRandomly: boolean) {
@@ -208,10 +230,10 @@ class PlayOneCategoryPageController{
     /**
      * Play an audio
     **/
-    public synPlay_Click = function () {
+    public synPlay_Click = function (ev:Event) {
         //* [2016-05-25 14:29] If there is no synAnsWCard is selected, take one of them
         if (!PlayOneCategoryPageController.Current.synAnsWCard) {
-            PlayOneCategoryPageController.Current.synPlayNext_Click();
+            PlayOneCategoryPageController.Current.synPlayNext_Click(null);
         }
         //* [2016-05-25 14:30] After updating, it should have gotten one synAnsWCard
         if (PlayOneCategoryPageController.Current.synAnsWCard) {
@@ -219,6 +241,7 @@ class PlayOneCategoryPageController{
             if (synAnsWCard.cardInfo.AudioFilePathOrUri) {
                 var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
                 meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri, this.Container, this.CFolder);
+                meAud.load();
                 meAud.play();
             }
 
@@ -246,7 +269,7 @@ class PlayOneCategoryPageController{
     /**
      * Choose next one to play
     **/
-    public synPlayNext_Click = function () {
+    public synPlayNext_Click = function (ev:Event) {
         var wcards = WCard.showedWCards;
         //* [2016-05-23 14:57] If there is no WCard, renew it
         if (wcards.length === 0) {
@@ -262,7 +285,7 @@ class PlayOneCategoryPageController{
         //* [2016-05-23 14:59] Since wcards.length!=0, choose one WCard randomly.
         var ith: number = MathHelper.MyRandomN(0, wcards.length - 1);
         PlayOneCategoryPageController.Current.synAnsWCard = wcards[ith];
-        PlayOneCategoryPageController.Current.synPlay_Click();
+        PlayOneCategoryPageController.Current.synPlay_Click(ev);
     };
 
     public recCheckAnswer_Click = function () {
@@ -330,7 +353,19 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             $(PlayOneCategoryPageController.Current.imgBackground).css(jObj["Background"]["ImgStyle"]); //Get Background Image
         if (jObj["Background"]["AudioProperties"]) {
             $(PlayOneCategoryPageController.Current.meBackground).prop(jObj["Background"]["AudioProperties"]);
-            PlayOneCategoryPageController.Current.meBackground.play();
+            //PlayOneCategoryPageController.Current.meBackground.load();
+            //PlayOneCategoryPageController.Current.meBackground.play();
+            //$(PlayOneCategoryPageController.Current.meBackground).one("loadstart", function () {
+            //    PlayOneCategoryPageController.Current.isBackAudioStartLoad = true;
+            //});
+            $(document).one("click", function (ev) {
+                //if (PlayOneCategoryPageController.Current.isBackAudioStartLoad)
+                //    return;
+                //else {
+                    PlayOneCategoryPageController.Current.meBackground.load();
+                    PlayOneCategoryPageController.Current.meBackground.play();
+                //}
+            });
         }
     }
     //* [2016-05-27 16:07] Set the global Score
@@ -362,7 +397,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
                         complete: function () {
                             PlayOneCategoryPageController.Current.selWCard.RemoveThisWCard();
                             PlayOneCategoryPageController.Current.synAnsWCard = null;
-                            PlayOneCategoryPageController.Current.synPlayNext_Click();
+                            PlayOneCategoryPageController.Current.synPlayNext_Click(null);
                             PlayOneCategoryPageController.scope.$apply(function () {
                                 PlayOneCategoryPageController.Current.synAnsWCard;
                             });
@@ -457,8 +492,9 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
 
     //* [2016-05-12 17:09] Set the default width and height of a card
     if (showedWcards.length > 0) {
-        PlayOneCategoryPageController.Current.defaultCardHeight = showedWcards[0].viewCard.clientHeight;
-        PlayOneCategoryPageController.Current.defaultCardWidth = showedWcards[0].viewCard.clientWidth;
-        PlayOneCategoryPageController.Current.defaultCardStyle = { width: showedWcards[0].viewCard.clientWidth + "px", height: showedWcards[0].viewCard.clientHeight + "px" };
+        PlayOneCategoryPageController.Current.defaultCardStyle = {
+            width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+            height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+        };
     }
 }

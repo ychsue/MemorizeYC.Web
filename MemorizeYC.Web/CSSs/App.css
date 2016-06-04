@@ -5,3 +5,8 @@
 .no-close .ui-dialog-titlebar-close{
     display:none;
 }
+
+body {
+    -ms-touch-action: manipulation !important;
+    touch-action: manipulation !important;
+}

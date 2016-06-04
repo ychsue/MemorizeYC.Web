@@ -9,10 +9,11 @@
 <nav class="navbar navbar-default navbar-fixed-bottom" id="bottomNavbar">
     <div class="container-fluid" ng-show="ctrl.playType==='syn'">
         <div class="row">
-            <button id="btSynPlay" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()" title="Click me at first.">
-                <span class="glyphicon glyphicon-play" />
+<!--            <button id="btSynPlay" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()" title="Click me at first.">-->
+            <button id="btSynPlay" class="col-xs-1 btn btn-default" title="Click me at first.">
+                    <span class="glyphicon glyphicon-play" />
             </button>
-            <button class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click()">
+            <button class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click($event)">
                 <span class="glyphicon glyphicon-step-forward" />
             </button>
             <div class="col-xs-10" ng-bind="ctrl.synAnsWCard.cardInfo.Dictate"></div>
@@ -60,7 +61,7 @@
                                 </h3>
                             </button>
                             <div class="col-sm-6">
-                                Show <input type="number" style="width:24px" ng-model="ctrl.numWCardShown" min="1" /> cards each time.
+                                Show <input type="number" style="width:40px" ng-model="ctrl.numWCardShown" min="1" /> cards each time.
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="cbPickRandomly" value="" ng-model="ctrl.isPickWCardsRandomly" />
@@ -69,8 +70,8 @@
                                 </div>
                                 <div>
                                     Resize:
-                                    <button class="glyphicon glyphicon-minus" ng-click="ctrl.Smaller_Click()"></button>
-                                    <button class="glyphicon glyphicon-plus" ng-click="ctrl.Larger_Click()"></button>
+                                    <button class="glyphicon glyphicon-minus" ng-click="ctrl.Smaller_Click($event)"></button>
+                                    <button class="glyphicon glyphicon-plus" ng-click="ctrl.Larger_Click($event)"></button>
                                 </div>
                             </div>
                         </div>

@@ -48,19 +48,31 @@ class CardsHelper {
             else
                 currentPosition[1] += card.viewSize[1] + 20;
         }
+
+        PlayOneCategoryPageController.Current.defaultCardHeight = wcards[0].viewCard.clientHeight;
+        PlayOneCategoryPageController.Current.defaultCardWidth = wcards[0].viewCard.clientWidth;
     }
 
     public static GetTreatablePath(cardPath: string, mainFolder: string = "", categoryFolder: string = ""):string {
         var newPath: string;
+        var hasProtocol: boolean = true;
 
-        if (cardPath.toLowerCase().indexOf("http://") === 0 || cardPath.toLowerCase().indexOf("https://")===0)
+        if (cardPath.toLowerCase().indexOf("http://") === 0 || cardPath.toLowerCase().indexOf("https://") === 0)
             newPath = cardPath;
         else if (cardPath.toLowerCase().indexOf("file://") === 0)
             newPath = cardPath;
-        else if (cardPath.charAt(0) === '/' || cardPath.charAt(0) === '\\')
-            newPath = mainFolder + "/" + cardPath.replace('\\', '/');
-        else
+        else if (cardPath.charAt(0) === '/' || cardPath.charAt(0) === '\\') {
+            newPath = mainFolder + cardPath.replace('\\', '/');
+            hasProtocol = false;
+        }
+        else {
             newPath = mainFolder + "/" + categoryFolder + "/" + cardPath.replace('\\', '/');
+            hasProtocol = false;
+        }
+
+        if (!hasProtocol && GlobalVariables.isHostNameShown) {
+            newPath = location.origin + newPath;
+        }
 
         return newPath;
     }
