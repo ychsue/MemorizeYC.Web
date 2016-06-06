@@ -243,7 +243,9 @@ class PlayOneCategoryPageController{
             var synAnsWCard = PlayOneCategoryPageController.Current.synAnsWCard;
             if (synAnsWCard.cardInfo.AudioFilePathOrUri) {
                 var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
-                meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri, this.Container, this.CFolder);
+                meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri,
+                    PlayOneCategoryPageController.Current.Container,
+                    PlayOneCategoryPageController.Current.CFolder);
                 meAud.load();
                 meAud.play();
             }

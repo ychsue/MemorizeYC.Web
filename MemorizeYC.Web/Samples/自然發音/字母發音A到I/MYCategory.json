@@ -1,0 +1,42 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "a, apple.box",
+      "AudioFilePathOrUri": "a, apple.mp3"
+    },
+    {
+      "FileName": "b, book.box",
+      "AudioFilePathOrUri": "b, book.m4a"
+    },
+    {
+      "FileName": "c, cat.box",
+      "AudioFilePathOrUri": "c, cat.m4a"
+    },
+    {
+      "FileName": "d, dog.box",
+      "AudioFilePathOrUri": "d, dog.m4a"
+    },
+    {
+      "FileName": "e, egg.box",
+      "AudioFilePathOrUri": "e, egg.m4a"
+    },
+    {
+      "FileName": "f, foot.box",
+      "AudioFilePathOrUri": "f, foot.m4a"
+    },
+    {
+      "FileName": "g, goat.box",
+      "AudioFilePathOrUri": "g, goat.m4a"
+    },
+    {
+      "FileName": "h, house.box",
+      "AudioFilePathOrUri": "h, house.m4a"
+    },
+    {
+      "FileName": "i, ink.box",
+      "AudioFilePathOrUri": "i, ink.m4a"
+    }
+  ],
+  "Link": "http://sammiwago.idv.tw/alphabat.htm"
+  
+}

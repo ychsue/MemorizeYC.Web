@@ -13,7 +13,9 @@ function ChooseAContainerPageController($scope) {
     }
     var self = this;
     self.containers = [new AContainer(GlobalVariables.rootDir+"Samples/MYContainer"),
-        new AContainer(GlobalVariables.rootDir+"Samples/健康操")];
+        new AContainer(GlobalVariables.rootDir + "Samples/健康操"),
+        new AContainer(GlobalVariables.rootDir + "Samples/自然發音")
+    ];
     self.selContainer=self.containers[0];
     self.categories;
     self.selCategory;

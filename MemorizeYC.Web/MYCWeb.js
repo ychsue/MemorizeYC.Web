@@ -12,7 +12,7 @@ var GlobalVariables = (function () {
     GlobalVariables.categoryListFileName = "MYCategory.json";
     GlobalVariables.containerListFileName = "MYContainer.json";
     GlobalVariables.isHostNameShown = true;
-    GlobalVariables.isLog = true;
+    GlobalVariables.isLog = false;
     GlobalVariables.isIOS = /iP/i.test(navigator.userAgent);
     GlobalVariables.rootDir = "/";
     GlobalVariables.currentMainFolder = GlobalVariables.rootDir + "Samples/MYContainer";
@@ -24,7 +24,7 @@ var GlobalVariables = (function () {
     GlobalVariables.clickedViewCard = null;
     GlobalVariables.PlayType = PlayTypeEnum.syn;
     GlobalVariables.currentDocumentSize = [0, 0];
-    GlobalVariables.version = "2016.0606.1.1";
+    GlobalVariables.version = "2016.0606.1.3";
     GlobalVariables.versionFile = GlobalVariables.rootDir + "version.json";
     return GlobalVariables;
 }());
@@ -428,7 +428,7 @@ var PlayOneCategoryPageController = (function () {
                 var synAnsWCard = PlayOneCategoryPageController.Current.synAnsWCard;
                 if (synAnsWCard.cardInfo.AudioFilePathOrUri) {
                     var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
-                    meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri, this.Container, this.CFolder);
+                    meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
                     meAud.load();
                     meAud.play();
                 }
@@ -816,7 +816,9 @@ function ChooseAContainerPageController($scope) {
     }
     var self = this;
     self.containers = [new AContainer(GlobalVariables.rootDir + "Samples/MYContainer"),
-        new AContainer(GlobalVariables.rootDir + "Samples/健康操")];
+        new AContainer(GlobalVariables.rootDir + "Samples/健康操"),
+        new AContainer(GlobalVariables.rootDir + "Samples/自然發音")
+    ];
     self.selContainer = self.containers[0];
     self.categories;
     self.selCategory;
