@@ -13,8 +13,8 @@
         var request = new XMLHttpRequest();
         request.open("GET", pathOrUrl, true);
         request.onloadend = function (ev) {
-            if (GlobalVariables.isDebug) {
-                alert(request);
+            if (GlobalVariables.isLog) {
+                console.log("FeedTextFromTxtFileToACallBack: "+request);
             }
 
             callback(request.responseText, thisCard);

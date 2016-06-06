@@ -4,7 +4,7 @@ class GlobalVariables {
     public static categoryListFileName: string = "MYCategory.json";
     public static containerListFileName: string = "MYContainer.json";
     public static isHostNameShown: boolean = true;
-    public static isDebug = false; //Turn it off when you published it.
+    public static isLog = true; //Turn it off when you published it.
     public static isIOS: boolean = /iP/i.test(navigator.userAgent);
 
     public static rootDir: string = "/";
@@ -19,4 +19,8 @@ class GlobalVariables {
     public static PlayType = PlayTypeEnum.syn;
 
     public static currentDocumentSize: number[] = [0,0];
+
+    public static version: string = "2016.0606.1.1"; //Change version.json, too
+    public static versionFile: string = GlobalVariables.rootDir + "version.json";
+
 }

@@ -153,8 +153,10 @@
     <TypeScriptCompile Include="Helpers\CardsHelper.ts" />
     <TypeScriptCompile Include="Helpers\mathhelper.ts" />
     <TypeScriptCompile Include="Helpers\MyFileHelper.ts" />
+    <TypeScriptCompile Include="Helpers\VersionHelper.ts" />
     <TypeScriptCompile Include="Models\EachDescription.ts" />
     <TypeScriptCompile Include="Models\Enums.ts" />
+    <TypeScriptCompile Include="Models\Version.ts" />
     <TypeScriptCompile Include="PlayPage\PlayOneCategoryPage.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />
@@ -172,6 +174,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
+    <Content Include="version.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

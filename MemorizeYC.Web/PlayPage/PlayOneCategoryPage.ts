@@ -111,6 +111,9 @@ class PlayOneCategoryPageController{
     //#endregion PlayType
 
     constructor($scope, $routeParams) {
+        //* [2016-06-06 12:04] Reload the web page if needed.
+        VersionHelper.ReloadIfNeeded();
+
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
@@ -147,8 +150,8 @@ class PlayOneCategoryPageController{
         this.numWCardShown = 8;
         this.isPickWCardsRandomly = true;
         var pathOrUri: string = CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder);
-        if (GlobalVariables.isDebug)
-            alert(pathOrUri);
+        if (GlobalVariables.isLog)
+            console.log("PlayOneCategoryPage:constructor:pathOrUri= " + pathOrUri);
         MyFileHelper.FeedTextFromTxtFileToACallBack(
             pathOrUri,
             WCard.restWCards,

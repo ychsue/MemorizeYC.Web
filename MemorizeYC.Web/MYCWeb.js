@@ -12,7 +12,7 @@ var GlobalVariables = (function () {
     GlobalVariables.categoryListFileName = "MYCategory.json";
     GlobalVariables.containerListFileName = "MYContainer.json";
     GlobalVariables.isHostNameShown = true;
-    GlobalVariables.isDebug = false;
+    GlobalVariables.isLog = true;
     GlobalVariables.isIOS = /iP/i.test(navigator.userAgent);
     GlobalVariables.rootDir = "/";
     GlobalVariables.currentMainFolder = GlobalVariables.rootDir + "Samples/MYContainer";
@@ -24,6 +24,8 @@ var GlobalVariables = (function () {
     GlobalVariables.clickedViewCard = null;
     GlobalVariables.PlayType = PlayTypeEnum.syn;
     GlobalVariables.currentDocumentSize = [0, 0];
+    GlobalVariables.version = "2016.0606.1.1";
+    GlobalVariables.versionFile = GlobalVariables.rootDir + "version.json";
     return GlobalVariables;
 }());
 var MyFileHelper = (function () {
@@ -41,8 +43,8 @@ var MyFileHelper = (function () {
         var request = new XMLHttpRequest();
         request.open("GET", pathOrUrl, true);
         request.onloadend = function (ev) {
-            if (GlobalVariables.isDebug) {
-                alert(request);
+            if (GlobalVariables.isLog) {
+                console.log("FeedTextFromTxtFileToACallBack: " + request);
             }
             callback(request.responseText, thisCard);
         };
@@ -495,6 +497,7 @@ var PlayOneCategoryPageController = (function () {
                 }
             }
         };
+        VersionHelper.ReloadIfNeeded();
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
@@ -525,8 +528,8 @@ var PlayOneCategoryPageController = (function () {
         this.numWCardShown = 8;
         this.isPickWCardsRandomly = true;
         var pathOrUri = CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder);
-        if (GlobalVariables.isDebug)
-            alert(pathOrUri);
+        if (GlobalVariables.isLog)
+            console.log("PlayOneCategoryPage:constructor:pathOrUri= " + pathOrUri);
         MyFileHelper.FeedTextFromTxtFileToACallBack(pathOrUri, WCard.restWCards, ShowWCardsAndEventsCallback);
         $(window).on("resize", function (ev) {
             if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
@@ -776,8 +779,38 @@ app.config(function ($routeProvider, $locationProvider) {
         controllerAs: 'ctrl'
     });
 });
+var myVersion = (function () {
+    function myVersion() {
+        this.version = GlobalVariables.version;
+    }
+    return myVersion;
+}());
+var VersionHelper = (function () {
+    function VersionHelper() {
+    }
+    VersionHelper.ReloadIfNeeded = function () {
+        MyFileHelper.FeedTextFromTxtFileToACallBack(GlobalVariables.versionFile + "?nocache=" + Date.now(), null, function (stJSON, buf) {
+            try {
+                var jObj = JSON.parse(stJSON);
+            }
+            catch (exc) {
+                console.log("VersionHelper:JSON.parse error:" + exc.message);
+                return;
+            }
+            if (GlobalVariables.isLog)
+                console.log("old one:" + GlobalVariables.version + "  ,new one:" + jObj.version);
+            if (jObj.version && jObj.version != GlobalVariables.version) {
+                location.reload(true);
+            }
+        });
+        return;
+    };
+    ;
+    return VersionHelper;
+}());
 function ChooseAContainerPageController($scope) {
-    if (GlobalVariables.isDebug) {
+    VersionHelper.ReloadIfNeeded();
+    if (GlobalVariables.isLog) {
         console.log("ChooseAContainerPageController in");
         console.log(location.origin);
     }
@@ -797,8 +830,8 @@ function ChooseAContainerPageController($scope) {
         MyFileHelper.FeedTextFromTxtFileToACallBack(self.GetPath(), self.categories, self.UpdateCategories);
     };
     self.UpdateCategories = function (jsonTxt, categories) {
-        if (GlobalVariables.isDebug) {
-            alert(jsonTxt);
+        if (GlobalVariables.isLog) {
+            console.log("ChooseAContainerPage:UpdateCategories: " + jsonTxt);
         }
         var obj = JSON.parse(jsonTxt);
         self.categories = [];

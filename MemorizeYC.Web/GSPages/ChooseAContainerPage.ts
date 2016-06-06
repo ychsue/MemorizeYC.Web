@@ -1,9 +1,13 @@
 ﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../helpers/myfilehelper.ts" />
+/// <reference path="../helpers/versionhelper.ts" />
 
 function ChooseAContainerPageController($scope) {
-    if (GlobalVariables.isDebug) {
+    //* [2016-06-06 12:04] Reload the web page if needed.
+    VersionHelper.ReloadIfNeeded();
+
+    if (GlobalVariables.isLog) {
         console.log("ChooseAContainerPageController in");
         console.log(location.origin);
     }
@@ -27,8 +31,8 @@ function ChooseAContainerPageController($scope) {
         MyFileHelper.FeedTextFromTxtFileToACallBack(self.GetPath(), self.categories, self.UpdateCategories);
     };
     self.UpdateCategories = function (jsonTxt: string, categories) {
-        if (GlobalVariables.isDebug) {
-            alert(jsonTxt);
+        if (GlobalVariables.isLog) {
+            console.log("ChooseAContainerPage:UpdateCategories: "+jsonTxt);
         }
         var obj = JSON.parse(jsonTxt);
         self.categories = [];
