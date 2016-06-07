@@ -20,7 +20,7 @@ class GlobalVariables {
 
     public static currentDocumentSize: number[] = [0,0];
 
-    public static version: string = "2016.0606.1.3"; //Change version.json, too
+    public static version: string = "2016.0606.1.4"; //Change version.json, too
     public static versionFile: string = GlobalVariables.rootDir + "version.json";
 
 }

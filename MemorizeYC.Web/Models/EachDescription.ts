@@ -5,8 +5,10 @@
     Link?: string;
     Position?: number[];
     Size?: number[];
-    IsXPosSet?: boolean;
-    IsYPosSet?: boolean;
+    IsSizeFixed?: boolean;
+    IsXPosFixed?: boolean;
+    IsYPosFixed?: boolean;
+    IsHideShadow?: boolean;
     IsUsingAudioFileForDictating?: boolean;
     AudioFilePathOrUri?: string;
 }

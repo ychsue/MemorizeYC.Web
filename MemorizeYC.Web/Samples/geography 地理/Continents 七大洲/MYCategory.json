@@ -1,0 +1,57 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "Asia 亞洲.png",
+      "Size": [ 462, 168 ],
+      "Position": [ 72, 38 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "Antarctica 南極洲.png",
+      "Size": [ 370, 36 ],
+      "Position": [ 126, 302 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "Australia 澳洲.png",
+      "Size": [ 94, 88 ],
+      "Position": [ 482, 184 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "Africa 非洲.png",
+      "Size": [ 112, 136 ],
+      "Position": [ 272, 112 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "Europe 歐洲.png",
+      "Size": [ 116, 78 ],
+      "Position": [ 270, 38 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "North America 北美洲.png",
+      "Size": [ 216, 134 ],
+      "Position": [ 70, 36 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "South America 南美洲.png",
+      "Size": [ 78, 128 ],
+      "Position": [ 164, 160 ],
+      "IsHideShadow": true
+    }
+  ],
+  "Link": "https://openclipart.org/detail/88033/continents-colored",
+  "Background": {
+    "ImgStyle": {
+      "width": "600px",
+      "height": "368px",
+      "opacity": "0.3",
+      "background-image": "MYCBackground.png",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    }
+  }
+}

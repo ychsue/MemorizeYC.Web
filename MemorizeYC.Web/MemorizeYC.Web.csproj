@@ -54,6 +54,14 @@
     <Content Include="MYCWeb.html" />
     <Content Include="index.html" />
     <Content Include="PlayPage\PlayOneCategoryPage.html" />
+    <Content Include="Samples\geography 地理\Continents 七大洲\Africa 非洲.png" />
+    <Content Include="Samples\geography 地理\Continents 七大洲\Antarctica 南極洲.png" />
+    <Content Include="Samples\geography 地理\Continents 七大洲\Asia 亞洲.png" />
+    <Content Include="Samples\geography 地理\Continents 七大洲\Australia 澳洲.png" />
+    <Content Include="Samples\geography 地理\Continents 七大洲\Europe 歐洲.png" />
+    <Content Include="Samples\geography 地理\Continents 七大洲\MYCBackground.png" />
+    <Content Include="Samples\geography 地理\Continents 七大洲\North America 北美洲.png" />
+    <Content Include="Samples\geography 地理\Continents 七大洲\South America 南美洲.png" />
     <Content Include="Samples\MYContainer\Shape and color\btest.exi">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -222,6 +230,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\自然發音\字母發音S到Z\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\geography 地理\MYContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\geography 地理\Continents 七大洲\MYCategory.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />

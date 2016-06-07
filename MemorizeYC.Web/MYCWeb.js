@@ -24,7 +24,7 @@ var GlobalVariables = (function () {
     GlobalVariables.clickedViewCard = null;
     GlobalVariables.PlayType = PlayTypeEnum.syn;
     GlobalVariables.currentDocumentSize = [0, 0];
-    GlobalVariables.version = "2016.0606.1.3";
+    GlobalVariables.version = "2016.0606.1.4";
     GlobalVariables.versionFile = GlobalVariables.rootDir + "version.json";
     return GlobalVariables;
 }());
@@ -199,12 +199,24 @@ var WCard = (function () {
             this.cCards[0] = theCard;
             this.viewCard.appendChild(theCard);
         }
-        if (cardInfo.Size)
+        if (cardInfo.Size) {
             this.viewSize = cardInfo.Size;
+            if (cardInfo.IsSizeFixed === undefined)
+                cardInfo.IsSizeFixed = true;
+        }
         else
             this.viewSize = [200, 200];
+        if (cardInfo.Position) {
+            this.viewPosition = cardInfo.Position;
+            if (cardInfo.IsXPosFixed === undefined)
+                cardInfo.IsXPosFixed = true;
+            if (cardInfo.IsYPosFixed === undefined)
+                cardInfo.IsYPosFixed = true;
+        }
         this.viewCard.style.position = "absolute";
         $(this.viewCard).addClass("WCard");
+        if (!this.cardInfo.IsHideShadow)
+            $(this.viewCard).addClass("hasShadow");
     };
     WCard.prototype.IniBox = function (stContent, thisWCard) {
         var sentences = stContent.split('\n');
@@ -378,9 +390,30 @@ var PlayOneCategoryPageController = (function () {
         this.imgBackground = document.getElementById('imgBackground');
         this.btSynPlay = document.getElementById('btSynPlay');
         this.isBackAudioStartLoad = false;
+        this.isBGAlsoChange = true;
         this.maxDelScore = 20;
         this.pgScore = document.getElementById('pgScore');
         this._rate2PowN = 0;
+        this.onPlayBGSound = function (ev) {
+            PlayOneCategoryPageController.Current.meBackground.load();
+            PlayOneCategoryPageController.Current.meBackground.play();
+        };
+        this.onWindowResize = function (ev) {
+            if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
+                return;
+            GlobalVariables.currentDocumentSize[0] = $(document).innerWidth();
+            GlobalVariables.currentDocumentSize[1] = $(document).innerHeight();
+            var wcards = WCard.showedWCards;
+            CardsHelper.RearrangeCards(wcards, PlayOneCategoryPageController.oneOverNWindow);
+            PlayOneCategoryPageController.scope.$apply(function () {
+                if (wcards.length > 0) {
+                    PlayOneCategoryPageController.Current.defaultCardStyle = {
+                        width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+                        height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+                    };
+                }
+            });
+        };
         this.ShowNewWCards_Click = function () {
             if (PlayOneCategoryPageController.Current.selWCard)
                 $(PlayOneCategoryPageController.Current.selWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
@@ -397,20 +430,34 @@ var PlayOneCategoryPageController = (function () {
         };
         this.Smaller_Click = function (ev) {
             PlayOneCategoryPageController.oneOverNWindow *= 1.2;
-            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true, 1 / 1.2);
             PlayOneCategoryPageController.Current.defaultCardStyle = {
                 width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
                 height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
             };
+            if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
+                var bGObj = PlayOneCategoryPageController.Current.imgBackground;
+                $(bGObj).css({
+                    'width': Math.round(bGObj.clientWidth / 1.2) + "px",
+                    'height': Math.round(bGObj.clientHeight / 1.2) + "px"
+                });
+            }
             ev.stopPropagation();
         };
         this.Larger_Click = function (ev) {
             PlayOneCategoryPageController.oneOverNWindow /= 1.2;
-            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true, 1.2);
             PlayOneCategoryPageController.Current.defaultCardStyle = {
                 width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
                 height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
             };
+            if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
+                var bGObj = PlayOneCategoryPageController.Current.imgBackground;
+                $(bGObj).css({
+                    'width': Math.round(bGObj.clientWidth * 1.2) + "px",
+                    'height': Math.round(bGObj.clientHeight * 1.2) + "px"
+                });
+            }
             ev.stopPropagation();
         };
         this.Arrange_Click = function (isRandomly) {
@@ -501,6 +548,9 @@ var PlayOneCategoryPageController = (function () {
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
+        $scope.$on('$routeChangeStart', function (ev, next, current) {
+            PlayOneCategoryPageController.Current.ClearBeforeLeavePage();
+        });
         if (GlobalVariables.isIOS)
             $(PlayOneCategoryPageController.Current.imgBackground).css('cursor', 'pointer');
         this.btSynPlay.addEventListener("click", this.synPlay_Click);
@@ -531,22 +581,7 @@ var PlayOneCategoryPageController = (function () {
         if (GlobalVariables.isLog)
             console.log("PlayOneCategoryPage:constructor:pathOrUri= " + pathOrUri);
         MyFileHelper.FeedTextFromTxtFileToACallBack(pathOrUri, WCard.restWCards, ShowWCardsAndEventsCallback);
-        $(window).on("resize", function (ev) {
-            if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
-                return;
-            GlobalVariables.currentDocumentSize[0] = $(document).innerWidth();
-            GlobalVariables.currentDocumentSize[1] = $(document).innerHeight();
-            var wcards = WCard.showedWCards;
-            CardsHelper.RearrangeCards(wcards, PlayOneCategoryPageController.oneOverNWindow);
-            PlayOneCategoryPageController.scope.$apply(function () {
-                if (wcards.length > 0) {
-                    PlayOneCategoryPageController.Current.defaultCardStyle = {
-                        width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-                        height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-                    };
-                }
-            });
-        });
+        $(window).on("resize", PlayOneCategoryPageController.Current.onWindowResize);
     }
     Object.defineProperty(PlayOneCategoryPageController.prototype, "totalScore", {
         get: function () {
@@ -623,6 +658,10 @@ var PlayOneCategoryPageController = (function () {
         enumerable: true,
         configurable: true
     });
+    PlayOneCategoryPageController.prototype.ClearBeforeLeavePage = function () {
+        $(window).off('resize', PlayOneCategoryPageController.Current.onWindowResize);
+        $(document).off('click', PlayOneCategoryPageController.Current.onPlayBGSound);
+    };
     PlayOneCategoryPageController.prototype.SetGlobalScore = function (wcards) {
         this.glScore = this.maxDelScore * wcards.length;
         this.totalScore = this.glScore;
@@ -647,14 +686,14 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
     CardsHelper.GetWCardsCallback(jObj, restWcards);
     PlayOneCategoryPageController.Current.hyperLink = jObj["Link"];
     if (jObj["Background"]) {
-        if (jObj["Background"]["ImgStyle"])
-            $(PlayOneCategoryPageController.Current.imgBackground).css(jObj["Background"]["ImgStyle"]);
+        if (jObj["Background"]["ImgStyle"]) {
+            var myStyle = jObj["Background"]["ImgStyle"];
+            myStyle = CardsHelper.CorrectBackgroundStyle(myStyle, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
+            $(PlayOneCategoryPageController.Current.imgBackground).css(myStyle);
+        }
         if (jObj["Background"]["AudioProperties"]) {
             $(PlayOneCategoryPageController.Current.meBackground).prop(jObj["Background"]["AudioProperties"]);
-            $(document).one("click", function (ev) {
-                PlayOneCategoryPageController.Current.meBackground.load();
-                PlayOneCategoryPageController.Current.meBackground.play();
-            });
+            $(document).one("click", PlayOneCategoryPageController.Current.onPlayBGSound);
         }
     }
     PlayOneCategoryPageController.Current.SetGlobalScore(restWcards);
@@ -736,8 +775,10 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
             var selWCard = PlayOneCategoryPageController.Current.selWCard;
             CardsHelper.ShowHLinkAndDesDialog(selWCard, PlayOneCategoryPageController.Current.dlDblClickWCard);
         });
-        $(restWcards[i0].viewCard).draggable();
-        $(restWcards[i0].viewCard).resizable();
+        if (!restWcards[i0].cardInfo.IsSizeFixed)
+            $(restWcards[i0].viewCard).draggable();
+        if (!restWcards[i0].cardInfo.IsXPosFixed || !restWcards[i0].cardInfo.IsYPosFixed)
+            $(restWcards[i0].viewCard).resizable();
         $(restWcards[i0].viewCard).on("resize", function (ev, ui) {
             ev.bubbles = false;
             var thisWCard = WCard.FindWCardFromViewCard(this);
@@ -817,7 +858,8 @@ function ChooseAContainerPageController($scope) {
     var self = this;
     self.containers = [new AContainer(GlobalVariables.rootDir + "Samples/MYContainer"),
         new AContainer(GlobalVariables.rootDir + "Samples/健康操"),
-        new AContainer(GlobalVariables.rootDir + "Samples/自然發音")
+        new AContainer(GlobalVariables.rootDir + "Samples/自然發音"),
+        new AContainer(GlobalVariables.rootDir + "Samples/geography 地理")
     ];
     self.selContainer = self.containers[0];
     self.categories;
@@ -880,10 +922,11 @@ var MathHelper = (function () {
 var CardsHelper = (function () {
     function CardsHelper() {
     }
-    CardsHelper.RearrangeCards = function (wcards, nCol, isRandom, isOptimizeSize) {
+    CardsHelper.RearrangeCards = function (wcards, nCol, isRandom, isOptimizeSize, expandRatio) {
         if (nCol === void 0) { nCol = 5; }
         if (isRandom === void 0) { isRandom = false; }
         if (isOptimizeSize === void 0) { isOptimizeSize = true; }
+        if (expandRatio === void 0) { expandRatio = 1; }
         if (!wcards || wcards.length === 0)
             return;
         var topOfTop = 50;
@@ -895,33 +938,49 @@ var CardsHelper = (function () {
         var maxWidth = 0;
         for (var i1 = 0; i1 < wcards.length; i1++) {
             var card = wcards[i1];
-            var size = [wWidth / nCol, wHeight / nCol];
-            if (!card.viewWHRatio)
-                card.viewWHRatio = new Array();
-            if (card.cCards != undefined && card.cCards[card.boxIndex] != undefined && isNaN(card.viewWHRatio[card.boxIndex])) {
-                var nWidth = card.cCards[card.boxIndex]["naturalWidth"];
-                var nHeight = card.cCards[card.boxIndex]["naturalHeight"];
-                if (nWidth != undefined && nWidth > 0 && nHeight > 0)
-                    card.viewWHRatio[card.boxIndex] = nWidth / nHeight;
-            }
-            if (card.viewWHRatio && !isNaN(card.viewWHRatio[card.boxIndex])) {
-                size[1] = size[0] / card.viewWHRatio[card.boxIndex];
-            }
-            if (isOptimizeSize)
-                card.viewSize = size;
-            var predictTop = currentPosition[1] + card.viewSize[1] + 20;
-            if (predictTop > wHeight) {
-                currentPosition = [currentPosition[0] + maxWidth + 20, topOfTop];
-                maxWidth = card.viewSize[0];
+            if (!card.cardInfo.IsSizeFixed) {
+                var size = [wWidth / nCol, wHeight / nCol];
+                if (!card.viewWHRatio)
+                    card.viewWHRatio = new Array();
+                if (card.cCards != undefined && card.cCards[card.boxIndex] != undefined && isNaN(card.viewWHRatio[card.boxIndex])) {
+                    var nWidth = card.cCards[card.boxIndex]["naturalWidth"];
+                    var nHeight = card.cCards[card.boxIndex]["naturalHeight"];
+                    if (nWidth != undefined && nWidth > 0 && nHeight > 0)
+                        card.viewWHRatio[card.boxIndex] = nWidth / nHeight;
+                }
+                if (card.viewWHRatio && !isNaN(card.viewWHRatio[card.boxIndex])) {
+                    size[1] = size[0] / card.viewWHRatio[card.boxIndex];
+                }
+                if (isOptimizeSize)
+                    card.viewSize = size;
             }
             else {
-                maxWidth = Math.max(maxWidth, card.viewSize[0]);
+                for (var i0 = 0; i0 < card.viewSize.length; i0++) {
+                    card.viewSize[i0] *= expandRatio;
+                }
+                card.viewSize = card.viewSize;
             }
-            card.viewPosition = currentPosition;
-            if (predictTop < wHeight)
-                currentPosition[1] = predictTop;
-            else
-                currentPosition[1] += card.viewSize[1] + 20;
+            if (!card.cardInfo.IsXPosFixed || !card.cardInfo.IsYPosFixed) {
+                var predictTop = currentPosition[1] + card.viewSize[1] + 20;
+                if (predictTop > wHeight) {
+                    currentPosition = [currentPosition[0] + maxWidth + 20, topOfTop];
+                    maxWidth = card.viewSize[0];
+                }
+                else {
+                    maxWidth = Math.max(maxWidth, card.viewSize[0]);
+                }
+                card.viewPosition = currentPosition;
+                if (predictTop < wHeight)
+                    currentPosition[1] = predictTop;
+                else
+                    currentPosition[1] += card.viewSize[1] + 20;
+            }
+            else {
+                for (var i0 = 0; i0 < card.viewPosition.length; i0++) {
+                    card.viewPosition[i0] *= expandRatio;
+                }
+                card.viewPosition = card.viewPosition;
+            }
         }
         PlayOneCategoryPageController.Current.defaultCardHeight = wcards[0].viewCard.clientHeight;
         PlayOneCategoryPageController.Current.defaultCardWidth = wcards[0].viewCard.clientWidth;
@@ -1042,6 +1101,15 @@ var CardsHelper = (function () {
             });
             $(diEle).dialog('open');
         }
+    };
+    CardsHelper.CorrectBackgroundStyle = function (myStyle, stContainer, stCFolder) {
+        var bgImgStyle = myStyle["background-image"];
+        if (bgImgStyle && bgImgStyle.indexOf("url(") < 0) {
+            var newBgImgStyle = "url(" + CardsHelper.GetTreatablePath(bgImgStyle, stContainer, stCFolder) + ")";
+            newBgImgStyle = encodeURI(newBgImgStyle);
+            myStyle["background-image"] = newBgImgStyle;
+        }
+        return myStyle;
     };
     return CardsHelper;
 }());

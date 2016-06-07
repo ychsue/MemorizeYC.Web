@@ -19,6 +19,8 @@ class PlayOneCategoryPageController{
     public btSynPlay: HTMLButtonElement = document.getElementById('btSynPlay') as HTMLButtonElement;
     public isBackAudioStartLoad: boolean = false;
 
+    public isBGAlsoChange: boolean = true;
+
     public topNavbarHeight: number;
     public bottomNavbarHeight: number;
     public defaultCardWidth: number;
@@ -110,6 +112,11 @@ class PlayOneCategoryPageController{
     }
     //#endregion PlayType
 
+    public ClearBeforeLeavePage() {
+        $(window).off('resize',PlayOneCategoryPageController.Current.onWindowResize);  
+        $(document).off('click',PlayOneCategoryPageController.Current.onPlayBGSound);
+    }
+
     constructor($scope, $routeParams) {
         //* [2016-06-06 12:04] Reload the web page if needed.
         VersionHelper.ReloadIfNeeded();
@@ -117,6 +124,11 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
+
+        //*[2016-06-07 14:27] Try to clear this Controller's actions
+        $scope.$on('$routeChangeStart', function (ev, next, current) {
+            PlayOneCategoryPageController.Current.ClearBeforeLeavePage();
+        });
 
         if (GlobalVariables.isIOS)
             $(PlayOneCategoryPageController.Current.imgBackground).css('cursor', 'pointer');
@@ -157,28 +169,34 @@ class PlayOneCategoryPageController{
             WCard.restWCards,
             ShowWCardsAndEventsCallback);
 
-        $(window).on("resize", function (ev) {
-            //* [2016-05-20 11:40] Resize only when the document's size is changed.
-            if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
-                return;
-            GlobalVariables.currentDocumentSize[0] = $(document).innerWidth();
-            GlobalVariables.currentDocumentSize[1] = $(document).innerHeight();
-
-            var wcards = WCard.showedWCards;
-            CardsHelper.RearrangeCards(wcards, PlayOneCategoryPageController.oneOverNWindow);
-
-            PlayOneCategoryPageController.scope.$apply(function () {
-                if (wcards.length > 0) {
-                    PlayOneCategoryPageController.Current.defaultCardStyle = {
-                        width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-                        height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-                    };
-                }
-            });
-        });
+        $(window).on("resize", PlayOneCategoryPageController.Current.onWindowResize);
     }
 
     //#region *EVENTS
+    public onPlayBGSound = function (ev) {
+        PlayOneCategoryPageController.Current.meBackground.load();
+        PlayOneCategoryPageController.Current.meBackground.play();
+    };
+
+    public onWindowResize = function (ev) {
+        //* [2016-05-20 11:40] Resize only when the document's size is changed.
+        if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
+            return;
+        GlobalVariables.currentDocumentSize[0] = $(document).innerWidth();
+        GlobalVariables.currentDocumentSize[1] = $(document).innerHeight();
+
+        var wcards = WCard.showedWCards;
+        CardsHelper.RearrangeCards(wcards, PlayOneCategoryPageController.oneOverNWindow);
+
+        PlayOneCategoryPageController.scope.$apply(function () {
+            if (wcards.length > 0) {
+                PlayOneCategoryPageController.Current.defaultCardStyle = {
+                    width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+                    height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+                };
+            }
+        });
+    };
     public ShowNewWCards_Click = function () {
         //* [2016-05-24 14:46] Remove the style of animation
         if (PlayOneCategoryPageController.Current.selWCard)
@@ -203,21 +221,40 @@ class PlayOneCategoryPageController{
     //#region **resize WCards
     public Smaller_Click = function (ev:Event) {
         PlayOneCategoryPageController.oneOverNWindow *= 1.2;
-        CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+        CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow,false,true,1/1.2);
         PlayOneCategoryPageController.Current.defaultCardStyle = {
             width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
             height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
         };
 
+        if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
+            var bGObj = PlayOneCategoryPageController.Current.imgBackground;
+            $(bGObj).css(
+                {
+                    'width':Math.round(bGObj.clientWidth/1.2)+"px",
+                    'height':Math.round(bGObj.clientHeight/1.2)+"px"
+                });
+        }
+
         ev.stopPropagation();
     };
     public Larger_Click = function (ev: Event) {
         PlayOneCategoryPageController.oneOverNWindow /= 1.2;
-        CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow);
+        CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow,false,true,1.2);
         PlayOneCategoryPageController.Current.defaultCardStyle = {
             width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
             height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
         };
+
+        if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
+            var bGObj = PlayOneCategoryPageController.Current.imgBackground;
+            $(bGObj).css(
+                {
+                    'width': Math.round(bGObj.clientWidth * 1.2)+"px",
+                    'height': Math.round(bGObj.clientHeight * 1.2)+"px"
+                });
+        }
+
         ev.stopPropagation();
     };
     //#endregion **resize WCards
@@ -354,8 +391,12 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     CardsHelper.GetWCardsCallback(jObj, restWcards); //Get WCards
     PlayOneCategoryPageController.Current.hyperLink = jObj["Link"]; //Get HyperLink
     if (jObj["Background"]) {
-        if(jObj["Background"]["ImgStyle"])
-            $(PlayOneCategoryPageController.Current.imgBackground).css(jObj["Background"]["ImgStyle"]); //Get Background Image
+        if (jObj["Background"]["ImgStyle"]) {
+            var myStyle = jObj["Background"]["ImgStyle"];
+            myStyle = CardsHelper.CorrectBackgroundStyle(myStyle, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
+            $(PlayOneCategoryPageController.Current.imgBackground).css(myStyle); //Get Background Image
+        }
+
         if (jObj["Background"]["AudioProperties"]) {
             $(PlayOneCategoryPageController.Current.meBackground).prop(jObj["Background"]["AudioProperties"]);
             //PlayOneCategoryPageController.Current.meBackground.load();
@@ -363,14 +404,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             //$(PlayOneCategoryPageController.Current.meBackground).one("loadstart", function () {
             //    PlayOneCategoryPageController.Current.isBackAudioStartLoad = true;
             //});
-            $(document).one("click", function (ev) {
-                //if (PlayOneCategoryPageController.Current.isBackAudioStartLoad)
-                //    return;
-                //else {
-                    PlayOneCategoryPageController.Current.meBackground.load();
-                    PlayOneCategoryPageController.Current.meBackground.play();
-                //}
-            });
+            $(document).one("click", PlayOneCategoryPageController.Current.onPlayBGSound);
         }
     }
     //* [2016-05-27 16:07] Set the global Score
@@ -471,8 +505,11 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         });
 
         //* [2016-05-19 20:02] Make it resizable
-        $(restWcards[i0].viewCard).draggable();
-        $(restWcards[i0].viewCard).resizable();
+        if(!restWcards[i0].cardInfo.IsSizeFixed)
+            $(restWcards[i0].viewCard).draggable();
+        if(!restWcards[i0].cardInfo.IsXPosFixed || !restWcards[i0].cardInfo.IsYPosFixed)
+            $(restWcards[i0].viewCard).resizable();
+
         $(restWcards[i0].viewCard).on("resize", function (ev, ui) {
             ev.bubbles = false;
             var thisWCard = WCard.FindWCardFromViewCard(this);

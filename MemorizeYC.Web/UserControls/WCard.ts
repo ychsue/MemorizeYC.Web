@@ -174,13 +174,28 @@ class WCard {
             this.cCards[0] = theCard;
             this.viewCard.appendChild(theCard);
         }   
-             
-        if (cardInfo.Size)
+        //* [2016-06-07 11:47] Settle its size             
+        if (cardInfo.Size) {
             this.viewSize = cardInfo.Size;
+            if (cardInfo.IsSizeFixed === undefined)
+                cardInfo.IsSizeFixed = true;
+        }
         else
             this.viewSize = [200, 200];
+        //* [2016-06-07 11:47] Settle its position
+        if (cardInfo.Position) {
+            this.viewPosition = cardInfo.Position;
+            if (cardInfo.IsXPosFixed === undefined)
+                cardInfo.IsXPosFixed = true;
+            if (cardInfo.IsYPosFixed === undefined)
+                cardInfo.IsYPosFixed = true;
+
+        }
+
         this.viewCard.style.position = "absolute";
         $(this.viewCard).addClass("WCard");
+        if (!this.cardInfo.IsHideShadow)
+            $(this.viewCard).addClass("hasShadow");
     }
     //#endregion   public IniCard(pathOrUrl: string). Initialize this Card
     
