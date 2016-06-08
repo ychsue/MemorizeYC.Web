@@ -5,6 +5,6 @@ It's main web site is at <http://memorizeyc.azurewebsites.net> and its demo is a
 2. Login as a super user in order to create a subdirectory such as **Static** as I used.
 3. copy **CSSs**, **GSPages**, **PlayPage**, **Samples**, **MYCWeb.html**, **MYCWeb.js** and **version.json** into this subdirectory.
 4. change its mode by `chmod -R 755 *`.
-5. Change **GlobalVariables.rootDir** from "/" to "/Static/".
+5. Change **GlobalVariables.rootDir** from "/" to "/Static/" in **MYCWeb.js**.
 6. Then, open a browser and key in `localhost/Static/MYCWeb.html` to test it.
 7. Have fun!
