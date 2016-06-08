@@ -114,7 +114,9 @@ class PlayOneCategoryPageController{
 
     public ClearBeforeLeavePage() {
         $(window).off('resize',PlayOneCategoryPageController.Current.onWindowResize);  
-        $(document).off('click',PlayOneCategoryPageController.Current.onPlayBGSound);
+        $(document).off('click', PlayOneCategoryPageController.Current.onPlayBGSound);
+        if (PlayOneCategoryPageController.Current.scoreTimerId)
+            clearTimeout(PlayOneCategoryPageController.Current.scoreTimerId);
     }
 
     constructor($scope, $routeParams) {
@@ -170,6 +172,10 @@ class PlayOneCategoryPageController{
             ShowWCardsAndEventsCallback);
 
         $(window).on("resize", PlayOneCategoryPageController.Current.onWindowResize);
+        //* [2016-06-08 09:44] Force it to rearrange all the cards after 2.5 second.
+        setTimeout(function () {
+            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true);
+        }, 2500);
     }
 
     //#region *EVENTS

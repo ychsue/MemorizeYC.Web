@@ -24,7 +24,7 @@ var GlobalVariables = (function () {
     GlobalVariables.clickedViewCard = null;
     GlobalVariables.PlayType = PlayTypeEnum.syn;
     GlobalVariables.currentDocumentSize = [0, 0];
-    GlobalVariables.version = "2016.0606.1.4";
+    GlobalVariables.version = "2016.0606.1.5";
     GlobalVariables.versionFile = GlobalVariables.rootDir + "version.json";
     return GlobalVariables;
 }());
@@ -582,6 +582,9 @@ var PlayOneCategoryPageController = (function () {
             console.log("PlayOneCategoryPage:constructor:pathOrUri= " + pathOrUri);
         MyFileHelper.FeedTextFromTxtFileToACallBack(pathOrUri, WCard.restWCards, ShowWCardsAndEventsCallback);
         $(window).on("resize", PlayOneCategoryPageController.Current.onWindowResize);
+        setTimeout(function () {
+            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true);
+        }, 2500);
     }
     Object.defineProperty(PlayOneCategoryPageController.prototype, "totalScore", {
         get: function () {
@@ -661,6 +664,8 @@ var PlayOneCategoryPageController = (function () {
     PlayOneCategoryPageController.prototype.ClearBeforeLeavePage = function () {
         $(window).off('resize', PlayOneCategoryPageController.Current.onWindowResize);
         $(document).off('click', PlayOneCategoryPageController.Current.onPlayBGSound);
+        if (PlayOneCategoryPageController.Current.scoreTimerId)
+            clearTimeout(PlayOneCategoryPageController.Current.scoreTimerId);
     };
     PlayOneCategoryPageController.prototype.SetGlobalScore = function (wcards) {
         this.glScore = this.maxDelScore * wcards.length;
