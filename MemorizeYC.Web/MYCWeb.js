@@ -14,9 +14,6 @@ var GlobalVariables = (function () {
     GlobalVariables.isHostNameShown = true;
     GlobalVariables.isLog = false;
     GlobalVariables.isIOS = /iP/i.test(navigator.userAgent);
-    GlobalVariables.rootDir = "/";
-    GlobalVariables.currentMainFolder = GlobalVariables.rootDir + "Samples/MYContainer";
-    GlobalVariables.currentCategoryFolder = "ShapeAndColor";
     GlobalVariables.onSingleClick = "onSingleClick";
     GlobalVariables.onDoubleClick = "onDoubleClick";
     GlobalVariables.numCardClick = 0;
@@ -811,16 +808,16 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
 }
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 app.controller('PlayOneCategoryPageController', ['$scope', '$routeParams', PlayOneCategoryPageController]);
-app.controller('ChooseAContainerPageController', ['$scope', ChooseAContainerPageController]);
+app.controller('ChooseAContainerPageController', ['$scope', '$routeParams', ChooseAContainerPageController]);
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/Play', {
-        templateUrl: GlobalVariables.rootDir + 'PlayPage/PlayOneCategoryPage.html',
+        templateUrl: GlobalVariables.playOneCategoryHtml,
         controller: 'PlayOneCategoryPageController',
         controllerAs: 'ctrl'
     })
         .when('/', {
-        templateUrl: GlobalVariables.rootDir + 'GSPages/ChooseAContainerPage.html',
+        templateUrl: GlobalVariables.chooseAContainerHtml,
         controller: 'ChooseAContainerPageController',
         controllerAs: 'ctrl'
     });
@@ -861,11 +858,7 @@ function ChooseAContainerPageController($scope) {
         console.log(location.origin);
     }
     var self = this;
-    self.containers = [new AContainer(GlobalVariables.rootDir + "Samples/MYContainer"),
-        new AContainer(GlobalVariables.rootDir + "Samples/健康操"),
-        new AContainer(GlobalVariables.rootDir + "Samples/自然發音"),
-        new AContainer(GlobalVariables.rootDir + "Samples/geography 地理")
-    ];
+    self.containers = GlobalVariables.containers;
     self.selContainer = self.containers[0];
     self.categories;
     self.selCategory;

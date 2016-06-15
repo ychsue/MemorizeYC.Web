@@ -20,10 +20,34 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
+    <!--<script src="Models/Enums.js"></script>
+    <script src="Helpers/mathhelper.js"></script>
+    <script src="Helpers/MyFileHelper.js"></script>
+    <script src="Models/EachDescription.js"></script>
+    <script src="GlobalVariables/GlobalVariables.js"></script>
+    <script src="UserControls/WCard.js"></script>
+    <script src="Helpers/CardsHelper.js"></script>
+    <script src="PlayPage/PlayOneCategoryPage.js"></script>
+    <script src="GSPages/ChooseAContainerPage.js"></script>
+
+    <script src="App.js"></script>-->
     <script src="MYCWeb.js"></script>
 
     <link href="CSSs/WCard.css" rel="stylesheet" />
     <link href="CSSs/App.css" rel="stylesheet" />
+
+    <script>
+        GlobalVariables.rootDir = "/"; //Change it if you put this SPA at a subdirectory.
+        GlobalVariables.version = "2016.0615.2.1";
+        GlobalVariables.containers = [new AContainer(GlobalVariables.rootDir + "Samples/MYContainer"),
+        new AContainer(GlobalVariables.rootDir + "Samples/健康操"),
+        new AContainer(GlobalVariables.rootDir + "Samples/自然發音"),
+        new AContainer(GlobalVariables.rootDir + "Samples/geography 地理"),
+        new AContainer(GlobalVariables.rootDir + "Samples/General Physics")
+        ];
+        GlobalVariables.playOneCategoryHtml = GlobalVariables.rootDir + 'PlayPage/PlayOneCategoryPage.html';
+        GlobalVariables.chooseAContainerHtml = GlobalVariables.rootDir + 'GSPages/ChooseAContainerPage.html';
+    </script>
 
     <title>MemorizeYC Web version Demo</title>
 </head>

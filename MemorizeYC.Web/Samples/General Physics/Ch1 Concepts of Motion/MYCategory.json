@@ -1,0 +1,90 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "average acceleration, a.box",
+      "Description": "平均加速度"
+    },
+    {
+      "FileName": "average speed.box",
+      "Description": "平均速率 (不是速度喔！)"
+    },
+    {
+      "FileName": "average velocity, v.box",
+      "Description": "平均速度 (有方向喔！)"
+    },
+    {
+      "FileName": "displacement, delta r.box",
+      "Description": "位移量"
+    },
+    {
+      "FileName": "motion diagram.box",
+      "Description": "運動圖?"
+    },
+    {
+      "FileName": "motion.box",
+      "Description": "運動"
+    },
+    {
+      "FileName": "operational definition.box",
+      "Description": "操作定義"
+    },
+    {
+      "FileName": "order-of-magnitude estimate.box",
+      "Description": "數量級估計"
+    },
+    {
+      "FileName": "particle model.box",
+      "Description": "粒子模型"
+    },
+    {
+      "FileName": "particle.box",
+      "Description": "粒子(假設體積為0但有位置的點)"
+    },
+    {
+      "FileName": "pictorial representation.box",
+      "Description": "圖像表示"
+    },
+    {
+      "FileName": "position vector, r.box",
+      "Description": "位置向量(需要座標原點)"
+    },
+    {
+      "FileName": "position-versus-time graph.box",
+      "Description": "位置vs時間圖"
+    },
+    {
+      "FileName": "representation of knowledge.box",
+      "Description": "知識表徵"
+    },
+    {
+      "FileName": "scalar quantity.box",
+      "Description": "純量"
+    },
+    { "FileName": "SI units.box" },
+    {
+      "FileName": "significant figures.box",
+      "Description": "有效位數"
+    },
+    {
+      "FileName": "time interval, delta t.box",
+      "Description": "時間間隔"
+    },
+    {
+      "FileName": "trajectory.box",
+      "Description": "軌跡"
+    },
+    {
+      "FileName": "translational motion.box",
+      "Description": "平移運動"
+    },
+    {
+      "FileName": "vector quantity.box",
+      "Description": "向量"
+    },
+    {
+      "FileName": "zero vector, 0.box",
+      "Description": "該向量長度為0方向任意"
+    }
+  ],
+  "Link": "https://www.amazon.com/Physics-Scientists-Engineers-Strategic-Approach/dp/0321507800/184-3633894-2398055?ie=UTF8&*Version*=1&*entries*=0"
+}

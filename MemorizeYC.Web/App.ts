@@ -6,18 +6,18 @@ var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 
 //Controllers
 app.controller('PlayOneCategoryPageController', ['$scope','$routeParams', PlayOneCategoryPageController]);
-app.controller('ChooseAContainerPageController', ['$scope',ChooseAContainerPageController]);
+app.controller('ChooseAContainerPageController', ['$scope','$routeParams',ChooseAContainerPageController]);
 
 //Config
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/Play', {
-            templateUrl: GlobalVariables.rootDir + 'PlayPage/PlayOneCategoryPage.html',
+            templateUrl: GlobalVariables.playOneCategoryHtml,
             controller: 'PlayOneCategoryPageController',
             controllerAs: 'ctrl'
         })
         .when('/', {
-            templateUrl: GlobalVariables.rootDir + 'GSPages/ChooseAContainerPage.html',
+            templateUrl: GlobalVariables.chooseAContainerHtml,
             controller: 'ChooseAContainerPageController',
             controllerAs: 'ctrl'
         });

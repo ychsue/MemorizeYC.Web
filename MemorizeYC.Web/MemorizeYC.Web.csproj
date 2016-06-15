@@ -22,6 +22,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ChiMeiLibrary\MYCWeb.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -54,6 +55,7 @@
     <Content Include="MYCWeb.html" />
     <Content Include="index.html" />
     <Content Include="PlayPage\PlayOneCategoryPage.html" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\BoxFiles\operational definition.txt" />
     <Content Include="Samples\geography 地理\Continents 七大洲\Africa 非洲.png" />
     <Content Include="Samples\geography 地理\Continents 七大洲\Antarctica 南極洲.png" />
     <Content Include="Samples\geography 地理\Continents 七大洲\Asia 亞洲.png" />
@@ -238,6 +240,71 @@
     <Content Include="Samples\geography 地理\Continents 七大洲\MYCategory.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\average acceleration, a.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\average speed.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\average velocity, v.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\displacement, delta r.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\motion diagram.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\motion.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\operational definition.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\order-of-magnitude estimate.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\particle model.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\particle.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\pictorial representation.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\position vector, r.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\position-versus-time graph.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\representation of knowledge.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\scalar quantity.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\SI units.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\significant figures.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\time interval, delta t.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\trajectory.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\translational motion.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\vector quantity.box" />
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\zero vector, 0.box" />
+    <Content Include="Samples\General Physics\MYContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\General Physics\Ch1 Concepts of Motion\MYCategory.json" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\伯艮地公爵夫人和她的小孩.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\卸下聖體.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\建築師馬太伍斯‧羅瑞策爾的肖像.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\愛神的菜單.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\戴爾夫蕭凡城鎮的景光.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\瑪麗─泰瑞莎‧巴多洛尼夫人肖像.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\維納斯的誕生.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\賽普爾人的潰敗.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\農人的反抗.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\麵包.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\兩個小女孩羞澀地站在鴨子前面 %28兒語鵝語%29.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\嬉戲的母子.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\捉蝴蝶的小愛神.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\杜勒半身像.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\母親與懷中哭鬧的孩童.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\米開朗基羅半身像.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\聖母頭像.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\蘇珊半身像.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\賽姬凝望沉睡的丘比特.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\鮮花儷人.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\人馬獸.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\傑洛姆半身像.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\克麗塔.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\兩愛神比高下.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\尼可拉‧莫林的夫人半身像.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\年輕少女.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\抱鴨的小男孩.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\提水的女郎.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\有志者事竟成.box" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\男子半身像.box" />
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\MYContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\MYContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\MYCategory.json" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\MYCategory.json" />
+    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\MYCategory.json" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
