@@ -22,7 +22,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ChiMeiLibrary\MYCWeb.html" />
+    <Content Include="ChiMeiMuseum\MYCWeb.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -266,45 +266,56 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\General Physics\Ch1 Concepts of Motion\MYCategory.json" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\伯艮地公爵夫人和她的小孩.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\卸下聖體.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\建築師馬太伍斯‧羅瑞策爾的肖像.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\愛神的菜單.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\戴爾夫蕭凡城鎮的景光.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\瑪麗─泰瑞莎‧巴多洛尼夫人肖像.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\維納斯的誕生.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\賽普爾人的潰敗.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\農人的反抗.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\麵包.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\兩個小女孩羞澀地站在鴨子前面 %28兒語鵝語%29.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\嬉戲的母子.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\捉蝴蝶的小愛神.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\杜勒半身像.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\母親與懷中哭鬧的孩童.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\米開朗基羅半身像.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\聖母頭像.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\蘇珊半身像.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\賽姬凝望沉睡的丘比特.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\鮮花儷人.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\人馬獸.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\傑洛姆半身像.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\克麗塔.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\兩愛神比高下.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\尼可拉‧莫林的夫人半身像.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\年輕少女.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\抱鴨的小男孩.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\提水的女郎.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\有志者事竟成.box" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\男子半身像.box" />
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\MYContainer.json">
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\伯艮地公爵夫人和她的小孩.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\卸下聖體.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\建築師馬太伍斯‧羅瑞策爾的肖像.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\愛神的菜單.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\戴爾夫蕭凡城鎮的景光.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\瑪麗─泰瑞莎‧巴多洛尼夫人肖像.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\維納斯的誕生.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\賽普爾人的潰敗.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\農人的反抗.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\麵包.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\兩個小女孩羞澀地站在鴨子前面 %28兒語鵝語%29.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\嬉戲的母子.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\捉蝴蝶的小愛神.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\杜勒半身像.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\母親與懷中哭鬧的孩童.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\米開朗基羅半身像.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\聖母頭像.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\蘇珊半身像.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\賽姬凝望沉睡的丘比特.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\鮮花儷人.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\人馬獸.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\傑洛姆半身像.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\克麗塔.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\兩愛神比高下.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\尼可拉‧莫林的夫人半身像.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\年輕少女.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\抱鴨的小男孩.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\提水的女郎.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\有志者事竟成.box" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\男子半身像.box" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\MYContainer.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\MYContainer.json">
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\MYContainer.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ChiMeiLibrary\繪畫 Paintings\繪畫1~10\MYCategory.json" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑1~10\MYCategory.json" />
-    <Content Include="ChiMeiLibrary\雕塑 Sculptures\雕塑11~20\MYCategory.json" />
+    <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\MYCategory.json" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\MYCategory.json" />
+    <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\MYCategory.json" />
+    <Content Include="走馬瀨農場\MYCWeb.html" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Archery Ground 射箭場.png" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Cute Zoo 可愛動物園.png" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Entrance 大門收費站.png" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Herb Garden 苗圃.png" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Horse Race Ground 跑馬場.png" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Parking Lot 停車場.png" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Pasture 放牧區.png" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Science Game Center 科學遊戲館.png" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Second B.B.Q. Area 第二烤肉區.png" />
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\Shih-Zih Woods 獅子林.png" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
@@ -315,6 +326,31 @@
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="web.config" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Chicken 雞.box" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Crocodile 鱷魚.box" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Formosan rock monkey 台灣獼猴.box" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Ostrich 鴕鳥.box" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Peacock 孔雀.box" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Pig 豬.box" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Rabbit 兔子.box" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Turkey 火雞.box" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\不知道.box" />
+    <Content Include="走馬瀨農場\綠色區\Pasture 放牧區\Cattle 黃牛.box" />
+    <Content Include="走馬瀨農場\綠色區\Pasture 放牧區\Dairy cattle 乳牛.box" />
+    <Content Include="走馬瀨農場\綠色區\Pasture 放牧區\Goat 山羊.box" />
+    <Content Include="走馬瀨農場\綠色區\Pasture 放牧區\Water buffalo 水牛.box" />
+    <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="走馬瀨農場\綠色區\Pasture 放牧區\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="走馬瀨農場\綠色區\Map 地圖%28綠色部分%29\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="走馬瀨農場\綠色區\MYContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="App.ts" />
@@ -324,8 +360,12 @@
     <TypeScriptCompile Include="Helpers\mathhelper.ts" />
     <TypeScriptCompile Include="Helpers\MyFileHelper.ts" />
     <TypeScriptCompile Include="Helpers\VersionHelper.ts" />
+    <TypeScriptCompile Include="Models\BackgroundObj.ts" />
+    <TypeScriptCompile Include="Models\EachCategory.ts" />
     <TypeScriptCompile Include="Models\EachDescription.ts" />
     <TypeScriptCompile Include="Models\Enums.ts" />
+    <TypeScriptCompile Include="Models\MYCategoryJson.ts" />
+    <TypeScriptCompile Include="Models\MYContainerJson.ts" />
     <TypeScriptCompile Include="Models\Version.ts" />
     <TypeScriptCompile Include="PlayPage\PlayOneCategoryPage.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />

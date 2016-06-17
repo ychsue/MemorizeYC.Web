@@ -1,8 +1,9 @@
 ﻿/// <reference path="mathhelper.ts" />
 /// <reference path="../models/eachdescription.ts" />
+/// <reference path="../models/mycategoryjson.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
 class CardsHelper {
-    public static RearrangeCards(wcards: WCard[], nCol: number = 5, isRandom:boolean=false, isOptimizeSize:boolean = true, expandRatio:number = 1) {
+    public static RearrangeCards(wcards: WCard[], nCol: number = 5, isRandom:boolean=false, isOptimizeSize:boolean = true, expandRatio:number = 1, justFixed:boolean = false) {
         if (!wcards || wcards.length === 0)
             return;
         var topOfTop: number = 50;
@@ -17,7 +18,7 @@ class CardsHelper {
         var maxWidth: number = 0;
         for (var i1: number = 0; i1 < wcards.length; i1++) {
             var card: WCard = wcards[i1];
-            if (!card.cardInfo.IsSizeFixed) { //Recalculate its size if its size is changeable
+            if (!card.cardInfo.IsSizeFixed && !justFixed) { //Recalculate its size if its size is changeable
                 var size = [wWidth / nCol, wHeight / nCol];
                 //* [2016-05-05 20:05] Initialize card.viewWHRatio
                 if (!card.viewWHRatio)
@@ -33,14 +34,15 @@ class CardsHelper {
                 }
                 if (isOptimizeSize)
                     card.viewSize = size; //This step will reset its size.
-            } else {
+            }
+            else if (card.cardInfo.IsSizeFixed){
                 for (var i0: number = 0; i0 < card.viewSize.length; i0++) {
                     card.viewSize[i0] *= expandRatio;
                 }
                 card.viewSize = card.viewSize; //To update it
             }
 
-            if (!card.cardInfo.IsXPosFixed || !card.cardInfo.IsYPosFixed) { //Update its position only if their positions are changeable.
+            if ((!card.cardInfo.IsXPosFixed || !card.cardInfo.IsYPosFixed) && !justFixed) { //Update its position only if their positions are changeable.
                 var predictTop = currentPosition[1] + card.viewSize[1] + 20;
                 if (predictTop > wHeight) {
                     currentPosition = [currentPosition[0] + maxWidth + 20, topOfTop];
@@ -55,7 +57,8 @@ class CardsHelper {
                     currentPosition[1] = predictTop;
                 else
                     currentPosition[1] += card.viewSize[1] + 20;
-            } else {
+            }
+            else if (card.cardInfo.IsXPosFixed && card.cardInfo.IsYPosFixed) {
                 for (var i0: number = 0; i0 < card.viewPosition.length; i0++) {
                     card.viewPosition[i0] *= expandRatio;
                 }
@@ -91,12 +94,12 @@ class CardsHelper {
         return newPath;
     }
 
-    public static GetWCardsCallback(jObj: Object, cards: WCard[]) {
+    public static GetWCardsCallback(jObj: MYCategoryJson, cards: WCard[]) {
         //* [2016-04-01 16:31] Decipher the jsonTxt
         if (!jObj)
             return;
 
-        var des: Array<EachDescription> = jObj["Cards"];
+        var des: Array<EachDescription> = jObj.Cards;
         if (!des)
             return;
 

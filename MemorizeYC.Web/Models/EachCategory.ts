@@ -1,0 +1,3 @@
+﻿interface EachCategory {
+    Folder?: string;
+}

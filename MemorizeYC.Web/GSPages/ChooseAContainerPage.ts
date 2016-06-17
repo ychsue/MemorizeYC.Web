@@ -2,6 +2,7 @@
 /// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../helpers/myfilehelper.ts" />
 /// <reference path="../helpers/versionhelper.ts" />
+/// <reference path="../models/mycontainerjson.ts" />
 
 function ChooseAContainerPageController($scope) {
     //* [2016-06-06 12:04] Reload the web page if needed.
@@ -33,7 +34,7 @@ function ChooseAContainerPageController($scope) {
         if (GlobalVariables.isLog) {
             console.log("ChooseAContainerPage:UpdateCategories: "+jsonTxt);
         }
-        var obj = JSON.parse(jsonTxt);
+        var obj = JSON.parse(jsonTxt) as MYContainerJson;
         self.categories = [];
         categories = [];
         for (var i0: number = 0; i0 < obj.Categories.length; i0++) {

@@ -2,6 +2,7 @@
 /// <reference path="../globalvariables/globalvariables.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
 /// <reference path="../scripts/typings/jqueryui/jqueryui.d.ts" />
+/// <reference path="../models/mycategoryjson.ts" />
 
 class PlayOneCategoryPageController{
     public Container: string;
@@ -227,6 +228,7 @@ class PlayOneCategoryPageController{
     //#region **resize WCards
     public Smaller_Click = function (ev:Event) {
         PlayOneCategoryPageController.oneOverNWindow *= 1.2;
+        CardsHelper.RearrangeCards(WCard.restWCards, PlayOneCategoryPageController.oneOverNWindow, false, false, 1/1.2, true);
         CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow,false,true,1/1.2);
         PlayOneCategoryPageController.Current.defaultCardStyle = {
             width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
@@ -246,6 +248,7 @@ class PlayOneCategoryPageController{
     };
     public Larger_Click = function (ev: Event) {
         PlayOneCategoryPageController.oneOverNWindow /= 1.2;
+        CardsHelper.RearrangeCards(WCard.restWCards, PlayOneCategoryPageController.oneOverNWindow, false, false, 1.2, true);
         CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow,false,true,1.2);
         PlayOneCategoryPageController.Current.defaultCardStyle = {
             width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
@@ -393,18 +396,26 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     var showedWcards: WCard[] = WCard.showedWCards;
     var ith: number = 0;
     //* [2016-05-20 16:03] Initialize hyperLink & WCards & Background
-    var jObj = JSON.parse(jsonTxt);
+    var jObj = JSON.parse(jsonTxt) as MYCategoryJson;
+    //* [2016-06-17 16:59] Initialize the settings inside the dropdown
+    PlayOneCategoryPageController.scope.$apply(function () {
+        if (jObj.numWCardShown) PlayOneCategoryPageController.numWCardShown = jObj.numWCardShown;
+        if (jObj.isBGAlsoChange) PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
+        if (jObj.isPickWCardsRandomly) PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
+    });
+
     CardsHelper.GetWCardsCallback(jObj, restWcards); //Get WCards
-    PlayOneCategoryPageController.Current.hyperLink = jObj["Link"]; //Get HyperLink
+    PlayOneCategoryPageController.Current.hyperLink = jObj.Link; //Get HyperLink
     if (jObj["Background"]) {
-        if (jObj["Background"]["ImgStyle"]) {
-            var myStyle = jObj["Background"]["ImgStyle"];
+        var bgSettings = jObj.Background;
+        if (bgSettings.ImgStyle) {
+            var myStyle = bgSettings.ImgStyle;
             myStyle = CardsHelper.CorrectBackgroundStyle(myStyle, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
             $(PlayOneCategoryPageController.Current.imgBackground).css(myStyle); //Get Background Image
         }
 
-        if (jObj["Background"]["AudioProperties"]) {
-            $(PlayOneCategoryPageController.Current.meBackground).prop(jObj["Background"]["AudioProperties"]);
+        if (bgSettings.AudioProperties) {
+            $(PlayOneCategoryPageController.Current.meBackground).prop(bgSettings.AudioProperties);
             //PlayOneCategoryPageController.Current.meBackground.load();
             //PlayOneCategoryPageController.Current.meBackground.play();
             //$(PlayOneCategoryPageController.Current.meBackground).one("loadstart", function () {

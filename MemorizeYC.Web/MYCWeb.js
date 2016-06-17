@@ -427,6 +427,7 @@ var PlayOneCategoryPageController = (function () {
         };
         this.Smaller_Click = function (ev) {
             PlayOneCategoryPageController.oneOverNWindow *= 1.2;
+            CardsHelper.RearrangeCards(WCard.restWCards, PlayOneCategoryPageController.oneOverNWindow, false, false, 1 / 1.2, true);
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true, 1 / 1.2);
             PlayOneCategoryPageController.Current.defaultCardStyle = {
                 width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
@@ -443,6 +444,7 @@ var PlayOneCategoryPageController = (function () {
         };
         this.Larger_Click = function (ev) {
             PlayOneCategoryPageController.oneOverNWindow /= 1.2;
+            CardsHelper.RearrangeCards(WCard.restWCards, PlayOneCategoryPageController.oneOverNWindow, false, false, 1.2, true);
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true, 1.2);
             PlayOneCategoryPageController.Current.defaultCardStyle = {
                 width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
@@ -685,16 +687,25 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
     var showedWcards = WCard.showedWCards;
     var ith = 0;
     var jObj = JSON.parse(jsonTxt);
+    PlayOneCategoryPageController.scope.$apply(function () {
+        if (jObj.numWCardShown)
+            PlayOneCategoryPageController.numWCardShown = jObj.numWCardShown;
+        if (jObj.isBGAlsoChange)
+            PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
+        if (jObj.isPickWCardsRandomly)
+            PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
+    });
     CardsHelper.GetWCardsCallback(jObj, restWcards);
-    PlayOneCategoryPageController.Current.hyperLink = jObj["Link"];
+    PlayOneCategoryPageController.Current.hyperLink = jObj.Link;
     if (jObj["Background"]) {
-        if (jObj["Background"]["ImgStyle"]) {
-            var myStyle = jObj["Background"]["ImgStyle"];
+        var bgSettings = jObj.Background;
+        if (bgSettings.ImgStyle) {
+            var myStyle = bgSettings.ImgStyle;
             myStyle = CardsHelper.CorrectBackgroundStyle(myStyle, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
             $(PlayOneCategoryPageController.Current.imgBackground).css(myStyle);
         }
-        if (jObj["Background"]["AudioProperties"]) {
-            $(PlayOneCategoryPageController.Current.meBackground).prop(jObj["Background"]["AudioProperties"]);
+        if (bgSettings.AudioProperties) {
+            $(PlayOneCategoryPageController.Current.meBackground).prop(bgSettings.AudioProperties);
             $(document).one("click", PlayOneCategoryPageController.Current.onPlayBGSound);
         }
     }
@@ -920,11 +931,12 @@ var MathHelper = (function () {
 var CardsHelper = (function () {
     function CardsHelper() {
     }
-    CardsHelper.RearrangeCards = function (wcards, nCol, isRandom, isOptimizeSize, expandRatio) {
+    CardsHelper.RearrangeCards = function (wcards, nCol, isRandom, isOptimizeSize, expandRatio, justFixed) {
         if (nCol === void 0) { nCol = 5; }
         if (isRandom === void 0) { isRandom = false; }
         if (isOptimizeSize === void 0) { isOptimizeSize = true; }
         if (expandRatio === void 0) { expandRatio = 1; }
+        if (justFixed === void 0) { justFixed = false; }
         if (!wcards || wcards.length === 0)
             return;
         var topOfTop = 50;
@@ -936,7 +948,7 @@ var CardsHelper = (function () {
         var maxWidth = 0;
         for (var i1 = 0; i1 < wcards.length; i1++) {
             var card = wcards[i1];
-            if (!card.cardInfo.IsSizeFixed) {
+            if (!card.cardInfo.IsSizeFixed && !justFixed) {
                 var size = [wWidth / nCol, wHeight / nCol];
                 if (!card.viewWHRatio)
                     card.viewWHRatio = new Array();
@@ -952,13 +964,13 @@ var CardsHelper = (function () {
                 if (isOptimizeSize)
                     card.viewSize = size;
             }
-            else {
+            else if (card.cardInfo.IsSizeFixed) {
                 for (var i0 = 0; i0 < card.viewSize.length; i0++) {
                     card.viewSize[i0] *= expandRatio;
                 }
                 card.viewSize = card.viewSize;
             }
-            if (!card.cardInfo.IsXPosFixed || !card.cardInfo.IsYPosFixed) {
+            if ((!card.cardInfo.IsXPosFixed || !card.cardInfo.IsYPosFixed) && !justFixed) {
                 var predictTop = currentPosition[1] + card.viewSize[1] + 20;
                 if (predictTop > wHeight) {
                     currentPosition = [currentPosition[0] + maxWidth + 20, topOfTop];
@@ -973,7 +985,7 @@ var CardsHelper = (function () {
                 else
                     currentPosition[1] += card.viewSize[1] + 20;
             }
-            else {
+            else if (card.cardInfo.IsXPosFixed && card.cardInfo.IsYPosFixed) {
                 for (var i0 = 0; i0 < card.viewPosition.length; i0++) {
                     card.viewPosition[i0] *= expandRatio;
                 }
@@ -1008,7 +1020,7 @@ var CardsHelper = (function () {
     CardsHelper.GetWCardsCallback = function (jObj, cards) {
         if (!jObj)
             return;
-        var des = jObj["Cards"];
+        var des = jObj.Cards;
         if (!des)
             return;
         for (var i0 = 0; i0 < des.length; i0++) {
