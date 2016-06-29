@@ -116,7 +116,15 @@ class CardsHelper {
         if (!des.Dictate && des.FileName) {
             var iDot: number = des.FileName.lastIndexOf('.');
             if (iDot > 0)
-                des.Dictate = decodeURIComponent( des.FileName.substring(0, iDot));
+                des.Dictate = decodeURIComponent(des.FileName.substring(0, iDot));
+            //* [2016-06-29 17:05] Take out s??.
+            if (des.Dictate[0].toLowerCase() === 's') {
+                if (/^[s,S][0-9]+\./.test(des.Dictate)) {
+                    iDot = des.Dictate.indexOf('.');
+                    des.Dictate = des.Dictate.substring(iDot + 1).trim();
+                }
+            }
+
         }
     }
 

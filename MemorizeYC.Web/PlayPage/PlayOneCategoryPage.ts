@@ -1,8 +1,10 @@
-﻿/// <reference path="../scripts/typings/jquery/jquery.d.ts" />
+﻿/// <reference path="../helpers/speechsynthesishelper.ts" />
+/// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../globalvariables/globalvariables.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
 /// <reference path="../scripts/typings/jqueryui/jqueryui.d.ts" />
 /// <reference path="../models/mycategoryjson.ts" />
+/// <reference path="../mytpdefinitions/chrome.d.ts" />
 
 class PlayOneCategoryPageController{
     public Container: string;
@@ -26,7 +28,7 @@ class PlayOneCategoryPageController{
     public bottomNavbarHeight: number;
     public defaultCardWidth: number;
     public defaultCardHeight: number;
-    public defaultCardStyle: Object;
+    public defaultCardStyle: Object = { width: "10vw", height: "10vh" };
     public level: number;
 
     //* [2016-05-27 16:01] Timer for scores
@@ -113,6 +115,16 @@ class PlayOneCategoryPageController{
     }
     //#endregion PlayType
 
+    //#region For SpeechSynthesis
+    get synAllVoices(): Array<SpeechSynthesisVoice_Instance> {
+        return GlobalVariables.allVoices;
+    }
+    set synAllVoices(value: Array<SpeechSynthesisVoice_Instance>) {
+        GlobalVariables.allVoices = value;
+    }
+    public currentSynVoice: SpeechSynthesisVoice_Instance;
+    //#endregion For SpeechSynthesis
+
     public ClearBeforeLeavePage() {
         $(window).off('resize',PlayOneCategoryPageController.Current.onWindowResize);  
         $(document).off('click', PlayOneCategoryPageController.Current.onPlayBGSound);
@@ -123,6 +135,9 @@ class PlayOneCategoryPageController{
     constructor($scope, $routeParams) {
         //* [2016-06-06 12:04] Reload the web page if needed.
         VersionHelper.ReloadIfNeeded();
+
+        //* [2016-06-28 22:17] Initialize allVoices if needed
+        SpeechSynthesisHelper.getAllVoices();
 
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
@@ -195,14 +210,14 @@ class PlayOneCategoryPageController{
         var wcards = WCard.showedWCards;
         CardsHelper.RearrangeCards(wcards, PlayOneCategoryPageController.oneOverNWindow);
 
-        PlayOneCategoryPageController.scope.$apply(function () {
-            if (wcards.length > 0) {
-                PlayOneCategoryPageController.Current.defaultCardStyle = {
-                    width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-                    height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-                };
-            }
-        });
+        //PlayOneCategoryPageController.scope.$apply(function () {
+        //    if (wcards.length > 0) {
+        //        PlayOneCategoryPageController.Current.defaultCardStyle = {
+        //            width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+        //            height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+        //        };
+        //    }
+        //});
     };
     public ShowNewWCards_Click = function () {
         //* [2016-05-24 14:46] Remove the style of animation
@@ -230,10 +245,10 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.oneOverNWindow *= 1.2;
         CardsHelper.RearrangeCards(WCard.restWCards, PlayOneCategoryPageController.oneOverNWindow, false, false, 1/1.2, true);
         CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow,false,true,1/1.2);
-        PlayOneCategoryPageController.Current.defaultCardStyle = {
-            width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-            height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-        };
+        //PlayOneCategoryPageController.Current.defaultCardStyle = {
+        //    width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+        //    height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+        //};
 
         if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
             var bGObj = PlayOneCategoryPageController.Current.imgBackground;
@@ -250,10 +265,10 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.oneOverNWindow /= 1.2;
         CardsHelper.RearrangeCards(WCard.restWCards, PlayOneCategoryPageController.oneOverNWindow, false, false, 1.2, true);
         CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow,false,true,1.2);
-        PlayOneCategoryPageController.Current.defaultCardStyle = {
-            width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-            height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-        };
+        //PlayOneCategoryPageController.Current.defaultCardStyle = {
+        //    width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+        //    height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+        //};
 
         if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
             var bGObj = PlayOneCategoryPageController.Current.imgBackground;
@@ -294,6 +309,12 @@ class PlayOneCategoryPageController{
                     PlayOneCategoryPageController.Current.CFolder);
                 meAud.load();
                 meAud.play();
+            } else if (GlobalVariables.synUtterance) {
+                GlobalVariables.synUtterance.voice = PlayOneCategoryPageController.Current.currentSynVoice;
+                GlobalVariables.synUtterance.rate = Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN);
+                GlobalVariables.synUtterance.text = synAnsWCard.cardInfo.Dictate;
+                GlobalVariables.synthesis.cancel();
+                GlobalVariables.synthesis.speak(GlobalVariables.synUtterance);
             }
 
             //* [2016-05-27 17:40] Update a timer
@@ -335,6 +356,13 @@ class PlayOneCategoryPageController{
         }
         //* [2016-05-23 14:59] Since wcards.length!=0, choose one WCard randomly.
         var ith: number = MathHelper.MyRandomN(0, wcards.length - 1);
+        var ithOld: number = wcards.indexOf(PlayOneCategoryPageController.Current.synAnsWCard);
+        if (ithOld < 0)
+            ith = MathHelper.MyRandomN(0, wcards.length - 1);
+        else {
+            ith = MathHelper.MyRandomN(0, wcards.length - 2);
+            ith = (ith < ithOld) ? ith : ith+1;
+        }
         PlayOneCategoryPageController.Current.synAnsWCard = wcards[ith];
         PlayOneCategoryPageController.Current.synPlay_Click(ev);
     };
@@ -402,6 +430,18 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         if (jObj.numWCardShown) PlayOneCategoryPageController.numWCardShown = jObj.numWCardShown;
         if (jObj.isBGAlsoChange) PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
         if (jObj.isPickWCardsRandomly) PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
+    });
+    //* [2016-06-29 15:16] Update SpeechSynthesis current voice
+    PlayOneCategoryPageController.scope.$apply(() => {
+        if (GlobalVariables.currentSynVoice)
+            PlayOneCategoryPageController.Current.currentSynVoice = GlobalVariables.currentSynVoice;
+        else if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
+            PlayOneCategoryPageController.Current.synAllVoices = GlobalVariables.allVoices;
+            var vVoice: SpeechSynthesisVoice_Instance;
+            if (jObj.SynLang)
+                vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(jObj.SynLang);
+            PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
+        }
     });
 
     CardsHelper.GetWCardsCallback(jObj, restWcards); //Get WCards
@@ -550,10 +590,10 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     CardsHelper.RearrangeCards(showedWcards, PlayOneCategoryPageController.oneOverNWindow);
 
     //* [2016-05-12 17:09] Set the default width and height of a card
-    if (showedWcards.length > 0) {
-        PlayOneCategoryPageController.Current.defaultCardStyle = {
-            width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-            height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-        };
-    }
+    //if (showedWcards.length > 0) {
+    //    PlayOneCategoryPageController.Current.defaultCardStyle = {
+    //        width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
+    //        height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
+    //    };
+    //}
 }

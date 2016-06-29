@@ -1,4 +1,5 @@
-﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../helpers/speechsynthesishelper.ts" />
+/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../helpers/myfilehelper.ts" />
 /// <reference path="../helpers/versionhelper.ts" />
@@ -7,6 +8,9 @@
 function ChooseAContainerPageController($scope) {
     //* [2016-06-06 12:04] Reload the web page if needed.
     VersionHelper.ReloadIfNeeded();
+
+    //* [2016-06-28 22:21] Load all voices again for speechSynthesis
+    SpeechSynthesisHelper.getAllVoices();
 
     if (GlobalVariables.isLog) {
         console.log("ChooseAContainerPageController in");

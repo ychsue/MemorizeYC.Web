@@ -1,5 +1,5 @@
-﻿<audio id="meCardsAudio" preload="none"/>
-<audio id="meBackground" preload="none"/>
+﻿<audio id="meCardsAudio" preload="none" />
+<audio id="meBackground" preload="none" />
 <div id="dlDblClickWCard" title="Double clicked"></div>
 <div id="dlFinish" title="All Done!">
     <h2>Your Score Is {{ctrl.totalScore}}/{{ctrl.glScore}}</h2>
@@ -9,14 +9,14 @@
 <nav class="navbar navbar-default navbar-fixed-bottom" id="bottomNavbar">
     <div class="container-fluid" ng-show="ctrl.playType==='syn'">
         <div class="row">
-<!--            <button id="btSynPlay" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()" title="Click me at first.">-->
+            <!--            <button id="btSynPlay" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()" title="Click me at first.">-->
             <button id="btSynPlay" class="col-xs-1 btn btn-default" title="Click me at first.">
-                    <span class="glyphicon glyphicon-play" />
+                <span class="glyphicon glyphicon-play" />
             </button>
             <button class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click($event)">
                 <span class="glyphicon glyphicon-step-forward" />
             </button>
-            <div class="col-xs-10" ng-bind="ctrl.synAnsWCard.cardInfo.Dictate"></div>
+            <div class="col-xs-10" style="font-size:x-large" ng-bind="ctrl.synAnsWCard.cardInfo.Dictate"></div>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
                     <img src="https://openclipart.org/image/2400px/svg_to_png/34345/signore-architetto-fran-01r.png" alt="microphone" style="height:32px" />
                 </button>
                 <input type="text" name="tbRecSentence" class="col-xs-10" ng-model="ctrl.recInputSentence" />
-                <input type="image" class="col-xs-1 btn btn-default" src="http://news.toyark.com/wp-content/uploads/sites/4/2013/08/New-52-Green-Arrow-07.jpg" style="height:44px; width:auto"/>
+                <input type="image" class="col-xs-1 btn btn-default" src="http://news.toyark.com/wp-content/uploads/sites/4/2013/08/New-52-Green-Arrow-07.jpg" style="height:44px; width:auto" />
             </form>
         </div>
     </div>
@@ -35,7 +35,7 @@
     <div class="container-fluid" ng-show="ctrl.playType==='hint'">
         <div class="row">
             <div class="col-xs-1 glyphicon glyphicon-exclamation-sign" style="font-size:large"></div>
-            <div class="col-xs-11 text-center" style="display:table-cell; vertical-align:central">{{ctrl.selWCard.cardInfo.Dictate}}</div>
+            <div class="col-xs-11 text-center" style="display:table-cell; vertical-align:central; font-size:x-large">{{ctrl.selWCard.cardInfo.Dictate}}</div>
         </div>
     </div>
 
@@ -44,7 +44,20 @@
 <nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
     <div class="container-fluid">
         <div class="row">
-            <a href="http://memorizeyc.azurewebsites.net" class="col-xs-1 btn btn-default">©</a>
+            <div class="dropdown">
+                <button class="col-xs-1 dropdown-toggle btn btn-default" type="button" id="dropdownLangSettings" data-toggle="dropdown" aria-haspopup="false">
+                    <img src="http://memorizeyc.azurewebsites.net/Static/PlayPage/SpeechLang.png" alt="Choose a Language" style="width:32px" />
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-left" style="margin-left:12px;" >
+                    <div ng-show="ctrl.synAllVoices&&ctrl.synAllVoices.length!=0">
+                        <h3><span class="glyphicon-headphones glyphicon"></span>Speech Synthesis</h3>
+                        <select ng-model="ctrl.currentSynVoice" ng-options="c.name for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer" ></select>
+                    </div>
+                    <h3>Contributor</h3>
+                    <a href="http://memorizeyc.azurewebsites.net/">© MemorizeYC</a>
+                </div>
+            </div>
             <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle col-xs-1" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -70,7 +83,7 @@
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="cbBGAlsoChange" value="" ng-model="ctrl.isBGAlsoChange"/>
+                                        <input type="checkbox" name="cbBGAlsoChange" value="" ng-model="ctrl.isBGAlsoChange" />
                                     </label>
                                     Resize Background, too.
                                 </div>
@@ -125,7 +138,7 @@
                     <li class="dropdown-header">Audio rate</li>
                     <li class="container">
                         <div class="col-xs-12">
-                            <input type="range" id="rgAudioRate" ng-model="ctrl.rate2PowN" min="-2" max="2"/>
+                            <input type="range" id="rgAudioRate" ng-model="ctrl.rate2PowN" min="-2" max="2" />
                         </div>
                     </li>
 

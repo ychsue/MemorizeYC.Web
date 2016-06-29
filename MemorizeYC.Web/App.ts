@@ -1,4 +1,5 @@
 ﻿/// <reference path="playpage/playonecategorypage.ts" />
+/// <reference path="helpers/speechsynthesishelper.ts" />
 /// <reference path="scripts/typings/angularjs/angular-route.d.ts" />
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
 

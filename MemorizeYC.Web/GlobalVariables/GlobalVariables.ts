@@ -1,4 +1,6 @@
-﻿/// <reference path="../models/enums.ts" />
+﻿/// <reference path="../helpers/speechsynthesishelper.ts" />
+/// <reference path="../models/enums.ts" />
+/// <reference path="../mytpdefinitions/chrome.d.ts" />
 
 class GlobalVariables {
     public static categoryListFileName: string = "MYCategory.json";
@@ -28,5 +30,11 @@ class GlobalVariables {
 
     public static version: string = "2016.0606.1.5"; //Change version.json, too
     public static versionFile: string = GlobalVariables.rootDir + "version.json";
+
+    //* [2016-06-28 21:27] Added for Speech
+    public static synthesis: SpeechSynthesis_Instance = window["speechSynthesis"];
+    public static allVoices: Array<SpeechSynthesisVoice_Instance>=undefined;
+    public static currentSynVoice: SpeechSynthesisVoice_Instance = undefined;
+    public static synUtterance: SpeechSynthesisUtterance_Instance = undefined;
 
 }

@@ -1,3 +1,41 @@
+var SpeechSynthesisHelper = (function () {
+    function SpeechSynthesisHelper() {
+    }
+    SpeechSynthesisHelper.getAllVoices = function () {
+        if (!GlobalVariables.synthesis || GlobalVariables.allVoices)
+            return;
+        GlobalVariables.allVoices = GlobalVariables.synthesis.getVoices();
+        SpeechSynthesisHelper.timerID = setInterval(function () {
+            SpeechSynthesisHelper.ith++;
+            if (GlobalVariables.allVoices || SpeechSynthesisHelper.ith > 10) {
+                clearInterval(SpeechSynthesisHelper.timerID);
+                SpeechSynthesisHelper.timerID = null;
+                SpeechSynthesisHelper.ith = 0;
+                GlobalVariables.synUtterance = new SpeechSynthesisUtterance("Welcome!");
+            }
+            else {
+                GlobalVariables.allVoices = GlobalVariables.synthesis.getVoices();
+            }
+        }, 250);
+    };
+    ;
+    SpeechSynthesisHelper.getSynVoiceFromLang = function (lang) {
+        if (!GlobalVariables.allVoices)
+            return null;
+        var vVoice = null;
+        for (var i0 = 0; i0 < GlobalVariables.allVoices.length; i0++) {
+            var voice = GlobalVariables.allVoices[i0];
+            if (voice.lang.toLowerCase() === lang.toLowerCase()) {
+                vVoice = voice;
+                break;
+            }
+        }
+        ;
+        return vVoice;
+    };
+    SpeechSynthesisHelper.ith = 0;
+    return SpeechSynthesisHelper;
+}());
 var PlayTypeEnum = (function () {
     function PlayTypeEnum() {
     }
@@ -23,6 +61,10 @@ var GlobalVariables = (function () {
     GlobalVariables.currentDocumentSize = [0, 0];
     GlobalVariables.version = "2016.0606.1.5";
     GlobalVariables.versionFile = GlobalVariables.rootDir + "version.json";
+    GlobalVariables.synthesis = window["speechSynthesis"];
+    GlobalVariables.allVoices = undefined;
+    GlobalVariables.currentSynVoice = undefined;
+    GlobalVariables.synUtterance = undefined;
     return GlobalVariables;
 }());
 var MyFileHelper = (function () {
@@ -388,6 +430,7 @@ var PlayOneCategoryPageController = (function () {
         this.btSynPlay = document.getElementById('btSynPlay');
         this.isBackAudioStartLoad = false;
         this.isBGAlsoChange = true;
+        this.defaultCardStyle = { width: "10vw", height: "10vh" };
         this.maxDelScore = 20;
         this.pgScore = document.getElementById('pgScore');
         this._rate2PowN = 0;
@@ -402,14 +445,6 @@ var PlayOneCategoryPageController = (function () {
             GlobalVariables.currentDocumentSize[1] = $(document).innerHeight();
             var wcards = WCard.showedWCards;
             CardsHelper.RearrangeCards(wcards, PlayOneCategoryPageController.oneOverNWindow);
-            PlayOneCategoryPageController.scope.$apply(function () {
-                if (wcards.length > 0) {
-                    PlayOneCategoryPageController.Current.defaultCardStyle = {
-                        width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-                        height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-                    };
-                }
-            });
         };
         this.ShowNewWCards_Click = function () {
             if (PlayOneCategoryPageController.Current.selWCard)
@@ -429,10 +464,6 @@ var PlayOneCategoryPageController = (function () {
             PlayOneCategoryPageController.oneOverNWindow *= 1.2;
             CardsHelper.RearrangeCards(WCard.restWCards, PlayOneCategoryPageController.oneOverNWindow, false, false, 1 / 1.2, true);
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true, 1 / 1.2);
-            PlayOneCategoryPageController.Current.defaultCardStyle = {
-                width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-                height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-            };
             if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
                 var bGObj = PlayOneCategoryPageController.Current.imgBackground;
                 $(bGObj).css({
@@ -446,10 +477,6 @@ var PlayOneCategoryPageController = (function () {
             PlayOneCategoryPageController.oneOverNWindow /= 1.2;
             CardsHelper.RearrangeCards(WCard.restWCards, PlayOneCategoryPageController.oneOverNWindow, false, false, 1.2, true);
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true, 1.2);
-            PlayOneCategoryPageController.Current.defaultCardStyle = {
-                width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-                height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-            };
             if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
                 var bGObj = PlayOneCategoryPageController.Current.imgBackground;
                 $(bGObj).css({
@@ -477,6 +504,13 @@ var PlayOneCategoryPageController = (function () {
                     meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
                     meAud.load();
                     meAud.play();
+                }
+                else if (GlobalVariables.synUtterance) {
+                    GlobalVariables.synUtterance.voice = PlayOneCategoryPageController.Current.currentSynVoice;
+                    GlobalVariables.synUtterance.rate = Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN);
+                    GlobalVariables.synUtterance.text = synAnsWCard.cardInfo.Dictate;
+                    GlobalVariables.synthesis.cancel();
+                    GlobalVariables.synthesis.speak(GlobalVariables.synUtterance);
                 }
                 if (!PlayOneCategoryPageController.Current.scoreTimerId) {
                     PlayOneCategoryPageController.Current.localMinusScore = 0;
@@ -509,6 +543,13 @@ var PlayOneCategoryPageController = (function () {
                 return;
             }
             var ith = MathHelper.MyRandomN(0, wcards.length - 1);
+            var ithOld = wcards.indexOf(PlayOneCategoryPageController.Current.synAnsWCard);
+            if (ithOld < 0)
+                ith = MathHelper.MyRandomN(0, wcards.length - 1);
+            else {
+                ith = MathHelper.MyRandomN(0, wcards.length - 2);
+                ith = (ith < ithOld) ? ith : ith + 1;
+            }
             PlayOneCategoryPageController.Current.synAnsWCard = wcards[ith];
             PlayOneCategoryPageController.Current.synPlay_Click(ev);
         };
@@ -544,6 +585,7 @@ var PlayOneCategoryPageController = (function () {
             }
         };
         VersionHelper.ReloadIfNeeded();
+        SpeechSynthesisHelper.getAllVoices();
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
@@ -660,6 +702,16 @@ var PlayOneCategoryPageController = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "synAllVoices", {
+        get: function () {
+            return GlobalVariables.allVoices;
+        },
+        set: function (value) {
+            GlobalVariables.allVoices = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     PlayOneCategoryPageController.prototype.ClearBeforeLeavePage = function () {
         $(window).off('resize', PlayOneCategoryPageController.Current.onWindowResize);
         $(document).off('click', PlayOneCategoryPageController.Current.onPlayBGSound);
@@ -694,6 +746,17 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
             PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
         if (jObj.isPickWCardsRandomly)
             PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
+    });
+    PlayOneCategoryPageController.scope.$apply(function () {
+        if (GlobalVariables.currentSynVoice)
+            PlayOneCategoryPageController.Current.currentSynVoice = GlobalVariables.currentSynVoice;
+        else if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
+            PlayOneCategoryPageController.Current.synAllVoices = GlobalVariables.allVoices;
+            var vVoice;
+            if (jObj.SynLang)
+                vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(jObj.SynLang);
+            PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
+        }
     });
     CardsHelper.GetWCardsCallback(jObj, restWcards);
     PlayOneCategoryPageController.Current.hyperLink = jObj.Link;
@@ -810,12 +873,6 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
         PlayOneCategoryPageController.Current.numRestWCards;
     });
     CardsHelper.RearrangeCards(showedWcards, PlayOneCategoryPageController.oneOverNWindow);
-    if (showedWcards.length > 0) {
-        PlayOneCategoryPageController.Current.defaultCardStyle = {
-            width: PlayOneCategoryPageController.Current.defaultCardWidth + "px",
-            height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
-        };
-    }
 }
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 app.controller('PlayOneCategoryPageController', ['$scope', '$routeParams', PlayOneCategoryPageController]);
@@ -864,6 +921,7 @@ var VersionHelper = (function () {
 }());
 function ChooseAContainerPageController($scope) {
     VersionHelper.ReloadIfNeeded();
+    SpeechSynthesisHelper.getAllVoices();
     if (GlobalVariables.isLog) {
         console.log("ChooseAContainerPageController in");
         console.log(location.origin);
@@ -1036,6 +1094,12 @@ var CardsHelper = (function () {
             var iDot = des.FileName.lastIndexOf('.');
             if (iDot > 0)
                 des.Dictate = decodeURIComponent(des.FileName.substring(0, iDot));
+            if (des.Dictate[0].toLowerCase() === 's') {
+                if (/^[s,S][0-9]+\./.test(des.Dictate)) {
+                    iDot = des.Dictate.indexOf('.');
+                    des.Dictate = des.Dictate.substring(iDot + 1).trim();
+                }
+            }
         }
     };
     CardsHelper.MoveArrayElements = function (from, to, numToMove, isRandomly, myAppendTo) {

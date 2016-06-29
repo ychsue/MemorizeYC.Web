@@ -55,6 +55,7 @@
     <Content Include="MYCWeb.html" />
     <Content Include="index.html" />
     <Content Include="PlayPage\PlayOneCategoryPage.html" />
+    <Content Include="PlayPage\SpeechLang.png" />
     <Content Include="Samples\General Physics\Ch1 Concepts of Motion\BoxFiles\operational definition.txt" />
     <Content Include="Samples\geography 地理\Continents 七大洲\Africa 非洲.png" />
     <Content Include="Samples\geography 地理\Continents 七大洲\Antarctica 南極洲.png" />
@@ -359,6 +360,7 @@
     <TypeScriptCompile Include="Helpers\CardsHelper.ts" />
     <TypeScriptCompile Include="Helpers\mathhelper.ts" />
     <TypeScriptCompile Include="Helpers\MyFileHelper.ts" />
+    <TypeScriptCompile Include="Helpers\SpeechSynthesisHelper.ts" />
     <TypeScriptCompile Include="Helpers\VersionHelper.ts" />
     <TypeScriptCompile Include="Models\BackgroundObj.ts" />
     <TypeScriptCompile Include="Models\EachCategory.ts" />
@@ -367,6 +369,7 @@
     <TypeScriptCompile Include="Models\MYCategoryJson.ts" />
     <TypeScriptCompile Include="Models\MYContainerJson.ts" />
     <TypeScriptCompile Include="Models\Version.ts" />
+    <TypeScriptCompile Include="MyTPDefinitions\Chrome.d.ts" />
     <TypeScriptCompile Include="PlayPage\PlayOneCategoryPage.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />

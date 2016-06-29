@@ -9,4 +9,7 @@ interface MYCategoryJson {
     isPickWCardsRandomly?: boolean;
     isBGAlsoChange?: boolean;
     Link?: string;
+
+    //* [2016-06-29 14:40] Added for Speech
+    SynLang?: string;
 }
