@@ -1,0 +1,18 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "Do you get it.box",
+      "Dictate": "Do you get it?"
+    },
+    { "FileName": "Everyone, take one copy..box" },
+    { "FileName": "Everyone, take one worksheet..box" },
+    { "FileName": "Eyes to the front..box" },
+    { "FileName": "It's time for class..box" },
+    { "FileName": "Let's have a roll call..box" },
+    { "FileName": "Let's stop here today..box" },
+    { "FileName": "Lower your voice!.box" },
+    { "FileName": "Take out your pen..box" },
+    { "FileName": "Take out your textbook..box" }
+  ],
+  "SynLang": "en-US"
+}

@@ -232,10 +232,10 @@ class WCard {
         }
 
         //* [2016-03-17 10:39] Show a card randomly
-        thisWCard.boxIndex = MathHelper.MyRandomN(0, thisWCard.cardsPath.length-1);
+        thisWCard.boxIndex = (thisWCard.cardsPath)? MathHelper.MyRandomN(0, thisWCard.cardsPath.length-1):0;
 
         //* [2016-03-21 15:17] Embeded in two buttons: btLeft & btRight
-        if (thisWCard.cardsPath.length > 1 && document.getElementsByClassName("btLeft").length === 0) {
+        if (thisWCard.cardsPath.length > 1 && $(thisWCard.viewCard).children(".btLeft").length === 0) {
             var tbIth = document.createElement('div');
             var btLeft = document.createElement('button');
             var btRight = document.createElement('button');

@@ -17,7 +17,8 @@
                 console.log("FeedTextFromTxtFileToACallBack: "+request);
             }
 
-            callback(request.responseText, thisCard);
+            if((<XMLHttpRequest>(ev.target)).status!=404)
+                callback(request.responseText, thisCard);
         }
         request.send();
     }

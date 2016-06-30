@@ -38,13 +38,15 @@
 
     <script>
         GlobalVariables.rootDir = "/"; //Change it if you put this SPA at a subdirectory.
-        GlobalVariables.version = "2016.0629.3.3";
+        GlobalVariables.version = "2016.0629.3.4";
         GlobalVariables.versionFile = GlobalVariables.rootDir + "version.json";
-        GlobalVariables.containers = [new AContainer(GlobalVariables.rootDir + "Samples/MYContainer"),
+        GlobalVariables.containers = [
+            new AContainer(GlobalVariables.rootDir + "Samples/課室常用英語指導用語"),
+            new AContainer(GlobalVariables.rootDir + "Samples/自然發音"),
+            new AContainer(GlobalVariables.rootDir + "Samples/General Physics"),
         new AContainer(GlobalVariables.rootDir + "Samples/健康操"),
-        new AContainer(GlobalVariables.rootDir + "Samples/自然發音"),
         new AContainer(GlobalVariables.rootDir + "Samples/geography 地理"),
-        new AContainer(GlobalVariables.rootDir + "Samples/General Physics")
+            new AContainer(GlobalVariables.rootDir + "Samples/MYContainer")
         ];
         GlobalVariables.playOneCategoryHtml = GlobalVariables.rootDir + 'PlayPage/PlayOneCategoryPage.html';
         GlobalVariables.chooseAContainerHtml = GlobalVariables.rootDir + 'GSPages/ChooseAContainerPage.html';

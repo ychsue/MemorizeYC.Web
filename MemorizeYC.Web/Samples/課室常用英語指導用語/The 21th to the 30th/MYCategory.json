@@ -1,0 +1,15 @@
+﻿{
+  "Cards": [
+    { "FileName": "Draw the curtains..box" },
+    { "FileName": "Good job..box" },
+    { "FileName": "Listen up!.box" },
+    { "FileName": "Open your book to page 11..box" },
+    { "FileName": "Pass your sheets to the front..box" },
+    { "FileName": "Put down the screen..box" },
+    { "FileName": "Put your book away..box" },
+    { "FileName": "Raise your hand..box" },
+    { "FileName": "Time's up. Pens down..box" },
+    { "FileName": "You got it..box" }
+  ],
+  "SynLang": "en-US"
+}

@@ -1,0 +1,15 @@
+﻿{
+  "Cards": [
+    { "FileName": "Don't look at others' paper..box" },
+    { "FileName": "Let me check your answer..box" },
+    { "FileName": "Let me check your work..box" },
+    { "FileName": "Make a sentence with (these words)..box" },
+    { "FileName": "Now let's start from the beginning again..box" },
+    { "FileName": "One more minute. Everyone, check your answers..box" },
+    { "FileName": "Show me (your pencil box).box" },
+    { "FileName": "Show your work to the class..box" },
+    { "FileName": "Try to do it by yourself..box" },
+    { "FileName": "You can do better than this..box" }
+  ],
+  "SynLang": "en-US"
+}

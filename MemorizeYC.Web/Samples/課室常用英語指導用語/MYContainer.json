@@ -1,0 +1,13 @@
+﻿{
+  "Categories": [
+			  {"Folder":"The 1st to the 10th"},
+			  {"Folder":"The 11th to the 20th"},
+			  {"Folder":"The 21th to the 30th"},
+			  {"Folder":"The 31th to the 40th"},
+			  {"Folder":"The 41th to the 50th"},
+			  {"Folder":"The 51th to the 60th"},
+			  {"Folder":"The 61th to the 70th"},
+			  {"Folder":"The 71th to the 80th"},
+    { "Folder": "The 81th to the 90th" }
+  ]
+}

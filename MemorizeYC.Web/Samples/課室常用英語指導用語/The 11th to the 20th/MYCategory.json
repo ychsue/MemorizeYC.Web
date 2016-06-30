@@ -1,0 +1,24 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "All done.box",
+      "Dictate": "All done?"
+    },
+    {
+      "FileName": "Are there any volunteers (to read the sentence).box",
+      "Dictate": "Are there any volunteers (to read the sentence)?"
+    },
+    {
+      "FileName": "Are you done.box",
+      "Dictate": "Are you done?"
+    },
+    { "FileName": "Brillient! (Excellent!) (Terrific!).box" },
+    { "FileName": "Correct each other's answers..box" },
+    { "FileName": "Kate, give out the workbooks, please..box" },
+    { "FileName": "Let's give her a big hand..box" },
+    { "FileName": "Let's give him a big hand..box" },
+    { "FileName": "Let's take a test..box" },
+    { "FileName": "Louder, please..box" }
+  ],
+  "SynLang": "en-US"
+}

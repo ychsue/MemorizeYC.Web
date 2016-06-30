@@ -1,0 +1,21 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "Can those in the back see it clearly%3F.box",
+      "Dictate": "Can those in the back see it clearly?"
+    },
+			   {"FileName":"Don't be afraid to make mistakes..box"},
+			   {"FileName":"Don't just sit there daydreaming..box"},
+			   {"FileName":"Don't zone out..box"},
+			   {"FileName":"Just guess if you are not sure..box"},
+			   {"FileName":"Look at this picture..box"},
+			   {"FileName":"Tell me what you see in this picture..box"},
+			   {"FileName":"There's some room for improvement..box"},
+    {
+      "FileName": "Who would like to read the sentence%3F.box",
+      "Dictate": "Who would like to read the sentence?"
+    },
+    { "FileName": "You can take a break when you finish..box" }
+  ],
+  "SynLang": "en-US"
+}

@@ -90,7 +90,8 @@ var MyFileHelper = (function () {
             if (GlobalVariables.isLog) {
                 console.log("FeedTextFromTxtFileToACallBack: " + request);
             }
-            callback(request.responseText, thisCard);
+            if ((ev.target).status != 404)
+                callback(request.responseText, thisCard);
         };
         request.send();
     };
@@ -288,8 +289,8 @@ var WCard = (function () {
             else
                 thisWCard.cardsDescription.push("");
         }
-        thisWCard.boxIndex = MathHelper.MyRandomN(0, thisWCard.cardsPath.length - 1);
-        if (thisWCard.cardsPath.length > 1 && document.getElementsByClassName("btLeft").length === 0) {
+        thisWCard.boxIndex = (thisWCard.cardsPath) ? MathHelper.MyRandomN(0, thisWCard.cardsPath.length - 1) : 0;
+        if (thisWCard.cardsPath.length > 1 && $(thisWCard.viewCard).children(".btLeft").length === 0) {
             var tbIth = document.createElement('div');
             var btLeft = document.createElement('button');
             var btRight = document.createElement('button');

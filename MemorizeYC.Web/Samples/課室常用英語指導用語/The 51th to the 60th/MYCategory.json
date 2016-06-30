@@ -1,0 +1,15 @@
+﻿{
+  "Cards": [
+    { "FileName": "Come to the front, please..box" },
+    { "FileName": "Follow me, please..box" },
+    { "FileName": "Go back to your seat, please..box" },
+    { "FileName": "Good Kid. (boy, girl).box" },
+    { "FileName": "Pay attention!.box" },
+    { "FileName": "Please take out your workbook..box" },
+    { "FileName": "Put them in order..box" },
+    { "FileName": "Repeat after me, please..box" },
+    { "FileName": "Sit still!.box" },
+    { "FileName": "You may have a 10-minute break..box" }
+  ],
+  "SynLang": "en-US"
+}
