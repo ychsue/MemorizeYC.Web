@@ -28,8 +28,8 @@ class GlobalVariables {
 
     public static currentDocumentSize: number[] = [0,0];
 
-    public static version: string = "2016.0606.1.5"; //Change version.json, too
-    public static versionFile: string = GlobalVariables.rootDir + "version.json";
+    public static version: string; //Change version.json, too
+    public static versionFile: string;
 
     //* [2016-06-28 21:27] Added for Speech
     public static synthesis: SpeechSynthesis_Instance = window["speechSynthesis"];

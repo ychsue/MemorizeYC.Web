@@ -9,9 +9,6 @@ function ChooseAContainerPageController($scope) {
     //* [2016-06-06 12:04] Reload the web page if needed.
     VersionHelper.ReloadIfNeeded();
 
-    //* [2016-06-28 22:21] Load all voices again for speechSynthesis
-    SpeechSynthesisHelper.getAllVoices();
-
     if (GlobalVariables.isLog) {
         console.log("ChooseAContainerPageController in");
         console.log(location.origin);

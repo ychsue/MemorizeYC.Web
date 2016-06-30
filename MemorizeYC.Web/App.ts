@@ -3,6 +3,8 @@
 /// <reference path="scripts/typings/angularjs/angular-route.d.ts" />
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
 
+$(window).one("load", () => {
+    SpeechSynthesisHelper.getAllVoices(() => { });});
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 
 //Controllers

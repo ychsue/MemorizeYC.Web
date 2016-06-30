@@ -1,17 +1,24 @@
 var SpeechSynthesisHelper = (function () {
     function SpeechSynthesisHelper() {
     }
-    SpeechSynthesisHelper.getAllVoices = function () {
-        if (!GlobalVariables.synthesis || GlobalVariables.allVoices)
+    SpeechSynthesisHelper.getAllVoices = function (callback) {
+        if (!GlobalVariables.synthesis)
             return;
+        if (GlobalVariables.allVoices) {
+            callback();
+            return;
+        }
         GlobalVariables.allVoices = GlobalVariables.synthesis.getVoices();
         SpeechSynthesisHelper.timerID = setInterval(function () {
             SpeechSynthesisHelper.ith++;
-            if (GlobalVariables.allVoices || SpeechSynthesisHelper.ith > 10) {
+            if (GlobalVariables.allVoices || SpeechSynthesisHelper.ith > 10000) {
                 clearInterval(SpeechSynthesisHelper.timerID);
                 SpeechSynthesisHelper.timerID = null;
                 SpeechSynthesisHelper.ith = 0;
-                GlobalVariables.synUtterance = new SpeechSynthesisUtterance("Welcome!");
+                if (GlobalVariables.allVoices) {
+                    GlobalVariables.synUtterance = new SpeechSynthesisUtterance("Welcome!");
+                    callback();
+                }
             }
             else {
                 GlobalVariables.allVoices = GlobalVariables.synthesis.getVoices();
@@ -59,8 +66,6 @@ var GlobalVariables = (function () {
     GlobalVariables.clickedViewCard = null;
     GlobalVariables.PlayType = PlayTypeEnum.syn;
     GlobalVariables.currentDocumentSize = [0, 0];
-    GlobalVariables.version = "2016.0606.1.5";
-    GlobalVariables.versionFile = GlobalVariables.rootDir + "version.json";
     GlobalVariables.synthesis = window["speechSynthesis"];
     GlobalVariables.allVoices = undefined;
     GlobalVariables.currentSynVoice = undefined;
@@ -585,7 +590,6 @@ var PlayOneCategoryPageController = (function () {
             }
         };
         VersionHelper.ReloadIfNeeded();
-        SpeechSynthesisHelper.getAllVoices();
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
@@ -747,16 +751,18 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
         if (jObj.isPickWCardsRandomly)
             PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
     });
-    PlayOneCategoryPageController.scope.$apply(function () {
-        if (GlobalVariables.currentSynVoice)
-            PlayOneCategoryPageController.Current.currentSynVoice = GlobalVariables.currentSynVoice;
-        else if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
-            PlayOneCategoryPageController.Current.synAllVoices = GlobalVariables.allVoices;
-            var vVoice;
-            if (jObj.SynLang)
-                vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(jObj.SynLang);
-            PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
-        }
+    SpeechSynthesisHelper.getAllVoices(function () {
+        PlayOneCategoryPageController.scope.$apply(function () {
+            if (GlobalVariables.currentSynVoice)
+                PlayOneCategoryPageController.Current.currentSynVoice = GlobalVariables.currentSynVoice;
+            else if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
+                PlayOneCategoryPageController.Current.synAllVoices = GlobalVariables.allVoices;
+                var vVoice;
+                if (jObj.SynLang)
+                    vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(jObj.SynLang);
+                PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
+            }
+        });
     });
     CardsHelper.GetWCardsCallback(jObj, restWcards);
     PlayOneCategoryPageController.Current.hyperLink = jObj.Link;
@@ -874,6 +880,9 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
     });
     CardsHelper.RearrangeCards(showedWcards, PlayOneCategoryPageController.oneOverNWindow);
 }
+$(window).one("load", function () {
+    SpeechSynthesisHelper.getAllVoices(function () { });
+});
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 app.controller('PlayOneCategoryPageController', ['$scope', '$routeParams', PlayOneCategoryPageController]);
 app.controller('ChooseAContainerPageController', ['$scope', '$routeParams', ChooseAContainerPageController]);
@@ -921,7 +930,6 @@ var VersionHelper = (function () {
 }());
 function ChooseAContainerPageController($scope) {
     VersionHelper.ReloadIfNeeded();
-    SpeechSynthesisHelper.getAllVoices();
     if (GlobalVariables.isLog) {
         console.log("ChooseAContainerPageController in");
         console.log(location.origin);

@@ -49,13 +49,22 @@
                     <img src="http://memorizeyc.azurewebsites.net/Static/PlayPage/SpeechLang.png" alt="Choose a Language" style="width:32px" />
                     <span class="caret"></span>
                 </button>
-                <div class="dropdown-menu dropdown-menu-left" style="margin-left:12px;" >
-                    <div ng-show="ctrl.synAllVoices&&ctrl.synAllVoices.length!=0">
-                        <h3><span class="glyphicon-headphones glyphicon"></span>Speech Synthesis</h3>
-                        <select ng-model="ctrl.currentSynVoice" ng-options="c.name for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer" ></select>
-                    </div>
-                    <h3>Contributor</h3>
-                    <a href="http://memorizeyc.azurewebsites.net/">© MemorizeYC</a>
+                <div class="dropdown-menu dropdown-menu-left" style="margin-left:12px;">
+                    <ul>
+                        <li class="dropdown-header">
+                            <h4><span class="glyphicon-headphones glyphicon"></span>Speech Synthesis</h4>
+                        </li>
+                        <li>
+                            <select ng-model="ctrl.currentSynVoice" ng-options="c.name for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer"></select>
+                        </li>
+                        <li role="separator" class="divider" />
+                        <li class="dropdown-header">
+                            <h4>Contributor</h4>
+                        </li>
+                        <li>
+                            <a href="http://memorizeyc.azurewebsites.net/">© MemorizeYC</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>

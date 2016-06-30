@@ -2,17 +2,24 @@
 class SpeechSynthesisHelper {
     public static timerID: number;
     public static ith: number = 0;
-    public static getAllVoices() {
-        if (!GlobalVariables.synthesis || GlobalVariables.allVoices ) return;
 
+    public static getAllVoices(callback: Function) {
+        if (!GlobalVariables.synthesis) return;
+        if (GlobalVariables.allVoices) {
+            callback();
+            return;
+        }
         GlobalVariables.allVoices = GlobalVariables.synthesis.getVoices();
         SpeechSynthesisHelper.timerID = setInterval(() => {
             SpeechSynthesisHelper.ith++;
-            if (GlobalVariables.allVoices ||SpeechSynthesisHelper.ith>10) {
+            if (GlobalVariables.allVoices ||SpeechSynthesisHelper.ith>10000) {
                 clearInterval(SpeechSynthesisHelper.timerID);
                 SpeechSynthesisHelper.timerID = null;
                 SpeechSynthesisHelper.ith = 0;
-                GlobalVariables.synUtterance = new SpeechSynthesisUtterance("Welcome!");
+                if (GlobalVariables.allVoices) {
+                    GlobalVariables.synUtterance = new SpeechSynthesisUtterance("Welcome!");
+                    callback();
+                }
             } else {
                 GlobalVariables.allVoices = GlobalVariables.synthesis.getVoices();
             }

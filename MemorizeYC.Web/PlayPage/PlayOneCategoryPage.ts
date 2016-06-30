@@ -136,11 +136,9 @@ class PlayOneCategoryPageController{
         //* [2016-06-06 12:04] Reload the web page if needed.
         VersionHelper.ReloadIfNeeded();
 
-        //* [2016-06-28 22:17] Initialize allVoices if needed
-        SpeechSynthesisHelper.getAllVoices();
-
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
+
         WCard.CleanWCards();
 
         //*[2016-06-07 14:27] Try to clear this Controller's actions
@@ -431,17 +429,19 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         if (jObj.isBGAlsoChange) PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
         if (jObj.isPickWCardsRandomly) PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
     });
-    //* [2016-06-29 15:16] Update SpeechSynthesis current voice
-    PlayOneCategoryPageController.scope.$apply(() => {
-        if (GlobalVariables.currentSynVoice)
-            PlayOneCategoryPageController.Current.currentSynVoice = GlobalVariables.currentSynVoice;
-        else if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
-            PlayOneCategoryPageController.Current.synAllVoices = GlobalVariables.allVoices;
-            var vVoice: SpeechSynthesisVoice_Instance;
-            if (jObj.SynLang)
-                vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(jObj.SynLang);
-            PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
-        }
+    SpeechSynthesisHelper.getAllVoices(() => {
+        //* [2016-06-29 15:16] Update SpeechSynthesis current voice
+        PlayOneCategoryPageController.scope.$apply(() => {
+            if (GlobalVariables.currentSynVoice)
+                PlayOneCategoryPageController.Current.currentSynVoice = GlobalVariables.currentSynVoice;
+            else if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
+                PlayOneCategoryPageController.Current.synAllVoices = GlobalVariables.allVoices;
+                var vVoice: SpeechSynthesisVoice_Instance;
+                if (jObj.SynLang)
+                    vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(jObj.SynLang);
+                PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
+            }
+        });
     });
 
     CardsHelper.GetWCardsCallback(jObj, restWcards); //Get WCards
