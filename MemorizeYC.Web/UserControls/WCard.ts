@@ -306,6 +306,7 @@ class WCard {
             case (FileTypeEnum.Text):
                 var tbArea = document.createElement("textarea");
                 tbArea.className = WCard.cardMainKey;
+                $(tbArea).prop("disabled",true);
                 MyFileHelper.ShowTextFromTxtFile(CardsHelper.GetTreatablePath(cardPath, this.mainFolder, this.categoryFolder)
                     , tbArea);
                 resObj = tbArea;

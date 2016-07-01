@@ -1,0 +1,22 @@
+﻿{
+  "Cards": [
+    { "FileName": "孔雀魚 (Guppy).box" },
+    { "FileName": "斑馬魚(Zebra Danio).box" },
+    { "FileName": "泰國鬥魚(Betta Splendens).box" },
+    { "FileName": "神仙魚(Angelfish).box" },
+    { "FileName": "花斑劍尾魚(Platy).box" },
+    { "FileName": "霓虹燈魚(Neon Tetra).box" }
+  ],
+  "Link": "https://zh.wikipedia.org/zh-tw/%E7%83%AD%E5%B8%A6%E9%B1%BC",
+  "SynLang": "zh-TW",
+  "Background": {
+    "ImgStyle": {
+      "width": "100vw",
+      "height": "100vh",
+      "opacity": "0.3",
+      "background-image": "http://thumb9.shutterstock.com/thumb_large/2824888/258630392/stock-photo-underwater-258630392.jpg",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    }
+  }
+}

@@ -514,6 +514,14 @@
     <Content Include="Samples\課室常用英語指導用語\The 81th to the 90th\MYCategory.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Samples\海洋生物\熱帶魚\孔雀魚 %28Guppy%29.box" />
+    <Content Include="Samples\海洋生物\熱帶魚\斑馬魚%28Zebra Danio%29.box" />
+    <Content Include="Samples\海洋生物\熱帶魚\泰國鬥魚%28Betta Splendens%29.box" />
+    <Content Include="Samples\海洋生物\熱帶魚\神仙魚%28Angelfish%29.box" />
+    <Content Include="Samples\海洋生物\熱帶魚\花斑劍尾魚%28Platy%29.box" />
+    <Content Include="Samples\海洋生物\熱帶魚\霓虹燈魚%28Neon Tetra%29.box" />
+    <Content Include="Samples\海洋生物\MYContainer.json" />
+    <Content Include="Samples\海洋生物\熱帶魚\MYCategory.json" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />

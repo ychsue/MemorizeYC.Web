@@ -28,7 +28,7 @@ class PlayOneCategoryPageController{
     public bottomNavbarHeight: number;
     public defaultCardWidth: number;
     public defaultCardHeight: number;
-    public defaultCardStyle: Object = { width: "10vw", height: "10vh" };
+    public defaultCardStyle: Object = { width: "16vw", height: "16vh" };
     public level: number;
 
     //* [2016-05-27 16:01] Timer for scores
@@ -48,6 +48,8 @@ class PlayOneCategoryPageController{
     public scoreTimerId: number;
     public maxDelScore: number = 20;
     public pgScore: HTMLDivElement = document.getElementById('pgScore') as HTMLDivElement;
+
+    public SynLang: string;
 
     public static Current: PlayOneCategoryPageController;
     public static scope;
@@ -197,6 +199,16 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.Current.meBackground.load();
         PlayOneCategoryPageController.Current.meBackground.play();
     };
+
+    public onReloadSynVoices= function (ev) {
+        SpeechSynthesisHelper.getAllVoices(PlayOneCategoryPageController.Current.GetCurrentSynVoice);
+        SpeechSynthesisHelper.getAllVoices(() => {
+            if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
+                alert("SynLang: " + PlayOneCategoryPageController.Current.SynLang + " ." + "Has allVoices.");
+            } else
+                alert("No Voice."+" isIOS="+GlobalVariables.isIOS);
+        });
+    }
 
     public onWindowResize = function (ev) {
         //* [2016-05-20 11:40] Resize only when the document's size is changed.
@@ -406,6 +418,23 @@ class PlayOneCategoryPageController{
     }
     //#endregion For Score
 
+    public GetCurrentSynVoice() {
+        //* [2016-06-29 15:16] Update SpeechSynthesis current voice
+        PlayOneCategoryPageController.scope.$apply(() => {
+            if (GlobalVariables.currentSynVoice)
+                PlayOneCategoryPageController.Current.currentSynVoice = GlobalVariables.currentSynVoice;
+            else if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
+                var allVoices = GlobalVariables.allVoices;
+                PlayOneCategoryPageController.Current.synAllVoices = null;
+                PlayOneCategoryPageController.Current.synAllVoices = allVoices; //Try to force it to renew it
+                var vVoice: SpeechSynthesisVoice_Instance;
+                if (PlayOneCategoryPageController.Current.SynLang)
+                    vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(PlayOneCategoryPageController.Current.SynLang);
+                PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
+            }
+        })
+    };
+
     public ShowdlFinish() {
         var nFinal = PlayOneCategoryPageController.Current.totalScore;
         var nAll = PlayOneCategoryPageController.Current.glScore;
@@ -429,20 +458,8 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         if (jObj.isBGAlsoChange) PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
         if (jObj.isPickWCardsRandomly) PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
     });
-    SpeechSynthesisHelper.getAllVoices(() => {
-        //* [2016-06-29 15:16] Update SpeechSynthesis current voice
-        PlayOneCategoryPageController.scope.$apply(() => {
-            if (GlobalVariables.currentSynVoice)
-                PlayOneCategoryPageController.Current.currentSynVoice = GlobalVariables.currentSynVoice;
-            else if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
-                PlayOneCategoryPageController.Current.synAllVoices = GlobalVariables.allVoices;
-                var vVoice: SpeechSynthesisVoice_Instance;
-                if (jObj.SynLang)
-                    vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(jObj.SynLang);
-                PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
-            }
-        });
-    });
+    PlayOneCategoryPageController.Current.SynLang = jObj.SynLang;
+    SpeechSynthesisHelper.getAllVoices(PlayOneCategoryPageController.Current.GetCurrentSynVoice);
 
     CardsHelper.GetWCardsCallback(jObj, restWcards); //Get WCards
     PlayOneCategoryPageController.Current.hyperLink = jObj.Link; //Get HyperLink
@@ -562,9 +579,9 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         });
 
         //* [2016-05-19 20:02] Make it resizable
-        if(!restWcards[i0].cardInfo.IsSizeFixed)
+        if (!restWcards[i0].cardInfo.IsXPosFixed || !restWcards[i0].cardInfo.IsYPosFixed)
             $(restWcards[i0].viewCard).draggable();
-        if(!restWcards[i0].cardInfo.IsXPosFixed || !restWcards[i0].cardInfo.IsYPosFixed)
+        if (!restWcards[i0].cardInfo.IsSizeFixed)
             $(restWcards[i0].viewCard).resizable();
 
         $(restWcards[i0].viewCard).on("resize", function (ev, ui) {
