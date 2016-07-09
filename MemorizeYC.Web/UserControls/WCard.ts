@@ -122,7 +122,12 @@ class WCard {
         this.mainFolder = mainFolder;
         this.categoryFolder = categoryFolder;
         this.IniCard(cardInfo);
+
         var viewCard = this.viewCard;
+        //* [2016-07-06 16:39] Added for moving
+        var divMove = document.createElement("span") as HTMLSpanElement;
+        $(divMove).addClass('wMove');
+        viewCard.appendChild(divMove);
         //viewCard.WCard = this; // This one cannot pass the 'Build'.
         $(viewCard).on('click', function (ev) { 
             //* [2016-05-24 15:18] To exclude the case of dragging a card
@@ -142,11 +147,13 @@ class WCard {
                 var thisWCard = WCard.FindWCardFromViewCard(clickedViewCard);
                 if (num == 1) {
                     //* [2016-05-10 11:46] for single click
-                    $(thisWCard).trigger(GlobalVariables.onSingleClick); //TODO: What I really want is triggering its parent, WCard.
+                    $(thisWCard.viewCard).trigger(GlobalVariables.onSingleClick);//For JQuery
+                    $(thisWCard).trigger(GlobalVariables.onSingleClick);
                 }
                 else if (num == 2) {
                     //* [2016-05-10 11:53] for double click
-                    $(thisWCard).trigger(GlobalVariables.onDoubleClick); //TODO: What I really want is triggering its parent, WCard.
+                    $(thisWCard.viewCard).trigger(GlobalVariables.onDoubleClick);//For JQuery
+                    $(thisWCard).trigger(GlobalVariables.onDoubleClick);
                 }
                 else
                     ;
@@ -306,7 +313,7 @@ class WCard {
             case (FileTypeEnum.Text):
                 var tbArea = document.createElement("textarea");
                 tbArea.className = WCard.cardMainKey;
-                $(tbArea).prop("disabled",true);
+                tbArea.readOnly = true;
                 MyFileHelper.ShowTextFromTxtFile(CardsHelper.GetTreatablePath(cardPath, this.mainFolder, this.categoryFolder)
                     , tbArea);
                 resObj = tbArea;

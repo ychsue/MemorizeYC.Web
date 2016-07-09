@@ -13,7 +13,7 @@
             <button id="btSynPlay" class="col-xs-1 btn btn-default" title="Click me at first.">
                 <span class="glyphicon glyphicon-play" />
             </button>
-            <button class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click($event)">
+            <button id="btSynNext" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click($event)">
                 <span class="glyphicon glyphicon-step-forward" />
             </button>
             <div class="col-xs-10" style="font-size:large" ng-bind="ctrl.synAnsWCard.cardInfo.Dictate"></div>
@@ -26,8 +26,8 @@
                 <button class="col-xs-1 btn btn-default">
                     <img src="https://openclipart.org/image/2400px/svg_to_png/34345/signore-architetto-fran-01r.png" alt="microphone" style="height:32px" />
                 </button>
-                <input type="text" name="tbRecSentence" class="col-xs-10" ng-model="ctrl.recInputSentence" />
-                <input type="image" class="col-xs-1 btn btn-default" src="http://news.toyark.com/wp-content/uploads/sites/4/2013/08/New-52-Green-Arrow-07.jpg" style="height:32px; width:auto" />
+                <input id="tbKeyIn" type="text" name="tbRecSentence" class="col-xs-11" ng-model="ctrl.recInputSentence" />
+                <!--<input type="image" class="col-xs-1 btn btn-default" src="http://news.toyark.com/wp-content/uploads/sites/4/2013/08/New-52-Green-Arrow-07.jpg" style="height:32px; width:auto" />-->
             </form>
         </div>
     </div>
@@ -44,7 +44,7 @@
 <nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
     <div class="container-fluid">
         <div class="row">
-            <div class="dropdown">
+            <div id="dpLangMain" class="dropdown">
                 <button class="col-xs-1 dropdown-toggle btn btn-default" type="button" id="dropdownLangSettings" data-toggle="dropdown" aria-haspopup="false">
                     <img src="http://memorizeyc.azurewebsites.net/Static/PlayPage/SpeechLang.png" alt="Choose a Language" style="width:32px" />
                     <span class="caret"></span>
@@ -55,7 +55,7 @@
                             <h4><span class="glyphicon-headphones glyphicon"></span>Speech Synthesis</h4>
                         </li>
                         <li>
-                            <select ng-model="ctrl.currentSynVoice" ng-options="c.name for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer"></select>
+                            <select id="cbSynAllVoices" ng-model="ctrl.currentSynVoice" ng-options="c.name for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer"></select>
                             <button ng-click="ctrl.onReloadSynVoices();" class="glyphicon glyphicon-refresh"></button>
                         </li>
                         <li role="separator" class="divider" />
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
-            <div class="dropdown">
+            <div id="dpPlaySettings" class="dropdown" style="opacity:0.95">
                 <button class="btn btn-default dropdown-toggle col-xs-1" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span class="glyphicon glyphicon-menu-hamburger" />
                 </button>
@@ -77,13 +77,13 @@
                     <!--1. For cards' size, shown-->
                     <li class="container">
                         <div class="row">
-                            <button class="WCard col-sm-6" ng-style="ctrl.defaultCardStyle" ng-click="ctrl.ShowNewWCards_Click()" ng-disabled="ctrl.numRestWCards.length==0">
+                            <button id="btChangeCards" class="WCard col-xs-3" ng-style="ctrl.defaultCardStyle" ng-click="ctrl.ShowNewWCards_Click()" ng-disabled="ctrl.numRestWCards.length==0">
                                 <div style="font-size:3vw">
                                     Rest: <br />
                                     <span class="badge">{{ctrl.numRestWCards}}</span>
                                 </div>
                             </button>
-                            <div class="col-sm-6">
+                            <div >
                                 Show <input type="number" style="width:40px" ng-model="ctrl.numWCardShown" min="1" /> cards each time.
                                 <div class="checkbox">
                                     <label>
@@ -94,8 +94,8 @@
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="cbBGAlsoChange" value="" ng-model="ctrl.isBGAlsoChange" />
+                                        Resize Background, too.
                                     </label>
-                                    Resize Background, too.
                                 </div>
                                 <div>
                                     Resize:
@@ -112,7 +112,7 @@
                     <li class="container">
                         <div class="row">
                             <div class="radio col-xs-4" style="margin-top:auto">
-                                <label>
+                                <label id="lbHint">
                                     <input type="radio" name="gameType" value="hint" ng-model="ctrl.playType" />
                                     Hint <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-exclamation-sign"></span>
                                 </label>
@@ -124,7 +124,7 @@
                                 </label>
                             </div><span></span>
                             <div class="radio col-xs-4" style="margin-top:auto">
-                                <label>
+                                <label id="lbKeyIn">
                                     <input type="radio" name="gameType" value="rec" ng-model="ctrl.playType" />
                                     KeyIn
                                     <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span>   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keyboard-icon_Wikipedians.svg/800px-Keyboard-icon_Wikipedians.svg.png" style="height:20px" alt="key in answer" />
@@ -149,6 +149,30 @@
                     <li class="container">
                         <div class="col-xs-12">
                             <input type="range" id="rgAudioRate" ng-model="ctrl.rate2PowN" min="-2" max="2" />
+                        </div>
+                    </li>
+                    <li role="separator" class="divider"></li>
+
+                    <!--5. Tutorial Mode-->
+                    <li class="dropdown-header">Tutorial</li>    
+                    <li class="container">
+                        <div id="rdTutorType" class="row">
+                            <label class="col-xs-3">
+                                <input type="radio" name="tutorType" value="Basic" ng-model="ctrl.TutorType" />
+                                basic
+                            </label>
+                            <label class="col-xs-3">
+                                <input type="radio" name="tutorType" value="Hint" ng-model="ctrl.TutorType" />
+                                hint
+                            </label>
+                            <label class="col-xs-3">
+                                <input type="radio" name="tutorType" value="KeyIn" ng-model="ctrl.TutorType" />
+                                KeyIn
+                            </label>
+                            <label class="col-xs-3">
+                                <input type="radio" name="tutorType" value="End" ng-model="ctrl.TutorType" />
+                                stop
+                            </label>
                         </div>
                     </li>
 

@@ -3,8 +3,6 @@
 /// <reference path="scripts/typings/angularjs/angular-route.d.ts" />
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
 
-$(window).one("load", () => {
-    SpeechSynthesisHelper.getAllVoices(() => { });});
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 
 //Controllers
@@ -13,6 +11,17 @@ app.controller('ChooseAContainerPageController', ['$scope','$routeParams',Choose
 
 //Config
 app.config(function ($routeProvider, $locationProvider) {
+
+    //* [2016-07-05 15:54] Preloading before any routings.
+    SpeechSynthesisHelper.getAllVoices(() => { });
+    GlobalVariables.gdTutorElements = {
+        gdMain: document.getElementById("gdTutorial") as HTMLDivElement,
+        gdBoard: $("#gdTutorial #gdBoard").get(0) as HTMLDivElement,
+        gdContent: $("#gdTutorial #gdContent").get(0) as HTMLDivElement,
+        btHide: $("#gdTutorial #btHide").get(0) as HTMLButtonElement,
+        btStop: $("#gdTutorial #btStop").get(0) as HTMLButtonElement
+    };
+
     $routeProvider
         .when('/Play', {
             templateUrl: GlobalVariables.playOneCategoryHtml,

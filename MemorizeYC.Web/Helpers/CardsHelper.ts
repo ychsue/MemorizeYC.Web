@@ -190,21 +190,27 @@ class CardsHelper {
         else
             isDescripted = false;
 
-        if (isDescripted) {
-            btns.push({
-                text: 'Description',
-                click: function () {
-                    window.alert(inStr2);
-                    $(diEle).dialog('close');
-                }
-            });
-        }
+        //if (isDescripted) {
+        //    btns.push({
+        //        text: 'Description',
+        //        click: function () {
+        //            window.alert(inStr2);
+        //            $(diEle).dialog('close');
+        //        }
+        //    });
+        //}
 
         //* [2016-05-26 10:23] Open the dialog
         if (isLinking || isDescripted) {
             $(diEle).dialog({
                 buttons: btns
             });
+            //*[2016-07-08 11:39] Show the description directly on this dialog.
+            if (isDescripted)
+                $(diEle).html("Description:<br/>" + inStr2);
+            else
+                $(diEle).html("No Description but it has a link.");
+
             $(diEle).dialog('open');
         }
     }

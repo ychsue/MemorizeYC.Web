@@ -18,6 +18,14 @@ textarea.cardMain{
         animation: breathBorder alternate 0.3s infinite;
     }
 
+.cvMain .wMove{
+    position:absolute;
+    left:20%;
+    top:20%;
+    width:60%;
+    height:60%;
+}
+
 /*#region keyframes breathBoder*/
 @keyframes breathBorder {
     from {

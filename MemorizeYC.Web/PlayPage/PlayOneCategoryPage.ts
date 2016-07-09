@@ -5,6 +5,7 @@
 /// <reference path="../scripts/typings/jqueryui/jqueryui.d.ts" />
 /// <reference path="../models/mycategoryjson.ts" />
 /// <reference path="../mytpdefinitions/chrome.d.ts" />
+/// <reference path="../helpers/tutorialhelper.ts" />
 
 class PlayOneCategoryPageController{
     public Container: string;
@@ -20,6 +21,10 @@ class PlayOneCategoryPageController{
     public ddSettings: HTMLElement = document.getElementById('ddSettings') as HTMLElement;
     public imgBackground: HTMLDivElement = document.getElementById('imgBackground') as HTMLDivElement;
     public btSynPlay: HTMLButtonElement = document.getElementById('btSynPlay') as HTMLButtonElement;
+    public btLangSettings: HTMLButtonElement = document.getElementById('dropdownLangSettings') as HTMLButtonElement;
+    public rdTutorType: HTMLDivElement = document.getElementById('rdTutorType') as HTMLDivElement;
+    public cvMain: HTMLDivElement = document.getElementsByClassName('cvMain')[0] as HTMLDivElement;
+
     public isBackAudioStartLoad: boolean = false;
 
     public isBGAlsoChange: boolean = true;
@@ -48,8 +53,6 @@ class PlayOneCategoryPageController{
     public scoreTimerId: number;
     public maxDelScore: number = 20;
     public pgScore: HTMLDivElement = document.getElementById('pgScore') as HTMLDivElement;
-
-    public SynLang: string;
 
     public static Current: PlayOneCategoryPageController;
     public static scope;
@@ -113,6 +116,9 @@ class PlayOneCategoryPageController{
             if (PlayOneCategoryPageController.Current.selWCard) {
                 $(PlayOneCategoryPageController.Current.selWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
             }
+
+            //* [2016-07-07 10:40] Added to trigger an event when PlayType is changed
+            $(PlayOneCategoryPageController.Current.ddSettings).trigger(GlobalVariables.PlayTypeChangeKey);
         }
     }
     //#endregion PlayType
@@ -124,14 +130,70 @@ class PlayOneCategoryPageController{
     set synAllVoices(value: Array<SpeechSynthesisVoice_Instance>) {
         GlobalVariables.allVoices = value;
     }
-    public currentSynVoice: SpeechSynthesisVoice_Instance;
+
+    private _currentSynVoice: SpeechSynthesisVoice_Instance;
+    get currentSynVoice(): SpeechSynthesisVoice_Instance { return this._currentSynVoice; }
+    set currentSynVoice(value: SpeechSynthesisVoice_Instance) {
+        if (value != this._currentSynVoice) {
+            this._currentSynVoice = value;
+            this.SynLang = value.lang;
+            if (GlobalVariables.isTutorMode) {
+                $(PlayOneCategoryPageController.Current.btLangSettings).trigger(GlobalVariables.SynVoiceChangeKey);   
+            }
+        }
+    }
+
+    public SynLang: string;
     //#endregion For SpeechSynthesis
+//#region TutorType
+    get TutorType(): string {
+        return TutorMainEnum[GlobalVariables.tutorState.Main];
+    }
+    set TutorType(value: string) {
+        if (value === TutorMainEnum[GlobalVariables.tutorState.Main])
+            return;
+        $(PlayOneCategoryPageController.Current.rdTutorType).trigger(GlobalVariables.TutorTypeChangeKey);
+        //* [2016-07-07 07:56] Default 
+        GlobalVariables.isTutorMode = true;
+        $(PlayOneCategoryPageController.Current.rdTutorType).prop('disabled', true);
+
+        switch (value) {
+            case TutorMainEnum[TutorMainEnum.Begin]:
+                GlobalVariables.isTutorMode = true;
+                $(PlayOneCategoryPageController.Current.rdTutorType).removeProp('disabled');
+                GlobalVariables.tutorState = { Main: TutorMainEnum.Begin, Step: 0 };
+                break;
+            case TutorMainEnum[TutorMainEnum.Basic]:
+                GlobalVariables.tutorState = { Main:TutorMainEnum.Basic, Step:0 };
+                break;
+            case TutorMainEnum[TutorMainEnum.Hint]:
+                GlobalVariables.tutorState = { Main: TutorMainEnum.Hint, Step: 0 };
+                break;
+            case TutorMainEnum[TutorMainEnum.KeyIn]:
+                GlobalVariables.tutorState = { Main: TutorMainEnum.KeyIn, Step: 0 };
+                break;
+            case TutorMainEnum[TutorMainEnum.End]:
+                GlobalVariables.isTutorMode = false;
+                $(PlayOneCategoryPageController.Current.rdTutorType).removeAttr('disabled');
+                GlobalVariables.tutorState = { Main: TutorMainEnum.End, Step: 0 };
+                PlayOneCategoryPageController.Current.playType = PlayTypeEnum.syn;
+                break;
+            default:
+                GlobalVariables.isTutorMode = false;
+                $(PlayOneCategoryPageController.Current.rdTutorType).removeProp('disabled');
+                break;
+        }
+
+        TutorialHelper.Action(GlobalVariables.tutorState);
+    }
+//#endregion TutorType
 
     public ClearBeforeLeavePage() {
         $(window).off('resize',PlayOneCategoryPageController.Current.onWindowResize);  
         $(document).off('click', PlayOneCategoryPageController.Current.onPlayBGSound);
         if (PlayOneCategoryPageController.Current.scoreTimerId)
             clearTimeout(PlayOneCategoryPageController.Current.scoreTimerId);
+        $(GlobalVariables.gdTutorElements.gdMain).hide(0);
     }
 
     constructor($scope, $routeParams) {
@@ -142,6 +204,12 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.scope = $scope;
 
         WCard.CleanWCards();
+
+        //* [2016-07-05 15:16] Show tutorial
+        if (GlobalVariables.isTutorMode) {
+            this.TutorType = TutorMainEnum[TutorMainEnum.Begin];
+            TutorialHelper.Action(GlobalVariables.tutorState);
+        }
 
         //*[2016-06-07 14:27] Try to clear this Controller's actions
         $scope.$on('$routeChangeStart', function (ev, next, current) {
@@ -160,12 +228,15 @@ class PlayOneCategoryPageController{
             buttons: [{
                 text: "OK",
                 click: function () {
-                    history.back();
+                    if (history.length > 1)
+                        history.back();
+                    else
+                        location.href = "/";
                     $(PlayOneCategoryPageController.Current.dlFinish).dialog('close');
                 }
             }]
         });
-        $(document).tooltip();
+        //$(document).tooltip();
 
         if ($routeParams["Container"] != undefined)
             GlobalVariables.currentMainFolder = $routeParams["Container"];
@@ -204,7 +275,13 @@ class PlayOneCategoryPageController{
         SpeechSynthesisHelper.getAllVoices(PlayOneCategoryPageController.Current.GetCurrentSynVoice);
         SpeechSynthesisHelper.getAllVoices(() => {
             if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0) {
-                alert("SynLang: " + PlayOneCategoryPageController.Current.SynLang + " ." + "Has allVoices.");
+                var stVoice = "{";
+                for (var key in PlayOneCategoryPageController.Current.currentSynVoice) {
+                    stVoice += key +": "+ PlayOneCategoryPageController.Current.currentSynVoice[key] + ";\n";
+                }
+                stVoice += "}";
+                alert("SynLang: " + PlayOneCategoryPageController.Current.SynLang + " ." + "Has allVoices." + "\n" +
+                    "CurrentVoice: "+stVoice);
             } else
                 alert("No Voice."+" isIOS="+GlobalVariables.isIOS);
         });
@@ -312,20 +389,7 @@ class PlayOneCategoryPageController{
         //* [2016-05-25 14:30] After updating, it should have gotten one synAnsWCard
         if (PlayOneCategoryPageController.Current.synAnsWCard) {
             var synAnsWCard = PlayOneCategoryPageController.Current.synAnsWCard;
-            if (synAnsWCard.cardInfo.AudioFilePathOrUri) {
-                var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
-                meAud.src = CardsHelper.GetTreatablePath(synAnsWCard.cardInfo.AudioFilePathOrUri,
-                    PlayOneCategoryPageController.Current.Container,
-                    PlayOneCategoryPageController.Current.CFolder);
-                meAud.load();
-                meAud.play();
-            } else if (GlobalVariables.synUtterance) {
-                GlobalVariables.synUtterance.voice = PlayOneCategoryPageController.Current.currentSynVoice;
-                GlobalVariables.synUtterance.rate = Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN);
-                GlobalVariables.synUtterance.text = synAnsWCard.cardInfo.Dictate;
-                GlobalVariables.synthesis.cancel();
-                GlobalVariables.synthesis.speak(GlobalVariables.synUtterance);
-            }
+            PlayOneCategoryPageController.Current.PlayAudio(synAnsWCard);
 
             //* [2016-05-27 17:40] Update a timer
             if (!PlayOneCategoryPageController.Current.scoreTimerId) {
@@ -386,6 +450,10 @@ class PlayOneCategoryPageController{
                     $(this).css('transform', 'scale(' + 1 / now + ',' + 1 / now + ')');
                 },
                 complete: function () {
+                    //* [2016-07-06 11:24] Triggered if it is in tutorial mode
+                    if (GlobalVariables.isTutorMode)
+                        $(PlayOneCategoryPageController.Current.cvMain).trigger(GlobalVariables.RemoveAWCardKey);
+
                     if(PlayOneCategoryPageController.Current.selWCard)
                         PlayOneCategoryPageController.Current.selWCard.RemoveThisWCard();
                     PlayOneCategoryPageController.Current.selWCard = null;
@@ -446,6 +514,23 @@ class PlayOneCategoryPageController{
         $(PlayOneCategoryPageController.Current.dlFinish).dialog('open');
         PlayOneCategoryPageController.Current.meBackground.pause();
     }
+
+    public PlayAudio(wCard: WCard) {
+        if (wCard.cardInfo.AudioFilePathOrUri) {
+            var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
+            meAud.src = CardsHelper.GetTreatablePath(wCard.cardInfo.AudioFilePathOrUri,
+                PlayOneCategoryPageController.Current.Container,
+                PlayOneCategoryPageController.Current.CFolder);
+            meAud.load();
+            meAud.play();
+        } else if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
+            SpeechSynthesisHelper.Speak(wCard.cardInfo.Dictate,
+                PlayOneCategoryPageController.Current.SynLang,
+                PlayOneCategoryPageController.Current.currentSynVoice,
+                Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN)
+            );
+        }
+    };
 }
 function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     var showedWcards: WCard[] = WCard.showedWCards;
@@ -514,16 +599,20 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
                             PlayOneCategoryPageController.scope.$apply(function () {
                                 PlayOneCategoryPageController.Current.synAnsWCard;
                             });
+
+                            //* [2016-07-06 11:24] Triggered if it is in tutorial mode
+                            if (GlobalVariables.isTutorMode)
+                                $(PlayOneCategoryPageController.Current.btSynPlay).trigger(GlobalVariables.RemoveAWCardKey);
                         }
                     });
                 }
                 else {
                     //** [2016-05-27 16:35] If no synAnsWCard, show a popup to warn the user that they didn't click the play yet.
                     if (!PlayOneCategoryPageController.Current.synAnsWCard) {
-                        $('#btSynPlay').tooltip({
-                            content: "You need to click this button at first!"
-                        })
-                            .tooltip('open');
+                        //$('#btSynPlay').tooltip({
+                        //    content: "You need to click this button at first!"
+                        //})
+                        //    .tooltip('open');
 
                         return;
                     }
@@ -565,6 +654,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
                 if (prevWCard)
                     $(prevWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
                 $(selWCard.viewCard).addClass(PlayOneCategoryPageController.styleSelWCard);
+                PlayOneCategoryPageController.Current.PlayAudio(selWCard);
             }
         });
 
@@ -589,8 +679,8 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             var thisWCard = WCard.FindWCardFromViewCard(this);
             thisWCard.viewSize = [ui.size.width, ui.size.height];
         });
-        restWcards[i0].viewCard.style.msTouchAction = "none";
-        restWcards[i0].viewCard.style.touchAction = "none";
+        restWcards[i0].viewCard.style.msTouchAction = "manipulation";
+        restWcards[i0].viewCard.style.touchAction = "manipulation";
     }
 
     //* [2016-05-17 15:35] Just show some wcards
@@ -604,7 +694,20 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         PlayOneCategoryPageController.Current.numRestWCards
     });
 
-    CardsHelper.RearrangeCards(showedWcards, PlayOneCategoryPageController.oneOverNWindow);
+    //* [2016-07-08 21:22] If the $(document).height() is larger than $(window).height(), it will be a little strange. I try to make the document's height is smaller than window's height
+    var newRate = 1;
+    if ($(document).height() * 1.1 > $(window).height())
+        newRate = $(window).height() / ($(document).height() * 1.1);
+    CardsHelper.RearrangeCards(showedWcards, PlayOneCategoryPageController.oneOverNWindow,false,true,newRate,false);
+
+    if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
+        var bGObj = PlayOneCategoryPageController.Current.imgBackground;
+        $(bGObj).css(
+            {
+                'width': Math.round(bGObj.clientWidth*newRate) + "px",
+                'height': Math.round(bGObj.clientHeight*newRate) + "px"
+            });
+    }
 
     //* [2016-05-12 17:09] Set the default width and height of a card
     //if (showedWcards.length > 0) {

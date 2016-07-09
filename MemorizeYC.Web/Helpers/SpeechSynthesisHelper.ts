@@ -67,9 +67,9 @@ class SpeechSynthesisHelper {
                 SpeechSynthesisHelper.ith++;
                 if ((GlobalVariables.allVoices && GlobalVariables.allVoices.length>0) || SpeechSynthesisHelper.ith > 20) {
                     clearInterval(SpeechSynthesisHelper.timerID);
-                    if (SpeechSynthesisHelper.ith > 20 && GlobalVariables.isIOS) {
-                        GlobalVariables.allVoices = SpeechSynthesisHelper._iOS9Voices;
-                    }
+                    //if (SpeechSynthesisHelper.ith > 20 && GlobalVariables.isIOS) {
+                    //    GlobalVariables.allVoices = SpeechSynthesisHelper._iOS9Voices;
+                    //}
                     if (GlobalVariables.allVoices) {
                         GlobalVariables.synUtterance = new SpeechSynthesisUtterance("Welcome!");
                         while (SpeechSynthesisHelper.callbacks.length > 0) {
@@ -90,11 +90,28 @@ class SpeechSynthesisHelper {
         var vVoice: SpeechSynthesisVoice_Instance = null;
         for (var i0: number = 0; i0 < GlobalVariables.allVoices.length; i0++){
             var voice = GlobalVariables.allVoices[i0];
-            if (voice.lang.toLowerCase() === lang.toLowerCase()) {
+            if (lang!="" && voice.lang!="" && (lang.toLowerCase().replace(/_/g, '-')).indexOf(
+                voice.lang.toLowerCase().replace(/_/g, '-')
+                ) >= 0) {
                 vVoice = voice;
                 break;
             }
         };
         return vVoice;
+    }
+
+    public static Speak(text: string, lang: string, voice: SpeechSynthesisVoice_Instance, rate: number = 1) {
+        if (!GlobalVariables.synthesis)
+            return;
+
+        if (!GlobalVariables.synUtterance)
+            GlobalVariables.synUtterance = new SpeechSynthesisUtterance("Hello! New start.");
+        GlobalVariables.synUtterance.text = text;
+        GlobalVariables.synUtterance.lang = lang;
+        GlobalVariables.synUtterance.voice = voice;
+        GlobalVariables.synUtterance.rate = rate;
+
+        GlobalVariables.synthesis.cancel();
+        GlobalVariables.synthesis.speak(GlobalVariables.synUtterance);
     }
 }

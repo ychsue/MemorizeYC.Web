@@ -2,11 +2,12 @@
 <div>
     <select ng-model="ctrl.selContainer"
             ng-options="c.itsLocation for c in ctrl.containers" 
-            ng-change="ctrl.onConChange()">
+            ng-change="ctrl.onConChange()"
+            size="4">
     </select>
-    {{ctrl.selContainer.itsLocation}}
+    <a class="btn btn-default" ng-href="#/Play?Container={{ctrl.selContainer.itsLocation}}&CFolder={{ctrl.selCategory.Folder}}">Play</a>
 </div>
 <h2>2. Please Select a Category</h2>
 <select ng-model="ctrl.selCategory"
-        ng-options="c.Folder for c in ctrl.categories"></select>
-<a class="btn btn-default" ng-href="#/Play?Container={{ctrl.selContainer.itsLocation}}&CFolder={{ctrl.selCategory.Folder}}">Play</a>
+        ng-options="c.Folder for c in ctrl.categories"
+        size="10"></select>

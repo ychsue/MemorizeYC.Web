@@ -1,0 +1,108 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "手太陰肺經脈巡行.box",
+      "Description": "本經發生病變時，主要表現為胸部滿悶，咳嗽，氣喘，鎖骨上窩痛，心胸煩滿，小便頻數，肩背，上肢前邊外側厥冷，麻木酸痛等症。",
+      "Size": [ 680, 916 ],
+      "Position": [ 0, 0 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "中焦.box",
+      "Description": "主要為脾胃",
+      "Size": [ 30, 30 ],
+      "Position": [ 355, 421 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "中府穴.box",
+      "Description": "別名膺俞、膺中俞、府中俞。<br/>主治咳嗽，氣喘，咳吐膿血，胸膺痛，肩背痛，以及肺炎，肺結核等",
+      "Size": [ 20, 20 ],
+      "Position": [ 225, 273 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "雲門穴.box",
+      "Description": "主治咳嗽，氣喘，胸痛，肩背痛等。",
+      "Size": [ 20, 20 ],
+      "Position": [ 225, 251 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "天府穴.box",
+      "Description": "主治咳嗽，喘息，鼻衄，癭氣，上臂前外側痛等。",
+      "Size": [ 20, 20 ],
+      "Position": [ 178, 353 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "俠白穴.box",
+      "Description": "【主治病症】<br/>1.呼吸系統疾病：支氣管炎，支氣管哮喘，肺炎；<br/>2.其它：心動過速，上臂內側神經痛。",
+      "Size": [ 20, 20 ],
+      "Position": [ 179, 379 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "尺澤穴.box",
+      "Description": "別名鬼受、鬼堂。<br/>主治咳嗽，氣喘，咯血、胸部煩滿，咽喉腫痛，肘臂攣痛等。",
+      "Size": [ 20, 20 ],
+      "Position": [ 159, 471 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "孔最穴.box",
+      "Description": "主治咳嗽，氣喘，咯血，咽痛，肘臂痛",
+      "Size": [ 20, 20 ],
+      "Position": [ 131, 545 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "列缺穴.box",
+      "Description": "八脈交會穴之一，通任脈。<br/>主治頭痛，項強，咳嗽，氣喘，咽喉腫痛，口眼歪斜，手腕無力等。",
+      "Size": [ 20, 20 ],
+      "Position": [ 97, 625 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "經渠穴.box",
+      "Description": "主治：<br/>1.呼吸系統疾病：氣管炎，支氣管，哮喘，肺炎，扁桃體炎，發熱，胸痛；<br/>2.精神神經系統疾病：膈肌痙攣，食道痙攣，橈神經痛或麻痹。",
+      "Size": [ 20, 20 ],
+      "Position": [ 109, 639 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "太淵穴.box",
+      "Description": "別名大泉、太泉、鬼心。<br/>八會穴之脈會。<br/>本穴開於寅，得氣最先，故在人體穴位中佔有重要地位。<br/>1.呼吸系統疾病：扁桃體炎，肺炎；2.循環系統疾病：心動過速，無脈症，脈管炎；3.其它：肋間神經痛，橈腕關節及周圍軟組織疾患，膈肌痙攣。",
+      "Size": [ 20, 20 ],
+      "Position": [ 103, 657 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "魚際穴.box",
+      "Description": "主治咳嗽，咯血，咽喉腫痛，發熱，及扁桃體炎，小兒營養不良等。",
+      "Size": [ 20, 20 ],
+      "Position": [ 87, 677 ],
+      "IsHideShadow": true
+    },
+    {
+      "FileName": "少商穴.box",
+      "Description": "別名鬼信。<br/>主治發熱，昏迷，咳嗽，咽喉腫痛，癲狂，鼻衄等。",
+      "Size": [ 20, 20 ],
+      "Position": [ 59, 720 ],
+      "IsHideShadow": true
+    }
+  ],
+  "Link": "http://cht.a-hospital.com/w/%E6%89%8B%E5%A4%AA%E9%98%B4%E8%82%BA%E7%BB%8F",
+  "Background": {
+    "ImgStyle": {
+      "width": "680px",
+      "height": "916px",
+      "opacity": "0.8",
+      "background-image": "BoxFiles/手太陰肺經Background.png",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    }
+  },
+  "SynLang": "zh-TW",
+  "numWCardShown": 40
+}

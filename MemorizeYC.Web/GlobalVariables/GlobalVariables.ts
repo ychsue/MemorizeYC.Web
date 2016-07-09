@@ -1,6 +1,8 @@
 ﻿/// <reference path="../helpers/speechsynthesishelper.ts" />
 /// <reference path="../models/enums.ts" />
 /// <reference path="../mytpdefinitions/chrome.d.ts" />
+/// <reference path="../scripts/typings/jquery/jquery.d.ts" />
+/// <reference path="../helpers/tutorialhelper.ts" />
 
 class GlobalVariables {
     public static categoryListFileName: string = "MYCategory.json";
@@ -37,4 +39,15 @@ class GlobalVariables {
     public static currentSynVoice: SpeechSynthesisVoice_Instance = undefined;
     public static synUtterance: SpeechSynthesisUtterance_Instance = undefined;
 
+    //* [2016-07-05 13:16] Added for Tutorial
+    public static isTutorMode: boolean = true;
+    public static gdTutorElements: TutorialElements;
+    public static tutorState: TutorState = {
+        Main: TutorMainEnum.Begin,
+        Step: 0
+    };
+    public static RemoveAWCardKey: string = "RemoveAWCard";
+    public static SynVoiceChangeKey: string = "SynVoiceChange";
+    public static TutorTypeChangeKey: string = "TutorTypeChange";
+    public static PlayTypeChangeKey: string = "PlayTypeChange";
 }

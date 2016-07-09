@@ -38,9 +38,10 @@
 
     <script>
         GlobalVariables.rootDir = "/"; //Change it if you put this SPA at a subdirectory.
-        GlobalVariables.version = "2016.0701.3.8";
+        GlobalVariables.version = "v2016.708.3";
         GlobalVariables.versionFile = GlobalVariables.rootDir + "version.json";
         GlobalVariables.containers = [
+            new AContainer(GlobalVariables.rootDir+"Samples/中醫經絡"),
             new AContainer(GlobalVariables.rootDir + "Samples/課室常用英語指導用語"),
             new AContainer(GlobalVariables.rootDir + "Samples/自然發音"),
             new AContainer(GlobalVariables.rootDir + "Samples/General Physics"),
@@ -57,5 +58,14 @@
 </head>
 <body ng-app="MYCWeb">
     <div ng-view></div>
+
+    <div id="gdTutorial" class="ui-widget-overlay" style="display:none">        
+        <div id="gdBoard">
+            <div id="gdContent" style="height:100%;width:100%;background:white;opacity:1;"></div>
+            <button id="btHide" class="bottom-right"><span class="glyphicon glyphicon-resize-small"></span>Hide</button>
+            <button id="btStop" class="bottom-right"><span class="glyphicon glyphicon-remove-sign"></span>Stop</button>
+        </div>
+    </div>
+
 </body>
 </html>
