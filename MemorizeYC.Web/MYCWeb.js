@@ -43,12 +43,24 @@ var SpeechSynthesisHelper = (function () {
         var vVoice = null;
         for (var i0 = 0; i0 < GlobalVariables.allVoices.length; i0++) {
             var voice = GlobalVariables.allVoices[i0];
-            if (lang != "" && voice.lang != "" && (lang.toLowerCase().replace(/_/g, '-')).indexOf(voice.lang.toLowerCase().replace(/_/g, '-')) >= 0) {
+            if (lang != "" && voice.lang != "" && voice.lang.toLowerCase().replace(/_/g, '-').indexOf(lang.toLowerCase().replace(/_/g, '-'))
+                >= 0) {
                 vVoice = voice;
                 break;
             }
         }
         ;
+        if (!vVoice && lang != "" && voice.lang != "" && lang.match(/[-_]/i)) {
+            var hLang = lang.split(/[-_]/g)[0];
+            for (var i0 = 0; i0 < GlobalVariables.allVoices.length; i0++) {
+                var voice = GlobalVariables.allVoices[i0];
+                if (hLang.trim().indexOf(voice.lang.trim()) === 0) {
+                    vVoice = voice;
+                    break;
+                }
+            }
+            ;
+        }
         return vVoice;
     };
     SpeechSynthesisHelper.Speak = function (text, lang, voice, rate) {
@@ -126,6 +138,13 @@ var TutorMainEnum;
     TutorMainEnum[TutorMainEnum["End"] = 4] = "End";
 })(TutorMainEnum || (TutorMainEnum = {}));
 ;
+var AudioSequenceStateEnum;
+(function (AudioSequenceStateEnum) {
+    AudioSequenceStateEnum[AudioSequenceStateEnum["End"] = 0] = "End";
+    AudioSequenceStateEnum[AudioSequenceStateEnum["Pause"] = 1] = "Pause";
+    AudioSequenceStateEnum[AudioSequenceStateEnum["Playing"] = 2] = "Playing";
+})(AudioSequenceStateEnum || (AudioSequenceStateEnum = {}));
+;
 var TutorialHelper = (function () {
     function TutorialHelper() {
     }
@@ -134,20 +153,32 @@ var TutorialHelper = (function () {
     };
     TutorialHelper.onBtStop = function (ev) {
         $(GlobalVariables.gdTutorElements.gdMain).hide('slow');
-        GlobalVariables.isTutorMode = false;
+        PlayOneCategoryPageController.Current.TutorType = TutorMainEnum[TutorMainEnum.End];
     };
     TutorialHelper.Action = function (state) {
         $(GlobalVariables.gdTutorElements.btHide).off('click', TutorialHelper.onBtHide);
         $(GlobalVariables.gdTutorElements.btHide).on('click', TutorialHelper.onBtHide);
         $(GlobalVariables.gdTutorElements.btStop).off('click', TutorialHelper.onBtStop);
         $(GlobalVariables.gdTutorElements.btStop).on('click', TutorialHelper.onBtStop);
+        if (!GlobalVariables.PageTexts)
+            GlobalVariables.PageTexts = PageTextHelper.defaultPageTexts;
+        var thisPageTexts = GlobalVariables.PageTexts.PlayOneCategoryPageJSON;
         switch (state.Main) {
             case TutorMainEnum.Begin:
                 $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:6vw;'>Tutorial</div>" +
-                    "<div style='text-align:center; font-size:3vh;'>You are in tutorial mode.<br/>" +
-                    "Choose the <b>Basic</b> in <span class='glyphicon glyphicon-menu-hamburger'></span> to start this tutorial.<br/>" +
-                    "Or click <span class='glyphicon glyphicon-remove-sign'></span><sub>Stop</sub> to stop it. </div>");
+                $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:6vw;'>" +
+                    thisPageTexts.stTutor +
+                    "</div>" +
+                    "<div style='text-align:center; font-size:3vh;'>" +
+                    thisPageTexts.stTut0_1_1 +
+                    "<br/>" +
+                    thisPageTexts.stTut0_1_2.replace(/\{0\}/g, function (st) {
+                        return "<span class='glyphicon glyphicon-menu-hamburger' > </span>";
+                    }) + "<br/>" +
+                    thisPageTexts.stTut0_1_3.replace(/\{0\}/g, function (st) {
+                        return "<span class='glyphicon glyphicon-remove-sign'></span><sub>Stop</sub>";
+                    }) +
+                    "</div>");
                 $(".glyphicon-menu-hamburger").addClass('blink');
                 $(".glyphicon-remove-sign").addClass('blink');
                 $(PlayOneCategoryPageController.Current.rdTutorType).addClass('blink');
@@ -157,7 +188,7 @@ var TutorialHelper = (function () {
                     $(".glyphicon-remove-sign").removeClass('blink');
                     $(PlayOneCategoryPageController.Current.rdTutorType).removeClass('blink');
                     $('#dpPlaySettings').removeClass('open');
-                    alert("Ok! Let's Start!");
+                    alert(thisPageTexts.stTut0To1);
                     $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                 };
                 $(PlayOneCategoryPageController.Current.rdTutorType).off(GlobalVariables.TutorTypeChangeKey, onStateChange);
@@ -167,8 +198,11 @@ var TutorialHelper = (function () {
                 switch (state.Step) {
                     case 0:
                         $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>1.1 Basic - Enlarge Cards</div>" +
-                            "<div style='text-align:center; font-size:3vh;'>Click <span class='glyphicon glyphicon-plus' style='color:red; font-size:4vw;'></span> in <span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span> to enlarge all cards.</div>");
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" +
+                            thisPageTexts.stTut1_1 +
+                            "</div>" +
+                            "<div style='text-align:center; font-size:3vh;'>" +
+                            thisPageTexts.stTut1_1_1.replace('{0}', "<span class='glyphicon glyphicon-plus' style='color:red; font-size:4vw;'></span>").replace('{1}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span>") + "</div>");
                         $(".glyphicon-menu-hamburger").addClass('blink');
                         $(".glyphicon-plus").addClass('blink');
                         $("#ddSettings .glyphicon-plus").one('click', function (ev) {
@@ -177,7 +211,7 @@ var TutorialHelper = (function () {
                                 $('#dpPlaySettings').removeClass('open');
                                 $(".glyphicon-menu-hamburger").removeClass('blink');
                                 $(".glyphicon-plus").removeClass('blink');
-                                alert("Hooray!\nYou did it!");
+                                alert(thisPageTexts.stTut1_1To2);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -187,8 +221,13 @@ var TutorialHelper = (function () {
                         break;
                     case 1:
                         $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>1.2 Basic - Shrink Cards</div>" +
-                            "<div style='text-align:center; font-size:3vh;'>Click <span class='glyphicon glyphicon-minus' style='color:red; font-size:4vw;'></span> in <span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span> to shrink all cards.</div>");
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" +
+                            thisPageTexts.stTut1_2 +
+                            "</div>" +
+                            "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut1_2_1
+                            .replace('{0}', "<span class='glyphicon glyphicon-minus' style='color:red; font-size:4vw;'></span>")
+                            .replace('{1}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span>")
+                            + "</div>");
                         $(".glyphicon-menu-hamburger").addClass('blink');
                         $(".glyphicon-minus").addClass('blink');
                         $("#ddSettings .glyphicon-minus").one('click', function (ev) {
@@ -197,7 +236,7 @@ var TutorialHelper = (function () {
                                 $('#dpPlaySettings').removeClass('open');
                                 $(".glyphicon-menu-hamburger").removeClass('blink');
                                 $(".glyphicon-minus").removeClass('blink');
-                                alert("Great Job!");
+                                alert(thisPageTexts.stTut1_2To3);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -207,22 +246,27 @@ var TutorialHelper = (function () {
                         break;
                     case 2:
                         $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>1.3 Basic - Pair</div>" +
-                            "<div style='text-align:center; font-size:3vh;'>Click <span class='glyphicon glyphicon-play' style='color:red;'></span><sub>Play</sub> or <span class='glyphicon glyphicon-step-forward' style='color:red;'></span><sub>Next</sub> at first.</div>");
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut1_3
+                            + "</div>" +
+                            "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut1_3_0.replace('{0}', "<span class='glyphicon glyphicon-play' style='color:red;'></span>")
+                            .replace('{1}', "<span class='glyphicon glyphicon-step-forward' style='color:red;'></span>")
+                            + "</div>");
                         $(".glyphicon-play").addClass('blink');
                         $(".glyphicon-step-forward").addClass('blink');
                         var onPlay = function (ev) {
                             $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                             $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>1.3.1 Pair - Tap Correct Card</div>" +
-                                "<div style='text-align:center; font-size:3vh;'>Click <span class='glyphicon glyphicon-resize-small'></span><sub>Hide</sub> to hide this tutorial and tap a coorect card to annihilate it. </div>");
+                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut1_3_1
+                                + "</div>" +
+                                "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut1_3_1_1.replace('{0}', "<span class='glyphicon glyphicon-resize-small'></span>")
+                                + "</div>");
                             $("#gdTutorial #btHide").addClass('blink');
                             $("#btSynPlay,#btSynNext").off('click', onPlay);
                             $(".glyphicon-play").removeClass('blink');
                             $(".glyphicon-step-forward").removeClass('blink');
                             var onRemove = function (ev) {
                                 $(GlobalVariables.gdTutorElements.gdMain).hide(0);
-                                alert("Good Job!");
+                                alert(thisPageTexts.stTut1_3To4);
                                 $("#btSynPlay").off(GlobalVariables.RemoveAWCardKey, onRemove);
                                 $("#gdTutorial #btHide").removeClass('blink');
                                 if (GlobalVariables.isTutorMode) {
@@ -244,8 +288,12 @@ var TutorialHelper = (function () {
                         }
                         ;
                         $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>1.4 Basic - Change Speech Synthesizer's Voice</div>" +
-                            "<div style='text-align:center; font-size:3vh;'>Choose a Language beside the <span class='glyphicon glyphicon-refresh'></span> button in <img src='http://memorizeyc.azurewebsites.net/Static/PlayPage/SpeechLang.png' alt='Choose a Language' style='width:32px'/>.</div>");
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:4vh;'>" + thisPageTexts.stTut1_4_Title
+                            + "</div>" +
+                            "<div style='text-align:left; font-size:2vh;'>" +
+                            thisPageTexts.stTut1_4_Content.replace('{0}', "<span class='glyphicon glyphicon-refresh'></span>")
+                                .replace('{1}', "<img src='http://memorizeyc.azurewebsites.net/Static/PlayPage/SpeechLang.png' alt='Choose a Language' style='width:32px'/>")
+                            + "</div>");
                         $("#dropdownLangSettings").addClass('blink');
                         $("#cbSynAllVoices").addClass('blink');
                         var onChange = function (ev) {
@@ -255,14 +303,16 @@ var TutorialHelper = (function () {
                             $("#dpLangMain").removeClass('open');
                             $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                             $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>1.4.1 Basic - Voice is Changed</div>" +
-                                "<div style='text-align:center; font-size:3vh;'>Click <span class='glyphicon glyphicon-play'></span> will play the sentence with different voice.</div>");
+                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut1_4_1_Title
+                                + "</div>" +
+                                "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut1_4_1_Content.replace('{0}', "<span class='glyphicon glyphicon-play'></span>")
+                                + "</div>");
                             $('.glyphicon-play').addClass('blink');
                             var onPlay = function (ev) {
                                 $('.glyphicon-play').off('click', onPlay);
                                 $('.glyphicon-play').removeClass('blink');
                                 $(GlobalVariables.gdTutorElements.gdMain).hide(0);
-                                alert("Now you know how to change voices.");
+                                alert(thisPageTexts.stTut1_4To5);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -276,11 +326,12 @@ var TutorialHelper = (function () {
                         break;
                     case 4:
                         $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:4vh;'>1.5 Basic - Change Cards</div>" +
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:4vh;'>" + thisPageTexts.stTut1_5_Title
+                            + "</div>" +
                             "<div style='text-align:left; font-size:2vh;'>" +
-                            "  Because total number of cards might be larger than '" + PlayOneCategoryPageController.Current.numWCardShown + "'," +
-                            "Click <button>Rest:<br /><span class='badge'>" + PlayOneCategoryPageController.Current.numRestWCards + "</span></button> in <span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:3vh;'></span> to change cards.<br/>" +
-                            "By the way, the number '" + PlayOneCategoryPageController.Current.numWCardShown + "' can be set by yourself." +
+                            thisPageTexts.stTut1_5_Content.replace(/\{0\}/g, PlayOneCategoryPageController.Current.numWCardShown.toString())
+                                .replace('{1}', "<button>Rest:<br /><span class='badge'>" + PlayOneCategoryPageController.Current.numRestWCards + "</span></button>")
+                                .replace('{2}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:3vh;'></span><br/>") +
                             "</div>");
                         $(".glyphicon-menu-hamburger").addClass('blink');
                         $("#btChangeCards").addClass('blink');
@@ -290,7 +341,7 @@ var TutorialHelper = (function () {
                                 $('#dpPlaySettings').removeClass('open');
                                 $(".glyphicon-menu-hamburger").removeClass('blink');
                                 $("#btChangeCards").removeClass('blink');
-                                alert("Now you know how to change cards!");
+                                alert(thisPageTexts.stTut1_5To6);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -300,13 +351,15 @@ var TutorialHelper = (function () {
                         break;
                     case 5:
                         $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:4vh;'>1.6 Basic - Extra info for each Card</div>" +
-                            "<div style='text-align:left; font-size:2vh;'> Hide me at first by clicking <span class='glyphicon glyphicon-resize-small'></span><sub>Hide</sub>.<br/>" +
-                            "Then, Double click (<img src='http://files.channel9.msdn.com/thumbnail/5b5394ca-30b2-4880-99fb-89de81c8e46b.jpg' style='width:3vh'/>X2) any Card will show you a popup for extra info.<br/>" +
-                            " </div>");
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:4vh;'>" + thisPageTexts.stTut1_6_Title
+                            + "</div>" +
+                            "<div style='text-align:left; font-size:2vh;'>" +
+                            thisPageTexts.stTut1_6_Content.replace('{0}', "<span class='glyphicon glyphicon-resize-small'></span>")
+                                .replace('{1}', "<img src='http://files.channel9.msdn.com/thumbnail/5b5394ca-30b2-4880-99fb-89de81c8e46b.jpg' style='width:3vh'/>X2")
+                            + " </div>");
                         $(GlobalVariables.gdTutorElements.btHide).addClass('blink');
                         var onShownInfo = function (ev) {
-                            alert('Then you should see a popup. If not, it means that it has no extra info.');
+                            alert(thisPageTexts.stTut1_6To7);
                             $('.cvMain .WCard').off(GlobalVariables.onDoubleClick, onShownInfo);
                             $(GlobalVariables.gdTutorElements.btHide).removeClass('blink');
                             if (GlobalVariables.isTutorMode) {
@@ -330,8 +383,11 @@ var TutorialHelper = (function () {
                 switch (state.Step) {
                     case 0:
                         $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>2. Hint: Get cards' infomation</div>" +
-                            "<div style='text-align:center; font-size:3vh;'>Click <input type='radio'/><sub>Hint</sub> in <span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span> to use Hint mode.</div>");
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut2_0_Title
+                            + "</div>" +
+                            "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut2_0_Content.replace('{0}', "<input type='radio'/>")
+                            .replace('{1}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span>")
+                            + "</div>");
                         $(".glyphicon-menu-hamburger").addClass('blink');
                         $("#lbHint").addClass('blink');
                         var onChange = function (ev) {
@@ -342,12 +398,15 @@ var TutorialHelper = (function () {
                             $('#dpPlaySettings').removeClass('open');
                             $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                             $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>2.1 Hint: Click one card</div>" +
-                                "<div style='text-align:center; font-size:3vh;'>Click <span class='glyphicon glyphicon-resize-small'></span><sub>Hide</sub> at first, then click at any one Card.</div>");
+                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut2_1_Title
+                                + "</div>" +
+                                "<div style='text-align:center; font-size:3vh;'>" +
+                                thisPageTexts.stTut2_1_Content.replace('{0}', "<span class='glyphicon glyphicon-resize-small'></span><sub>Hide</sub>")
+                                + "</div>");
                             $(PlayOneCategoryPageController.Current.ddSettings).off(GlobalVariables.PlayTypeChangeKey, onChange);
                             $(GlobalVariables.gdTutorElements.btHide).addClass('blink');
                             var onCardClicked = function (ev) {
-                                alert("You'll see its answer in the below textblock.");
+                                alert(thisPageTexts.stTut2_1To2);
                                 $(GlobalVariables.gdTutorElements.btHide).removeClass('blink');
                                 $('.cvMain .WCard').off(GlobalVariables.onSingleClick, onCardClicked);
                                 if (GlobalVariables.isTutorMode) {
@@ -361,6 +420,33 @@ var TutorialHelper = (function () {
                         $(PlayOneCategoryPageController.Current.ddSettings).off(GlobalVariables.PlayTypeChangeKey, onChange);
                         $(PlayOneCategoryPageController.Current.ddSettings).on(GlobalVariables.PlayTypeChangeKey, onChange);
                         break;
+                    case 1:
+                        $(GlobalVariables.gdTutorElements.gdMain).show('slow');
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:4vh;'>" + thisPageTexts.stTut2_2_Title
+                            + "</div>" +
+                            "<div style='text-align:center; font-size:2vh;'>" + thisPageTexts.stTut2_2_Content.replace('{0}', "<button class='glyphicon glyphicon-exclamation-sign'/>")
+                            .replace('{1}', "<button class='glyphicon glyphicon-pause'/>")
+                            + "</div>");
+                        $("button.glyphicon-pause,button.glyphicon-exclamation-sign").addClass('blink');
+                        var onClickPlayAll = function (ev) {
+                            $(GlobalVariables.gdTutorElements.gdMain).hide('slow');
+                            $(PlayOneCategoryPageController.Current.btAudioAllPlay).off('click', onClickPlayAll);
+                        };
+                        $(PlayOneCategoryPageController.Current.btAudioAllPlay).off('click', onClickPlayAll);
+                        $(PlayOneCategoryPageController.Current.btAudioAllPlay).on('click', onClickPlayAll);
+                        var onAudioStop = function (ev, audioState) {
+                            $(PlayOneCategoryPageController.Current.btPauseAudio).off(GlobalVariables.AudioPauseKey, onAudioStop);
+                            $("button.glyphicon-pause,button.glyphicon-exclamation-sign").removeClass('blink');
+                            if (audioState === AudioSequenceStateEnum.End || audioState === AudioSequenceStateEnum.Pause)
+                                alert(thisPageTexts.stTut2_2To3);
+                            if (GlobalVariables.isTutorMode) {
+                                GlobalVariables.tutorState.Step++;
+                                TutorialHelper.Action(GlobalVariables.tutorState);
+                            }
+                        };
+                        $(PlayOneCategoryPageController.Current.btPauseAudio).off(GlobalVariables.AudioPauseKey, onAudioStop);
+                        $(PlayOneCategoryPageController.Current.btPauseAudio).on(GlobalVariables.AudioPauseKey, onAudioStop);
+                        break;
                     default:
                         if (GlobalVariables.isTutorMode) {
                             GlobalVariables.tutorState = { Main: TutorMainEnum.KeyIn, Step: 0 };
@@ -373,8 +459,11 @@ var TutorialHelper = (function () {
                 switch (state.Step) {
                     case 0:
                         $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>3. KeyIn: Annihilate a Card by Input Correct Answer</div>" +
-                            "<div style='text-align:center; font-size:3vh;'>Click <input type='radio'/><sub>KeyIn</sub> in <span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span> to use Hint mode.</div>");
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut3_0_Title
+                            + "</div>" +
+                            "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut3_0_Content.replace('{0}', "<input type='radio'/>")
+                            .replace('{1}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span>")
+                            + "</div>");
                         $(".glyphicon-menu-hamburger").addClass('blink');
                         $("#lbKeyIn").addClass('blink');
                         var onChange = function (ev) {
@@ -385,8 +474,10 @@ var TutorialHelper = (function () {
                             $('#dpPlaySettings').removeClass('open');
                             $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                             $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>3.1 KeyIn: Click one card</div>" +
-                                "<div style='text-align:center; font-size:3vh;'>Click <span class='glyphicon glyphicon-resize-small'></span><sub>Hide</sub> at first, then click at any one Card.</div>");
+                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut3_1_Title
+                                + "</div>" +
+                                "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut3_1_Content.replace('{0}', "<span class='glyphicon glyphicon-resize-small'></span><sub>Hide</sub>")
+                                + "</div>");
                             $(PlayOneCategoryPageController.Current.ddSettings).off(GlobalVariables.PlayTypeChangeKey, onChange);
                             $(GlobalVariables.gdTutorElements.btHide).addClass('blink');
                             var onCardClicked = function (ev) {
@@ -406,18 +497,20 @@ var TutorialHelper = (function () {
                         break;
                     case 1:
                         $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>3.2 KeyIn: Key in Correct Answer</div>" +
-                            "<div style='text-align:center; font-size:3vh;'> Key in CORRECT ANSWER into the textBox </div>");
+                        $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut3_1_2_Title
+                            + "</div>" +
+                            "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut3_1_2_Content.replace('{0}', "CORRECT ANSWER")
+                            + "</div>");
                         setTimeout(function () {
-                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>3.2 KeyIn: Key in Correct Answer</div>" +
-                                "<div style='text-align:center; font-size:3vh;'> Key in <b>" +
-                                PlayOneCategoryPageController.Current.selWCard.cardInfo.Dictate
-                                + "</b> into the textBox.</div>");
+                            $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut3_1_2_Title
+                                + "</div>" +
+                                "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut3_1_2_Content.replace('{0}', PlayOneCategoryPageController.Current.selWCard.cardInfo.Dictate)
+                                + "</div>");
                         }, 1000);
                         $("#tbKeyIn").addClass('blink-background');
                         var onRemove = function (ev) {
                             $(GlobalVariables.gdTutorElements.gdMain).hide(0);
-                            alert("Good Job!");
+                            alert(thisPageTexts.stTut3_1To2);
                             $(PlayOneCategoryPageController.Current.cvMain).off(GlobalVariables.RemoveAWCardKey, onRemove);
                             $("#gdTutorial #btHide").removeClass('blink');
                             $("#tbKeyIn").removeClass('blink-background');
@@ -438,8 +531,10 @@ var TutorialHelper = (function () {
                 break;
             case TutorMainEnum.End:
                 $(GlobalVariables.gdTutorElements.gdMain).show('slow');
-                $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>Well Done!</div>" +
-                    "<div style='text-align:center; font-size:3vh;'>Click <span class='glyphicon glyphicon-remove-sign'></span><sub>Stop</sub> to stop this tutorial.</div>");
+                $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut_End_Title
+                    + "</div>" +
+                    "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut_End_Content.replace('{0}', "<span class='glyphicon glyphicon-remove-sign'></span><sub>Stop</sub>")
+                    + "</div>");
                 PlayOneCategoryPageController.scope.$apply(function () { PlayOneCategoryPageController.Current.playType = PlayTypeEnum.syn; });
                 break;
         }
@@ -474,19 +569,125 @@ var GlobalVariables = (function () {
     GlobalVariables.SynVoiceChangeKey = "SynVoiceChange";
     GlobalVariables.TutorTypeChangeKey = "TutorTypeChange";
     GlobalVariables.PlayTypeChangeKey = "PlayTypeChange";
+    GlobalVariables.AudioPauseKey = "AudioPause";
+    GlobalVariables.PageTextChangeKey = "PageTextChange";
+    GlobalVariables.PageTextsJSONFName = "Resources.json";
     return GlobalVariables;
+}());
+var PageTextHelper = (function () {
+    function PageTextHelper() {
+    }
+    PageTextHelper.InitPageTexts = function (callback, arg) {
+        if (callback === void 0) { callback = null; }
+        if (arg === void 0) { arg = null; }
+        MyFileHelper.FeedTextFromTxtFileToACallBack(PageTextHelper.GetLocaleSubFolder(GlobalVariables.SelPageTextLang.lang, GlobalVariables.LangsInStrings), null, function (stJson) {
+            GlobalVariables.PageTexts = JSON.parse(stJson);
+            if (callback)
+                callback(arg);
+        });
+    };
+    ;
+    PageTextHelper.GetLocaleSubFolder = function (lang, allLangs) {
+        var bLang = PageTextHelper.GetPageTextLang(lang, allLangs).lang;
+        var filePath = GlobalVariables.rootDir + 'Strings/' + bLang + '/' + GlobalVariables.PageTextsJSONFName;
+        return filePath;
+    };
+    PageTextHelper.InitLangsInStrings = function () {
+        var array = [];
+        array.push({ lang: 'zh-TW', name: '中文' });
+        array.push({ lang: 'en-US', name: 'English' });
+        return array;
+    };
+    PageTextHelper.GetPageTextLang = function (lang, allLangs) {
+        var bufLang = (lang && lang.match(/^zh/i)) ? 'zh-TW' : lang;
+        bufLang = bufLang.replace(/_/g, '-').toLowerCase();
+        for (var i0 = 0; i0 < allLangs.length; i0++) {
+            var eachLang = allLangs[i0];
+            if (bufLang && bufLang.length > 0 && bufLang.indexOf(eachLang.lang.toLowerCase().replace(/_/g, '-')) > -1)
+                return eachLang;
+        }
+        for (var i0 = 0; i0 < allLangs.length; i0++) {
+            var eachLang = allLangs[i0];
+            if (eachLang.lang === 'en-US')
+                return eachLang;
+        }
+    };
+    PageTextHelper.defaultPageTexts = {
+        "PlayOneCategoryPageJSON": {
+            "stSynVoice": "語音模擬的聲音：",
+            "stContributor": "貢獻者",
+            "stRest": "尚隱藏的卡數：",
+            "stNumWCardShown": "張卡會被顯示",
+            "stckTakeCardRandomly": "隨機取卡",
+            "stCkResizeBg": "連同背景一起縮放",
+            "stResize": "縮放：",
+            "stPlayType": "使用類型",
+            "stHint": "提示",
+            "stPair": "配對",
+            "stKeyIn": "鍵入正解",
+            "stArrange": "排列卡片",
+            "stAudioRate": "音效撥放速率",
+            "stTutor": "互動教學",
+            "stBasic": "基礎",
+            "stStop": "停止",
+            "stHyperLink": "超連結",
+            "stMyLink": "本類別的連結",
+            "stTut0_1_1": "你現在在教學模式下。",
+            "stTut0_1_2": "先按{0}然後選<b>基礎</b>開始本教學。",
+            "stTut0_1_3": "或按{0}來停止此互動教學。",
+            "stTut0To1": "好了！讓我們開始吧！",
+            "stTut1_1": "1.1基礎 - 放大所有卡片",
+            "stTut1_1_1": "按{1}裏頭的{0}來放大所有卡片。",
+            "stTut1_1To2": "太棒了！\n你做到了！",
+            "stTut1_2": "1.2 基礎 - 縮小所有卡片",
+            "stTut1_2_1": "按{1}裏頭的{0}來縮小所有卡片。",
+            "stTut1_2To3": "做得好！",
+            "stTut1_3": "1.3 基礎 - 配對",
+            "stTut1_3_0": "請先按 {0}<sub>播放</sub> 或 {1}<sub>撥下個</sub>。",
+            "stTut1_3_1": "1.3.1 配對 - 點相應的卡",
+            "stTut1_3_1_1": "因為要點相應的卡好消掉該卡，請點 {0}<sub>Hide</sub> 來隱藏此教學。",
+            "stTut1_3To4": "做得好！",
+            "stTut1_4_Title": "1.4 基礎 - 換語音模擬的語音",
+            "stTut1_4_Content": "按一下{1}鈕，然後選{0}鈕旁邊的下拉式選單選擇語音。",
+            "stTut1_4_1_Title": "1.4.1 基礎 - 語音已經換了。",
+            "stTut1_4_1_Content": "按{0}將用你新選的語音來撥放句子。",
+            "stTut1_4To5": "現在你已經知道怎麼換語音了。",
+            "stTut1_5_Title": "1.5 基礎 - 換卡",
+            "stTut1_5_Content": "因為怕卡片一次顯示太多會不好找，所以限定一次只顯示'{0}'張卡，若要立刻顯示未顯示的，請按{2}中的{1}來換卡。此外，顯示卡數'{0}'是可以自己修改的喔！",
+            "stTut1_5To6": "現在，你知道怎麼換卡了！",
+            "stTut1_6_Title": "1.6 基礎 - 顯示額外訊息",
+            "stTut1_6_Content": "首先，請先點{0}<sub>Hide</sub>鈕隱藏本教學。<br/> 然後對任何卡雙擊({1})就會跳出一個畫面顯示額外的訊息了。<br/>",
+            "stTut1_6To7": "照理說，它會跳出一個Popup顯示額外訊息，如果沒有，那就是該卡片沒有額外訊息。",
+            "stTut2_0_Title": "2.1 提示： 取得卡片的訊息",
+            "stTut2_0_Content": "按{1}裡的{0}<sub>提示</sub>鈕來進入提示模式。",
+            "stTut2_1_Title": "2.1 提示： 顯示單張卡的訊息",
+            "stTut2_1_Content": "先按{0}後，然後請按任意一張卡片。它會顯示它的相應句子。",
+            "stTut2_1To2": "等一下就會在下方的文字列看到相對應的句子。",
+            "stTut2_2_Title": "2.2 提示：依序顯示卡片們相應訊息",
+            "stTut2_2_Content": "首先，按{0}會依序由<b>2.1</b>所選的卡片開始撥放卡片訊息。<br/> 按{1}則會暫停依序播放。",
+            "stTut2_2To3": "現在，你已經知道怎麼依序顯示卡片們相應的句子了。",
+            "stTut3_0_Title": "3. 鍵入正解： 利用鍵入正解消除卡片",
+            "stTut3_0_Content": "按{1}裡的{0}<sub>鍵入正解</sub>鈕來進入鍵入正解模式。",
+            "stTut3_1_Title": "3.1 鍵入正解： 點選一張卡",
+            "stTut3_1_Content": "先按{0}鈕，然後在選任一張卡片吧！",
+            "stTut3_1_2_Title": "3.1.2 鍵入正解：將正確答案鍵入",
+            "stTut3_1_2_Content": " 請將 <b>{0}</b> 鍵入下面的文字方塊裡，然後按Enter鍵送出答案。",
+            "stTut3_1To2": "做得好！",
+            "stTut_End_Title": "太棒了！全部完成！",
+            "stTut_End_Content": "按{0}來停止本教學。謝謝。"
+        },
+        "ChooseAContainerPageJSON": {
+            "stPlay": "玩",
+            "stSelContainer": "1. 選個容器吧：",
+            "stSelCategory": "2. 再選容器中的一個類別吧：",
+            "stSelLang": "3. 設定用來顯示頁面的語言："
+        }
+    };
+    return PageTextHelper;
 }());
 var MyFileHelper = (function () {
     function MyFileHelper() {
     }
-    MyFileHelper.ShowTextFromTxtFile = function (pathOrUrl, tbResult) {
-        var request = new XMLHttpRequest();
-        request.open("GET", pathOrUrl, true);
-        request.onloadend = function (ev) {
-            tbResult.innerText = request.responseText;
-        };
-        request.send();
-    };
     MyFileHelper.FeedTextFromTxtFileToACallBack = function (pathOrUrl, thisCard, callback) {
         var request = new XMLHttpRequest();
         request.open("GET", pathOrUrl, true);
@@ -496,6 +697,14 @@ var MyFileHelper = (function () {
             }
             if ((ev.target).status != 404)
                 callback(request.responseText, thisCard);
+        };
+        request.send();
+    };
+    MyFileHelper.ShowTextFromTxtFile = function (pathOrUrl, tbResult) {
+        var request = new XMLHttpRequest();
+        request.open("GET", pathOrUrl, true);
+        request.onloadend = function (ev) {
+            tbResult.innerText = request.responseText;
         };
         request.send();
     };
@@ -847,6 +1056,8 @@ var PlayOneCategoryPageController = (function () {
         this.btLangSettings = document.getElementById('dropdownLangSettings');
         this.rdTutorType = document.getElementById('rdTutorType');
         this.cvMain = document.getElementsByClassName('cvMain')[0];
+        this.btPauseAudio = document.getElementById('btPauseAudio');
+        this.btAudioAllPlay = document.getElementById('btAudioAllPlay');
         this.isBackAudioStartLoad = false;
         this.isBGAlsoChange = true;
         this.defaultCardStyle = { width: "16vw", height: "16vh" };
@@ -1013,6 +1224,14 @@ var PlayOneCategoryPageController = (function () {
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
+        var renewPageTexts = function () {
+            PlayOneCategoryPageController.scope.$apply(function () {
+                PlayOneCategoryPageController.Current.thisPageTexts = null;
+            });
+            $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        };
+        $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        $(document).on(GlobalVariables.PageTextChangeKey, renewPageTexts);
         if (GlobalVariables.isTutorMode) {
             this.TutorType = TutorMainEnum[TutorMainEnum.Begin];
             TutorialHelper.Action(GlobalVariables.tutorState);
@@ -1184,6 +1403,7 @@ var PlayOneCategoryPageController = (function () {
                     break;
                 case TutorMainEnum[TutorMainEnum.End]:
                     GlobalVariables.isTutorMode = false;
+                    $("#dropdownMenuPlayPageSettings").removeClass('blink');
                     $(PlayOneCategoryPageController.Current.rdTutorType).removeAttr('disabled');
                     GlobalVariables.tutorState = { Main: TutorMainEnum.End, Step: 0 };
                     PlayOneCategoryPageController.Current.playType = PlayTypeEnum.syn;
@@ -1198,12 +1418,67 @@ var PlayOneCategoryPageController = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "thisPageTexts", {
+        get: function () {
+            if (!GlobalVariables.PageTexts)
+                GlobalVariables.PageTexts = PageTextHelper.defaultPageTexts;
+            return GlobalVariables.PageTexts.PlayOneCategoryPageJSON;
+        },
+        set: function (value) {
+        },
+        enumerable: true,
+        configurable: true
+    });
     PlayOneCategoryPageController.prototype.ClearBeforeLeavePage = function () {
         $(window).off('resize', PlayOneCategoryPageController.Current.onWindowResize);
         $(document).off('click', PlayOneCategoryPageController.Current.onPlayBGSound);
         if (PlayOneCategoryPageController.Current.scoreTimerId)
             clearTimeout(PlayOneCategoryPageController.Current.scoreTimerId);
         $(GlobalVariables.gdTutorElements.gdMain).hide(0);
+        $(PlayOneCategoryPageController.Current.btPauseAudio).off('click');
+    };
+    PlayOneCategoryPageController.prototype.onPlayAllViewableWCard = function (ev) {
+        if (GlobalVariables.synthesis)
+            GlobalVariables.synthesis.cancel();
+        var isPausing = false;
+        var onClick = function (ev) {
+            isPausing = true;
+            PlayOneCategoryPageController.Current.PauseAudio();
+            $('button.glyphicon-exclamation-sign, #dropdownMenuPlayPageSettings').prop('disabled', false);
+            $(PlayOneCategoryPageController.Current.btPauseAudio).trigger(GlobalVariables.AudioPauseKey, AudioSequenceStateEnum.Pause);
+        };
+        $(PlayOneCategoryPageController.Current.btPauseAudio).off('click', onClick);
+        $(PlayOneCategoryPageController.Current.btPauseAudio).on('click', onClick);
+        var ith = MathHelper.FindIndex(WCard.showedWCards, PlayOneCategoryPageController.Current.selWCard);
+        ith = (ith < 0) ? 0 : ith;
+        var ith0 = ith;
+        var nextPlay = function (ev) {
+            $(WCard.showedWCards[ith].viewCard).removeClass('selWCard');
+            if (isPausing) {
+                return;
+            }
+            ith++;
+            if (ith < WCard.showedWCards.length) {
+                PlayOneCategoryPageController.scope.$apply(function () {
+                    PlayOneCategoryPageController.Current.selWCard = WCard.showedWCards[ith];
+                });
+                $(WCard.showedWCards[ith].viewCard).addClass('selWCard');
+                PlayOneCategoryPageController.Current.PlayAudio(WCard.showedWCards[ith], nextPlay);
+            }
+            else {
+                $(WCard.showedWCards[ith0].viewCard).addClass('selWCard');
+                PlayOneCategoryPageController.scope.$apply(function () {
+                    PlayOneCategoryPageController.Current.selWCard = WCard.showedWCards[ith0];
+                });
+                $('button.glyphicon-exclamation-sign, #dropdownMenuPlayPageSettings').prop('disabled', false);
+                $(PlayOneCategoryPageController.Current.btPauseAudio).trigger(GlobalVariables.AudioPauseKey, AudioSequenceStateEnum.End);
+                return;
+            }
+        };
+        $('button.glyphicon-exclamation-sign, #dropdownMenuPlayPageSettings').prop('disabled', true);
+        PlayOneCategoryPageController.Current.selWCard = WCard.showedWCards[ith];
+        $(WCard.showedWCards[ith].viewCard).addClass('selWCard');
+        PlayOneCategoryPageController.Current.PlayAudio(WCard.showedWCards[ith], nextPlay);
     };
     PlayOneCategoryPageController.prototype.SetGlobalScore = function (wcards) {
         this.glScore = this.maxDelScore * wcards.length;
@@ -1234,16 +1509,36 @@ var PlayOneCategoryPageController = (function () {
         $(PlayOneCategoryPageController.Current.dlFinish).dialog('open');
         PlayOneCategoryPageController.Current.meBackground.pause();
     };
-    PlayOneCategoryPageController.prototype.PlayAudio = function (wCard) {
+    PlayOneCategoryPageController.prototype.PlayAudio = function (wCard, callback) {
+        if (callback === void 0) { callback = null; }
         if (wCard.cardInfo.AudioFilePathOrUri) {
             var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
             meAud.src = CardsHelper.GetTreatablePath(wCard.cardInfo.AudioFilePathOrUri, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
             meAud.load();
             meAud.play();
+            if (callback) {
+                $(meAud).one("ended", callback);
+            }
         }
         else if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
+            if (GlobalVariables.synthesis.paused)
+                GlobalVariables.synthesis.resume();
             SpeechSynthesisHelper.Speak(wCard.cardInfo.Dictate, PlayOneCategoryPageController.Current.SynLang, PlayOneCategoryPageController.Current.currentSynVoice, Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN));
+            if (callback) {
+                $(GlobalVariables.synUtterance).one("end", callback);
+            }
         }
+        else {
+            if (callback)
+                setTimeout(callback, 2000);
+        }
+    };
+    ;
+    PlayOneCategoryPageController.prototype.PauseAudio = function () {
+        if (PlayOneCategoryPageController.Current.meCardsAudio)
+            PlayOneCategoryPageController.Current.meCardsAudio.pause();
+        if (GlobalVariables.synthesis && GlobalVariables.synUtterance)
+            GlobalVariables.synthesis.cancel();
     };
     ;
     PlayOneCategoryPageController.oneOverNWindow = 5;
@@ -1389,30 +1684,6 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
         });
     }
 }
-var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
-app.controller('PlayOneCategoryPageController', ['$scope', '$routeParams', PlayOneCategoryPageController]);
-app.controller('ChooseAContainerPageController', ['$scope', '$routeParams', ChooseAContainerPageController]);
-app.config(function ($routeProvider, $locationProvider) {
-    SpeechSynthesisHelper.getAllVoices(function () { });
-    GlobalVariables.gdTutorElements = {
-        gdMain: document.getElementById("gdTutorial"),
-        gdBoard: $("#gdTutorial #gdBoard").get(0),
-        gdContent: $("#gdTutorial #gdContent").get(0),
-        btHide: $("#gdTutorial #btHide").get(0),
-        btStop: $("#gdTutorial #btStop").get(0)
-    };
-    $routeProvider
-        .when('/Play', {
-        templateUrl: GlobalVariables.playOneCategoryHtml,
-        controller: 'PlayOneCategoryPageController',
-        controllerAs: 'ctrl'
-    })
-        .when('/', {
-        templateUrl: GlobalVariables.chooseAContainerHtml,
-        controller: 'ChooseAContainerPageController',
-        controllerAs: 'ctrl'
-    });
-});
 var myVersion = (function () {
     function myVersion() {
         this.version = GlobalVariables.version;
@@ -1442,53 +1713,140 @@ var VersionHelper = (function () {
     ;
     return VersionHelper;
 }());
-function ChooseAContainerPageController($scope) {
-    VersionHelper.ReloadIfNeeded();
-    if (GlobalVariables.isLog) {
-        console.log("ChooseAContainerPageController in");
-        console.log(location.origin);
+var ChooseAContainerPageController = (function () {
+    function ChooseAContainerPageController($scope, $routeParams) {
+        this.containers = GlobalVariables.containers;
+        this.selContainer = this.containers[0];
+        this.onConChange = function onContainerChange() {
+            MyFileHelper.FeedTextFromTxtFileToACallBack(ChooseAContainerPageController.Current.GetPath(), ChooseAContainerPageController.Current.categories, ChooseAContainerPageController.Current.UpdateCategories);
+        };
+        VersionHelper.ReloadIfNeeded();
+        ChooseAContainerPageController.Current = this;
+        ChooseAContainerPageController.scope = $scope;
+        var renewPageTexts = function () {
+            ChooseAContainerPageController.scope.$apply(function () {
+                ChooseAContainerPageController.Current.thisPageTexts = null;
+            });
+            $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        };
+        $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        $(document).on(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        if (GlobalVariables.isLog) {
+            console.log("ChooseAContainerPageController in");
+            console.log(location.origin);
+        }
+        this.onConChange();
     }
-    var self = this;
-    self.containers = GlobalVariables.containers;
-    self.selContainer = self.containers[0];
-    self.categories;
-    self.selCategory;
-    self.GetPath = function () {
-        var pathOrUrl = self.selContainer.itsLocation + "/" + GlobalVariables.containerListFileName;
+    Object.defineProperty(ChooseAContainerPageController.prototype, "thisPageTexts", {
+        get: function () {
+            if (!GlobalVariables.PageTexts)
+                GlobalVariables.PageTexts = PageTextHelper.defaultPageTexts;
+            return GlobalVariables.PageTexts.ChooseAContainerPageJSON;
+        },
+        set: function (value) {
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(ChooseAContainerPageController.prototype, "LangsInString", {
+        get: function () {
+            return GlobalVariables.LangsInStrings;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ChooseAContainerPageController.prototype, "SelPageTextLang", {
+        get: function () {
+            return GlobalVariables.SelPageTextLang;
+        },
+        set: function (value) {
+            GlobalVariables.SelPageTextLang = value;
+            PageTextHelper.InitPageTexts(function () {
+                ChooseAContainerPageController.scope.$apply(function () {
+                    ChooseAContainerPageController.Current.thisPageTexts = null;
+                });
+            });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ChooseAContainerPageController.prototype.GetPath = function () {
+        var pathOrUrl = ChooseAContainerPageController.Current.selContainer.itsLocation + "/" + GlobalVariables.containerListFileName;
         if (GlobalVariables.isHostNameShown)
             pathOrUrl = location.origin + pathOrUrl;
         return pathOrUrl;
     };
-    self.onConChange = function onContainerChange() {
-        MyFileHelper.FeedTextFromTxtFileToACallBack(self.GetPath(), self.categories, self.UpdateCategories);
-    };
-    self.UpdateCategories = function (jsonTxt, categories) {
+    ChooseAContainerPageController.prototype.UpdateCategories = function (jsonTxt, categories) {
         if (GlobalVariables.isLog) {
             console.log("ChooseAContainerPage:UpdateCategories: " + jsonTxt);
         }
         var obj = JSON.parse(jsonTxt);
-        self.categories = [];
+        ChooseAContainerPageController.Current.categories = [];
         categories = [];
         for (var i0 = 0; i0 < obj.Categories.length; i0++) {
             categories.push(obj.Categories[i0]);
         }
-        $scope.$apply(function () {
-            self.categories = categories;
+        ChooseAContainerPageController.scope.$apply(function () {
+            ChooseAContainerPageController.Current.categories = categories;
             if (categories.length > 0)
-                self.selCategory = categories[0];
+                ChooseAContainerPageController.Current.selCategory = categories[0];
         });
     };
-    self.onConChange();
-}
+    ;
+    return ChooseAContainerPageController;
+}());
 var AContainer = (function () {
     function AContainer(pos) {
         this.itsLocation = pos;
     }
     return AContainer;
 }());
+var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
+app.controller('PlayOneCategoryPageController', ['$scope', '$routeParams', PlayOneCategoryPageController]);
+app.controller('ChooseAContainerPageController', ['$scope', '$routeParams', ChooseAContainerPageController]);
+app.config(function ($routeProvider, $locationProvider) {
+    GlobalVariables.LangsInStrings = PageTextHelper.InitLangsInStrings();
+    GlobalVariables.SelPageTextLang = PageTextHelper.GetPageTextLang(navigator.language, GlobalVariables.LangsInStrings);
+    PageTextHelper.InitPageTexts(function () { $(document).trigger(GlobalVariables.PageTextChangeKey); });
+    SpeechSynthesisHelper.getAllVoices(function () { });
+    GlobalVariables.gdTutorElements = {
+        gdMain: document.getElementById("gdTutorial"),
+        gdBoard: $("#gdTutorial #gdBoard").get(0),
+        gdContent: $("#gdTutorial #gdContent").get(0),
+        btHide: $("#gdTutorial #btHide").get(0),
+        btStop: $("#gdTutorial #btStop").get(0)
+    };
+    $routeProvider
+        .when('/Play', {
+        templateUrl: GlobalVariables.playOneCategoryHtml,
+        controller: 'PlayOneCategoryPageController',
+        controllerAs: 'ctrl'
+    })
+        .when('/', {
+        templateUrl: GlobalVariables.chooseAContainerHtml,
+        controller: 'ChooseAContainerPageController',
+        controllerAs: 'ctrl'
+    });
+});
 var MathHelper = (function () {
     function MathHelper() {
     }
+    MathHelper.MyRandomN = function (iStart, iEnd) {
+        var ith;
+        ith = Math.floor((iEnd - iStart + 1 - 1e-10) * Math.random() + iStart);
+        return ith;
+    };
+    MathHelper.FindIndex = function (theArray, element) {
+        if (!theArray || !element)
+            return -1;
+        for (var i0 = 0; i0 < theArray.length; i0++) {
+            if (angular.equals(theArray[i0], element))
+                return i0;
+        }
+        return -1;
+    };
     MathHelper.Permute = function (oldSet) {
         var newSet = new Array();
         while (oldSet.length > 0) {
@@ -1500,11 +1858,6 @@ var MathHelper = (function () {
             oldSet.push(newSet[i0]);
         }
         return newSet;
-    };
-    MathHelper.MyRandomN = function (iStart, iEnd) {
-        var ith;
-        ith = Math.floor((iEnd - iStart + 1 - 1e-10) * Math.random() + iStart);
-        return ith;
     };
     return MathHelper;
 }());

@@ -1,4 +1,5 @@
-﻿/// <reference path="../helpers/speechsynthesishelper.ts" />
+﻿/// <reference path="../helpers/pagetexthelper.ts" />
+/// <reference path="../helpers/speechsynthesishelper.ts" />
 /// <reference path="../models/enums.ts" />
 /// <reference path="../mytpdefinitions/chrome.d.ts" />
 /// <reference path="../scripts/typings/jquery/jquery.d.ts" />
@@ -50,4 +51,16 @@ class GlobalVariables {
     public static SynVoiceChangeKey: string = "SynVoiceChange";
     public static TutorTypeChangeKey: string = "TutorTypeChange";
     public static PlayTypeChangeKey: string = "PlayTypeChange";
+    public static AudioPauseKey: string = "AudioPause";
+
+    //* [2016-07-10 16:23] PageTexts
+    public static PageTextChangeKey = "PageTextChange";
+    public static LangsInStrings: Array<LangInStrings>;
+    public static SelPageTextLang: LangInStrings;
+    public static PageTexts: PageTextsInterface;
+
+    /**
+     * This file is located at 'Strings/en-US/Resources.json' for English
+     */
+    public static PageTextsJSONFName: string="Resources.json";
 }

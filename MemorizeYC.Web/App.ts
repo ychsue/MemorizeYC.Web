@@ -1,6 +1,8 @@
 ﻿/// <reference path="playpage/playonecategorypage.ts" />
 /// <reference path="helpers/speechsynthesishelper.ts" />
+/// <reference path="helpers/pagetexthelper.ts" />
 /// <reference path="scripts/typings/angularjs/angular-route.d.ts" />
+/// <reference path="gspages/chooseacontainerpage.ts" />
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
 
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
@@ -11,6 +13,10 @@ app.controller('ChooseAContainerPageController', ['$scope','$routeParams',Choose
 
 //Config
 app.config(function ($routeProvider, $locationProvider) {
+    //* [2016-07-10 20:45] Get the related PageTexts
+    GlobalVariables.LangsInStrings = PageTextHelper.InitLangsInStrings();
+    GlobalVariables.SelPageTextLang = PageTextHelper.GetPageTextLang(navigator.language, GlobalVariables.LangsInStrings);
+    PageTextHelper.InitPageTexts(() => { $(document).trigger(GlobalVariables.PageTextChangeKey); });
 
     //* [2016-07-05 15:54] Preloading before any routings.
     SpeechSynthesisHelper.getAllVoices(() => { });

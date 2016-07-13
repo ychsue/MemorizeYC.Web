@@ -1,4 +1,4 @@
-﻿<h1>1. Please Select a Container:</h1>
+﻿<h1 ng-bind="ctrl.thisPageTexts.stSelContainer"></h1>
 <div>
     <select ng-model="ctrl.selContainer"
             ng-options="c.itsLocation for c in ctrl.containers" 
@@ -7,7 +7,12 @@
     </select>
     <a class="btn btn-default" ng-href="#/Play?Container={{ctrl.selContainer.itsLocation}}&CFolder={{ctrl.selCategory.Folder}}">Play</a>
 </div>
-<h2>2. Please Select a Category</h2>
+<h2 ng-bind="ctrl.thisPageTexts.stSelCategory"></h2>
 <select ng-model="ctrl.selCategory"
         ng-options="c.Folder for c in ctrl.categories"
         size="10"></select>
+
+<h3 ng-bind="ctrl.thisPageTexts.stSelLang"></h3>
+<select ng-model="ctrl.SelPageTextLang"
+        ng-options="c.name for c in ctrl.LangsInString">
+</select>

@@ -10,7 +10,7 @@
     <div class="container-fluid" ng-show="ctrl.playType==='syn'">
         <div class="row">
             <!--            <button id="btSynPlay" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()" title="Click me at first.">-->
-            <button id="btSynPlay" class="col-xs-1 btn btn-default" title="Click me at first.">
+            <button id="btSynPlay" class="col-xs-1 btn btn-default">
                 <span class="glyphicon glyphicon-play" />
             </button>
             <button id="btSynNext" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click($event)">
@@ -24,7 +24,7 @@
         <div class="row">
             <form ng-submit="ctrl.recCheckAnswer_Click()">
                 <button class="col-xs-1 btn btn-default">
-                    <img src="https://openclipart.org/image/2400px/svg_to_png/34345/signore-architetto-fran-01r.png" alt="microphone" style="height:32px" />
+                    <img src="https://openclipart.org/image/2400px/svg_to_png/34345/signore-architetto-fran-01r.png" alt="microphone" style="height:40px" />
                 </button>
                 <input id="tbKeyIn" type="text" name="tbRecSentence" class="col-xs-11" ng-model="ctrl.recInputSentence" />
                 <!--<input type="image" class="col-xs-1 btn btn-default" src="http://news.toyark.com/wp-content/uploads/sites/4/2013/08/New-52-Green-Arrow-07.jpg" style="height:32px; width:auto" />-->
@@ -34,8 +34,9 @@
 
     <div class="container-fluid" ng-show="ctrl.playType==='hint'">
         <div class="row">
-            <div class="col-xs-1 glyphicon glyphicon-exclamation-sign" style="font-size:large"></div>
-            <div class="col-xs-11 text-center" style="display:table-cell; vertical-align:central; font-size:x-large">{{ctrl.selWCard.cardInfo.Dictate}}</div>
+            <button class="col-xs-1 glyphicon glyphicon-exclamation-sign btn btn-default" type="button" id="btAudioAllPlay" ng-click="ctrl.onPlayAllViewableWCard()"></button>
+            <button class="col-xs-1 glyphicon glyphicon-pause btn btn-default" type="button" id="btPauseAudio"></button>
+            <div class="col-xs-10 text-center" style="display:table-cell; vertical-align:central; font-size:x-large">{{ctrl.selWCard.cardInfo.Dictate}}</div>
         </div>
     </div>
 
@@ -45,14 +46,14 @@
     <div class="container-fluid">
         <div class="row">
             <div id="dpLangMain" class="dropdown">
-                <button class="col-xs-1 dropdown-toggle btn btn-default" type="button" id="dropdownLangSettings" data-toggle="dropdown" aria-haspopup="false">
+                <button class="col-xs-1 dropdown-toggle btn btn-default" role="button" type="button" id="dropdownLangSettings" data-toggle="dropdown" aria-haspopup="false">
                     <img src="http://memorizeyc.azurewebsites.net/Static/PlayPage/SpeechLang.png" alt="Choose a Language" style="width:32px" />
                     <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-left" style="margin-left:12px;">
                     <ul>
                         <li class="dropdown-header">
-                            <h4><span class="glyphicon-headphones glyphicon"></span>Speech Synthesis</h4>
+                            <h4><span class="glyphicon-headphones glyphicon"></span>{{ctrl.thisPageTexts.stSynVoice}}</h4>
                         </li>
                         <li>
                             <select id="cbSynAllVoices" ng-model="ctrl.currentSynVoice" ng-options="c.name for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer"></select>
@@ -60,7 +61,7 @@
                         </li>
                         <li role="separator" class="divider" />
                         <li class="dropdown-header">
-                            <h4>Contributor</h4>
+                            <h4>{{ctrl.thisPageTexts.stContributor}}</h4>
                         </li>
                         <li>
                             <a href="http://memorizeyc.azurewebsites.net/">© MemorizeYC</a>
@@ -69,36 +70,36 @@
                 </div>
             </div>
             <h4 class="col-xs-10 text-center">{{ctrl.CFolder}}</h4>
-            <div id="dpPlaySettings" class="dropdown" style="opacity:0.95">
-                <button class="btn btn-default dropdown-toggle col-xs-1" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <span class="glyphicon glyphicon-menu-hamburger" />
+            <div id="dpPlaySettings" class="dropdown" style="opacity:0.95;">
+                <button class="navbar-btn dropdown-toggle col-xs-1" style="height:36px;" role="button" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+                    <span class="glyphicon glyphicon-menu-hamburger"/>
                 </button>
-                <ul id="ddSettings" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPlayPageSettings">
+                <ul id="ddSettings" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPlayPageSettings" style="max-width:90vw;">
                     <!--1. For cards' size, shown-->
                     <li class="container">
                         <div class="row">
-                            <button id="btChangeCards" class="WCard col-xs-3" ng-style="ctrl.defaultCardStyle" ng-click="ctrl.ShowNewWCards_Click()" ng-disabled="ctrl.numRestWCards.length==0">
-                                <div style="font-size:3vw">
-                                    Rest: <br />
+                            <button id="btChangeCards" ng-style="ctrl.defaultCardStyle" ng-click="ctrl.ShowNewWCards_Click()" style="float:left;margin:4px;" >
+                                <div>
+                                    {{ctrl.thisPageTexts.stRest}} <br />
                                     <span class="badge">{{ctrl.numRestWCards}}</span>
                                 </div>
                             </button>
-                            <div >
-                                Show <input type="number" style="width:40px" ng-model="ctrl.numWCardShown" min="1" /> cards each time.
+                            <div style="margin:4px;float:left">
+                                 <input type="number" style="width:40px" ng-model="ctrl.numWCardShown" min="1" /> {{ctrl.thisPageTexts.stNumWCardShown}}
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="cbPickRandomly" value="" ng-model="ctrl.isPickWCardsRandomly" />
-                                        Takes new cards randomly.
+                                        {{ctrl.thisPageTexts.stckTakeCardRandomly}}
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="cbBGAlsoChange" value="" ng-model="ctrl.isBGAlsoChange" />
-                                        Resize Background, too.
+                                        {{ctrl.thisPageTexts.stCkResizeBg}}
                                     </label>
                                 </div>
                                 <div>
-                                    Resize:
+                                    {{ctrl.thisPageTexts.stResize}}
                                     <button class="glyphicon glyphicon-minus" ng-click="ctrl.Smaller_Click($event)"></button>
                                     <button class="glyphicon glyphicon-plus" ng-click="ctrl.Larger_Click($event)"></button>
                                 </div>
@@ -108,25 +109,25 @@
                     <li role="separator" class="divider"></li>
 
                     <!--2. For Play Type-->
-                    <li class="dropdown-header">Type</li>
+                    <li class="dropdown-header">{{ctrl.thisPageTexts.stPlayType}}</li>
                     <li class="container">
                         <div class="row">
                             <div class="radio col-xs-4" style="margin-top:auto">
                                 <label id="lbHint">
                                     <input type="radio" name="gameType" value="hint" ng-model="ctrl.playType" />
-                                    Hint <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                    {{ctrl.thisPageTexts.stHint}} <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-exclamation-sign"></span>
                                 </label>
                             </div>
                             <div class="radio col-xs-4" style="margin-top:auto">
                                 <label>
                                     <input type="radio" name="gameType" value="syn" ng-model="ctrl.playType" /> <!--Definded in PlayTypeEnum-->
-                                    Click <span class="glyphicon glyphicon-play"></span>  <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-modal-window"></span>
+                                    {{ctrl.thisPageTexts.stPair}} <span class="glyphicon glyphicon-play"></span>  <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-modal-window"></span>
                                 </label>
                             </div><span></span>
                             <div class="radio col-xs-4" style="margin-top:auto">
                                 <label id="lbKeyIn">
                                     <input type="radio" name="gameType" value="rec" ng-model="ctrl.playType" />
-                                    KeyIn
+                                    {{ctrl.thisPageTexts.stKeyIn}}
                                     <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span>   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keyboard-icon_Wikipedians.svg/800px-Keyboard-icon_Wikipedians.svg.png" style="height:20px" alt="key in answer" />
                                 </label>
                             </div>
@@ -135,7 +136,7 @@
                     <li role="separator" class="divider"></li>
 
                     <!--3. For arrangement-->
-                    <li class="dropdown-header">Arrangement</li>
+                    <li class="dropdown-header">{{ctrl.thisPageTexts.stArrange}}</li>
                     <li class="container">
                         <div class="row">
                             <div class="col-xs-4"><button class="glyphicon glyphicon-th" ng-click="ctrl.Arrange_Click(false)"></button></div>
@@ -145,7 +146,7 @@
                     <li role="separator" class="divider"></li>
 
                     <!--4. Audio rate-->
-                    <li class="dropdown-header">Audio rate</li>
+                    <li class="dropdown-header">{{ctrl.thisPageTexts.stAudioRate}}</li>
                     <li class="container">
                         <div class="col-xs-12">
                             <input type="range" id="rgAudioRate" ng-model="ctrl.rate2PowN" min="-2" max="2" />
@@ -154,32 +155,32 @@
                     <li role="separator" class="divider"></li>
 
                     <!--5. Tutorial Mode-->
-                    <li class="dropdown-header">Tutorial</li>    
+                    <li class="dropdown-header">{{ctrl.thisPageTexts.stTutor}}</li>    
                     <li class="container">
                         <div id="rdTutorType" class="row">
                             <label class="col-xs-3">
                                 <input type="radio" name="tutorType" value="Basic" ng-model="ctrl.TutorType" />
-                                basic
+                                {{ctrl.thisPageTexts.stBasic}}
                             </label>
                             <label class="col-xs-3">
                                 <input type="radio" name="tutorType" value="Hint" ng-model="ctrl.TutorType" />
-                                hint
+                                {{ctrl.thisPageTexts.stHint}}
                             </label>
                             <label class="col-xs-3">
                                 <input type="radio" name="tutorType" value="KeyIn" ng-model="ctrl.TutorType" />
-                                KeyIn
+                                {{ctrl.thisPageTexts.stKeyIn}}
                             </label>
                             <label class="col-xs-3">
                                 <input type="radio" name="tutorType" value="End" ng-model="ctrl.TutorType" />
-                                stop
+                                {{ctrl.thisPageTexts.stStop}}
                             </label>
                         </div>
                     </li>
 
                     <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">HyperLinks</li>
+                    <li class="dropdown-header">{{ctrl.thisPageTexts.stHyperLink}}</li>
                     <li>
-                        <button class="btn btn-default" ng-click="ctrl.OpenHyperLink_Click()" ng-show="ctrl.hyperLink">my link</button>
+                        <button class="btn btn-default" ng-click="ctrl.OpenHyperLink_Click()" ng-show="ctrl.hyperLink">{{ctrl.thisPageTexts.stMyLink}}</button>
                     </li>
                 </ul>
             </div>

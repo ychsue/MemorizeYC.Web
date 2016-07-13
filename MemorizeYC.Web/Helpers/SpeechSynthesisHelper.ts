@@ -90,13 +90,23 @@ class SpeechSynthesisHelper {
         var vVoice: SpeechSynthesisVoice_Instance = null;
         for (var i0: number = 0; i0 < GlobalVariables.allVoices.length; i0++){
             var voice = GlobalVariables.allVoices[i0];
-            if (lang!="" && voice.lang!="" && (lang.toLowerCase().replace(/_/g, '-')).indexOf(
-                voice.lang.toLowerCase().replace(/_/g, '-')
-                ) >= 0) {
+            if (lang!="" && voice.lang!="" &&          voice.lang.toLowerCase().replace(/_/g, '-').indexOf(lang.toLowerCase().replace(/_/g, '-'))
+                 >= 0) {
                 vVoice = voice;
                 break;
             }
         };
+        if (!vVoice && lang != "" && voice.lang != "" && lang.match(/[-_]/i)) {
+            var hLang = lang.split(/[-_]/g)[0];
+            for (var i0: number = 0; i0 < GlobalVariables.allVoices.length; i0++) {
+                var voice = GlobalVariables.allVoices[i0];
+
+                if (hLang.trim().indexOf(voice.lang.trim()) === 0) {
+                    vVoice = voice;
+                    break;
+                }
+            };
+        }
         return vVoice;
     }
 

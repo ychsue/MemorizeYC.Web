@@ -24,6 +24,8 @@ class PlayOneCategoryPageController{
     public btLangSettings: HTMLButtonElement = document.getElementById('dropdownLangSettings') as HTMLButtonElement;
     public rdTutorType: HTMLDivElement = document.getElementById('rdTutorType') as HTMLDivElement;
     public cvMain: HTMLDivElement = document.getElementsByClassName('cvMain')[0] as HTMLDivElement;
+    public btPauseAudio: HTMLButtonElement = document.getElementById('btPauseAudio') as HTMLButtonElement;
+    public btAudioAllPlay: HTMLButtonElement = document.getElementById('btAudioAllPlay') as HTMLButtonElement;
 
     public isBackAudioStartLoad: boolean = false;
 
@@ -174,6 +176,7 @@ class PlayOneCategoryPageController{
                 break;
             case TutorMainEnum[TutorMainEnum.End]:
                 GlobalVariables.isTutorMode = false;
+                $("#dropdownMenuPlayPageSettings").removeClass('blink');
                 $(PlayOneCategoryPageController.Current.rdTutorType).removeAttr('disabled');
                 GlobalVariables.tutorState = { Main: TutorMainEnum.End, Step: 0 };
                 PlayOneCategoryPageController.Current.playType = PlayTypeEnum.syn;
@@ -187,6 +190,16 @@ class PlayOneCategoryPageController{
         TutorialHelper.Action(GlobalVariables.tutorState);
     }
 //#endregion TutorType
+//#region thisPageTexts
+    get thisPageTexts(): PlayOneCategoryPageJSON {
+        if (!GlobalVariables.PageTexts)
+            GlobalVariables.PageTexts = PageTextHelper.defaultPageTexts;
+        return GlobalVariables.PageTexts.PlayOneCategoryPageJSON;
+    }
+    set thisPageTexts(value: PlayOneCategoryPageJSON) {
+        //Do nothing. It is just for notifying this controller that it is changed.
+    }
+//#endregion thisPageTexts
 
     public ClearBeforeLeavePage() {
         $(window).off('resize',PlayOneCategoryPageController.Current.onWindowResize);  
@@ -194,6 +207,7 @@ class PlayOneCategoryPageController{
         if (PlayOneCategoryPageController.Current.scoreTimerId)
             clearTimeout(PlayOneCategoryPageController.Current.scoreTimerId);
         $(GlobalVariables.gdTutorElements.gdMain).hide(0);
+        $(PlayOneCategoryPageController.Current.btPauseAudio).off('click');
     }
 
     constructor($scope, $routeParams) {
@@ -204,6 +218,16 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.scope = $scope;
 
         WCard.CleanWCards();
+
+        //* [2016-07-11 15:02] Because its language might not ready, I use a trigger to tell me that it is done
+        var renewPageTexts = () => {
+            PlayOneCategoryPageController.scope.$apply(() => {
+                PlayOneCategoryPageController.Current.thisPageTexts = null;
+            });
+            $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        };
+        $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        $(document).on(GlobalVariables.PageTextChangeKey, renewPageTexts);
 
         //* [2016-07-05 15:16] Show tutorial
         if (GlobalVariables.isTutorMode) {
@@ -266,6 +290,57 @@ class PlayOneCategoryPageController{
     }
 
     //#region *EVENTS
+    public onPlayAllViewableWCard(ev) {
+        if(GlobalVariables.synthesis)
+            GlobalVariables.synthesis.cancel();
+
+        var isPausing = false; //use to stop the recursive play
+        var onClick = (ev) => {
+            isPausing = true;
+            PlayOneCategoryPageController.Current.PauseAudio();
+            $('button.glyphicon-exclamation-sign, #dropdownMenuPlayPageSettings').prop('disabled', false);
+            $(PlayOneCategoryPageController.Current.btPauseAudio).trigger(GlobalVariables.AudioPauseKey, AudioSequenceStateEnum.Pause);
+        };
+        $(PlayOneCategoryPageController.Current.btPauseAudio).off('click', onClick);
+        $(PlayOneCategoryPageController.Current.btPauseAudio).on('click', onClick);
+        //* [2016-07-12] 'ith' for the recursive calling to take the ith WCard
+        var ith = MathHelper.FindIndex(WCard.showedWCards, PlayOneCategoryPageController.Current.selWCard);
+        ith = (ith < 0) ? 0 : ith;
+        var ith0 = ith;
+
+        //* [2016-07-12] The callback for the recursive function
+        var nextPlay = (ev) => {
+            $(WCard.showedWCards[ith].viewCard).removeClass('selWCard');
+
+            if (isPausing) {
+                return;
+            }
+
+            ith++;
+            if (ith < WCard.showedWCards.length) {
+                PlayOneCategoryPageController.scope.$apply(() => {
+                    PlayOneCategoryPageController.Current.selWCard = WCard.showedWCards[ith];
+                });
+                $(WCard.showedWCards[ith].viewCard).addClass('selWCard');
+                PlayOneCategoryPageController.Current.PlayAudio(WCard.showedWCards[ith], nextPlay);
+            } else {
+                $(WCard.showedWCards[ith0].viewCard).addClass('selWCard');
+                PlayOneCategoryPageController.scope.$apply(() => {
+                    PlayOneCategoryPageController.Current.selWCard = WCard.showedWCards[ith0];
+                });
+                $('button.glyphicon-exclamation-sign, #dropdownMenuPlayPageSettings').prop('disabled', false);
+                $(PlayOneCategoryPageController.Current.btPauseAudio).trigger(GlobalVariables.AudioPauseKey, AudioSequenceStateEnum.End);
+                return;
+            }
+        };
+
+        $('button.glyphicon-exclamation-sign, #dropdownMenuPlayPageSettings').prop('disabled', true);
+
+        PlayOneCategoryPageController.Current.selWCard = WCard.showedWCards[ith];
+        $(WCard.showedWCards[ith].viewCard).addClass('selWCard');
+        PlayOneCategoryPageController.Current.PlayAudio(WCard.showedWCards[ith], nextPlay);
+    }
+
     public onPlayBGSound = function (ev) {
         PlayOneCategoryPageController.Current.meBackground.load();
         PlayOneCategoryPageController.Current.meBackground.play();
@@ -515,7 +590,12 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.Current.meBackground.pause();
     }
 
-    public PlayAudio(wCard: WCard) {
+    /**
+     * Use this function to utter a WCard's answer. The 'callback' will be called when it is complete
+     * @param wCard Its type is WCard
+     * @param callback handler: (JQueryEventObject)=>any. It will be called when the audio play is complete
+     */
+    public PlayAudio(wCard: WCard, callback:any=null) {
         if (wCard.cardInfo.AudioFilePathOrUri) {
             var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
             meAud.src = CardsHelper.GetTreatablePath(wCard.cardInfo.AudioFilePathOrUri,
@@ -523,13 +603,33 @@ class PlayOneCategoryPageController{
                 PlayOneCategoryPageController.Current.CFolder);
             meAud.load();
             meAud.play();
+            //* [2016-07-12 22:03] If callback is provided, it will be excuted.
+            if (callback) {
+                $(meAud).one("ended", callback);
+            }
         } else if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
+            if (GlobalVariables.synthesis.paused)
+                GlobalVariables.synthesis.resume();
             SpeechSynthesisHelper.Speak(wCard.cardInfo.Dictate,
                 PlayOneCategoryPageController.Current.SynLang,
                 PlayOneCategoryPageController.Current.currentSynVoice,
                 Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN)
             );
+            //* [2016-07-12 22:17] If callback is provided, it will be executed.
+            if (callback) {
+                $(GlobalVariables.synUtterance).one("end", callback);
+            }
+        } else {
+            if (callback)
+                setTimeout(callback, 2000);
         }
+    };
+
+    public PauseAudio() {
+        if (PlayOneCategoryPageController.Current.meCardsAudio)
+            PlayOneCategoryPageController.Current.meCardsAudio.pause();
+        if (GlobalVariables.synthesis && GlobalVariables.synUtterance)
+            GlobalVariables.synthesis.cancel();
     };
 }
 function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {

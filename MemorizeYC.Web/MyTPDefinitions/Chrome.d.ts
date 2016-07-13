@@ -15,6 +15,9 @@ interface SpeechSynthesis_Instance {
     getVoices(): Array<SpeechSynthesisVoice_Instance>;
     speak(utter: SpeechSynthesisUtterance_Instance): void;
     cancel(): void;
+    pause(): void;
+    resume(): void;
+    paused: boolean;
 }
 
 interface SpeechSynthesisVoice_Instance {
