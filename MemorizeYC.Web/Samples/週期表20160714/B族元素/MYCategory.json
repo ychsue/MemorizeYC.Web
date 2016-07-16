@@ -1,0 +1,177 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "21 鈧 S c 過渡金屬 .box",
+      "Position": [ 308, 408 ],
+      "Size": [84,84]
+    },
+    {
+      "FileName": "22 鈦 T i 過渡金屬.box",
+      "Position": [ 408, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "23 釩 V 過渡金屬.box",
+      "Position": [ 508, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "24 鉻 C r 過渡金屬.box",
+      "Position": [ 608, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "25 錳 M n 過渡金屬.box",
+      "Position": [ 708, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "26 鐵 F e 過渡金屬.box",
+      "Position": [ 808, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "27 鈷 C o 過渡金屬.box",
+      "Position": [ 908, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "28 鎳 N i 過渡金屬.box",
+      "Position": [ 1008, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "29 銅 C u 過渡金屬.box",
+      "Position": [ 1108, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "30 鋅 Z n 過渡金屬.box",
+      "Position": [ 1208, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "39 釔 Y 過渡金屬.box",
+      "Position": [ 308, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "40 鋯 Z r 過渡金屬.box",
+      "Position": [ 408, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "41 鈮 N b 過渡金屬.box",
+      "Position": [ 508, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "42 鉬 M o 過渡金屬.box",
+      "Position": [ 608, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "43 鎝 T c 過渡金屬.box",
+      "Position": [ 708, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "44 釕 R u 過渡金屬.box",
+      "Position": [ 808, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "45 銠 R h 過渡金屬.box",
+      "Position": [ 908, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "46 鈀 P d 過渡金屬.box",
+      "Position": [ 1008, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "47 銀 A g 過渡金屬.box",
+      "Position": [ 1108, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "48 鎘 C d 過渡金屬.box",
+      "Position": [ 1208, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "57到71 鑭系元素.box",
+      "Position": [ 308, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "72 鉿 H f 過渡金屬.box",
+      "Position": [ 408, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "73 鉭 T a 過渡金屬.box",
+      "Position": [ 508, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "74 鎢 W 過渡金屬.box",
+      "Position": [ 608, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "75 錸 R e 過渡金屬.box",
+      "Position": [ 708, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "76 鋨 O s 過渡金屬.box",
+      "Position": [ 808, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "77 銥 I r 過渡金屬.box",
+      "Position": [ 908, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "78 鉑 P t 過渡金屬.box",
+      "Position": [ 1008, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "79 金 A u 過渡金屬.box",
+      "Position": [ 1108, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "80 汞 H g 過渡金屬.box",
+      "Position": [ 1208, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "89到103 錒系元素.box",
+      "Position": [ 308, 708 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "104 鑪 R f 過渡金屬.box",
+      "Position": [ 408, 708 ],
+      "Size": [ 84, 84 ]
+    }
+  ],
+  "Link": "https://zh.wikipedia.org/zh-tw/%E5%85%83%E7%B4%A0%E5%91%A8%E6%9C%9F%E8%A1%A8",
+  "SynLang": "zh-TW",
+  "Background": {
+    "ImgStyle": {
+      "width": "2000px",
+      "height": "1200px",
+      "opacity": "0.3",
+      "background": "url('/Samples/週期表20160714/MYCBackground.png')",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    }
+  },
+  "numWCardShown": 50
+}

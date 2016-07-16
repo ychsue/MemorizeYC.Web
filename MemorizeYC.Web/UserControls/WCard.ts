@@ -82,8 +82,10 @@ class WCard {
         //** [2016-03-18 15:32] fix its size
         if (isNaN(this.viewWHRatio[value]) && this.cCards[value]["naturalHeight"])
             this.viewWHRatio[value] = (this.cCards[value]["naturalWidth"]) / (this.cCards[value]["naturalHeight"]);
-        var bufHeight = (isNaN(this.viewWHRatio[value])) ? this.viewSize[1] : (this.viewSize[0]/this.viewWHRatio[value]);
-        this.viewSize = [this.viewSize[0], bufHeight];
+        var bufHeight = (isNaN(this.viewWHRatio[value])) ? this.viewSize[1] : (this.viewSize[0] / this.viewWHRatio[value]);
+        if (!this.cardInfo.IsSizeFixed) {
+            this.viewSize = [this.viewSize[0], bufHeight];
+        }
         this.cCards[value].style.zIndex = "1";
         //** [2016-03-17 11:16] If this card exists, append the new one.
         this.viewCard.appendChild(this.cCards[value]);

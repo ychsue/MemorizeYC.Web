@@ -822,7 +822,9 @@ var WCard = (function () {
             if (isNaN(this.viewWHRatio[value]) && this.cCards[value]["naturalHeight"])
                 this.viewWHRatio[value] = (this.cCards[value]["naturalWidth"]) / (this.cCards[value]["naturalHeight"]);
             var bufHeight = (isNaN(this.viewWHRatio[value])) ? this.viewSize[1] : (this.viewSize[0] / this.viewWHRatio[value]);
-            this.viewSize = [this.viewSize[0], bufHeight];
+            if (!this.cardInfo.IsSizeFixed) {
+                this.viewSize = [this.viewSize[0], bufHeight];
+            }
             this.cCards[value].style.zIndex = "1";
             this.viewCard.appendChild(this.cCards[value]);
             var tbIth = this.viewCard.getElementsByClassName('tbIth')[0];

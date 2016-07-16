@@ -1,0 +1,167 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "57 鑭 L a 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [308,908]
+    },
+    {
+      "FileName": "58 鈰 C e 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 408, 908 ]
+    },
+    {
+      "FileName": "59 鐠 P r 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 508, 908 ]
+    },
+    {
+      "FileName": "60 釹 N d 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 608, 908 ]
+    },
+    {
+      "FileName": "61 鉕 P m 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 708, 908 ]
+    },
+    {
+      "FileName": "62 釤 S m 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 808, 908 ]
+    },
+    {
+      "FileName": "63 銪 E u 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 908, 908 ]
+    },
+    {
+      "FileName": "64 釓 G d 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1008, 908 ]
+    },
+    {
+      "FileName": "65 鋱 T b 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1108, 908 ]
+    },
+    {
+      "FileName": "66 鏑 D y 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1208, 908 ]
+    },
+    {
+      "FileName": "67 鈥 H o 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1308, 908 ]
+    },
+    {
+      "FileName": "68 鉺 E r 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1408, 908 ]
+    },
+    {
+      "FileName": "69 銩 T m 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1508, 908 ]
+    },
+    {
+      "FileName": "70 鐿 Y b 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1608, 908 ]
+    },
+    {
+      "FileName": "71 鎦 L u 稀土元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1708, 908 ]
+    },
+    {
+      "FileName": "89 錒 A c 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 308, 1008 ]
+    },
+    {
+      "FileName": "90 釷 T h 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 408, 1008 ]
+    },
+    {
+      "FileName": "91 鏷 P a 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 508, 1008 ]
+    },
+    {
+      "FileName": "92 鈾 U 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 608, 1008 ]
+    },
+    {
+      "FileName": "93 錼 N p 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 708, 1008 ]
+    },
+    {
+      "FileName": "94 鈽 P u 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 808, 1008 ]
+    },
+    {
+      "FileName": "95 鋂 A m 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 908, 1008 ]
+    },
+    {
+      "FileName": "96 鋦 C m 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1008, 1008 ]
+    },
+    {
+      "FileName": "97 鉳 B k 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1108, 1008 ]
+    },
+    {
+      "FileName": "98 鉲 C f 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1208, 1008 ]
+    },
+    {
+      "FileName": "99 鑀 E s 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1308, 1008 ]
+    },
+    {
+      "FileName": "100 鐨 F m 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1408, 1008 ]
+    },
+    {
+      "FileName": "101 鍆 M d 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1508, 1008 ]
+    },
+    {
+      "FileName": "102 鍩 N o 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1608, 1008 ]
+    },
+    {
+      "FileName": "103 鐒 L r 錒系元素.box",
+      "Size": [ 84, 84 ],
+      "Position": [ 1708, 1008 ]
+    }
+  ],
+  "Link": "https://zh.wikipedia.org/zh-tw/%E5%85%83%E7%B4%A0%E5%91%A8%E6%9C%9F%E8%A1%A8",
+  "SynLang": "zh-TW",
+  "Background": {
+    "ImgStyle": {
+      "width": "2000px",
+      "height": "1200px",
+      "opacity": "0.3",
+      "background": "url('/Samples/週期表20160714/MYCBackground.png')",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    }
+  },
+  "numWCardShown": 50
+}
