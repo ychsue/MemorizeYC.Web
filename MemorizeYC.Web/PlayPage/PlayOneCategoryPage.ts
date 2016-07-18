@@ -26,13 +26,13 @@ class PlayOneCategoryPageController{
     public cvMain: HTMLDivElement = document.getElementsByClassName('cvMain')[0] as HTMLDivElement;
     public btPauseAudio: HTMLButtonElement = document.getElementById('btPauseAudio') as HTMLButtonElement;
     public btAudioAllPlay: HTMLButtonElement = document.getElementById('btAudioAllPlay') as HTMLButtonElement;
+    public topNavbar: HTMLElement = document.getElementById('topNavbar') as HTMLElement;
+    public bottomNavbar: HTMLElement = document.getElementById('bottomNavbar') as HTMLElement;
 
     public isBackAudioStartLoad: boolean = false;
 
     public isBGAlsoChange: boolean = true;
 
-    public topNavbarHeight: number;
-    public bottomNavbarHeight: number;
     public defaultCardWidth: number;
     public defaultCardHeight: number;
     public defaultCardStyle: Object = { width: "16vw", height: "16vh" };
@@ -219,6 +219,12 @@ class PlayOneCategoryPageController{
 
         WCard.CleanWCards();
 
+        //* [2016-07-16 13:57] Shift all the cards
+        $(PlayOneCategoryPageController.Current.cvMain).css({
+            top:
+            $(PlayOneCategoryPageController.Current.topNavbar).height() + "px"
+        });
+
         //* [2016-07-11 15:02] Because its language might not ready, I use a trigger to tell me that it is done
         var renewPageTexts = () => {
             PlayOneCategoryPageController.scope.$apply(() => {
@@ -268,9 +274,6 @@ class PlayOneCategoryPageController{
             GlobalVariables.currentCategoryFolder = $routeParams["CFolder"];
         this.Container = GlobalVariables.currentMainFolder;
         this.CFolder = GlobalVariables.currentCategoryFolder;
-
-        this.topNavbarHeight = $("#topNavbar").height();
-        this.bottomNavbarHeight = $("#bottomNavbar").height();
 
         this.numWCardShown = 8;
         this.isPickWCardsRandomly = true;
@@ -363,6 +366,10 @@ class PlayOneCategoryPageController{
     }
 
     public onWindowResize = function (ev) {
+        $(PlayOneCategoryPageController.Current.cvMain).css({
+            top:
+            $(PlayOneCategoryPageController.Current.topNavbar).height()+"px"
+        });
         //* [2016-05-20 11:40] Resize only when the document's size is changed.
         if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
             return;
@@ -796,8 +803,9 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
 
     //* [2016-07-08 21:22] If the $(document).height() is larger than $(window).height(), it will be a little strange. I try to make the document's height is smaller than window's height
     var newRate = 1;
-    if ($(document).height() * 1.1 > $(window).height())
-        newRate = $(window).height() / ($(document).height() * 1.1);
+    //if ($(document).height() * 1.1 > $(window).height())
+    //    newRate = $(window).height() / ($(document).height() * 1.1);
+    newRate = Math.min($(window).height() / ($(document).height() * 1), $(window).width() / ($(document).width() * 1));
     CardsHelper.RearrangeCards(showedWcards, PlayOneCategoryPageController.oneOverNWindow,false,true,newRate,false);
 
     if (PlayOneCategoryPageController.Current.isBGAlsoChange) {

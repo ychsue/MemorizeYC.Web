@@ -6,7 +6,11 @@
     <h1>Your Level is {{ctrl.level}}</h1>
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom" id="bottomNavbar">
+<div class="cvMain" role="main" style="position:absolute">
+    <div id="imgBackground"></div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom" style="position:fixed;bottom:0; height:50px;" id="bottomNavbar">
     <div class="container-fluid" ng-show="ctrl.playType==='syn'">
         <div class="row">
             <!--            <button id="btSynPlay" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()" title="Click me at first.">-->
@@ -189,9 +193,6 @@
 </nav>
 
 
-<div class="cvMain">
-    <div id="imgBackground"></div>
-</div>
 
 <div class="progress navbar-fixed-bottom" style="bottom: 32px; width:100%">
     <div id="pgScore" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 100%; position:absolute; right:0">

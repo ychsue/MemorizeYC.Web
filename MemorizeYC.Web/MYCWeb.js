@@ -1060,6 +1060,8 @@ var PlayOneCategoryPageController = (function () {
         this.cvMain = document.getElementsByClassName('cvMain')[0];
         this.btPauseAudio = document.getElementById('btPauseAudio');
         this.btAudioAllPlay = document.getElementById('btAudioAllPlay');
+        this.topNavbar = document.getElementById('topNavbar');
+        this.bottomNavbar = document.getElementById('bottomNavbar');
         this.isBackAudioStartLoad = false;
         this.isBGAlsoChange = true;
         this.defaultCardStyle = { width: "16vw", height: "16vh" };
@@ -1087,6 +1089,9 @@ var PlayOneCategoryPageController = (function () {
             });
         };
         this.onWindowResize = function (ev) {
+            $(PlayOneCategoryPageController.Current.cvMain).css({
+                top: $(PlayOneCategoryPageController.Current.topNavbar).height() + "px"
+            });
             if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
                 return;
             GlobalVariables.currentDocumentSize[0] = $(document).innerWidth();
@@ -1226,6 +1231,9 @@ var PlayOneCategoryPageController = (function () {
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
+        $(PlayOneCategoryPageController.Current.cvMain).css({
+            top: $(PlayOneCategoryPageController.Current.topNavbar).height() + "px"
+        });
         var renewPageTexts = function () {
             PlayOneCategoryPageController.scope.$apply(function () {
                 PlayOneCategoryPageController.Current.thisPageTexts = null;
@@ -1265,8 +1273,6 @@ var PlayOneCategoryPageController = (function () {
             GlobalVariables.currentCategoryFolder = $routeParams["CFolder"];
         this.Container = GlobalVariables.currentMainFolder;
         this.CFolder = GlobalVariables.currentCategoryFolder;
-        this.topNavbarHeight = $("#topNavbar").height();
-        this.bottomNavbarHeight = $("#bottomNavbar").height();
         this.numWCardShown = 8;
         this.isPickWCardsRandomly = true;
         var pathOrUri = CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, this.Container, this.CFolder);
@@ -1675,8 +1681,7 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
         PlayOneCategoryPageController.Current.numRestWCards;
     });
     var newRate = 1;
-    if ($(document).height() * 1.1 > $(window).height())
-        newRate = $(window).height() / ($(document).height() * 1.1);
+    newRate = Math.min($(window).height() / ($(document).height() * 1), $(window).width() / ($(document).width() * 1));
     CardsHelper.RearrangeCards(showedWcards, PlayOneCategoryPageController.oneOverNWindow, false, true, newRate, false);
     if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
         var bGObj = PlayOneCategoryPageController.Current.imgBackground;
@@ -1875,7 +1880,7 @@ var CardsHelper = (function () {
         if (!wcards || wcards.length === 0)
             return;
         var topOfTop = 50;
-        var currentPosition = [0, topOfTop];
+        var currentPosition = [0, 0];
         var wWidth = window.innerWidth;
         var wHeight = window.innerHeight - topOfTop;
         if (isRandom)
@@ -1906,9 +1911,9 @@ var CardsHelper = (function () {
                 card.viewSize = card.viewSize;
             }
             if ((!card.cardInfo.IsXPosFixed || !card.cardInfo.IsYPosFixed) && !justFixed) {
-                var predictTop = currentPosition[1] + card.viewSize[1] + 20;
+                var predictTop = currentPosition[1] + card.viewSize[1] + topOfTop;
                 if (predictTop > wHeight) {
-                    currentPosition = [currentPosition[0] + maxWidth + 20, topOfTop];
+                    currentPosition = [currentPosition[0] + maxWidth + 20, 0];
                     maxWidth = card.viewSize[0];
                 }
                 else {

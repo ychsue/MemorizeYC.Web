@@ -7,7 +7,7 @@ class CardsHelper {
         if (!wcards || wcards.length === 0)
             return;
         var topOfTop: number = 50;
-        var currentPosition: number[] = [0, topOfTop];
+        var currentPosition: number[] = [0, 0];
         var wWidth: number = window.innerWidth;
         var wHeight: number = window.innerHeight - topOfTop; //For bottom bar
 
@@ -43,9 +43,9 @@ class CardsHelper {
             }
 
             if ((!card.cardInfo.IsXPosFixed || !card.cardInfo.IsYPosFixed) && !justFixed) { //Update its position only if their positions are changeable.
-                var predictTop = currentPosition[1] + card.viewSize[1] + 20;
+                var predictTop = currentPosition[1] + card.viewSize[1] + topOfTop;
                 if (predictTop > wHeight) {
-                    currentPosition = [currentPosition[0] + maxWidth + 20, topOfTop];
+                    currentPosition = [currentPosition[0] + maxWidth + 20, 0];
                     maxWidth = card.viewSize[0];
                 }
                 else {
