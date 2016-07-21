@@ -6,6 +6,7 @@ interface PageTextsInterface {
 }
 
 interface PlayOneCategoryPageJSON {
+    stWaitUtterDone: string;
     stSynVoice: string;
     stContributor: string;
     stRest: string;
@@ -135,6 +136,7 @@ class PageTextHelper {
 
     public static defaultPageTexts: PageTextsInterface = {
         "PlayOneCategoryPageJSON": {
+            "stWaitUtterDone":"稍安勿躁，請等我唸完再點選。",
             "stSynVoice": "語音模擬的聲音：",
             "stContributor": "貢獻者",
             "stRest": "尚隱藏的卡數：",

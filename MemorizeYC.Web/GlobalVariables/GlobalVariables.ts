@@ -21,6 +21,7 @@ class GlobalVariables {
     public static containers: Array<AContainer>;
     public static currentMainFolder: string;
     public static currentCategoryFolder: string;
+    public static currentUser: string = "MYC";
 
     public static onSingleClick: string = "onSingleClick";
     public static onDoubleClick: string = "onDoubleClick";

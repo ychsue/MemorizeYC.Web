@@ -1,7 +1,9 @@
-﻿/// <reference path="../helpers/speechsynthesishelper.ts" />
+﻿/// <reference path="../models/eachrecord.ts" />
+/// <reference path="../helpers/speechsynthesishelper.ts" />
 /// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../globalvariables/globalvariables.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
+/// <reference path="../helpers/indexeddbhelper.ts" />
 /// <reference path="../scripts/typings/jqueryui/jqueryui.d.ts" />
 /// <reference path="../models/mycategoryjson.ts" />
 /// <reference path="../mytpdefinitions/chrome.d.ts" />
@@ -30,6 +32,7 @@ class PlayOneCategoryPageController{
     public bottomNavbar: HTMLElement = document.getElementById('bottomNavbar') as HTMLElement;
 
     public isBackAudioStartLoad: boolean = false;
+    public isAudioPlaying: boolean = false;
 
     public isBGAlsoChange: boolean = true;
 
@@ -201,6 +204,10 @@ class PlayOneCategoryPageController{
     }
 //#endregion thisPageTexts
 
+    //#region for EachRecord
+    public eachRecord: EachRecord = {UCC:null,SynLang:"en-US",history:'[]',nextTime:0,RecLang:"en-US"};
+    //#endregion for EachRecord
+
     public ClearBeforeLeavePage() {
         $(window).off('resize',PlayOneCategoryPageController.Current.onWindowResize);  
         $(document).off('click', PlayOneCategoryPageController.Current.onPlayBGSound);
@@ -208,6 +215,7 @@ class PlayOneCategoryPageController{
             clearTimeout(PlayOneCategoryPageController.Current.scoreTimerId);
         $(GlobalVariables.gdTutorElements.gdMain).hide(0);
         $(PlayOneCategoryPageController.Current.btPauseAudio).off('click');
+        $(GlobalVariables.synUtterance).off('start error end pause');
     }
 
     constructor($scope, $routeParams) {
@@ -290,6 +298,25 @@ class PlayOneCategoryPageController{
         setTimeout(function () {
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true);
         }, 2500);
+
+        //* [2016-07-19 12:21] Launched when the user leave this Play Page
+        IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord);
+        $(window).one('popstate', (ev) => {
+            var isAdd = (PlayOneCategoryPageController.Current.eachRecord.history === '[]') ? true : false;
+
+            var lv: LVsTime = {
+                slv: 0,
+                tlv: PlayOneCategoryPageController.Current.level,
+                ts: Date.now()
+            };
+
+            var lvs = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history) as Array<LVsTime>;
+            lvs.push(lv);
+            PlayOneCategoryPageController.Current.eachRecord.history = JSON.stringify(lvs);
+
+            IndexedDBHelper.PutARecordAsync(PlayOneCategoryPageController.Current.eachRecord,isAdd);
+        });
+        
     }
 
     //#region *EVENTS
@@ -524,6 +551,10 @@ class PlayOneCategoryPageController{
     };
 
     public recCheckAnswer_Click = function () {
+        //* [2016-07-21 11:54] In order to make people easier to remember the stuff by their hearing, force it to pronounce it.
+        if (PlayOneCategoryPageController.Current.selWCard)
+            PlayOneCategoryPageController.Current.PlayAudio(PlayOneCategoryPageController.Current.selWCard);
+
         if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence && PlayOneCategoryPageController.Current.selWCard.cardInfo.Dictate.trim().
             indexOf(PlayOneCategoryPageController.Current.recInputSentence.trim()) === 0) {
             $(PlayOneCategoryPageController.Current.selWCard.viewCard).animate({ opacity: 0.1 }, {
@@ -582,7 +613,7 @@ class PlayOneCategoryPageController{
                     vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(PlayOneCategoryPageController.Current.SynLang);
                 PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
             }
-        })
+        });
     };
 
     public ShowdlFinish() {
@@ -610,6 +641,13 @@ class PlayOneCategoryPageController{
                 PlayOneCategoryPageController.Current.CFolder);
             meAud.load();
             meAud.play();
+            //* [2016-07-21 12:17] To force user to listen the whole speech.
+            $(meAud).one('playing', () => {
+                PlayOneCategoryPageController.Current.isAudioPlaying = true;
+            });
+            $(meAud).one('ended', () => {
+                PlayOneCategoryPageController.Current.isAudioPlaying = false;
+            });
             //* [2016-07-12 22:03] If callback is provided, it will be excuted.
             if (callback) {
                 $(meAud).one("ended", callback);
@@ -651,7 +689,19 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         if (jObj.isPickWCardsRandomly) PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
     });
     PlayOneCategoryPageController.Current.SynLang = jObj.SynLang;
-    SpeechSynthesisHelper.getAllVoices(PlayOneCategoryPageController.Current.GetCurrentSynVoice);
+    SpeechSynthesisHelper.getAllVoices(() => {
+        PlayOneCategoryPageController.Current.GetCurrentSynVoice();
+
+        //* [2016-07-21 12:22] Force the user to listen up the whole sentence
+        $(GlobalVariables.synUtterance).on('start', (ev) => {
+            console.log('synUtterance.' + ev.type);
+            PlayOneCategoryPageController.Current.isAudioPlaying = true;
+        });
+        $(GlobalVariables.synUtterance).on('error end pause', (ev) => {
+            console.log('synUtterance.' + ev.type);
+            PlayOneCategoryPageController.Current.isAudioPlaying = false;
+        });
+    });
 
     CardsHelper.GetWCardsCallback(jObj, restWcards); //Get WCards
     PlayOneCategoryPageController.Current.hyperLink = jObj.Link; //Get HyperLink
@@ -687,6 +737,11 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             });
             //* [2016-05-23 15:45] If it is under synthesizer mode
             if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.syn) {
+                //* [2016-07-21 12:26] Force the user to listen up the whole sentence before they can select the correct card.
+                if (PlayOneCategoryPageController.Current.isAudioPlaying) {
+                    alert(PlayOneCategoryPageController.Current.thisPageTexts.stWaitUtterDone);
+                    return;
+                }
                 if (selWCard === PlayOneCategoryPageController.Current.synAnsWCard) {
                     //** [2016-05-27 16:21] Stop the timer
                     if (PlayOneCategoryPageController.Current.scoreTimerId) {

@@ -706,6 +706,7 @@
     <TypeScriptCompile Include="GlobalVariables\GlobalVariables.ts" />
     <TypeScriptCompile Include="GSPages\ChooseAContainerPage.ts" />
     <TypeScriptCompile Include="Helpers\CardsHelper.ts" />
+    <TypeScriptCompile Include="Helpers\IndexedDBHelper.ts" />
     <TypeScriptCompile Include="Helpers\mathhelper.ts" />
     <TypeScriptCompile Include="Helpers\MyFileHelper.ts" />
     <TypeScriptCompile Include="Helpers\PageTextHelper.ts" />
@@ -715,6 +716,7 @@
     <TypeScriptCompile Include="Models\BackgroundObj.ts" />
     <TypeScriptCompile Include="Models\EachCategory.ts" />
     <TypeScriptCompile Include="Models\EachDescription.ts" />
+    <TypeScriptCompile Include="Models\EachRecord.ts" />
     <TypeScriptCompile Include="Models\Enums.ts" />
     <TypeScriptCompile Include="Models\MYCategoryJson.ts" />
     <TypeScriptCompile Include="Models\MYContainerJson.ts" />

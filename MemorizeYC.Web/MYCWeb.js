@@ -549,6 +549,7 @@ var GlobalVariables = (function () {
     GlobalVariables.isHostNameShown = true;
     GlobalVariables.isLog = false;
     GlobalVariables.isIOS = /iP/i.test(navigator.userAgent);
+    GlobalVariables.currentUser = "MYC";
     GlobalVariables.onSingleClick = "onSingleClick";
     GlobalVariables.onDoubleClick = "onDoubleClick";
     GlobalVariables.numCardClick = 0;
@@ -614,6 +615,7 @@ var PageTextHelper = (function () {
     };
     PageTextHelper.defaultPageTexts = {
         "PlayOneCategoryPageJSON": {
+            "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
             "stSynVoice": "語音模擬的聲音：",
             "stContributor": "貢獻者",
             "stRest": "尚隱藏的卡數：",
@@ -1046,6 +1048,128 @@ var WCard = (function () {
     WCard.btRightClickKey = "btRightClick";
     return WCard;
 }());
+var IndexedDBHelper = (function () {
+    function IndexedDBHelper() {
+    }
+    IndexedDBHelper.InitIDB = function () {
+        IndexedDBHelper.myIDB = indexedDB || msIndexedDB || window["webkitIndexedDB"] || window["mozIndexedDB"];
+        IndexedDBHelper.myIDBTransaction = window["IDBTransaction"] || window["webkitIDBTransaction"] || window["msIDBTransaction"];
+        IndexedDBHelper.myIDBKeyRange = window["IDBKeyRange"] || window["webkitIDBKeyRange"] || window["msIDBKeyRange"];
+    };
+    IndexedDBHelper.OpenADBAsync = function (onSuccess) {
+        if (onSuccess === void 0) { onSuccess = null; }
+        if (!IndexedDBHelper.myIDB)
+            IndexedDBHelper.InitIDB();
+        if (!IndexedDBHelper.myIDB) {
+            console.log("Does not support IndexedDB");
+            return;
+        }
+        var request = IndexedDBHelper.myIDB.open(IndexedDBHelper.IDBDBKey, IndexedDBHelper.myVersion);
+        request.onerror = function (ev) {
+            console.log("Cannot open DataBase '" + IndexedDBHelper.IDBDBKey + "',   version:" + IndexedDBHelper.myVersion);
+        };
+        request.addEventListener("success", function (ev) {
+            IndexedDBHelper.myDataBase = (ev.target).result;
+            IndexedDBHelper.isReady = true;
+            $(document).trigger(IndexedDBHelper.ReadyTriggerKey);
+            if (onSuccess)
+                onSuccess(ev);
+        });
+        request.onupgradeneeded = function (ev) {
+            var db = ev.target.result;
+            db.onerror = function (ev) {
+                console.log("onupgradeneeded: Cannot open DataBase '" + IndexedDBHelper.IDBDBKey + "',   version:" + IndexedDBHelper.myVersion);
+            };
+            var myOS = db.createObjectStore(IndexedDBHelper.IDBUCCKey, { keyPath: "UCC" });
+            var bufRecord = { SynLang: null, RecLang: "en-US", history: '[]', nextTime: 0 };
+            for (var key in bufRecord) {
+                myOS.createIndex(key, key, { unique: false });
+            }
+        };
+    };
+    IndexedDBHelper.DeleteADBAsync = function (onSuccess) {
+        if (onSuccess === void 0) { onSuccess = null; }
+        if (!IndexedDBHelper.myIDB)
+            IndexedDBHelper.InitIDB();
+        if (!IndexedDBHelper.myIDB) {
+            console.log("Does not support IndexedDB");
+            return;
+        }
+        var request = IndexedDBHelper.myIDB.deleteDatabase(IndexedDBHelper.IDBDBKey);
+        request.addEventListener("success", function (ev) {
+            IndexedDBHelper.myDataBase = null;
+            if (onSuccess)
+                onSuccess(ev);
+        });
+    };
+    IndexedDBHelper.GetARecordAsync = function (refRecord, onSuccess) {
+        if (onSuccess === void 0) { onSuccess = null; }
+        var uccObj = { user: GlobalVariables.currentUser, Container: GlobalVariables.currentMainFolder, Category: GlobalVariables.currentCategoryFolder };
+        var ucc = JSON.stringify(uccObj);
+        var getRecord = function () {
+            var transaction = IndexedDBHelper.myDataBase.transaction([IndexedDBHelper.IDBUCCKey], "readonly");
+            var request = transaction
+                .objectStore(IndexedDBHelper.IDBUCCKey)
+                .get(ucc);
+            request.addEventListener("success", function (ev) {
+                if (request.result != undefined) {
+                    for (var key in refRecord) {
+                        refRecord[key] = request.result[key];
+                    }
+                }
+                else {
+                    console.log("success:: Cannot get this Record");
+                    refRecord.UCC = ucc;
+                }
+                if (onSuccess)
+                    onSuccess(ev);
+            });
+            request.addEventListener("error", function (ev) {
+                console.log("Cannot get this Record");
+                refRecord.UCC = ucc;
+            });
+            transaction.addEventListener("complete", function (ev) {
+                $(document).trigger(IndexedDBHelper.GetIDBRecordKey);
+            });
+        };
+        if (IndexedDBHelper.myDataBase)
+            getRecord();
+        else
+            IndexedDBHelper.OpenADBAsync(getRecord);
+    };
+    IndexedDBHelper.PutARecordAsync = function (record, isAdd, onSuccess) {
+        if (onSuccess === void 0) { onSuccess = null; }
+        var putRecord = function () {
+            var transaction = IndexedDBHelper.myDataBase.transaction([IndexedDBHelper.IDBUCCKey], 'readwrite');
+            transaction.oncomplete = function (ev) {
+            };
+            var request;
+            if (isAdd)
+                request = transaction.objectStore(IndexedDBHelper.IDBUCCKey).add(record);
+            else
+                request = transaction.objectStore(IndexedDBHelper.IDBUCCKey).put(record);
+            request.onerror = function (ev) {
+                console.log("Fail to put data into the DataBase");
+            };
+            request.onsuccess = function (ev) {
+                console.log("Succeed to put this Record into DataBase");
+                if (onSuccess)
+                    onSuccess(ev);
+            };
+        };
+        if (IndexedDBHelper.myDataBase)
+            putRecord();
+        else
+            IndexedDBHelper.OpenADBAsync(putRecord);
+    };
+    IndexedDBHelper.IDBDBKey = "MYCIDB";
+    IndexedDBHelper.IDBUCCKey = "UserConCategory";
+    IndexedDBHelper.ReadyTriggerKey = "IDBIsReady";
+    IndexedDBHelper.GetIDBRecordKey = "GetIDBRecord";
+    IndexedDBHelper.isReady = false;
+    IndexedDBHelper.myVersion = 1;
+    return IndexedDBHelper;
+}());
 var PlayOneCategoryPageController = (function () {
     function PlayOneCategoryPageController($scope, $routeParams) {
         this.meCardsAudio = document.getElementById('meCardsAudio');
@@ -1063,11 +1187,13 @@ var PlayOneCategoryPageController = (function () {
         this.topNavbar = document.getElementById('topNavbar');
         this.bottomNavbar = document.getElementById('bottomNavbar');
         this.isBackAudioStartLoad = false;
+        this.isAudioPlaying = false;
         this.isBGAlsoChange = true;
         this.defaultCardStyle = { width: "16vw", height: "16vh" };
         this.maxDelScore = 20;
         this.pgScore = document.getElementById('pgScore');
         this._rate2PowN = 0;
+        this.eachRecord = { UCC: null, SynLang: "en-US", history: '[]', nextTime: 0, RecLang: "en-US" };
         this.onPlayBGSound = function (ev) {
             PlayOneCategoryPageController.Current.meBackground.load();
             PlayOneCategoryPageController.Current.meBackground.play();
@@ -1195,6 +1321,8 @@ var PlayOneCategoryPageController = (function () {
             PlayOneCategoryPageController.Current.synPlay_Click(ev);
         };
         this.recCheckAnswer_Click = function () {
+            if (PlayOneCategoryPageController.Current.selWCard)
+                PlayOneCategoryPageController.Current.PlayAudio(PlayOneCategoryPageController.Current.selWCard);
             if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence && PlayOneCategoryPageController.Current.selWCard.cardInfo.Dictate.trim().
                 indexOf(PlayOneCategoryPageController.Current.recInputSentence.trim()) === 0) {
                 $(PlayOneCategoryPageController.Current.selWCard.viewCard).animate({ opacity: 0.1 }, {
@@ -1283,6 +1411,19 @@ var PlayOneCategoryPageController = (function () {
         setTimeout(function () {
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true);
         }, 2500);
+        IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord);
+        $(window).one('popstate', function (ev) {
+            var isAdd = (PlayOneCategoryPageController.Current.eachRecord.history === '[]') ? true : false;
+            var lv = {
+                slv: 0,
+                tlv: PlayOneCategoryPageController.Current.level,
+                ts: Date.now()
+            };
+            var lvs = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history);
+            lvs.push(lv);
+            PlayOneCategoryPageController.Current.eachRecord.history = JSON.stringify(lvs);
+            IndexedDBHelper.PutARecordAsync(PlayOneCategoryPageController.Current.eachRecord, isAdd);
+        });
     }
     Object.defineProperty(PlayOneCategoryPageController.prototype, "totalScore", {
         get: function () {
@@ -1444,6 +1585,7 @@ var PlayOneCategoryPageController = (function () {
             clearTimeout(PlayOneCategoryPageController.Current.scoreTimerId);
         $(GlobalVariables.gdTutorElements.gdMain).hide(0);
         $(PlayOneCategoryPageController.Current.btPauseAudio).off('click');
+        $(GlobalVariables.synUtterance).off('start error end pause');
     };
     PlayOneCategoryPageController.prototype.onPlayAllViewableWCard = function (ev) {
         if (GlobalVariables.synthesis)
@@ -1524,6 +1666,12 @@ var PlayOneCategoryPageController = (function () {
             meAud.src = CardsHelper.GetTreatablePath(wCard.cardInfo.AudioFilePathOrUri, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
             meAud.load();
             meAud.play();
+            $(meAud).one('playing', function () {
+                PlayOneCategoryPageController.Current.isAudioPlaying = true;
+            });
+            $(meAud).one('ended', function () {
+                PlayOneCategoryPageController.Current.isAudioPlaying = false;
+            });
             if (callback) {
                 $(meAud).one("ended", callback);
             }
@@ -1566,7 +1714,17 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
             PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
     });
     PlayOneCategoryPageController.Current.SynLang = jObj.SynLang;
-    SpeechSynthesisHelper.getAllVoices(PlayOneCategoryPageController.Current.GetCurrentSynVoice);
+    SpeechSynthesisHelper.getAllVoices(function () {
+        PlayOneCategoryPageController.Current.GetCurrentSynVoice();
+        $(GlobalVariables.synUtterance).on('start', function (ev) {
+            console.log('synUtterance.' + ev.type);
+            PlayOneCategoryPageController.Current.isAudioPlaying = true;
+        });
+        $(GlobalVariables.synUtterance).on('error end pause', function (ev) {
+            console.log('synUtterance.' + ev.type);
+            PlayOneCategoryPageController.Current.isAudioPlaying = false;
+        });
+    });
     CardsHelper.GetWCardsCallback(jObj, restWcards);
     PlayOneCategoryPageController.Current.hyperLink = jObj.Link;
     if (jObj["Background"]) {
@@ -1590,6 +1748,10 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
                 PlayOneCategoryPageController.Current.selWCard = selWCard;
             });
             if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.syn) {
+                if (PlayOneCategoryPageController.Current.isAudioPlaying) {
+                    alert(PlayOneCategoryPageController.Current.thisPageTexts.stWaitUtterDone);
+                    return;
+                }
                 if (selWCard === PlayOneCategoryPageController.Current.synAnsWCard) {
                     if (PlayOneCategoryPageController.Current.scoreTimerId) {
                         clearInterval(PlayOneCategoryPageController.Current.scoreTimerId);
@@ -1814,6 +1976,7 @@ var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 app.controller('PlayOneCategoryPageController', ['$scope', '$routeParams', PlayOneCategoryPageController]);
 app.controller('ChooseAContainerPageController', ['$scope', '$routeParams', ChooseAContainerPageController]);
 app.config(function ($routeProvider, $locationProvider) {
+    IndexedDBHelper.DeleteADBAsync(function (ev) { IndexedDBHelper.OpenADBAsync; });
     GlobalVariables.LangsInStrings = PageTextHelper.InitLangsInStrings();
     GlobalVariables.SelPageTextLang = PageTextHelper.GetPageTextLang(navigator.language, GlobalVariables.LangsInStrings);
     PageTextHelper.InitPageTexts(function () { $(document).trigger(GlobalVariables.PageTextChangeKey); });
