@@ -1,5 +1,15 @@
 ﻿{
   "PlayOneCategoryPageJSON": {
+    "stShowScore": "<h2>Your score is {0}/{1}</h2>",
+    "stNewUpToOne": "<h3>Congradulation! Your level is 1 now. Play again tomorrow.</h3>",
+    "stNewBackTo0": "<h3>It seems that you have no idea about this category. You have better to switch to <b>Hint mode</b> to get a more clear concept of this category. </h3>",
+    "stIncLVNotYet": "<h3>Great! Please play again {0} day(s) later.</h3>",
+    "stIncLV": "<h3>Congradulation! Level up! Play again {0} day(s) later.</h3>",
+    "stKeepLV": "<h3>Although you make progress, it is not enough to reach next level. Please play again {0} day(s) later.</h3>",
+    "stBackTo0": "<h3>I'm sorry. Let's start from LV0 again and play it again tomorrow.</h3>",
+    "stNoteForKeyIn": "<h4>Note: In <b>KeyIn</b> mode, you will get higher score.</h4>",
+    "stHandWriting": "<h4>How about use hand writing to input the answer?</h4>",
+
     "stWaitUtterDone": "I'm uttering. Please wait.",
     "stSynVoice": "Voice for Speech Synthesis:",
     "stContributor": "Contributor",

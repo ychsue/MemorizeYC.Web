@@ -1,5 +1,15 @@
 ﻿{
   "PlayOneCategoryPageJSON": {
+    "stShowScore": "<h2>你的得分為{0}/{1}</h2>",
+    "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
+    "stNewBackTo0": "<h3>看來你對這個部分沒啥概念，建議你切換到<b>提示</b>模式，等有點概念後再玩配對。</h3>",
+    "stIncLVNotYet": "<h3>太棒了！請 {0} 天後再玩。</h3>",
+    "stIncLV": "<h3>恭喜！升級了！請 {0} 天後再玩。</h3>",
+    "stKeepLV": "<h3>雖然你有進步，可惜還不夠升級，請 {0} 天後再玩一次。</h3>",
+    "stBackTo0": "<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
+    "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
+    "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+
     "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
     "stSynVoice": "語音模擬的聲音：",
     "stContributor": "貢獻者",

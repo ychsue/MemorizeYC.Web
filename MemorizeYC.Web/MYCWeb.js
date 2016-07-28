@@ -615,6 +615,15 @@ var PageTextHelper = (function () {
     };
     PageTextHelper.defaultPageTexts = {
         "PlayOneCategoryPageJSON": {
+            "stShowScore": "<h2>你的得分為{0}，而滿分為{1}</h2>",
+            "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
+            "stNewBackTo0": "<h3>看來你對這個部分沒啥概念，建議你切換到<b>提示</b>模式，等有點概念後再玩配對。</h3>",
+            "stIncLVNotYet": "<h3>太棒了！請 {0} 天後再玩。</h3>",
+            "stIncLV": "<h3>恭喜！升級了！請 {0} 天後再玩。</h3>",
+            "stKeepLV": "<h3>雖然你有進步，可惜還不夠升級，請 {0} 天後再玩一次。</h3>",
+            "stBackTo0": "<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
+            "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
+            "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
             "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
             "stSynVoice": "語音模擬的聲音：",
             "stContributor": "貢獻者",
@@ -1386,12 +1395,21 @@ var PlayOneCategoryPageController = (function () {
             autoOpen: false, modal: true, dialogClass: "no-close",
             buttons: [{
                     text: "OK",
+                    icons: { primary: "ui-icon-check" },
                     click: function () {
                         if (history.length > 1)
                             history.back();
                         else
                             location.href = "/";
                         $(PlayOneCategoryPageController.Current.dlFinish).dialog('close');
+                    }
+                }, {
+                    text: "Again",
+                    icons: { primary: "ui-icon-arrowrefresh-1-e" },
+                    click: function () {
+                        $(PlayOneCategoryPageController.Current.dlFinish).dialog('close');
+                        var pathOrUri = CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
+                        MyFileHelper.FeedTextFromTxtFileToACallBack(pathOrUri, WCard.restWCards, ShowWCardsAndEventsCallback);
                     }
                 }]
         });
@@ -1412,18 +1430,6 @@ var PlayOneCategoryPageController = (function () {
             CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true);
         }, 2500);
         IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord);
-        $(window).one('popstate', function (ev) {
-            var isAdd = (PlayOneCategoryPageController.Current.eachRecord.history === '[]') ? true : false;
-            var lv = {
-                slv: 0,
-                tlv: PlayOneCategoryPageController.Current.level,
-                ts: Date.now()
-            };
-            var lvs = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history);
-            lvs.push(lv);
-            PlayOneCategoryPageController.Current.eachRecord.history = JSON.stringify(lvs);
-            IndexedDBHelper.PutARecordAsync(PlayOneCategoryPageController.Current.eachRecord, isAdd);
-        });
     }
     Object.defineProperty(PlayOneCategoryPageController.prototype, "totalScore", {
         get: function () {
@@ -1653,11 +1659,98 @@ var PlayOneCategoryPageController = (function () {
     PlayOneCategoryPageController.prototype.ShowdlFinish = function () {
         var nFinal = PlayOneCategoryPageController.Current.totalScore;
         var nAll = PlayOneCategoryPageController.Current.glScore;
-        PlayOneCategoryPageController.scope.$apply(function () {
-            PlayOneCategoryPageController.Current.level = Math.max(0, Math.round((nFinal / nAll - 0.5) * 20));
-        });
+        var trueLV = Math.max(0, Math.round((nFinal / nAll - 0.5) * 20));
+        var history = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history);
+        var stInnerHTML = PlayOneCategoryPageController.Current.thisPageTexts.stShowScore.replace("{0}", PlayOneCategoryPageController.Current.totalScore.toString())
+            .replace("{1}", PlayOneCategoryPageController.Current.glScore.toString());
+        if (history.length === 0) {
+            if (trueLV >= 1) {
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stNewUpToOne;
+                PlayOneCategoryPageController.Current.level = 1;
+            }
+            else {
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stNewBackTo0;
+                PlayOneCategoryPageController.Current.level = 0;
+            }
+            PlayOneCategoryPageController.Current.eachRecord.nextTime = Date.now() + 86400000;
+        }
+        else {
+            var cHistory = history.pop();
+            var oldScore = cHistory.score;
+            var oldLV = cHistory.slv;
+            var increaseYourLevel = function () {
+                if (PlayOneCategoryPageController.Current.eachRecord.nextTime > Date.now()) {
+                    stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stIncLVNotYet.replace('{0}', (Math.floor((PlayOneCategoryPageController.Current.eachRecord.nextTime - Date.now()) / 8640000) / 10).toString());
+                    PlayOneCategoryPageController.Current.level = oldLV;
+                }
+                else {
+                    var newTime = PlayOneCategoryPageController.Current.eachRecord.nextTime + Math.pow(2, oldLV / 2) * 86400000;
+                    if ((newTime - 43200000) < Date.now())
+                        newTime = Date.now() + 86400000;
+                    stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stIncLV.replace('{0}', (Math.floor((PlayOneCategoryPageController.Current.eachRecord.nextTime - Date.now()) / 8640000) / 10).toString());
+                    PlayOneCategoryPageController.Current.level = oldLV + 1;
+                    PlayOneCategoryPageController.Current.eachRecord.nextTime = newTime;
+                }
+                ;
+            };
+            var keepLevel = function () {
+                var newTime = ((PlayOneCategoryPageController.Current.eachRecord.nextTime - 43200000) > Date.now()) ? PlayOneCategoryPageController.Current.eachRecord.nextTime : (Date.now() + 86400000);
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stKeepLV.replace('{0}', (Math.floor(newTime / 8640000) / 10).toString());
+                PlayOneCategoryPageController.Current.level = oldLV;
+                PlayOneCategoryPageController.Current.eachRecord.nextTime = newTime;
+            };
+            var backToLV0 = function () {
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stBackTo0;
+                PlayOneCategoryPageController.Current.level = 0;
+                PlayOneCategoryPageController.Current.eachRecord.nextTime = Date.now() + 86400000;
+            };
+            var NoteForKeyIn = function () {
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stNoteForKeyIn;
+            };
+            if (nFinal > oldScore) {
+                if (trueLV > oldLV) {
+                    increaseYourLevel();
+                }
+                else {
+                    keepLevel();
+                    NoteForKeyIn();
+                }
+            }
+            else if (nFinal === oldScore) {
+                if (oldScore === PlayOneCategoryPageController.Current.glScore) {
+                    increaseYourLevel();
+                    stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stHandWriting;
+                }
+                else {
+                    keepLevel();
+                }
+            }
+            else if (nFinal < oldScore) {
+                if (trueLV > oldLV) {
+                    increaseYourLevel();
+                }
+                else {
+                    backToLV0();
+                }
+                ;
+                NoteForKeyIn();
+            }
+            ;
+        }
+        ;
+        $(PlayOneCategoryPageController.Current.dlFinish).html(stInnerHTML);
         $(PlayOneCategoryPageController.Current.dlFinish).dialog('open');
         PlayOneCategoryPageController.Current.meBackground.pause();
+        var isAdd = (PlayOneCategoryPageController.Current.eachRecord.history === '[]') ? true : false;
+        var lv = {
+            slv: PlayOneCategoryPageController.Current.level,
+            score: PlayOneCategoryPageController.Current.totalScore,
+            ts: Date.now()
+        };
+        var lvs = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history);
+        lvs.push(lv);
+        PlayOneCategoryPageController.Current.eachRecord.history = JSON.stringify(lvs);
+        IndexedDBHelper.PutARecordAsync(PlayOneCategoryPageController.Current.eachRecord, isAdd);
     };
     PlayOneCategoryPageController.prototype.PlayAudio = function (wCard, callback) {
         if (callback === void 0) { callback = null; }

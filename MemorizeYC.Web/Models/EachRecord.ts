@@ -8,7 +8,7 @@ interface EachRecord {
 }
 
 interface LVsTime {
-    tlv: number;    //True Level
+    score: number;    //Score
     slv: number;    //Stage Level for forgotten curve
     ts: number;     //TimeStamp. Use Date(timeStamp) to get its time
 }

@@ -265,6 +265,7 @@ class PlayOneCategoryPageController{
             autoOpen: false, modal: true, dialogClass: "no-close",
             buttons: [{
                 text: "OK",
+                icons: {primary: "ui-icon-check"},
                 click: function () {
                     if (history.length > 1)
                         history.back();
@@ -272,7 +273,20 @@ class PlayOneCategoryPageController{
                         location.href = "/";
                     $(PlayOneCategoryPageController.Current.dlFinish).dialog('close');
                 }
-            }]
+            }, {
+                    text: "Again",
+                    icons: { primary: "ui-icon-arrowrefresh-1-e" },
+                    click: function () {
+                        $(PlayOneCategoryPageController.Current.dlFinish).dialog('close');
+                        //location.reload(true);
+                        //location.href = location.href;
+                        var pathOrUri: string = CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
+                        MyFileHelper.FeedTextFromTxtFileToACallBack(
+                            pathOrUri,
+                            WCard.restWCards,
+                            ShowWCardsAndEventsCallback);
+                    }
+                }]
         });
         //$(document).tooltip();
 
@@ -301,21 +315,21 @@ class PlayOneCategoryPageController{
 
         //* [2016-07-19 12:21] Launched when the user leave this Play Page
         IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord);
-        $(window).one('popstate', (ev) => {
-            var isAdd = (PlayOneCategoryPageController.Current.eachRecord.history === '[]') ? true : false;
+        //$(window).one('popstate', (ev) => {
+        //    var isAdd = (PlayOneCategoryPageController.Current.eachRecord.history === '[]') ? true : false;
 
-            var lv: LVsTime = {
-                slv: 0,
-                tlv: PlayOneCategoryPageController.Current.level,
-                ts: Date.now()
-            };
+        //    var lv: LVsTime = {
+        //        slv: PlayOneCategoryPageController.Current.level,
+        //        score: PlayOneCategoryPageController.Current.totalScore,
+        //        ts: Date.now()
+        //    };
 
-            var lvs = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history) as Array<LVsTime>;
-            lvs.push(lv);
-            PlayOneCategoryPageController.Current.eachRecord.history = JSON.stringify(lvs);
+        //    var lvs = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history) as Array<LVsTime>;
+        //    lvs.push(lv);
+        //    PlayOneCategoryPageController.Current.eachRecord.history = JSON.stringify(lvs);
 
-            IndexedDBHelper.PutARecordAsync(PlayOneCategoryPageController.Current.eachRecord,isAdd);
-        });
+        //    IndexedDBHelper.PutARecordAsync(PlayOneCategoryPageController.Current.eachRecord,isAdd);
+        //});
         
     }
 
@@ -619,13 +633,94 @@ class PlayOneCategoryPageController{
     public ShowdlFinish() {
         var nFinal = PlayOneCategoryPageController.Current.totalScore;
         var nAll = PlayOneCategoryPageController.Current.glScore;
-        PlayOneCategoryPageController.scope.$apply(function () {
-            PlayOneCategoryPageController.Current.level = Math.max(0, Math.round(
-                (nFinal / nAll - 0.5) * 20
-            ));
-        });
+        var trueLV = Math.max(0, Math.round( (nFinal / nAll - 0.5) * 20 ));
+        //* [2016-07-22 18:16] Let me update innerHTML
+        var history = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history) as Array<LVsTime>;
+        var stInnerHTML: string = PlayOneCategoryPageController.Current.thisPageTexts.stShowScore.replace("{0}", PlayOneCategoryPageController.Current.totalScore.toString())
+        .replace("{1}",PlayOneCategoryPageController.Current.glScore.toString());
+        if (history.length === 0) {
+            if (trueLV >= 1) {
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stNewUpToOne;
+                PlayOneCategoryPageController.Current.level = 1;
+            }
+            else {
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stNewBackTo0;
+                PlayOneCategoryPageController.Current.level = 0;
+            }
+            PlayOneCategoryPageController.Current.eachRecord.nextTime = Date.now() + 86400000;
+        } else {
+            var cHistory: LVsTime = history.pop();
+            var oldScore: number = cHistory.score;
+            var oldLV: number = cHistory.slv;
+            var increaseYourLevel = () => {
+                if (PlayOneCategoryPageController.Current.eachRecord.nextTime > Date.now()) {
+                    stInnerHTML +=PlayOneCategoryPageController.Current.thisPageTexts.stIncLVNotYet.replace('{0}',(Math.floor((PlayOneCategoryPageController.Current.eachRecord.nextTime - Date.now()) / 8640000)/10).toString() );
+                    PlayOneCategoryPageController.Current.level = oldLV;
+                } else {
+                    var newTime = PlayOneCategoryPageController.Current.eachRecord.nextTime + Math.pow(2, oldLV / 2) * 86400000;
+                    if ((newTime - 43200000) < Date.now())
+                        newTime = Date.now() + 86400000;
+                    stInnerHTML +=PlayOneCategoryPageController.Current.thisPageTexts.stIncLV.replace('{0}',( Math.floor((PlayOneCategoryPageController.Current.eachRecord.nextTime - Date.now()) / 8640000)/10).toString());
+                    PlayOneCategoryPageController.Current.level = oldLV + 1;
+                    PlayOneCategoryPageController.Current.eachRecord.nextTime = newTime;
+                };
+            };
+            var keepLevel = () => {
+                var newTime = ((PlayOneCategoryPageController.Current.eachRecord.nextTime - 43200000) > Date.now()) ? PlayOneCategoryPageController.Current.eachRecord.nextTime : (Date.now() + 86400000);
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stKeepLV.replace('{0}',( Math.floor(newTime / 8640000)/10).toString());
+                PlayOneCategoryPageController.Current.level = oldLV;
+                PlayOneCategoryPageController.Current.eachRecord.nextTime = newTime;
+            };
+            var backToLV0 = () => {
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stBackTo0;
+                PlayOneCategoryPageController.Current.level = 0;
+                PlayOneCategoryPageController.Current.eachRecord.nextTime = Date.now() + 86400000;
+            };
+            var NoteForKeyIn = () => {
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stNoteForKeyIn;
+            };
+            if (nFinal > oldScore) {
+                if (trueLV > oldLV) {
+                    increaseYourLevel();
+                } else {
+                    keepLevel();
+                    NoteForKeyIn();
+                }
+            } else if (nFinal === oldScore) {
+                if (oldScore === PlayOneCategoryPageController.Current.glScore) { //You have reach the highest score
+                    increaseYourLevel();
+                    stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stHandWriting;
+                } else {
+                    keepLevel();
+                }
+            } else if (nFinal < oldScore) {
+                if (trueLV > oldLV) {
+                    increaseYourLevel();
+                } else {
+                    backToLV0();
+                };
+                NoteForKeyIn();
+            };
+        };
+
+        $(PlayOneCategoryPageController.Current.dlFinish).html(stInnerHTML);
         $(PlayOneCategoryPageController.Current.dlFinish).dialog('open');
         PlayOneCategoryPageController.Current.meBackground.pause();
+
+        //* [2016-07-25 17:47] Unfortunately, event popstate is not triggered so that I move this code segment to this place to record the history
+        var isAdd = (PlayOneCategoryPageController.Current.eachRecord.history === '[]') ? true : false;
+
+        var lv: LVsTime = {
+            slv: PlayOneCategoryPageController.Current.level,
+            score: PlayOneCategoryPageController.Current.totalScore,
+            ts: Date.now()
+        };
+
+        var lvs = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history) as Array<LVsTime>;
+        lvs.push(lv);
+        PlayOneCategoryPageController.Current.eachRecord.history = JSON.stringify(lvs);
+
+        IndexedDBHelper.PutARecordAsync(PlayOneCategoryPageController.Current.eachRecord, isAdd);
     }
 
     /**
