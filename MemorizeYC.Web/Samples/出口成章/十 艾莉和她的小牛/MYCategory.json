@@ -1,0 +1,17 @@
+﻿{
+  "Cards": [
+    { "FileName": "不加思索.box" },
+    { "FileName": "全心全意.box" },
+    { "FileName": "十萬火急.box" },
+    { "FileName": "吞吞吐吐.box" },
+    { "FileName": "家破人亡.box" },
+    { "FileName": "形影不離.box" },
+    { "FileName": "理直氣壯.box" },
+    { "FileName": "盛氣凌人.box" },
+    { "FileName": "輕舉妄動.box" },
+    { "FileName": "難以置信.box" },
+    { "FileName": "馬不停蹄.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

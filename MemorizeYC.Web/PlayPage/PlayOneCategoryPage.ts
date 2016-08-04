@@ -1,4 +1,5 @@
-﻿/// <reference path="../models/eachrecord.ts" />
+﻿/// <reference path="../helpers/speechrecognitionhelper.ts" />
+/// <reference path="../models/eachrecord.ts" />
 /// <reference path="../helpers/speechsynthesishelper.ts" />
 /// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../globalvariables/globalvariables.ts" />
@@ -33,6 +34,7 @@ class PlayOneCategoryPageController{
 
     public isBackAudioStartLoad: boolean = false;
     public isAudioPlaying: boolean = false;
+    public isSpeechRecognitionRunning: boolean = false;
 
     public isBGAlsoChange: boolean = true;
 
@@ -58,6 +60,7 @@ class PlayOneCategoryPageController{
     public scoreTimerId: number;
     public maxDelScore: number = 20;
     public pgScore: HTMLDivElement = document.getElementById('pgScore') as HTMLDivElement;
+    public isHighest: boolean = false;
 
     public static Current: PlayOneCategoryPageController;
     public static scope;
@@ -150,6 +153,11 @@ class PlayOneCategoryPageController{
 
     public SynLang: string;
     //#endregion For SpeechSynthesis
+    //#region for SpeechRecognition
+    get isHavingSpeechRecognier(): boolean {
+        return GlobalVariables.isHavingSpeechRecognier;
+    }
+    //#endregion for SpeechRecognition
 //#region TutorType
     get TutorType(): string {
         return TutorMainEnum[GlobalVariables.tutorState.Main];
@@ -205,7 +213,7 @@ class PlayOneCategoryPageController{
 //#endregion thisPageTexts
 
     //#region for EachRecord
-    public eachRecord: EachRecord = {UCC:null,SynLang:"en-US",history:'[]',nextTime:0,RecLang:"en-US"};
+    public eachRecord: EachRecord = {UCC:null,SynLang:"en-US",history:'[]',nextTime:0,RecLang:"en-US",highestScore:0};
     //#endregion for EachRecord
 
     public ClearBeforeLeavePage() {
@@ -221,6 +229,8 @@ class PlayOneCategoryPageController{
     constructor($scope, $routeParams) {
         //* [2016-06-06 12:04] Reload the web page if needed.
         VersionHelper.ReloadIfNeeded();
+
+        SpeechRecognizerHelper.iniSpeechRecognition();
 
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
@@ -243,6 +253,9 @@ class PlayOneCategoryPageController{
         $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
         $(document).on(GlobalVariables.PageTextChangeKey, renewPageTexts);
 
+        //* [2016-08-01 18:00] Get Tutorial Mode from LocalStorage
+        if (typeof (Storage) !== "undefined")
+            GlobalVariables.isTutorMode= (localStorage.getItem(GlobalVariables.IsShownTutorKey)!="false");
         //* [2016-07-05 15:16] Show tutorial
         if (GlobalVariables.isTutorMode) {
             this.TutorType = TutorMainEnum[TutorMainEnum.Begin];
@@ -281,6 +294,7 @@ class PlayOneCategoryPageController{
                         //location.reload(true);
                         //location.href = location.href;
                         var pathOrUri: string = CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
+                        PlayOneCategoryPageController.scope.$apply(() => { PlayOneCategoryPageController.Current.isHighest = false;});
                         MyFileHelper.FeedTextFromTxtFileToACallBack(
                             pathOrUri,
                             WCard.restWCards,
@@ -548,7 +562,7 @@ class PlayOneCategoryPageController{
         //* [2016-05-23 14:57] After renewing, if there is still no WCard, back to previous page
         if (wcards.length === 0) {
             //history.back();
-            PlayOneCategoryPageController.Current.ShowdlFinish();
+            PlayOneCategoryPageController.Current.FinalStep();
             return;
         }
         //* [2016-05-23 14:59] Since wcards.length!=0, choose one WCard randomly.
@@ -564,7 +578,11 @@ class PlayOneCategoryPageController{
         PlayOneCategoryPageController.Current.synPlay_Click(ev);
     };
 
-    public recCheckAnswer_Click = function () {
+    public recCheckAnswer_Click = function (ev: Event) {
+        if (ev.type === "keyup" && (<KeyboardEvent>ev).key.toLowerCase() !== "enter")
+            return;
+        if (PlayOneCategoryPageController.Current.isSpeechRecognitionRunning)
+            return;
         //* [2016-07-21 11:54] In order to make people easier to remember the stuff by their hearing, force it to pronounce it.
         if (PlayOneCategoryPageController.Current.selWCard)
             PlayOneCategoryPageController.Current.PlayAudio(PlayOneCategoryPageController.Current.selWCard);
@@ -588,7 +606,7 @@ class PlayOneCategoryPageController{
                         PlayOneCategoryPageController.Current.ShowNewWCards_Click();
                     if (WCard.showedWCards.length === 0) {
                         //history.back();
-                        PlayOneCategoryPageController.Current.ShowdlFinish();
+                        PlayOneCategoryPageController.Current.FinalStep();
                         return;
                     }
                 }
@@ -604,6 +622,60 @@ class PlayOneCategoryPageController{
             }
         }
     };
+
+    public StartSpeechRecognition_Click(ev: Event) {
+        ev.stopPropagation();
+        if (!this.selWCard) {
+            this.recCheckAnswer_Click(null);
+            return;
+        }
+        if (!GlobalVariables.isHavingSpeechRecognier)
+            return;
+        if (PlayOneCategoryPageController.Current.isSpeechRecognitionRunning) {
+            GlobalVariables.speechRecognizer.stop();
+            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
+            return;
+        } else {
+            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = true;
+            var selWCard = this.selWCard;
+            if (GlobalVariables.isHavingSpeechRecognier && selWCard) {
+                var SR = GlobalVariables.speechRecognizer;
+                var grammar: string = "#JSGF V1.0; grammar sentences; public <x> =" +
+                    SpeechRecognizerHelper.SentenceToGrammarString(selWCard.cardInfo.Dictate) + ";";
+                var sRList = new GlobalVariables.SpeechGrammarList() as SpeechGrammarList;
+                sRList.addFromString(grammar, 1);
+                SR.grammars = sRList;
+                SR.lang = PlayOneCategoryPageController.Current.SynLang;
+                SR.continuous = false;
+                SR.interimResults = true;
+                SR.maxAlternatives = 1;
+                var hasGot = false;
+                SR.onresult = (ev1: SpeechRecognitionEvent) => {
+                    PlayOneCategoryPageController.scope.$apply(() => {
+                        if (ev1.results[0][0].confidence > 0.9)
+                            hasGot = true;
+                        PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript+" "+ev1.results[0][0].confidence;
+                    });
+                    if (ev1.results[0].isFinal) {
+                        PlayOneCategoryPageController.scope.$apply(() => {
+                            PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript;
+                            if (hasGot)
+                                PlayOneCategoryPageController.Current.recInputSentence = selWCard.cardInfo.Dictate;
+                            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
+                        });
+                    }
+                };
+                var onEnd = (ev) => {
+                    PlayOneCategoryPageController.scope.$apply(() => {
+                        PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
+                    });
+                };
+                $(SR).one("end", onEnd);
+
+                SR.start();
+            }
+        }
+    }
     //#endregion *EVENTS
 
     //#region For Score
@@ -629,6 +701,32 @@ class PlayOneCategoryPageController{
             }
         });
     };
+
+    public FinalStep() {
+        if (PlayOneCategoryPageController.Current.eachRecord.highestScore < PlayOneCategoryPageController.Current.totalScore) {
+            PlayOneCategoryPageController.Current.eachRecord.highestScore = PlayOneCategoryPageController.Current.totalScore;
+            //* [2016-08-04 09:38] Show animation to tell the user that he/she wins!
+            PlayOneCategoryPageController.Current.isHighest = true;
+            var iCount = 0;
+            var iterateAnimateFun = (index, elem1) => {
+                var angle: number = Math.PI * 2 * Math.random();
+                var speed: number = 50 + 70 * Math.random(); //50% to 120%
+                $(elem1).css({ top: "50vh", left: "50vw" });
+                var dt: number = 1;
+                $(elem1).animate({ top: Math.round(50 + speed * Math.cos(angle) * dt) + "vh", left: Math.round(50 + speed * Math.sin(angle) * dt) + "vw" }, 1000+index*10, () => {
+                    if (iCount > 100)
+                        return;
+                    iCount++;
+                    iterateAnimateFun(index, elem1);
+                });
+            };
+            $(".imgStar").each((index, elem) => {
+                iterateAnimateFun(index, elem);
+            });
+            setTimeout(PlayOneCategoryPageController.Current.ShowdlFinish, 4000);
+        } else
+            PlayOneCategoryPageController.Current.ShowdlFinish();
+    }
 
     public ShowdlFinish() {
         var nFinal = PlayOneCategoryPageController.Current.totalScore;
@@ -660,14 +758,14 @@ class PlayOneCategoryPageController{
                     var newTime = PlayOneCategoryPageController.Current.eachRecord.nextTime + Math.pow(2, oldLV / 2) * 86400000;
                     if ((newTime - 43200000) < Date.now())
                         newTime = Date.now() + 86400000;
-                    stInnerHTML +=PlayOneCategoryPageController.Current.thisPageTexts.stIncLV.replace('{0}',( Math.floor((PlayOneCategoryPageController.Current.eachRecord.nextTime - Date.now()) / 8640000)/10).toString());
+                    stInnerHTML +=PlayOneCategoryPageController.Current.thisPageTexts.stIncLV.replace('{0}',( Math.floor((newTime - Date.now()) / 8640000)/10).toString());
                     PlayOneCategoryPageController.Current.level = oldLV + 1;
                     PlayOneCategoryPageController.Current.eachRecord.nextTime = newTime;
                 };
             };
             var keepLevel = () => {
                 var newTime = ((PlayOneCategoryPageController.Current.eachRecord.nextTime - 43200000) > Date.now()) ? PlayOneCategoryPageController.Current.eachRecord.nextTime : (Date.now() + 86400000);
-                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stKeepLV.replace('{0}',( Math.floor(newTime / 8640000)/10).toString());
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stKeepLV.replace('{0}',( Math.floor((newTime-Date.now()) / 8640000)/10).toString());
                 PlayOneCategoryPageController.Current.level = oldLV;
                 PlayOneCategoryPageController.Current.eachRecord.nextTime = newTime;
             };
@@ -687,7 +785,7 @@ class PlayOneCategoryPageController{
                     NoteForKeyIn();
                 }
             } else if (nFinal === oldScore) {
-                if (oldScore === PlayOneCategoryPageController.Current.glScore) { //You have reach the highest score
+                if (oldScore === PlayOneCategoryPageController.Current.glScore || trueLV > oldLV) { //You have reach the highest score
                     increaseYourLevel();
                     stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stHandWriting;
                 } else {
@@ -703,6 +801,7 @@ class PlayOneCategoryPageController{
             };
         };
 
+        stInnerHTML = "<h1 style='text-align:center;'>LV" + PlayOneCategoryPageController.Current.level +"("+trueLV+")"+ "</h1>" + stInnerHTML;
         $(PlayOneCategoryPageController.Current.dlFinish).html(stInnerHTML);
         $(PlayOneCategoryPageController.Current.dlFinish).dialog('open');
         PlayOneCategoryPageController.Current.meBackground.pause();

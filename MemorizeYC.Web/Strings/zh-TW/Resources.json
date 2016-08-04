@@ -10,6 +10,8 @@
     "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
     "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
 
+    "stHighestScore": "最高分！",
+
     "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
     "stSynVoice": "語音模擬的聲音：",
     "stContributor": "貢獻者",

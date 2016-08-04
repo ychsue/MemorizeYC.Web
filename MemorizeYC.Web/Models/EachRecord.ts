@@ -5,6 +5,7 @@ interface EachRecord {
     RecLang: string;
     history: string; //JSON.stringify(value:Array<LVsTime>)
     nextTime: number; //Get its time by Date(nextTime).
+    highestScore: number;
 }
 
 interface LVsTime {

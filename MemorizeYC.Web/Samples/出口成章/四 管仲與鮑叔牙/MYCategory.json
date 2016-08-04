@@ -1,0 +1,19 @@
+﻿{
+  "Cards": [
+    { "FileName": "不勝枚舉.box" },
+    { "FileName": "嗤之以鼻.box" },
+    { "FileName": "堅定不移.box" },
+    { "FileName": "忍辱偷生.box" },
+    { "FileName": "志同道合.box" },
+    { "FileName": "津津樂道.box" },
+    { "FileName": "牢不可破.box" },
+    { "FileName": "疾言厲色.box" },
+    { "FileName": "百感交集.box" },
+    { "FileName": "管鮑之交.box" },
+    { "FileName": "臨陣脫逃.box" },
+    { "FileName": "舉足輕重.box" },
+    { "FileName": "貪生怕死.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

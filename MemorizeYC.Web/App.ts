@@ -14,9 +14,14 @@ app.controller('ChooseAContainerPageController', ['$scope','$routeParams',Choose
 
 //Config
 app.config(function ($routeProvider, $locationProvider) {
+    //* [2016-08-01 17:29] Set LocalStorage["IsShownTutor"]=true if it is undefined
+    if (typeof (Storage) !== "undefined" && localStorage[GlobalVariables.IsShownTutorKey] === undefined) {
+        localStorage[GlobalVariables.IsShownTutorKey] = GlobalVariables.isTutorMode;
+    }
+
     //* [2016-07-19 11:47] Initialize the DataBase and the ObjectStore
-    IndexedDBHelper.DeleteADBAsync((ev) => { IndexedDBHelper.OpenADBAsync });
-    //IndexedDBHelper.OpenADBAsync();
+    //IndexedDBHelper.DeleteADBAsync((ev) => { IndexedDBHelper.OpenADBAsync });
+    IndexedDBHelper.OpenADBAsync();
 
     //* [2016-07-10 20:45] Get the related PageTexts
     GlobalVariables.LangsInStrings = PageTextHelper.InitLangsInStrings();

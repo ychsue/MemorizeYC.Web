@@ -502,6 +502,9 @@ class TutorialHelper {
                 }
                 break;
             case TutorMainEnum.End:
+                if (typeof (Storage) !== "undefined")
+                    localStorage.setItem(GlobalVariables.IsShownTutorKey, String(GlobalVariables.isTutorMode));
+
                 $(GlobalVariables.gdTutorElements.gdMain).show('slow');
                 $(GlobalVariables.gdTutorElements.gdContent).html(
                     "<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut_End_Title

@@ -1,0 +1,77 @@
+﻿.MyContainer, .MyCategory{
+    display:inline-table;
+    width:120px;
+    height:140px;
+    margin:4px;
+}
+.MyContainer.Main{
+    background-image:url(../Images/FilledContainer.png);
+    background-size:cover;
+}
+.MyContainer.Empty{
+    background-image:url(../Images/EmptyContainer.png);
+    background-size:cover;
+}
+.Main.NotYet{
+    background-color:blue;
+    border:solid 8px blue;
+}
+.Main.DayOut{
+    background-color:red;
+    border:8px solid red;
+}
+
+.MyCategory.Main{
+    background-image:url(../Images/Category.png);
+    background-size:cover;
+}
+
+.ImgOK{
+    position:relative;
+    opacity:0;
+    top:0;
+    left:0;
+}
+.ImgOK:hover{
+    opacity:0.5;
+}
+.ImgOK.Show{
+    opacity:1;
+}
+
+.showContainerPos{
+    background:white;
+    display:table-caption;
+    position:relative;
+    margin:0 18px 0 6px;
+    top:140px;
+}
+
+.showCategoryPos{
+    background:white;
+    display:table-caption;
+    position:relative;
+    margin:0 18px 4px 18px;
+    top:140px;
+}
+
+#btToPlay.ng-hide-remove {
+    animation: ToRightBottom 1s ease 1 normal;
+        opacity:1;
+}
+#btToPlay {
+    position:absolute;
+    bottom:0;
+    right:0;
+}
+
+@keyframes ToRightBottom{
+    from{
+        bottom:50vh;
+        right:100vw;
+    }
+    to{
+        bottom:1vh;
+        right:1vw;
+    }
+}

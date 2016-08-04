@@ -1,0 +1,18 @@
+﻿{
+  "Cards": [
+    { "FileName": "不翼而飛.box" },
+    { "FileName": "人聲鼎沸.box" },
+    { "FileName": "唉聲嘆氣.box" },
+    { "FileName": "固執己見.box" },
+    { "FileName": "垂頭喪氣.box" },
+    { "FileName": "小心翼翼.box" },
+    { "FileName": "心不在焉.box" },
+    { "FileName": "快馬加鞭.box" },
+    { "FileName": "無可奈何.box" },
+    { "FileName": "無精打采.box" },
+    { "FileName": "熙熙攘攘.box" },
+    { "FileName": "默默無言.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

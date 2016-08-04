@@ -1,0 +1,18 @@
+﻿{
+  "Cards": [
+			   {"FileName":"五臟六腑.box"},
+			   {"FileName":"井然有序.box"},
+			   {"FileName":"作惡多端.box"},
+			   {"FileName":"千辛萬苦.box"},
+			   {"FileName":"垂涎三尺.box"},
+			   {"FileName":"奮不顧身.box"},
+			   {"FileName":"害人不淺.box"},
+			   {"FileName":"惹事生非.box"},
+			   {"FileName":"為民除害.box"},
+			   {"FileName":"粉身碎骨.box"},
+			   {"FileName":"自告奮勇.box"},
+         { "FileName": "誠心誠意.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

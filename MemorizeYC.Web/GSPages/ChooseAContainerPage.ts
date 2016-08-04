@@ -1,18 +1,36 @@
-﻿/// <reference path="../helpers/speechsynthesishelper.ts" />
+﻿/// <reference path="../models/eachcategory.ts" />
+/// <reference path="../helpers/speechsynthesishelper.ts" />
 /// <reference path="../scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../helpers/myfilehelper.ts" />
 /// <reference path="../helpers/versionhelper.ts" />
 /// <reference path="../models/mycontainerjson.ts" />
 /// <reference path="../helpers/pagetexthelper.ts" />
+/// <reference path="../models/ccfromidb.ts" />
+/// <reference path="../helpers/indexeddbhelper.ts" />
 
 class ChooseAContainerPageController {
     public static Current: ChooseAContainerPageController;
     public static scope: any;
     public containers: Array<AContainer> = GlobalVariables.containers;
-    public selContainer = this.containers[0];
-    public categories;
-    public selCategory;
+    public prevContainer: AContainer;
+    public isShownCategories: boolean;
+    //#region selContainer
+    public selContainer: AContainer;
+    private _selContainerID: number;
+    get selContainerID():number {
+        return this._selContainerID;
+    }
+    set selContainerID(value: number) {
+        this._selContainerID = value;
+        this.selContainer = this.containers[value];
+    }
+    //#endregion selContainer
+    public categories: Array<EachCategory>;
+    public selCategory: EachCategory;
+    public CCFromIDB: CCFromIDB = {};
+    public restTimesForContainer: Array<number> = [];
+    public restTimesForCategory: Array<number> = [];
 
     //#region thisPageTexts
     get thisPageTexts(): ChooseAContainerPageJSON {
@@ -63,48 +81,125 @@ class ChooseAContainerPageController {
             console.log("ChooseAContainerPageController in");
             console.log(location.origin);
         }
-        //* [2016-05-04 17:23] Force it to update its Container
-        this.onConChange();
+
+        IndexedDBHelper.GetWholeCCFromIDBAsync(this.CCFromIDB, this.callbackShowNextTimeForContainer);
     }
 
-    //* [2016-06-02 20:21] Get the path with protocol,hostname and port
-    public GetPath(): string {
-        var pathOrUrl: string = ChooseAContainerPageController.Current.selContainer.itsLocation + "/" + GlobalVariables.containerListFileName;
-        if (GlobalVariables.isHostNameShown)
-            pathOrUrl = location.origin + pathOrUrl;
-        //if (GlobalVariables.isDebug) // For Debug
-        //    alert(pathOrUrl);
-        return pathOrUrl;
-    }
-    //* [2016-05-04 17:18] Update Categories when Container is selected
-    public onConChange = function onContainerChange() {
-        MyFileHelper.FeedTextFromTxtFileToACallBack(ChooseAContainerPageController.Current.GetPath(),
-            ChooseAContainerPageController.Current.categories,
-            ChooseAContainerPageController.Current.UpdateCategories);
-    };
-    public UpdateCategories(jsonTxt: string, categories) {
-        if (GlobalVariables.isLog) {
-            console.log("ChooseAContainerPage:UpdateCategories: " + jsonTxt);
+    //#region EVENTS
+    public onContainerClick = (ev: Event, id: number) => {
+        $(".MyContainer.ImgOK").removeClass('Show');
+        $(".MyContainer.Main").removeClass('Empty');
+        ChooseAContainerPageController.Current.selContainerID = id;
+
+        //* [2016-07-28 16:58] release the trigger upon the previous Container
+        var prevContainer = ChooseAContainerPageController.Current.prevContainer;
+        if (prevContainer && prevContainer.idTrigger != "") {
+            $(document).off(prevContainer.idTrigger);
         }
-        var obj = JSON.parse(jsonTxt) as MYContainerJson;
-        ChooseAContainerPageController.Current.categories = [];
-        categories = [];
-        for (var i0: number = 0; i0 < obj.Categories.length; i0++) {
-            categories.push(obj.Categories[i0]);
+        //* [2016-07-28 17:00] Decide whether to show Categories
+        var thisContainer = ChooseAContainerPageController.Current.containers[ChooseAContainerPageController.Current.selContainerID];
+        if (thisContainer.idTrigger === "") {
+            ChooseAContainerPageController.Current.isShownCategories = true;
+            ChooseAContainerPageController.Current.categories = thisContainer.categories;
+            ChooseAContainerPageController.Current.selCategory = null;
+        } else {
+            ChooseAContainerPageController.Current.isShownCategories = false;
+            $(document).one(thisContainer.idTrigger, (ev) => {
+                thisContainer.idTrigger = "";
+                ChooseAContainerPageController.scope.$apply(() => {
+                    ChooseAContainerPageController.Current.isShownCategories = true;
+                    ChooseAContainerPageController.Current.categories = thisContainer.categories;
+                    ChooseAContainerPageController.Current.selCategory = null;
+                });
+            });
         }
-        ChooseAContainerPageController.scope.$apply(function () {
-            ChooseAContainerPageController.Current.categories = categories;
-            if (categories.length > 0)
-                ChooseAContainerPageController.Current.selCategory = categories[0];
-        }); //For updating variables for AngularJS
+
+        ChooseAContainerPageController.Current.prevContainer = thisContainer;
+
+        if (ev) {
+            $(ev.target).addClass('Show');
+            $((<HTMLElement>(ev.target)).parentElement).addClass('Empty');
+        }
+
+        //* [2016-07-31 14:53] Show restTime for each category
+        ChooseAContainerPageController.Current.callbackRestTimesForCategory();
+
     };
 
+    public onCategoryClick(ev: Event,id: number) {
+        $(".MyCategory.ImgOK").removeClass("Show");
+        ChooseAContainerPageController.Current.selCategory = ChooseAContainerPageController.Current.categories[id];
+        $(ev.target).addClass('Show');
+    }
+    //#endregion EVENTS
+    //#region CALLBACKS
+    public callbackShowNextTimeForContainer() {
+        var CCFromIDB = ChooseAContainerPageController.Current.CCFromIDB;
+        var containers = ChooseAContainerPageController.Current.containers;
+        for (var key0 in CCFromIDB) {
+            var lastNTime: number = CCFromIDB[key0].lastNextTime;
+            var restDays: number = Math.round((lastNTime - Date.now()) / 8640000) / 10;
+            //* [2016-07-31 14:02] Show NextTime for Container
+            for (var i0 = 0; i0 < containers.length; i0++) {
+                if (containers[i0].itsLocation === key0) {
+                    ChooseAContainerPageController.scope.$apply(() => {
+                        ChooseAContainerPageController.Current.restTimesForContainer[i0] = restDays;
+                    });
+                    break;
+                }
+            }
+        }
+    }
+
+    public callbackRestTimesForCategory() {
+        ChooseAContainerPageController.Current.restTimesForCategory = [];
+        var container = ChooseAContainerPageController.Current.CCFromIDB[
+            ChooseAContainerPageController.Current.containers[ChooseAContainerPageController.Current.selContainerID].itsLocation];
+        if (!container)
+            return;
+        var categoriesFromIDB = container.Categories;
+        var categories = ChooseAContainerPageController.Current.categories;
+        for (var key in categoriesFromIDB) {
+            var restTime: number = Math.round((categoriesFromIDB[key].nextTime - Date.now()) / 8640000) / 10;
+            for (var i0 = 0; i0 < categories.length; i0++) {
+                if (key === categories[i0].Folder) {
+                    ChooseAContainerPageController.Current.restTimesForCategory[i0] = restTime;
+                    break;
+                }
+            }
+        }
+    }
+    //#endregion CALLBACKS
 }
 
-    class AContainer {
+class AContainer {
     public itsLocation: string;
+    public showedName: string;
+    public categories:Array<EachCategory>;
+    public idTrigger: string = ""; //Its value will be Date.now() when it is getting data from the server.
 
     public constructor(pos: string) {
         this.itsLocation = pos;
+        this.showedName = pos.substr(pos.lastIndexOf('/') + 1);
+        this.idTrigger = Date.now().toString(); //It will be set as "" when the categories are gotten.
+
+        MyFileHelper.FeedTextFromTxtFileToACallBack(pos+"/"+GlobalVariables.containerListFileName,
+            this,
+            this.UpdateCategories);
     }
+
+    public UpdateCategories(jsonTxt: string, aContainer: AContainer) {
+        //* [2016-07-28 16:33] Update a Container's categories
+        if (GlobalVariables.isLog) {
+            console.log("AContainer: " + jsonTxt);
+        }
+        var obj = JSON.parse(jsonTxt) as MYContainerJson;
+        aContainer.categories = [];
+        for (var i0: number = 0; i0 < obj.Categories.length; i0++) {
+            aContainer.categories.push(obj.Categories[i0]);
+        }
+        //* [2016-07-28 16:34] Trigger the event
+        $(document).trigger(aContainer.idTrigger);
+        aContainer.idTrigger = "";
+    };
 }

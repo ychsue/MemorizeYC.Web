@@ -1,0 +1,17 @@
+﻿{
+  "Cards": [
+			   {"FileName":"一貧如洗.box"},
+			   {"FileName":"不可思議.box"},
+			   {"FileName":"付諸流水.box"},
+			   {"FileName":"半信半疑.box"},
+			   {"FileName":"喜出望外.box"},
+         { "FileName": "失而復得.box" },
+			   {"FileName":"富可敵國.box"},
+			   {"FileName":"拾金不昧.box"},
+			   {"FileName":"東張西望.box"},
+			   {"FileName":"熱鍋上螞蟻.box"},
+         { "FileName": "迷迷糊糊.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

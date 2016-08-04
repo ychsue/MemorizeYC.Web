@@ -1,0 +1,20 @@
+﻿{
+  "Cards": [
+			   {"FileName":"一決勝負.box"},
+			   {"FileName":"傻裡傻氣.box"},
+			   {"FileName":"寥寥無幾.box"},
+			   {"FileName":"從容不迫.box"},
+			   {"FileName":"惱羞成怒.box"},
+			   {"FileName":"愣頭愣腦.box"},
+			   {"FileName":"手忙腳亂.box"},
+			   {"FileName":"搖身一變.box"},
+			   {"FileName":"步步為營.box"},
+			   {"FileName":"比手畫腳.box"},
+			   {"FileName":"濃眉大眼.box"},
+			   {"FileName":"重整旗鼓.box"},
+         { "FileName": "面不改色.box" },
+			   {"FileName":"高人一等.box"}
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

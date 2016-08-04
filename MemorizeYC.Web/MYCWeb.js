@@ -1,3 +1,28 @@
+var SpeechRecognizerHelper = (function () {
+    function SpeechRecognizerHelper() {
+    }
+    SpeechRecognizerHelper.iniSpeechRecognition = function () {
+        var winSR;
+        if (GlobalVariables.isHavingSpeechRecognier === undefined) {
+            winSR = window["SpeechRecognition"] || window["msSpeechRecognition"] || window["webkitSpeechRecognition"] || window["mozSpeechRecognition"];
+            GlobalVariables.isHavingSpeechRecognier = (winSR) ? true : false;
+        }
+        if (GlobalVariables.isHavingSpeechRecognier && winSR !== undefined) {
+            GlobalVariables.speechRecognizer = new winSR();
+            GlobalVariables.speechRecognizer.onerror = function (ev) {
+                alert("Speech Recognition Error: " + ev.error);
+            };
+            var SG = window["SpeechGrammarList"] || window["msSpeechGrammarList"] || window["webkitSpeechGrammarList"] || window["mosSpeechGrammarList"];
+            if (SG)
+                GlobalVariables.SpeechGrammarList = SG;
+        }
+    };
+    SpeechRecognizerHelper.SentenceToGrammarString = function (oldString) {
+        var newString = oldString.toLowerCase().replace(/[,\.\/;\'\":<>\`~!@#$%\^\&\*\(\)\-\_\+\=\[\]\{\}\\\|]/g, "");
+        return newString;
+    };
+    return SpeechRecognizerHelper;
+}());
 var SpeechSynthesisHelper = (function () {
     function SpeechSynthesisHelper() {
     }
@@ -530,6 +555,8 @@ var TutorialHelper = (function () {
                 }
                 break;
             case TutorMainEnum.End:
+                if (typeof (Storage) !== "undefined")
+                    localStorage.setItem(GlobalVariables.IsShownTutorKey, String(GlobalVariables.isTutorMode));
                 $(GlobalVariables.gdTutorElements.gdMain).show('slow');
                 $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut_End_Title
                     + "</div>" +
@@ -562,6 +589,7 @@ var GlobalVariables = (function () {
     GlobalVariables.currentSynVoice = undefined;
     GlobalVariables.synUtterance = undefined;
     GlobalVariables.isTutorMode = true;
+    GlobalVariables.IsShownTutorKey = "IsShownTutor";
     GlobalVariables.tutorState = {
         Main: TutorMainEnum.Begin,
         Step: 0
@@ -624,6 +652,7 @@ var PageTextHelper = (function () {
             "stBackTo0": "<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
             "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
             "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+            "stHighestScore": "最高分！",
             "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
             "stSynVoice": "語音模擬的聲音：",
             "stContributor": "貢獻者",
@@ -1090,7 +1119,7 @@ var IndexedDBHelper = (function () {
                 console.log("onupgradeneeded: Cannot open DataBase '" + IndexedDBHelper.IDBDBKey + "',   version:" + IndexedDBHelper.myVersion);
             };
             var myOS = db.createObjectStore(IndexedDBHelper.IDBUCCKey, { keyPath: "UCC" });
-            var bufRecord = { SynLang: null, RecLang: "en-US", history: '[]', nextTime: 0 };
+            var bufRecord = { SynLang: null, RecLang: "en-US", history: '[]', nextTime: 0, highestScore: 0 };
             for (var key in bufRecord) {
                 myOS.createIndex(key, key, { unique: false });
             }
@@ -1171,6 +1200,44 @@ var IndexedDBHelper = (function () {
         else
             IndexedDBHelper.OpenADBAsync(putRecord);
     };
+    IndexedDBHelper.GetWholeCCFromIDBAsync = function (refCC, onFinish) {
+        if (onFinish === void 0) { onFinish = null; }
+        var getRefCC = function () {
+            var transaction = IndexedDBHelper.myDataBase.transaction([IndexedDBHelper.IDBUCCKey], "readonly");
+            var request = transaction
+                .objectStore(IndexedDBHelper.IDBUCCKey)
+                .openCursor();
+            request.addEventListener("success", function (ev) {
+                var cursor = (ev.target).result;
+                if (cursor) {
+                    var value = cursor.value;
+                    var ucc = JSON.parse(value.UCC);
+                    if (ucc.user === GlobalVariables.currentUser) {
+                        var history = JSON.parse(value.history);
+                        if (!refCC[ucc.Container])
+                            refCC[ucc.Container] = { Categories: {}, lastNextTime: null };
+                        var container = refCC[ucc.Container];
+                        if (!container.Categories[ucc.Category])
+                            container.Categories[ucc.Category] = { history: null, nextTime: null };
+                        var category = container.Categories[ucc.Category];
+                        category.history = history;
+                        category.nextTime = value.nextTime;
+                        container.lastNextTime = (container.lastNextTime) ? Math.min(container.lastNextTime, value.nextTime) : value.nextTime;
+                    }
+                    cursor.continue();
+                }
+                else {
+                    if (onFinish)
+                        onFinish(ev);
+                }
+            });
+        };
+        if (IndexedDBHelper.myDataBase)
+            getRefCC();
+        else
+            IndexedDBHelper.OpenADBAsync(getRefCC);
+    };
+    ;
     IndexedDBHelper.IDBDBKey = "MYCIDB";
     IndexedDBHelper.IDBUCCKey = "UserConCategory";
     IndexedDBHelper.ReadyTriggerKey = "IDBIsReady";
@@ -1197,12 +1264,14 @@ var PlayOneCategoryPageController = (function () {
         this.bottomNavbar = document.getElementById('bottomNavbar');
         this.isBackAudioStartLoad = false;
         this.isAudioPlaying = false;
+        this.isSpeechRecognitionRunning = false;
         this.isBGAlsoChange = true;
         this.defaultCardStyle = { width: "16vw", height: "16vh" };
         this.maxDelScore = 20;
         this.pgScore = document.getElementById('pgScore');
+        this.isHighest = false;
         this._rate2PowN = 0;
-        this.eachRecord = { UCC: null, SynLang: "en-US", history: '[]', nextTime: 0, RecLang: "en-US" };
+        this.eachRecord = { UCC: null, SynLang: "en-US", history: '[]', nextTime: 0, RecLang: "en-US", highestScore: 0 };
         this.onPlayBGSound = function (ev) {
             PlayOneCategoryPageController.Current.meBackground.load();
             PlayOneCategoryPageController.Current.meBackground.play();
@@ -1315,7 +1384,7 @@ var PlayOneCategoryPageController = (function () {
                 wcards = WCard.showedWCards;
             }
             if (wcards.length === 0) {
-                PlayOneCategoryPageController.Current.ShowdlFinish();
+                PlayOneCategoryPageController.Current.FinalStep();
                 return;
             }
             var ith = MathHelper.MyRandomN(0, wcards.length - 1);
@@ -1329,7 +1398,11 @@ var PlayOneCategoryPageController = (function () {
             PlayOneCategoryPageController.Current.synAnsWCard = wcards[ith];
             PlayOneCategoryPageController.Current.synPlay_Click(ev);
         };
-        this.recCheckAnswer_Click = function () {
+        this.recCheckAnswer_Click = function (ev) {
+            if (ev.type === "keyup" && ev.key.toLowerCase() !== "enter")
+                return;
+            if (PlayOneCategoryPageController.Current.isSpeechRecognitionRunning)
+                return;
             if (PlayOneCategoryPageController.Current.selWCard)
                 PlayOneCategoryPageController.Current.PlayAudio(PlayOneCategoryPageController.Current.selWCard);
             if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence && PlayOneCategoryPageController.Current.selWCard.cardInfo.Dictate.trim().
@@ -1348,7 +1421,7 @@ var PlayOneCategoryPageController = (function () {
                         if (WCard.showedWCards.length === 0)
                             PlayOneCategoryPageController.Current.ShowNewWCards_Click();
                         if (WCard.showedWCards.length === 0) {
-                            PlayOneCategoryPageController.Current.ShowdlFinish();
+                            PlayOneCategoryPageController.Current.FinalStep();
                             return;
                         }
                     }
@@ -1365,6 +1438,7 @@ var PlayOneCategoryPageController = (function () {
             }
         };
         VersionHelper.ReloadIfNeeded();
+        SpeechRecognizerHelper.iniSpeechRecognition();
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
         WCard.CleanWCards();
@@ -1379,6 +1453,8 @@ var PlayOneCategoryPageController = (function () {
         };
         $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
         $(document).on(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        if (typeof (Storage) !== "undefined")
+            GlobalVariables.isTutorMode = (localStorage.getItem(GlobalVariables.IsShownTutorKey) != "false");
         if (GlobalVariables.isTutorMode) {
             this.TutorType = TutorMainEnum[TutorMainEnum.Begin];
             TutorialHelper.Action(GlobalVariables.tutorState);
@@ -1409,6 +1485,7 @@ var PlayOneCategoryPageController = (function () {
                     click: function () {
                         $(PlayOneCategoryPageController.Current.dlFinish).dialog('close');
                         var pathOrUri = CardsHelper.GetTreatablePath(GlobalVariables.categoryListFileName, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
+                        PlayOneCategoryPageController.scope.$apply(function () { PlayOneCategoryPageController.Current.isHighest = false; });
                         MyFileHelper.FeedTextFromTxtFileToACallBack(pathOrUri, WCard.restWCards, ShowWCardsAndEventsCallback);
                     }
                 }]
@@ -1531,6 +1608,13 @@ var PlayOneCategoryPageController = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "isHavingSpeechRecognier", {
+        get: function () {
+            return GlobalVariables.isHavingSpeechRecognier;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(PlayOneCategoryPageController.prototype, "TutorType", {
         get: function () {
             return TutorMainEnum[GlobalVariables.tutorState.Main];
@@ -1636,6 +1720,59 @@ var PlayOneCategoryPageController = (function () {
         $(WCard.showedWCards[ith].viewCard).addClass('selWCard');
         PlayOneCategoryPageController.Current.PlayAudio(WCard.showedWCards[ith], nextPlay);
     };
+    PlayOneCategoryPageController.prototype.StartSpeechRecognition_Click = function (ev) {
+        ev.stopPropagation();
+        if (!this.selWCard) {
+            this.recCheckAnswer_Click(null);
+            return;
+        }
+        if (!GlobalVariables.isHavingSpeechRecognier)
+            return;
+        if (PlayOneCategoryPageController.Current.isSpeechRecognitionRunning) {
+            GlobalVariables.speechRecognizer.stop();
+            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
+            return;
+        }
+        else {
+            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = true;
+            var selWCard = this.selWCard;
+            if (GlobalVariables.isHavingSpeechRecognier && selWCard) {
+                var SR = GlobalVariables.speechRecognizer;
+                var grammar = "#JSGF V1.0; grammar sentences; public <x> =" +
+                    SpeechRecognizerHelper.SentenceToGrammarString(selWCard.cardInfo.Dictate) + ";";
+                var sRList = new GlobalVariables.SpeechGrammarList();
+                sRList.addFromString(grammar, 1);
+                SR.grammars = sRList;
+                SR.lang = PlayOneCategoryPageController.Current.SynLang;
+                SR.continuous = false;
+                SR.interimResults = true;
+                SR.maxAlternatives = 1;
+                var hasGot = false;
+                SR.onresult = function (ev1) {
+                    PlayOneCategoryPageController.scope.$apply(function () {
+                        if (ev1.results[0][0].confidence > 0.9)
+                            hasGot = true;
+                        PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript + " " + ev1.results[0][0].confidence;
+                    });
+                    if (ev1.results[0].isFinal) {
+                        PlayOneCategoryPageController.scope.$apply(function () {
+                            PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript;
+                            if (hasGot)
+                                PlayOneCategoryPageController.Current.recInputSentence = selWCard.cardInfo.Dictate;
+                            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
+                        });
+                    }
+                };
+                var onEnd = function (ev) {
+                    PlayOneCategoryPageController.scope.$apply(function () {
+                        PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
+                    });
+                };
+                $(SR).one("end", onEnd);
+                SR.start();
+            }
+        }
+    };
     PlayOneCategoryPageController.prototype.SetGlobalScore = function (wcards) {
         this.glScore = this.maxDelScore * wcards.length;
         this.totalScore = this.glScore;
@@ -1656,6 +1793,31 @@ var PlayOneCategoryPageController = (function () {
         });
     };
     ;
+    PlayOneCategoryPageController.prototype.FinalStep = function () {
+        if (PlayOneCategoryPageController.Current.eachRecord.highestScore < PlayOneCategoryPageController.Current.totalScore) {
+            PlayOneCategoryPageController.Current.eachRecord.highestScore = PlayOneCategoryPageController.Current.totalScore;
+            PlayOneCategoryPageController.Current.isHighest = true;
+            var iCount = 0;
+            var iterateAnimateFun = function (index, elem1) {
+                var angle = Math.PI * 2 * Math.random();
+                var speed = 50 + 70 * Math.random();
+                $(elem1).css({ top: "50vh", left: "50vw" });
+                var dt = 1;
+                $(elem1).animate({ top: Math.round(50 + speed * Math.cos(angle) * dt) + "vh", left: Math.round(50 + speed * Math.sin(angle) * dt) + "vw" }, 1000 + index * 10, function () {
+                    if (iCount > 100)
+                        return;
+                    iCount++;
+                    iterateAnimateFun(index, elem1);
+                });
+            };
+            $(".imgStar").each(function (index, elem) {
+                iterateAnimateFun(index, elem);
+            });
+            setTimeout(PlayOneCategoryPageController.Current.ShowdlFinish, 4000);
+        }
+        else
+            PlayOneCategoryPageController.Current.ShowdlFinish();
+    };
     PlayOneCategoryPageController.prototype.ShowdlFinish = function () {
         var nFinal = PlayOneCategoryPageController.Current.totalScore;
         var nAll = PlayOneCategoryPageController.Current.glScore;
@@ -1687,7 +1849,7 @@ var PlayOneCategoryPageController = (function () {
                     var newTime = PlayOneCategoryPageController.Current.eachRecord.nextTime + Math.pow(2, oldLV / 2) * 86400000;
                     if ((newTime - 43200000) < Date.now())
                         newTime = Date.now() + 86400000;
-                    stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stIncLV.replace('{0}', (Math.floor((PlayOneCategoryPageController.Current.eachRecord.nextTime - Date.now()) / 8640000) / 10).toString());
+                    stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stIncLV.replace('{0}', (Math.floor((newTime - Date.now()) / 8640000) / 10).toString());
                     PlayOneCategoryPageController.Current.level = oldLV + 1;
                     PlayOneCategoryPageController.Current.eachRecord.nextTime = newTime;
                 }
@@ -1695,7 +1857,7 @@ var PlayOneCategoryPageController = (function () {
             };
             var keepLevel = function () {
                 var newTime = ((PlayOneCategoryPageController.Current.eachRecord.nextTime - 43200000) > Date.now()) ? PlayOneCategoryPageController.Current.eachRecord.nextTime : (Date.now() + 86400000);
-                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stKeepLV.replace('{0}', (Math.floor(newTime / 8640000) / 10).toString());
+                stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stKeepLV.replace('{0}', (Math.floor((newTime - Date.now()) / 8640000) / 10).toString());
                 PlayOneCategoryPageController.Current.level = oldLV;
                 PlayOneCategoryPageController.Current.eachRecord.nextTime = newTime;
             };
@@ -1717,7 +1879,7 @@ var PlayOneCategoryPageController = (function () {
                 }
             }
             else if (nFinal === oldScore) {
-                if (oldScore === PlayOneCategoryPageController.Current.glScore) {
+                if (oldScore === PlayOneCategoryPageController.Current.glScore || trueLV > oldLV) {
                     increaseYourLevel();
                     stInnerHTML += PlayOneCategoryPageController.Current.thisPageTexts.stHandWriting;
                 }
@@ -1738,6 +1900,7 @@ var PlayOneCategoryPageController = (function () {
             ;
         }
         ;
+        stInnerHTML = "<h1 style='text-align:center;'>LV" + PlayOneCategoryPageController.Current.level + "(" + trueLV + ")" + "</h1>" + stInnerHTML;
         $(PlayOneCategoryPageController.Current.dlFinish).html(stInnerHTML);
         $(PlayOneCategoryPageController.Current.dlFinish).dialog('open');
         PlayOneCategoryPageController.Current.meBackground.pause();
@@ -1978,9 +2141,40 @@ var VersionHelper = (function () {
 var ChooseAContainerPageController = (function () {
     function ChooseAContainerPageController($scope, $routeParams) {
         this.containers = GlobalVariables.containers;
-        this.selContainer = this.containers[0];
-        this.onConChange = function onContainerChange() {
-            MyFileHelper.FeedTextFromTxtFileToACallBack(ChooseAContainerPageController.Current.GetPath(), ChooseAContainerPageController.Current.categories, ChooseAContainerPageController.Current.UpdateCategories);
+        this.CCFromIDB = {};
+        this.restTimesForContainer = [];
+        this.restTimesForCategory = [];
+        this.onContainerClick = function (ev, id) {
+            $(".MyContainer.ImgOK").removeClass('Show');
+            $(".MyContainer.Main").removeClass('Empty');
+            ChooseAContainerPageController.Current.selContainerID = id;
+            var prevContainer = ChooseAContainerPageController.Current.prevContainer;
+            if (prevContainer && prevContainer.idTrigger != "") {
+                $(document).off(prevContainer.idTrigger);
+            }
+            var thisContainer = ChooseAContainerPageController.Current.containers[ChooseAContainerPageController.Current.selContainerID];
+            if (thisContainer.idTrigger === "") {
+                ChooseAContainerPageController.Current.isShownCategories = true;
+                ChooseAContainerPageController.Current.categories = thisContainer.categories;
+                ChooseAContainerPageController.Current.selCategory = null;
+            }
+            else {
+                ChooseAContainerPageController.Current.isShownCategories = false;
+                $(document).one(thisContainer.idTrigger, function (ev) {
+                    thisContainer.idTrigger = "";
+                    ChooseAContainerPageController.scope.$apply(function () {
+                        ChooseAContainerPageController.Current.isShownCategories = true;
+                        ChooseAContainerPageController.Current.categories = thisContainer.categories;
+                        ChooseAContainerPageController.Current.selCategory = null;
+                    });
+                });
+            }
+            ChooseAContainerPageController.Current.prevContainer = thisContainer;
+            if (ev) {
+                $(ev.target).addClass('Show');
+                $((ev.target).parentElement).addClass('Empty');
+            }
+            ChooseAContainerPageController.Current.callbackRestTimesForCategory();
         };
         VersionHelper.ReloadIfNeeded();
         ChooseAContainerPageController.Current = this;
@@ -1997,8 +2191,19 @@ var ChooseAContainerPageController = (function () {
             console.log("ChooseAContainerPageController in");
             console.log(location.origin);
         }
-        this.onConChange();
+        IndexedDBHelper.GetWholeCCFromIDBAsync(this.CCFromIDB, this.callbackShowNextTimeForContainer);
     }
+    Object.defineProperty(ChooseAContainerPageController.prototype, "selContainerID", {
+        get: function () {
+            return this._selContainerID;
+        },
+        set: function (value) {
+            this._selContainerID = value;
+            this.selContainer = this.containers[value];
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ChooseAContainerPageController.prototype, "thisPageTexts", {
         get: function () {
             if (!GlobalVariables.PageTexts)
@@ -2034,42 +2239,77 @@ var ChooseAContainerPageController = (function () {
         enumerable: true,
         configurable: true
     });
-    ChooseAContainerPageController.prototype.GetPath = function () {
-        var pathOrUrl = ChooseAContainerPageController.Current.selContainer.itsLocation + "/" + GlobalVariables.containerListFileName;
-        if (GlobalVariables.isHostNameShown)
-            pathOrUrl = location.origin + pathOrUrl;
-        return pathOrUrl;
+    ChooseAContainerPageController.prototype.onCategoryClick = function (ev, id) {
+        $(".MyCategory.ImgOK").removeClass("Show");
+        ChooseAContainerPageController.Current.selCategory = ChooseAContainerPageController.Current.categories[id];
+        $(ev.target).addClass('Show');
     };
-    ChooseAContainerPageController.prototype.UpdateCategories = function (jsonTxt, categories) {
-        if (GlobalVariables.isLog) {
-            console.log("ChooseAContainerPage:UpdateCategories: " + jsonTxt);
+    ChooseAContainerPageController.prototype.callbackShowNextTimeForContainer = function () {
+        var CCFromIDB = ChooseAContainerPageController.Current.CCFromIDB;
+        var containers = ChooseAContainerPageController.Current.containers;
+        for (var key0 in CCFromIDB) {
+            var lastNTime = CCFromIDB[key0].lastNextTime;
+            var restDays = Math.round((lastNTime - Date.now()) / 8640000) / 10;
+            for (var i0 = 0; i0 < containers.length; i0++) {
+                if (containers[i0].itsLocation === key0) {
+                    ChooseAContainerPageController.scope.$apply(function () {
+                        ChooseAContainerPageController.Current.restTimesForContainer[i0] = restDays;
+                    });
+                    break;
+                }
+            }
         }
-        var obj = JSON.parse(jsonTxt);
-        ChooseAContainerPageController.Current.categories = [];
-        categories = [];
-        for (var i0 = 0; i0 < obj.Categories.length; i0++) {
-            categories.push(obj.Categories[i0]);
-        }
-        ChooseAContainerPageController.scope.$apply(function () {
-            ChooseAContainerPageController.Current.categories = categories;
-            if (categories.length > 0)
-                ChooseAContainerPageController.Current.selCategory = categories[0];
-        });
     };
-    ;
+    ChooseAContainerPageController.prototype.callbackRestTimesForCategory = function () {
+        ChooseAContainerPageController.Current.restTimesForCategory = [];
+        var container = ChooseAContainerPageController.Current.CCFromIDB[ChooseAContainerPageController.Current.containers[ChooseAContainerPageController.Current.selContainerID].itsLocation];
+        if (!container)
+            return;
+        var categoriesFromIDB = container.Categories;
+        var categories = ChooseAContainerPageController.Current.categories;
+        for (var key in categoriesFromIDB) {
+            var restTime = Math.round((categoriesFromIDB[key].nextTime - Date.now()) / 8640000) / 10;
+            for (var i0 = 0; i0 < categories.length; i0++) {
+                if (key === categories[i0].Folder) {
+                    ChooseAContainerPageController.Current.restTimesForCategory[i0] = restTime;
+                    break;
+                }
+            }
+        }
+    };
     return ChooseAContainerPageController;
 }());
 var AContainer = (function () {
     function AContainer(pos) {
+        this.idTrigger = "";
         this.itsLocation = pos;
+        this.showedName = pos.substr(pos.lastIndexOf('/') + 1);
+        this.idTrigger = Date.now().toString();
+        MyFileHelper.FeedTextFromTxtFileToACallBack(pos + "/" + GlobalVariables.containerListFileName, this, this.UpdateCategories);
     }
+    AContainer.prototype.UpdateCategories = function (jsonTxt, aContainer) {
+        if (GlobalVariables.isLog) {
+            console.log("AContainer: " + jsonTxt);
+        }
+        var obj = JSON.parse(jsonTxt);
+        aContainer.categories = [];
+        for (var i0 = 0; i0 < obj.Categories.length; i0++) {
+            aContainer.categories.push(obj.Categories[i0]);
+        }
+        $(document).trigger(aContainer.idTrigger);
+        aContainer.idTrigger = "";
+    };
+    ;
     return AContainer;
 }());
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 app.controller('PlayOneCategoryPageController', ['$scope', '$routeParams', PlayOneCategoryPageController]);
 app.controller('ChooseAContainerPageController', ['$scope', '$routeParams', ChooseAContainerPageController]);
 app.config(function ($routeProvider, $locationProvider) {
-    IndexedDBHelper.DeleteADBAsync(function (ev) { IndexedDBHelper.OpenADBAsync; });
+    if (typeof (Storage) !== "undefined" && localStorage[GlobalVariables.IsShownTutorKey] === undefined) {
+        localStorage[GlobalVariables.IsShownTutorKey] = GlobalVariables.isTutorMode;
+    }
+    IndexedDBHelper.OpenADBAsync();
     GlobalVariables.LangsInStrings = PageTextHelper.InitLangsInStrings();
     GlobalVariables.SelPageTextLang = PageTextHelper.GetPageTextLang(navigator.language, GlobalVariables.LangsInStrings);
     PageTextHelper.InitPageTexts(function () { $(document).trigger(GlobalVariables.PageTextChangeKey); });

@@ -1,0 +1,17 @@
+﻿{
+  "Cards": [
+    { "FileName": "一五一十.box" },
+    { "FileName": "七嘴八舌.box" },
+    { "FileName": "不以為意.box" },
+    { "FileName": "不白之冤.box" },
+    { "FileName": "大快朵頤.box" },
+    { "FileName": "奄奄一息.box" },
+    { "FileName": "左思右想.box" },
+    { "FileName": "火冒三丈.box" },
+    { "FileName": "言而無信.box" },
+    { "FileName": "語重心長.box" },
+    { "FileName": "迫不及待.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

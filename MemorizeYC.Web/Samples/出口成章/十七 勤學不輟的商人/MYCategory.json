@@ -1,0 +1,18 @@
+﻿{
+  "Cards": [
+    { "FileName": "一技之長.box" },
+    { "FileName": "光輝燦爛.box" },
+    { "FileName": "名列前茅.box" },
+    { "FileName": "含辛茹苦.box" },
+    { "FileName": "多才多藝.box" },
+    { "FileName": "好學不倦.box" },
+    { "FileName": "家常便飯.box" },
+    { "FileName": "怨天尤人.box" },
+    { "FileName": "有聲有色.box" },
+    { "FileName": "癡心妄想.box" },
+    { "FileName": "街頭巷尾.box" },
+    { "FileName": "養家活口.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

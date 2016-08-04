@@ -1,0 +1,18 @@
+﻿{
+  "Cards": [
+    { "FileName": "咎由自取.box" },
+    { "FileName": "大難臨頭.box" },
+    { "FileName": "忠言逆耳.box" },
+    { "FileName": "曲意逢迎.box" },
+    { "FileName": "無可救藥.box" },
+    { "FileName": "胡說八道.box" },
+    { "FileName": "自欺欺人.box" },
+    { "FileName": "自言自語.box" },
+    { "FileName": "長治久安.box" },
+    { "FileName": "阿諛奉承.box" },
+    { "FileName": "養尊處優.box" },
+    { "FileName": "馬耳東風.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

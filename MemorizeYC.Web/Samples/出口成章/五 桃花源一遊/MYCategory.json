@@ -1,0 +1,17 @@
+﻿{
+  "Cards": [
+    { "FileName": "不知不覺.box" },
+    { "FileName": "世外桃源.box" },
+    { "FileName": "五顏六色.box" },
+    { "FileName": "別有洞天.box" },
+    { "FileName": "千方百計.box" },
+    { "FileName": "各式各樣.box" },
+    { "FileName": "大惑不解.box" },
+    { "FileName": "家家戶戶.box" },
+    { "FileName": "無憂無慮.box" },
+    { "FileName": "目不轉睛.box" },
+    { "FileName": "美不勝收.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

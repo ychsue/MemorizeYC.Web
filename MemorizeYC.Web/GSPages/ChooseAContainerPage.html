@@ -1,18 +1,35 @@
-﻿<h1 ng-bind="ctrl.thisPageTexts.stSelContainer"></h1>
-<div>
-    <select ng-model="ctrl.selContainer"
-            ng-options="c.itsLocation for c in ctrl.containers" 
-            ng-change="ctrl.onConChange()"
-            size="4">
-    </select>
-    <a class="btn btn-default" ng-href="#/Play?Container={{ctrl.selContainer.itsLocation}}&CFolder={{ctrl.selCategory.Folder}}">Play</a>
+﻿<nav class="nav navbar-fixed-top">
+    <div class="dropdown">
+        <button class="navbar-btn navbar-right col-xs-1 dropdown-toggle" data-toggle="dropdown" role="button" type="button" aria-expanded="true" aria-haspopup="true" id="ddMenuBtn">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="ddMenuBtn" style="background:white;">
+            <h3 ng-bind="ctrl.thisPageTexts.stSelLang"></h3>
+            <select ng-model="ctrl.SelPageTextLang" ng-click="$event.stopPropagation();"
+                    ng-options="c.name for c in ctrl.LangsInString"></select>
+        </div>
+    </div>
+</nav>
+<div style="height:50vh;overflow-y:scroll;border:5px; border-style:groove; border-radius:12px; border-color:blue;">
+    <h1 ng-bind="ctrl.thisPageTexts.stSelContainer">{{ctrl.selContainer.itsLocation}}</h1>
+    <div ng-repeat="container in ctrl.containers" class="MyContainer Main" data-value="{{$index}}" ng-click="ctrl.onContainerClick($event,$index)"
+         ng-class="{NotYet: ctrl.restTimesForContainer[$index]>0, DayOut:(ctrl.restTimesForContainer[$index]<0)}">
+        <div class="showContainerPos"><span class="badge" ng-bind="ctrl.restTimesForContainer[$index]"></span>{{container.showedName}}</div>
+        <img src="./Images/Ok.png" alt="Selected" class="MyContainer ImgOK" />
+    </div>
 </div>
-<h2 ng-bind="ctrl.thisPageTexts.stSelCategory"></h2>
-<select ng-model="ctrl.selCategory"
-        ng-options="c.Folder for c in ctrl.categories"
-        size="10"></select>
+<div style="height:50vh;overflow-y:scroll;">
+    <h2 ng-bind="ctrl.thisPageTexts.stSelCategory">{{ctrl.selCategory.Folder}}</h2>
+    <h3 ng-hide="!ctrl.selContainerID||ctrl.isShownCategories">Loading...</h3>
+    <div ng-repeat="category in ctrl.categories" class="MyCategory Main" data-value="{{$index}}" ng-click="ctrl.onCategoryClick($event,$index)"
+                  ng-class="{NotYet:(ctrl.restTimesForCategory[$index]>0), DayOut:(ctrl.restTimesForCategory[$index]<0)}">
+        <div class="showCategoryPos"><span class="badge" ng-bind="ctrl.restTimesForCategory[$index]"></span>{{category.Folder}}</div>
+        <img src="./Images/Ok.png" alt="Selected" class="MyCategory ImgOK" />
+    </div>
+</div>
 
-<h3 ng-bind="ctrl.thisPageTexts.stSelLang"></h3>
-<select ng-model="ctrl.SelPageTextLang"
-        ng-options="c.name for c in ctrl.LangsInString">
-</select>
+<a id="btToPlay" class="btn btn-default"
+   ng-href="#/Play?Container={{ctrl.containers[ctrl.selContainerID].itsLocation}}&CFolder={{ctrl.selCategory.Folder}}"
+    ng-show="ctrl.selCategory">
+    <img src="./Images/CategoryAnimate.gif" alt="Play a Category" style="width:136px;height:100px;" />
+</a>

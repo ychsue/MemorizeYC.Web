@@ -1,0 +1,19 @@
+﻿{
+  "Cards": [
+			   {"FileName":"全神貫注.box"},
+			   {"FileName":"功名利祿.box"},
+			   {"FileName":"坐立不安.box"},
+			   {"FileName":"夢寐以求.box"},
+			   {"FileName":"家喻戶曉.box"},
+			   {"FileName":"東床快婿.box"},
+			   {"FileName":"津津有味.box"},
+			   {"FileName":"盡人皆知.box"},
+			   {"FileName":"眉清目秀.box"},
+			   {"FileName":"神色自若.box"},
+			   {"FileName":"自然而然.box"},
+			   {"FileName":"自由自在.box"},
+         { "FileName": "裝模作樣.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

@@ -16,6 +16,8 @@ interface PlayOneCategoryPageJSON {
     stNoteForKeyIn: string;
     stHandWriting: string;
 
+    stHighestScore: string;
+
     stWaitUtterDone: string;
     stSynVoice: string;
     stContributor: string;
@@ -154,7 +156,9 @@ class PageTextHelper {
             "stKeepLV":"<h3>雖然你有進步，可惜還不夠升級，請 {0} 天後再玩一次。</h3>",
             "stBackTo0":"<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
             "stNoteForKeyIn":"<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
-            "stHandWriting":"<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+            "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+
+            "stHighestScore":"最高分！",
 
             "stWaitUtterDone":"稍安勿躁，請等我唸完再點選。",
             "stSynVoice": "語音模擬的聲音：",

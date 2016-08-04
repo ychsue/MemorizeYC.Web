@@ -1,0 +1,18 @@
+﻿{
+  "Cards": [
+			   {"FileName":"三長兩短.box"},
+			   {"FileName":"不約而同.box"},
+			   {"FileName":"回天乏術.box"},
+			   {"FileName":"憂心忡忡.box"},
+			   {"FileName":"昏昏沉沉.box"},
+			   {"FileName":"有氣無力.box"},
+			   {"FileName":"栩栩如生.box"},
+			   {"FileName":"生氣勃勃.box"},
+			   {"FileName":"聲名大噪.box"},
+			   {"FileName":"胡思亂想.box"},
+         { "FileName": "自不量力.box" },
+			   {"FileName":"與世長辭.box"}
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

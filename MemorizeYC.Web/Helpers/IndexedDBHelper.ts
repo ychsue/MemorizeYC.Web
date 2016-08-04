@@ -1,4 +1,5 @@
-﻿/// <reference path="../models/eachrecord.ts" />
+﻿/// <reference path="../models/ccfromidb.ts" />
+/// <reference path="../models/eachrecord.ts" />
 class IndexedDBHelper {
     public static IDBDBKey = "MYCIDB";
     public static IDBUCCKey = "UserConCategory";
@@ -56,7 +57,7 @@ class IndexedDBHelper {
             //* [2016-07-18 21:47] Create an ObjectStore
             var myOS = db.createObjectStore(IndexedDBHelper.IDBUCCKey, { keyPath: "UCC" });
             //* [2016-07-19 11:26] Add index for it
-            var bufRecord: EachRecord = { SynLang: null, RecLang: "en-US", history: '[]', nextTime: 0 };
+            var bufRecord: EachRecord = { SynLang: null, RecLang: "en-US", history: '[]', nextTime: 0, highestScore:0 };
             for (var key in bufRecord) {
                 myOS.createIndex(key, key, { unique: false });
             }
@@ -150,4 +151,40 @@ class IndexedDBHelper {
         else
             IndexedDBHelper.OpenADBAsync(putRecord);
     }
+
+    public static GetWholeCCFromIDBAsync(refCC:CCFromIDB,onFinish: EventListener = null) {
+        var getRefCC = () => {
+            var transaction = IndexedDBHelper.myDataBase.transaction([IndexedDBHelper.IDBUCCKey], "readonly");
+            var request = transaction
+                .objectStore(IndexedDBHelper.IDBUCCKey)
+                .openCursor();
+            request.addEventListener("success", (ev) => {
+                var cursor = (<IDBRequest>(ev.target)).result as IDBCursorWithValue;
+                if (cursor) {
+                    var value = cursor.value as EachRecord;
+                    var ucc = JSON.parse(value.UCC) as UCC;
+                    if (ucc.user === GlobalVariables.currentUser) {
+                        var history = JSON.parse(value.history) as Array<LVsTime>;
+                        if (!refCC[ucc.Container])
+                            refCC[ucc.Container] = { Categories: {}, lastNextTime:null };
+                        var container = refCC[ucc.Container];
+                        if (!container.Categories[ucc.Category])
+                            container.Categories[ucc.Category] = {history:null, nextTime:null};
+                        var category = container.Categories[ucc.Category];
+                        category.history = history;
+                        category.nextTime = value.nextTime;
+                        container.lastNextTime = (container.lastNextTime) ? Math.min(container.lastNextTime, value.nextTime) : value.nextTime;
+                    }
+                    cursor.continue();
+                } else {
+                    if (onFinish) onFinish(ev);
+                }
+            });
+        };
+
+        if (IndexedDBHelper.myDataBase)
+            getRefCC();
+        else
+            IndexedDBHelper.OpenADBAsync(getRefCC);
+    };
 }

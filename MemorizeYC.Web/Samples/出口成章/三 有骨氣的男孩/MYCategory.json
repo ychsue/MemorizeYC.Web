@@ -1,0 +1,14 @@
+﻿{
+  "Cards": [
+    { "FileName": "一語不發.box" },
+    { "FileName": "喜不自勝.box" },
+    { "FileName": "大吃一驚.box" },
+    { "FileName": "孤苦伶仃.box" },
+    { "FileName": "弱不禁風.box" },
+    { "FileName": "悲從中來.box" },
+    { "FileName": "愁眉苦臉.box" },
+    { "FileName": "所見所聞.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

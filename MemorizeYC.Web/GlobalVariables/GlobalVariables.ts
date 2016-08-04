@@ -41,8 +41,13 @@ class GlobalVariables {
     public static currentSynVoice: SpeechSynthesisVoice_Instance = undefined;
     public static synUtterance: SpeechSynthesisUtterance_Instance = undefined;
 
+    public static isHavingSpeechRecognier: boolean;
+    public static speechRecognizer: SpeechRecognition;
+    public static SpeechGrammarList;
+
     //* [2016-07-05 13:16] Added for Tutorial
     public static isTutorMode: boolean = true;
+    public static IsShownTutorKey = "IsShownTutor"; //For LocalStorage
     public static gdTutorElements: TutorialElements;
     public static tutorState: TutorState = {
         Main: TutorMainEnum.Begin,
@@ -63,5 +68,6 @@ class GlobalVariables {
     /**
      * This file is located at 'Strings/en-US/Resources.json' for English
      */
-    public static PageTextsJSONFName: string="Resources.json";
+    public static PageTextsJSONFName: string = "Resources.json";
+
 }

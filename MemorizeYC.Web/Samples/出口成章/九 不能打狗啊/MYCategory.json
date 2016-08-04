@@ -1,0 +1,18 @@
+﻿{
+  "Cards": [
+			   {"FileName":"充耳不聞.box"},
+			   {"FileName":"心血來潮.box"},
+			   {"FileName":"忠心耿耿.box"},
+			   {"FileName":"怒氣沖沖.box"},
+			   {"FileName":"恍然大悟.box"},
+			   {"FileName":"悔不當初.box"},
+			   {"FileName":"滂沱大雨.box"},
+			   {"FileName":"狼狽不堪.box"},
+			   {"FileName":"盡忠職守.box"},
+			   {"FileName":"神清氣爽.box"},
+			   {"FileName":"莫名其妙.box"},
+         { "FileName": "談天說地.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

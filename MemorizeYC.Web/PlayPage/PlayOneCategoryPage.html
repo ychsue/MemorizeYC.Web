@@ -4,6 +4,25 @@
 <div id="dlFinish" title="All Done!">
 </div>
 
+<div id="divForChampion" ng-show="ctrl.isHighest" style="position:fixed;width:100vw;height:100vh; background-color:red;z-index:10">
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <img class="imgStar" src="./Images/star.svg" />
+    <div class="text-center" style="position:absolute;width:100vw;top:40vh;font-size:10vw;color:white;">
+        {{ctrl.thisPageTexts.stHighestScore}}
+    </div>
+</div>
+
+
 <div class="cvMain" role="main" style="position:absolute">
     <div id="imgBackground"></div>
 </div>
@@ -24,13 +43,14 @@
 
     <div class="container-fluid" ng-show="ctrl.playType==='rec'">
         <div class="row">
-            <form ng-submit="ctrl.recCheckAnswer_Click()">
-                <button class="col-xs-1 btn btn-default">
-                    <img src="https://openclipart.org/image/2400px/svg_to_png/34345/signore-architetto-fran-01r.png" alt="microphone" style="height:40px" />
-                </button>
-                <input id="tbKeyIn" type="text" name="tbRecSentence" class="col-xs-10 navbar-right" style="margin:8px;" ng-model="ctrl.recInputSentence" />
-                <!--<input type="image" class="col-xs-1 btn btn-default" src="http://news.toyark.com/wp-content/uploads/sites/4/2013/08/New-52-Green-Arrow-07.jpg" style="height:32px; width:auto" />-->
-            </form>
+            <button class="col-xs-1 btn btn-default" ng-click="ctrl.StartSpeechRecognition_Click($event)" ng-disabled="!ctrl.isHavingSpeechRecognier">
+                <img src="./Images/microphone.svg" alt="microphone" style="height:40px" ng-hide="ctrl.isSpeechRecognitionRunning" />
+                <svg height="40" width="40" ng-show="ctrl.isSpeechRecognitionRunning">
+                    <circle cx="20" cy="20" r="12" stroke="black" stroke-width="3" fill="red" />
+                </svg>
+            </button>
+            <input id="tbKeyIn" type="text" name="tbRecSentence" class="col-xs-9" style="margin:8px;" ng-model="ctrl.recInputSentence" ng-keyup="ctrl.recCheckAnswer_Click($event)" />
+            <button class="glyphicon glyphicon-upload col-xs-1 navbar-right" style="height:45px;font-size:20px" ng-click="ctrl.recCheckAnswer_Click($event)"></button>
         </div>
     </div>
 
@@ -49,7 +69,7 @@
         <div class="row">
             <div id="dpLangMain" class="dropdown">
                 <button class="col-xs-1 dropdown-toggle btn btn-default" role="button" type="button" id="dropdownLangSettings" data-toggle="dropdown" aria-haspopup="false">
-                    <img src="http://memorizeyc.azurewebsites.net/Static/PlayPage/SpeechLang.png" alt="Choose a Language" style="width:32px" />
+                    <img src="./Images/SpeechLang.png" alt="Choose a Language" style="width:32px" />
                     <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-left" style="margin-left:12px;">
@@ -71,23 +91,23 @@
                     </ul>
                 </div>
             </div>
-            <h4 class="col-xs-9 text-center" >{{ctrl.CFolder}}</h4>
+            <h4 class="col-xs-9 text-center">{{ctrl.CFolder}}</h4>
             <div id="dpPlaySettings" class="dropdown" style="opacity:0.95;">
-                <button class="navbar-btn dropdown-toggle col-xs-1 navbar-right" style="height:36px;" role="button" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
-                    <span class="glyphicon glyphicon-menu-hamburger"/>
+                <button class="navbar-btn dropdown-toggle col-xs-1 navbar-right" style="height:36px;" role="button" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="glyphicon glyphicon-menu-hamburger" />
                 </button>
                 <ul id="ddSettings" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPlayPageSettings" style="max-width:90vw;">
                     <!--1. For cards' size, shown-->
                     <li class="container">
                         <div class="row">
-                            <button id="btChangeCards" ng-style="ctrl.defaultCardStyle" ng-click="ctrl.ShowNewWCards_Click()" style="float:left;margin:4px;" >
+                            <button id="btChangeCards" ng-style="ctrl.defaultCardStyle" ng-click="ctrl.ShowNewWCards_Click()" style="float:left;margin:4px;">
                                 <div>
                                     {{ctrl.thisPageTexts.stRest}} <br />
                                     <span class="badge">{{ctrl.numRestWCards}}</span>
                                 </div>
                             </button>
                             <div style="margin:4px;float:left">
-                                 <input type="number" style="width:40px" ng-model="ctrl.numWCardShown" min="1" /> {{ctrl.thisPageTexts.stNumWCardShown}}
+                                <input type="number" style="width:40px" ng-model="ctrl.numWCardShown" min="1" /> {{ctrl.thisPageTexts.stNumWCardShown}}
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="cbPickRandomly" value="" ng-model="ctrl.isPickWCardsRandomly" />
@@ -157,7 +177,7 @@
                     <li role="separator" class="divider"></li>
 
                     <!--5. Tutorial Mode-->
-                    <li class="dropdown-header">{{ctrl.thisPageTexts.stTutor}}</li>    
+                    <li class="dropdown-header">{{ctrl.thisPageTexts.stTutor}}</li>
                     <li class="container">
                         <div id="rdTutorType" class="row">
                             <label class="col-xs-3">

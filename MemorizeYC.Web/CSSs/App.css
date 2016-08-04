@@ -2,6 +2,10 @@
     border:1px solid red;
 }
 
+.imgStar{
+    position:absolute;
+}
+
 .no-close .ui-dialog-titlebar-close{
     display:none;
 }

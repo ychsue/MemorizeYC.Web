@@ -1,0 +1,18 @@
+﻿{
+  "Cards": [
+			   {"FileName":"名落孫山.box"},
+			   {"FileName":"大打出手.box"},
+			   {"FileName":"如花似玉.box"},
+			   {"FileName":"妙不可言.box"},
+			   {"FileName":"感恩圖報.box"},
+			   {"FileName":"挺身而出.box"},
+			   {"FileName":"掌上明珠.box"},
+			   {"FileName":"束手無策.box"},
+			   {"FileName":"破口大罵.box"},
+			   {"FileName":"賢妻良母.box"},
+			   {"FileName":"順理成章.box"},
+         { "FileName": "頭昏眼花.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

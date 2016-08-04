@@ -1,0 +1,18 @@
+﻿{
+  "Cards": [
+			   {"FileName":"一擲千金.box"},
+			   {"FileName":"一舉一動.box"},
+			   {"FileName":"人山人海.box"},
+			   {"FileName":"始終如一.box"},
+			   {"FileName":"情不自禁.box"},
+			   {"FileName":"才貌雙全.box"},
+			   {"FileName":"數一數二.box"},
+			   {"FileName":"水洩不通.box"},
+			   {"FileName":"沉魚落雁.box"},
+			   {"FileName":"滿載而歸.box"},
+			   {"FileName":"赫赫有名.box"},
+         { "FileName": "閉月羞花.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}

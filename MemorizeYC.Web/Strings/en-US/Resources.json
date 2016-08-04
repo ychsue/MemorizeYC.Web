@@ -10,6 +10,8 @@
     "stNoteForKeyIn": "<h4>Note: In <b>KeyIn</b> mode, you will get higher score.</h4>",
     "stHandWriting": "<h4>How about use hand writing to input the answer?</h4>",
 
+    "stHighestScore": "NUMBER 1!",
+
     "stWaitUtterDone": "I'm uttering. Please wait.",
     "stSynVoice": "Voice for Speech Synthesis:",
     "stContributor": "Contributor",

@@ -1,0 +1,16 @@
+﻿{
+  "Cards": [
+    { "FileName": "一模一樣.box" },
+    { "FileName": "信以為真.box" },
+    { "FileName": "完美無缺.box" },
+    { "FileName": "文武雙全.box" },
+    { "FileName": "氣喘如牛.box" },
+    { "FileName": "溫文爾雅.box" },
+    { "FileName": "猶豫不決.box" },
+    { "FileName": "若有所思.box" },
+    { "FileName": "行色匆匆.box" },
+    { "FileName": "頭頭是道.box" }
+  ],
+  "Link": "./Samples/出口成章/出口成章.html",
+  "SynLang": "zh-TW"
+}
