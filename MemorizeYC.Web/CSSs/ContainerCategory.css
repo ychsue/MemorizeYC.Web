@@ -1,7 +1,7 @@
 ﻿.MyContainer, .MyCategory{
     display:inline-table;
-    width:120px;
-    height:140px;
+    width:80px;
+    height:94px;
     margin:4px;
 }
 .MyContainer.Main{
@@ -44,7 +44,7 @@
     display:table-caption;
     position:relative;
     margin:0 18px 0 6px;
-    top:140px;
+    top:94px;
 }
 
 .showCategoryPos{
@@ -52,7 +52,7 @@
     display:table-caption;
     position:relative;
     margin:0 18px 4px 18px;
-    top:140px;
+    top:94px;
 }
 
 #btToPlay.ng-hide-remove {
