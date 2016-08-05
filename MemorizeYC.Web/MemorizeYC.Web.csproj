@@ -489,6 +489,8 @@
     <Content Include="Samples\週期表20160714\MYCBackground.png" />
     <Content Include="Samples\週期表20160714\B族元素\BoxFiles\57到71 鑭系元素.txt" />
     <Content Include="Samples\週期表20160714\B族元素\BoxFiles\89到103 錒系元素.txt" />
+    <Content Include="Samples\週期表20160714\全\BoxFiles\57到71 鑭系元素.txt" />
+    <Content Include="Samples\週期表20160714\全\BoxFiles\89到103 錒系元素.txt" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
@@ -1129,6 +1131,9 @@
     <Content Include="Samples\出口成章\十六 愛聽好話的國君\MYCategory.json" />
     <Content Include="Samples\出口成章\十四 東床快婿\MYCategory.json" />
     <Content Include="Samples\出口成章\四 管仲與鮑叔牙\MYCategory.json" />
+    <Content Include="Samples\週期表20160714\全\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />

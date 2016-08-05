@@ -113,10 +113,18 @@ class CardsHelper {
     }
 
     public static UpdateEachDescription(des: EachDescription) {
+        var myDictate: string;
         if (!des.Dictate && des.FileName) {
-            var iDot: number = des.FileName.lastIndexOf('.');
+            //* [2016-08-05 18:46] Drop out all subFolders' information
+            var iSlash = des.FileName.lastIndexOf('/');
+            if (iSlash >= 0)
+                myDictate = des.FileName.substr(iSlash + 1);
+            else
+                myDictate = des.FileName;
+            //* [2016-06-29] Take out file extension
+            var iDot: number = myDictate.lastIndexOf('.');
             if (iDot > 0)
-                des.Dictate = decodeURIComponent(des.FileName.substring(0, iDot));
+                des.Dictate = decodeURIComponent(myDictate.substring(0, iDot));
             //* [2016-06-29 17:05] Take out s??.
             if (des.Dictate[0].toLowerCase() === 's') {
                 if (/^[s,S][0-9]+\./.test(des.Dictate)) {

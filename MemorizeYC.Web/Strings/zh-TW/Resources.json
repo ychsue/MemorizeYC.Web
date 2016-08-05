@@ -78,7 +78,7 @@
   "ChooseAContainerPageJSON": {
     "stPlay": "玩",
     "stSelContainer": "1. 選個容器吧：",
-    "stSelCategory": "2. 再選容器中的一個類別吧：",
+    "stSelCategory": "2. 再選個類別吧：",
     "stSelLang": "3. 設定用來顯示頁面的語言："
   }
 }

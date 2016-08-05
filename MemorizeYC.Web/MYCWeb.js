@@ -2490,10 +2490,16 @@ var CardsHelper = (function () {
         }
     };
     CardsHelper.UpdateEachDescription = function (des) {
+        var myDictate;
         if (!des.Dictate && des.FileName) {
-            var iDot = des.FileName.lastIndexOf('.');
+            var iSlash = des.FileName.lastIndexOf('/');
+            if (iSlash >= 0)
+                myDictate = des.FileName.substr(iSlash + 1);
+            else
+                myDictate = des.FileName;
+            var iDot = myDictate.lastIndexOf('.');
             if (iDot > 0)
-                des.Dictate = decodeURIComponent(des.FileName.substring(0, iDot));
+                des.Dictate = decodeURIComponent(myDictate.substring(0, iDot));
             if (des.Dictate[0].toLowerCase() === 's') {
                 if (/^[s,S][0-9]+\./.test(des.Dictate)) {
                     iDot = des.Dictate.indexOf('.');
