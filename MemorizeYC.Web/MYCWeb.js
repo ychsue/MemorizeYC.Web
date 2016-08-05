@@ -2145,6 +2145,8 @@ var ChooseAContainerPageController = (function () {
         this.restTimesForContainer = [];
         this.restTimesForCategory = [];
         this.onContainerClick = function (ev, id) {
+            if ($("#divCategory").height() === 0)
+                ChooseAContainerPageController.Current.onHowToShowWholeCC_Click(null, 1);
             $(".MyContainer.ImgOK").removeClass('Show');
             $(".MyContainer.Main").removeClass('Empty');
             ChooseAContainerPageController.Current.selContainerID = id;
@@ -2239,6 +2241,26 @@ var ChooseAContainerPageController = (function () {
         enumerable: true,
         configurable: true
     });
+    ChooseAContainerPageController.prototype.onHowToShowWholeCC_Click = function (ev, value) {
+        var bothDivJQuery = $("#divContainer, #divCategory");
+        if (value > 0) {
+            var divCategoryHeight = $("#divCategory").height();
+            bothDivJQuery.removeClass("WholeContainer WholeCategory Half");
+            if (divCategoryHeight <= 0)
+                bothDivJQuery.addClass("Half");
+            else
+                bothDivJQuery.addClass("WholeCategory");
+        }
+        else if (value < 0) {
+            var divContainerHeight = $("#divContainer").height();
+            bothDivJQuery.removeClass("WholeContainer WholeCategory Half");
+            if (divContainerHeight <= 0)
+                bothDivJQuery.addClass("Half");
+            else
+                bothDivJQuery.addClass("WholeContainer");
+        }
+    };
+    ;
     ChooseAContainerPageController.prototype.onCategoryClick = function (ev, id) {
         $(".MyCategory.ImgOK").removeClass("Show");
         ChooseAContainerPageController.Current.selCategory = ChooseAContainerPageController.Current.categories[id];

@@ -1,12 +1,64 @@
-﻿.MyContainer, .MyCategory{
+﻿/*#region Toggle the sizes Huge blocks*/
+#divContainer, #divCategory{
+    position:absolute;
+    width:100vw;
+    transition:height ease-in-out 0.5s, top  ease-in-out 0.5s,opacity ease-in-out 0.5s;
+}
+#divContainer{
+    border:6px; 
+    border-style:groove; 
+    border-radius:12px; 
+    border-color:blue;
+    top:0;
+    height:100vh;
+    opacity:1;
+}
+#divCategory{    
+    top:100vh;
+    height:0;
+    opacity:0;
+}
+#divContainer.WholeContainer{
+    height:100vh;
+    top:0;
+    opacity:1;
+}
+#divCategory.WholeContainer{
+    height:0;
+    top:100vh;
+    opacity:0;
+}
+#divContainer.Half{
+    height:50vh;
+    top:0;
+    opacity:1;
+}
+#divCategory.Half{
+    height:50vh;
+    top:50vh;
+    opacity:1;
+}
+#divContainer.WholeCategory{
+    height:1vh;
+    top:0;
+    opacity:0;
+}
+#divCategory.WholeCategory{
+    height:100vh;
+    top:0;
+    opacity:1;
+}
+/*#endregion Toggle the sizes Huge blocks*/
+
+.MyContainer, .MyCategory{
     display:inline-table;
-    width:80px;
-    height:94px;
-    margin:4px;
+    width:25vmin;
+    height:29vmin;
 }
 .MyContainer.Main{
     background-image:url(../Images/FilledContainer.png);
     background-size:cover;
+    font-size:3vmin;
 }
 .MyContainer.Empty{
     background-image:url(../Images/EmptyContainer.png);
@@ -24,6 +76,7 @@
 .MyCategory.Main{
     background-image:url(../Images/Category.png);
     background-size:cover;
+    font-size:3vmin;
 }
 
 .ImgOK{
@@ -43,16 +96,16 @@
     background:white;
     display:table-caption;
     position:relative;
-    margin:0 18px 0 6px;
-    top:94px;
+    margin:0 3vmin 0 2vmin;
+    top:28vmin;
 }
 
 .showCategoryPos{
     background:white;
     display:table-caption;
     position:relative;
-    margin:0 18px 4px 18px;
-    top:94px;
+    margin:0 3vmin 1vmin 3vmin;
+    top:28vmin;
 }
 
 #btToPlay.ng-hide-remove {
@@ -74,4 +127,28 @@
         bottom:1vh;
         right:1vw;
     }
+}
+
+#btUpward{
+    position:absolute;
+    bottom:2px;
+    width:8vw;
+    height:4vw;
+    left:46vw;
+    left:calc(46vw - 6px);
+    background-image:url(../Images/button_upward.svg);
+    background-size:cover;
+    min-height:0;
+    min-width:0
+}
+#btDownward{
+    position:absolute;
+    top:2px;
+    width:8vw;
+    height:4vw;
+    left:46vw;
+    background-image:url(../Images/button_downward.svg);
+    background-size:cover;
+    min-height:0;
+    min-width:0
 }

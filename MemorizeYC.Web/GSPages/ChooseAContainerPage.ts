@@ -86,7 +86,28 @@ class ChooseAContainerPageController {
     }
 
     //#region EVENTS
+    public onHowToShowWholeCC_Click(ev: Event,value:number) {
+        //var value: number = 1;
+        var bothDivJQuery:JQuery = $("#divContainer, #divCategory");
+        if (value > 0) {
+            var divCategoryHeight: number = $("#divCategory").height();
+            bothDivJQuery.removeClass("WholeContainer WholeCategory Half");
+            if (divCategoryHeight <= 0)
+                bothDivJQuery.addClass("Half");
+            else
+                bothDivJQuery.addClass("WholeCategory");
+        } else if (value < 0) {
+            var divContainerHeight: number = $("#divContainer").height();
+            bothDivJQuery.removeClass("WholeContainer WholeCategory Half");
+            if (divContainerHeight <= 0)
+                bothDivJQuery.addClass("Half");
+            else
+                bothDivJQuery.addClass("WholeContainer");
+        }
+    };
     public onContainerClick = (ev: Event, id: number) => {
+        if($("#divCategory").height()===0)
+            ChooseAContainerPageController.Current.onHowToShowWholeCC_Click(null, 1);
         $(".MyContainer.ImgOK").removeClass('Show');
         $(".MyContainer.Main").removeClass('Empty');
         ChooseAContainerPageController.Current.selContainerID = id;

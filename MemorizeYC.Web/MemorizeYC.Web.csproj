@@ -61,6 +61,8 @@
     <Content Include="CSSs\WCard.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="GSPages\ChooseAContainerPage.html" />
+    <Content Include="Images\button_downward.svg" />
+    <Content Include="Images\button_upward.svg" />
     <Content Include="Images\Category.png" />
     <Content Include="Images\CategoryAnimate.gif" />
     <Content Include="Images\EmptyContainer.png" />
