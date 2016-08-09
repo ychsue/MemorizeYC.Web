@@ -1,102 +1,122 @@
 ﻿{
   "Cards": [
     {
-      "FileName": "21 鈧 S c 過渡金屬 .box",
+      "FileName": "21 鈧 S c 過渡金屬.box",
+      "Ans_KeyIn": [ "21 鈧 Sc 過渡金屬", "鈧", "Sc" ],
       "Position": [ 308, 408 ],
-      "Size": [84,84]
+      "Size": [ 84, 84 ]
     },
     {
       "FileName": "22 鈦 T i 過渡金屬.box",
+      "Ans_KeyIn": [ "22 鈦 Ti 過渡金屬", "鈦", "Ti" ],
       "Position": [ 408, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "23 釩 V 過渡金屬.box",
+      "Ans_KeyIn": [ "23 釩 V 過渡金屬", "釩", "V" ],
       "Position": [ 508, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "24 鉻 C r 過渡金屬.box",
+      "Ans_KeyIn": [ "24 鉻 Cr 過渡金屬", "鉻" ,"Cr"],
       "Position": [ 608, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "25 錳 M n 過渡金屬.box",
+      "Ans_KeyIn": [ "25 錳 Mn 過渡金屬", "錳", "Mn" ],
       "Position": [ 708, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "26 鐵 F e 過渡金屬.box",
+      "Ans_KeyIn": [ "26 鐵 Fe 過渡金屬", "鐵", "Fe" ],
       "Position": [ 808, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "27 鈷 C o 過渡金屬.box",
+      "Ans_KeyIn": [ "27 鈷 Co 過渡金屬", "鈷", "Co" ],
       "Position": [ 908, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "28 鎳 N i 過渡金屬.box",
+      "Ans_KeyIn": [ "28 鎳 Ni 過渡金屬", "鎳", "Ni" ],
       "Position": [ 1008, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "29 銅 C u 過渡金屬.box",
+      "Ans_KeyIn": [ "29 銅 Cu 過渡金屬", "銅", "Cu" ],
       "Position": [ 1108, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "30 鋅 Z n 過渡金屬.box",
+      "Ans_KeyIn": [ "30 鋅 Zn 過渡金屬", "鋅", "Zn" ],
       "Position": [ 1208, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "39 釔 Y 過渡金屬.box",
+      "Ans_KeyIn": [ "39 釔 Y 過渡金屬", "釔", "Y" ],
       "Position": [ 308, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "40 鋯 Z r 過渡金屬.box",
+      "Ans_KeyIn": [ "40 鋯 Zr 過渡金屬", "鋯", "Zr" ],
       "Position": [ 408, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "41 鈮 N b 過渡金屬.box",
+      "Ans_KeyIn": [ "41 鈮 Nb 過渡金屬", "鈮", "Nb" ],
       "Position": [ 508, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "42 鉬 M o 過渡金屬.box",
+      "Ans_KeyIn": [ "42 鉬 Mo 過渡金屬", "鉬", "Mo" ],
       "Position": [ 608, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "43 鎝 T c 過渡金屬.box",
+      "Ans_KeyIn": [ "43 鎝 Tc 過渡金屬", "鎝" ,"Tc"],
       "Position": [ 708, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "44 釕 R u 過渡金屬.box",
+      "Ans_KeyIn": [ "44 釕 Ru 過渡金屬", "釕", "Ru" ],
       "Position": [ 808, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "45 銠 R h 過渡金屬.box",
+      "Ans_KeyIn": [ "45 銠 Rh 過渡金屬", "銠", "Rh" ],
       "Position": [ 908, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "46 鈀 P d 過渡金屬.box",
+      "Ans_KeyIn": [ "46 鈀 Pd 過渡金屬", "鈀", "Pd" ],
       "Position": [ 1008, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "47 銀 A g 過渡金屬.box",
+      "Ans_KeyIn": [ "47 銀 Ag 過渡金屬", "銀", "Ag" ],
       "Position": [ 1108, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "48 鎘 C d 過渡金屬.box",
+      "Ans_KeyIn": [ "48 鎘 Cd 過渡金屬", "鎘", "Cd" ],
       "Position": [ 1208, 508 ],
       "Size": [ 84, 84 ]
     },
@@ -107,46 +127,55 @@
     },
     {
       "FileName": "72 鉿 H f 過渡金屬.box",
+      "Ans_KeyIn": [ "72 鉿 Hf 過渡金屬", "鉿", "Hf" ],
       "Position": [ 408, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "73 鉭 T a 過渡金屬.box",
+      "Ans_KeyIn": [ "73 鉭 Ta 過渡金屬", "鉭", "Ta" ],
       "Position": [ 508, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "74 鎢 W 過渡金屬.box",
+      "Ans_KeyIn": [ "74 鎢 W 過渡金屬", "鎢", "W" ],
       "Position": [ 608, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "75 錸 R e 過渡金屬.box",
+      "Ans_KeyIn": [ "75 錸 Re 過渡金屬", "錸", "Re" ],
       "Position": [ 708, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "76 鋨 O s 過渡金屬.box",
+      "Ans_KeyIn": [ "76 鋨 Os 過渡金屬", "鋨", "Os" ],
       "Position": [ 808, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "77 銥 I r 過渡金屬.box",
+      "Ans_KeyIn": [ "77 銥 Ir 過渡金屬", "銥", "Ir" ],
       "Position": [ 908, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "78 鉑 P t 過渡金屬.box",
+      "Ans_KeyIn": [ "78 鉑 Pt 過渡金屬", "鉑", "Pt" ],
       "Position": [ 1008, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "79 金 A u 過渡金屬.box",
+      "Ans_KeyIn": [ "79 金 Au 過渡金屬", "金", "Au" ],
       "Position": [ 1108, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "80 汞 H g 過渡金屬.box",
+      "Ans_KeyIn": [ "80 汞 Hg 過渡金屬", "汞", "Hg" ],
       "Position": [ 1208, 608 ],
       "Size": [ 84, 84 ]
     },
@@ -157,6 +186,7 @@
     },
     {
       "FileName": "104 鑪 R f 過渡金屬.box",
+      "Ans_KeyIn": [ "104 鑪 Rf 過渡金屬", "鑪", "Rf" ],
       "Position": [ 408, 708 ],
       "Size": [ 84, 84 ]
     }

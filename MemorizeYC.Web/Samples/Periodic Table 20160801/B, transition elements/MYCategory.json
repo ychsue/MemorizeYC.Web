@@ -1,0 +1,207 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "21, Scandium, S c, Transition metal.box",
+      "Ans_KeyIn": [ "21, Scandium, Sc, Transition metal", "Scandium", "Sc" ],
+      "Position": [ 308, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "22, Titanium, T I, Transition metal.box",
+      "Ans_KeyIn": [ "22, Titanium, Ti, Transition metal", "Titanium", "Ti" ],
+      "Position": [ 408, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "23, Vanadium, V, Transition metal.box",
+      "Ans_KeyIn": [ "23, Vanadium, V, Transition metal", "Vanadium", "V" ],
+      "Position": [ 508, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "24, Chromium, C r, Transition metal.box",
+      "Ans_KeyIn": [ "24, Chromium, Cr, Transition metal", "Chromium", "Cr" ],
+      "Position": [ 608, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "25, Manganese, M n, Transition metal.box",
+      "Ans_KeyIn": [ "25, Manganese, Mn, Transition metal", "Manganese", "Mn" ],
+      "Position": [ 708, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "26, Iron, F e, Transition metal.box",
+      "Ans_KeyIn": [ "26, Iron, Fe, Transition metal", "Iron", "Fe" ],
+      "Position": [ 808, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "27, Cobalt, C o, Transition metal.box",
+      "Ans_KeyIn": [ "27, Cobalt, Co, Transition metal", "Cobalt", "Co" ],
+      "Position": [ 908, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "28, Nickel, N I, Transition metal.box",
+      "Ans_KeyIn": [ "28, Nickel, Ni, Transition metal", "Nickel", "Ni" ],
+      "Position": [ 1008, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "29, Copper, C u, Transition metal.box",
+      "Ans_KeyIn": [ "29, Copper, Cu, Transition metal", "Copper", "Cu" ],
+      "Position": [ 1108, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "30, Zinc, Z n, Transition metal.box",
+      "Ans_KeyIn": [ "30, Zinc, Zn, Transition metal", "Zinc", "Zn" ],
+      "Position": [ 1208, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "39,Yttrium, Y, Transition metal.box",
+      "Ans_KeyIn": [ "39,Yttrium, Y, Transition metal", "Yttrium", "Y" ],
+      "Position": [ 308, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "40, Zirconium, Z r, Transition metal.box",
+      "Ans_KeyIn": [ "40, Zirconium, Zr, Transition metal", "Zirconium", "Zr" ],
+      "Position": [ 408, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "41, Niobium, N b, Transition metal.box",
+      "Ans_KeyIn": [ "41, Niobium, Nb, Transition metal", "Niobium", "Nb" ],
+      "Position": [ 508, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "42, Molybdenum, M o, Transition metal.box",
+      "Ans_KeyIn": [ "42, Molybdenum, Mo, Transition metal", "Molybdenum", "Mo" ],
+      "Position": [ 608, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "43, Technetium, T c, Transition metal.box",
+      "Ans_KeyIn": [ "43, Technetium, Tc, Transition metal", "Technetium", "Tc" ],
+      "Position": [ 708, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "44, Ruthenium, R u, Transition metal.box",
+      "Ans_KeyIn": [ "44, Ruthenium, Ru, Transition metal", "Ruthenium", "Ru" ],
+      "Position": [ 808, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "45, Rhodium, R h, Transition metal.box",
+      "Ans_KeyIn": [ "45, Rhodium, Rh, Transition metal", "Rhodium", "Rh" ],
+      "Position": [ 908, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "46, Palladium, P d, Transition metal.box",
+      "Ans_KeyIn": [ "46, Palladium, Pd, Transition metal", "Palladium", "Pd" ],
+      "Position": [ 1008, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "47, Silver, A g, Transition metal.box",
+      "Ans_KeyIn": [ "47, Silver, Ag, Transition metal", "Silver", "Ag" ],
+      "Position": [ 1108, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "48, Cadmium, C d, Transition metal.box",
+      "Ans_KeyIn": [ "48, Cadmium, Cd, Transition metal", "Cadmium", "Cd" ],
+      "Position": [ 1208, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "57 To 71, Lanthanide.box",
+      "Position": [ 308, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "72, Hafnium, H f, Transition metal.box",
+      "Ans_KeyIn": [ "72, Hafnium, Hf, Transition metal", "Hafnium", "Hf" ],
+      "Position": [ 408, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "73, Tantalum, T a, Transition metal.box",
+      "Ans_KeyIn": [ "73, Tantalum, Ta, Transition metal", "Tantalum", "Ta" ],
+      "Position": [ 508, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "74, Tungsten, W, Transition metal.box",
+      "Ans_KeyIn": [ "74, Tungsten, W, Transition metal", "Tungsten", "W" ],
+      "Position": [ 608, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "75, Rhenium, R e, Transition metal.box",
+      "Ans_KeyIn": [ "75, Rhenium, Re, Transition metal", "Rhenium", "Re" ],
+      "Position": [ 708, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "76, Osmium, O s, Transition metal.box",
+      "Ans_KeyIn": [ "76, Osmium, Os, Transition metal", "Osmium", "Os" ],
+      "Position": [ 808, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "77, Iridium, I r, Transition metal.box",
+      "Ans_KeyIn": [ "77, Iridium, Ir, Transition metal", "Iridium", "Ir" ],
+      "Position": [ 908, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "78, Platinum, P t, Transition metal.box",
+      "Ans_KeyIn": [ "78, Platinum, Pt, Transition metal", "Platinum", "Pt" ],
+      "Position": [ 1008, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "79, Gold, A u, Transition metal.box",
+      "Ans_KeyIn": [ "79, Gold, Au, Transition metal", "Gold", "Au" ],
+      "Position": [ 1108, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "80, Mercury, H g, Transition metal.box",
+      "Ans_KeyIn": [ "80, Mercury, Hg, Transition metal", "Mercury", "Hg" ],
+      "Position": [ 1208, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "89 To 103, Actinide.box",
+      "Position": [ 308, 708 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "104, Rutherfordium, R f, Transition metal.box",
+      "Ans_KeyIn": [ "104, Rutherfordium, Rf, Transition metal", "Rutherfordium", "Rf" ],
+      "Position": [ 408, 708 ],
+      "Size": [ 84, 84 ]
+    }
+  ],
+  "Link": "https://en.wikipedia.org/wiki/Periodic_table",
+  "SynLang": "en-US",
+  "Background": {
+    "ImgStyle": {
+      "width": "2000px",
+      "height": "1200px",
+      "opacity": "0.3",
+      "background": "/MYCBackground.png",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    }
+  },
+  "numWCardShown": 50
+}

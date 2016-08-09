@@ -2,261 +2,317 @@
   "Cards": [
     {
       "FileName": "../A族元素/1 氫 H 非金屬.box",
+      "Ans_KeyIn": [ "1 氫 H 非金屬", "氫", "H" ],
       "Position": [ 108, 108 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/2 氦 H e 惰性氣體.box",
+      "Ans_KeyIn": [ "2 氦 He 惰性氣體", "氦", "He" ],
       "Position": [ 1808, 108 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/3 鋰 L i 鹼金屬.box",
+      "Ans_KeyIn": [ "3 鋰 Li 鹼金屬", "鋰", "Li" ],
       "Position": [ 108, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/4 鈹 B e 鹼土金屬.box",
+      "Ans_KeyIn": [ "4 鈹 Be 鹼土金屬", "鈹", "Be" ],
       "Position": [ 208, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/5 硼 B 類金屬.box",
+      "Ans_KeyIn": [ "5 硼 B 類金屬", "硼", "B" ],
       "Position": [ 1308, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/6 碳 C 非金屬.box",
+      "Ans_KeyIn": [ "6 碳 C 非金屬", "碳", "C" ],
       "Position": [ 1408, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/7 氮 N 非金屬.box",
+      "Ans_KeyIn": [ "7 氮 N 非金屬", "氮", "N" ],
       "Position": [ 1508, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/8 氧 O 非金屬.box",
+      "Ans_KeyIn": [ "8 氧 O 非金屬", "氧", "O" ],
       "Position": [ 1608, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/9 氟 F 鹵素.box",
+      "Ans_KeyIn": [ "9 氟 F 鹵素", "氟", "F" ],
       "Position": [ 1708, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/10 氖 N e 惰性氣體.box",
+      "Ans_KeyIn": [ "10 氖 Ne 惰性氣體", "氖", "Ne" ],
       "Position": [ 1808, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/11 鈉 N a 鹼金屬.box",
+      "Ans_KeyIn": [ "11 鈉 Na 鹼金屬", "鈉", "Na" ],
       "Position": [ 108, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/12 鎂 M g 鹼土金屬.box",
+      "Ans_KeyIn": [ "12 鎂 Mg 鹼土金屬", "鎂", "Mg" ],
       "Position": [ 208, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/13 鋁 A l 金屬.box",
+      "Ans_KeyIn": [ "13 鋁 Al 金屬", "鋁", "Al" ],
       "Position": [ 1308, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/14 矽 S I 類金屬.box",
+      "Ans_KeyIn": [ "14 矽 Si 類金屬", "矽", "Si" ],
       "Position": [ 1408, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/15 磷 P 非金屬.box",
+      "Ans_KeyIn": [ "15 磷 P 非金屬", "磷", "P" ],
       "Position": [ 1508, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/16 硫 S 非金屬.box",
+      "Ans_KeyIn": [ "16 硫 S 非金屬", "硫", "S" ],
       "Position": [ 1608, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/17 氯 C l 鹵素.box",
+      "Ans_KeyIn": [ "17 氯 Cl 鹵素", "氯", "Cl" ],
       "Position": [ 1708, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/18 氬 A r 惰性氣體.box",
+      "Ans_KeyIn": [ "18 氬 Ar 惰性氣體", "氬", "Ar" ],
       "Position": [ 1808, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/19 鉀 K 鹼金屬.box",
+      "Ans_KeyIn": [ "19 鉀 K 鹼金屬", "鉀", "K" ],
       "Position": [ 108, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/20 鈣 C a 鹼土金屬.box",
+      "Ans_KeyIn": [ "20 鈣 Ca 鹼土金屬", "鈣", "Ca" ],
       "Position": [ 208, 408 ],
       "Size": [ 84, 84 ]
     },
+
     {
-      "FileName": "../B族元素/21 鈧 S c 過渡金屬 .box",
+      "FileName": "../B族元素/21 鈧 S c 過渡金屬.box",
+      "Ans_KeyIn": [ "21 鈧 Sc 過渡金屬", "鈧", "Sc" ],
       "Position": [ 308, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/22 鈦 T i 過渡金屬.box",
+      "Ans_KeyIn": [ "22 鈦 Ti 過渡金屬", "鈦", "Ti" ],
       "Position": [ 408, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/23 釩 V 過渡金屬.box",
+      "Ans_KeyIn": [ "23 釩 V 過渡金屬", "釩", "V" ],
       "Position": [ 508, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/24 鉻 C r 過渡金屬.box",
+      "Ans_KeyIn": [ "24 鉻 Cr 過渡金屬", "鉻", "Cr" ],
       "Position": [ 608, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/25 錳 M n 過渡金屬.box",
+      "Ans_KeyIn": [ "25 錳 Mn 過渡金屬", "錳", "Mn" ],
       "Position": [ 708, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/26 鐵 F e 過渡金屬.box",
+      "Ans_KeyIn": [ "26 鐵 Fe 過渡金屬", "鐵", "Fe" ],
       "Position": [ 808, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/27 鈷 C o 過渡金屬.box",
+      "Ans_KeyIn": [ "27 鈷 Co 過渡金屬", "鈷", "Co" ],
       "Position": [ 908, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/28 鎳 N i 過渡金屬.box",
+      "Ans_KeyIn": [ "28 鎳 Ni 過渡金屬", "鎳", "Ni" ],
       "Position": [ 1008, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/29 銅 C u 過渡金屬.box",
+      "Ans_KeyIn": [ "29 銅 Cu 過渡金屬", "銅", "Cu" ],
       "Position": [ 1108, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/30 鋅 Z n 過渡金屬.box",
+      "Ans_KeyIn": [ "30 鋅 Zn 過渡金屬", "鋅", "Zn" ],
       "Position": [ 1208, 408 ],
       "Size": [ 84, 84 ]
     },
+
     {
       "FileName": "../A族元素/31 鎵 G a 金屬.box",
+      "Ans_KeyIn": [ "31 鎵 Ga 金屬", "鎵", "Ga" ],
       "Position": [ 1308, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/32 鍺 G e 類金屬.box",
+      "Ans_KeyIn": [ "32 鍺 Ge 類金屬", "鍺", "Ge" ],
       "Position": [ 1408, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/33 砷 A s 非金屬.box",
+      "Ans_KeyIn": [ "33 砷 As 非金屬", "砷", "As" ],
       "Position": [ 1508, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/34 硒 S e 非金屬.box",
+      "Ans_KeyIn": [ "34 硒 Se 非金屬", "硒", "Se" ],
       "Position": [ 1608, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/35 溴 B r 鹵素.box",
+      "Ans_KeyIn": [ "35 溴 Br 鹵素", "溴", "Br" ],
       "Position": [ 1708, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/36 氪 K r 惰性氣體.box",
+      "Ans_KeyIn": [ "36 氪 Kr 惰性氣體", "氪", "Kr" ],
       "Position": [ 1808, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/37 銣 R b 鹼金屬.box",
+      "Ans_KeyIn": [ "37 銣 Rb 鹼金屬", "銣", "Rb" ],
       "Position": [ 108, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/38 鍶 S r 鹼土金屬.box",
+      "Ans_KeyIn": [ "38 鍶 Sr 鹼土金屬", "鍶", "Sr" ],
       "Position": [ 208, 508 ],
       "Size": [ 84, 84 ]
     },
+
     {
       "FileName": "../B族元素/39 釔 Y 過渡金屬.box",
+      "Ans_KeyIn": [ "39 釔 Y 過渡金屬", "釔", "Y" ],
       "Position": [ 308, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/40 鋯 Z r 過渡金屬.box",
+      "Ans_KeyIn": [ "40 鋯 Zr 過渡金屬", "鋯", "Zr" ],
       "Position": [ 408, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/41 鈮 N b 過渡金屬.box",
+      "Ans_KeyIn": [ "41 鈮 Nb 過渡金屬", "鈮", "Nb" ],
       "Position": [ 508, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/42 鉬 M o 過渡金屬.box",
+      "Ans_KeyIn": [ "42 鉬 Mo 過渡金屬", "鉬", "Mo" ],
       "Position": [ 608, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/43 鎝 T c 過渡金屬.box",
+      "Ans_KeyIn": [ "43 鎝 Tc 過渡金屬", "鎝", "Tc" ],
       "Position": [ 708, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/44 釕 R u 過渡金屬.box",
+      "Ans_KeyIn": [ "44 釕 Ru 過渡金屬", "釕", "Ru" ],
       "Position": [ 808, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/45 銠 R h 過渡金屬.box",
+      "Ans_KeyIn": [ "45 銠 Rh 過渡金屬", "銠", "Rh" ],
       "Position": [ 908, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/46 鈀 P d 過渡金屬.box",
+      "Ans_KeyIn": [ "46 鈀 Pd 過渡金屬", "鈀", "Pd" ],
       "Position": [ 1008, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/47 銀 A g 過渡金屬.box",
+      "Ans_KeyIn": [ "47 銀 Ag 過渡金屬", "銀", "Ag" ],
       "Position": [ 1108, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/48 鎘 C d 過渡金屬.box",
+      "Ans_KeyIn": [ "48 鎘 Cd 過渡金屬", "鎘", "Cd" ],
       "Position": [ 1208, 508 ],
       "Size": [ 84, 84 ]
     },
+
     {
       "FileName": "../A族元素/49 銦 I n 金屬.box",
+      "Ans_KeyIn": [ "49 銦 In 金屬", "銦", "In" ],
       "Position": [ 1308, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/50 錫 S n 金屬.box",
+      "Ans_KeyIn": [ "50 錫 Sn 金屬", "錫", "Sn" ],
       "Position": [ 1408, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/51 銻 S b 類金屬.box",
+      "Ans_KeyIn": [ "51 銻 Sb 類金屬", "銻", "Sb" ],
       "Position": [ 1508, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/52 碲 T e 類金屬.box",
+      "Ans_KeyIn": [ "52 碲 Te 類金屬", "碲", "Te" ],
       "Position": [ 1608, 508 ],
       "Size": [ 84, 84 ]
     },
@@ -267,181 +323,220 @@
     },
     {
       "FileName": "../A族元素/54 氙 X e 惰性氣體.box",
+      "Ans_KeyIn": [ "54 氙 Xe 惰性氣體", "氙", "Xe" ],
       "Position": [ 1808, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/55 銫 C s 鹼金屬.box",
+      "Ans_KeyIn": [ "55 銫 Cs 鹼金屬", "銫", "Cs" ],
       "Position": [ 108, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/56 鋇 B a 鹼土金屬.box",
+      "Ans_KeyIn": [ "56 鋇 Ba 鹼土金屬", "鋇", "Ba" ],
       "Position": [ 208, 608 ],
       "Size": [ 84, 84 ]
     },
+
     {
       "FileName": "../B族元素/57到71 鑭系元素.box",
       "Position": [ 308, 608 ],
       "Size": [ 84, 84 ]
     },
+
     {
       "FileName": "../鑭系與錒系元素/57 鑭 L a 稀土元素.box",
+      "Ans_KeyIn": [ "57 鑭 La 稀土元素", "鑭", "La" ],
       "Size": [ 84, 84 ],
       "Position": [ 308, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/58 鈰 C e 稀土元素.box",
+      "Ans_KeyIn": [ "58 鈰 Ce 稀土元素", "鈰", "Ce" ],
       "Size": [ 84, 84 ],
       "Position": [ 408, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/59 鐠 P r 稀土元素.box",
+      "Ans_KeyIn": [ "59 鐠 P r 稀土元素", "鐠", "Pr" ],
       "Size": [ 84, 84 ],
       "Position": [ 508, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/60 釹 N d 稀土元素.box",
+      "Ans_KeyIn": [ "60 釹 N d 稀土元素", "釹", "Nd" ],
       "Size": [ 84, 84 ],
       "Position": [ 608, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/61 鉕 P m 稀土元素.box",
+      "Ans_KeyIn": [ "61 鉕 P m 稀土元素", "鉕", "Pm" ],
       "Size": [ 84, 84 ],
       "Position": [ 708, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/62 釤 S m 稀土元素.box",
+      "Ans_KeyIn": [ "62 釤 S m 稀土元素", "釤", "Sm" ],
       "Size": [ 84, 84 ],
       "Position": [ 808, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/63 銪 E u 稀土元素.box",
+      "Ans_KeyIn": [ "63 銪 E u 稀土元素", "銪", "Eu" ],
       "Size": [ 84, 84 ],
       "Position": [ 908, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/64 釓 G d 稀土元素.box",
+      "Ans_KeyIn": [ "64 釓 G d 稀土元素", "釓", "Gd" ],
       "Size": [ 84, 84 ],
       "Position": [ 1008, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/65 鋱 T b 稀土元素.box",
+      "Ans_KeyIn": [ "65 鋱 T b 稀土元素", "鋱", "Tb" ],
       "Size": [ 84, 84 ],
       "Position": [ 1108, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/66 鏑 D y 稀土元素.box",
+      "Ans_KeyIn": [ "66 鏑 D y 稀土元素", "鏑", "Dy" ],
       "Size": [ 84, 84 ],
       "Position": [ 1208, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/67 鈥 H o 稀土元素.box",
+      "Ans_KeyIn": [ "67 鈥 H o 稀土元素", "鈥", "Ho" ],
       "Size": [ 84, 84 ],
       "Position": [ 1308, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/68 鉺 E r 稀土元素.box",
+      "Ans_KeyIn": [ "68 鉺 E r 稀土元素", "鉺", "Er" ],
       "Size": [ 84, 84 ],
       "Position": [ 1408, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/69 銩 T m 稀土元素.box",
+      "Ans_KeyIn": [ "69 銩 T m 稀土元素", "銩", "Tm" ],
       "Size": [ 84, 84 ],
       "Position": [ 1508, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/70 鐿 Y b 稀土元素.box",
+      "Ans_KeyIn": [ "70 鐿 Y b 稀土元素", "鐿", "Yb" ],
       "Size": [ 84, 84 ],
       "Position": [ 1608, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/71 鎦 L u 稀土元素.box",
+      "Ans_KeyIn": [ "71 鎦 L u 稀土元素", "鎦", "Lu" ],
       "Size": [ 84, 84 ],
       "Position": [ 1708, 908 ]
     },
+
     {
       "FileName": "../B族元素/72 鉿 H f 過渡金屬.box",
+      "Ans_KeyIn": [ "72 鉿 Hf 過渡金屬", "鉿", "Hf" ],
       "Position": [ 408, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/73 鉭 T a 過渡金屬.box",
+      "Ans_KeyIn": [ "73 鉭 Ta 過渡金屬", "鉭", "Ta" ],
       "Position": [ 508, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/74 鎢 W 過渡金屬.box",
+      "Ans_KeyIn": [ "74 鎢 W 過渡金屬", "鎢", "W" ],
       "Position": [ 608, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/75 錸 R e 過渡金屬.box",
+      "Ans_KeyIn": [ "75 錸 Re 過渡金屬", "錸", "Re" ],
       "Position": [ 708, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/76 鋨 O s 過渡金屬.box",
+      "Ans_KeyIn": [ "76 鋨 Os 過渡金屬", "鋨", "Os" ],
       "Position": [ 808, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/77 銥 I r 過渡金屬.box",
+      "Ans_KeyIn": [ "77 銥 Ir 過渡金屬", "銥", "Ir" ],
       "Position": [ 908, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/78 鉑 P t 過渡金屬.box",
+      "Ans_KeyIn": [ "78 鉑 Pt 過渡金屬", "鉑", "Pt" ],
       "Position": [ 1008, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/79 金 A u 過渡金屬.box",
+      "Ans_KeyIn": [ "79 金 Au 過渡金屬", "金", "Au" ],
       "Position": [ 1108, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../B族元素/80 汞 H g 過渡金屬.box",
+      "Ans_KeyIn": [ "80 汞 Hg 過渡金屬", "汞", "Hg" ],
       "Position": [ 1208, 608 ],
       "Size": [ 84, 84 ]
     },
+
     {
       "FileName": "../A族元素/81 鉈 T l 金屬.box",
+      "Ans_KeyIn": [ "81 鉈 Tl 金屬", "鉈", "Tl" ],
       "Position": [ 1308, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/82 鉛 P b 金屬.box",
+      "Ans_KeyIn": [ "82 鉛 Pb 金屬", "鉛", "Pb" ],
       "Position": [ 1408, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/83 鉍 B i 金屬.box",
+      "Ans_KeyIn": [ "83 鉍 Bi 金屬", "鉍", "Bi" ],
       "Position": [ 1508, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/84 釙 P o 金屬.box",
+      "Ans_KeyIn": [ "84 釙 Po 金屬", "釙", "Po" ],
       "Position": [ 1608, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/85 砈 A t 鹵素、金屬.box",
+      "Ans_KeyIn": [ "85 砈 At 鹵素、金屬", "砈", "At" ],
       "Position": [ 1708, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/86 氡 R n 惰性氣體.box",
+      "Ans_KeyIn": [ "86 氡 Rn 惰性氣體", "氡", "Rn" ],
       "Position": [ 1808, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/87 鍅 F r 鹼金屬.box",
+      "Ans_KeyIn": [ "87 鍅 Fr 鹼金屬", "鍅", "Fr" ],
       "Position": [ 108, 708 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "../A族元素/88 鐳 R a 鹼土金屬.box",
+      "Ans_KeyIn": [ "88 鐳 Ra 鹼土金屬", "鐳", "Ra" ],
       "Position": [ 208, 708 ],
       "Size": [ 84, 84 ]
     },
@@ -450,83 +545,100 @@
       "Position": [ 308, 708 ],
       "Size": [ 84, 84 ]
     },
+
     {
       "FileName": "../鑭系與錒系元素/89 錒 A c 錒系元素.box",
+      "Ans_KeyIn": [ "89 錒 A c 錒系元素", "錒", "Ac" ],
       "Size": [ 84, 84 ],
       "Position": [ 308, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/90 釷 T h 錒系元素.box",
+      "Ans_KeyIn": [ "90 釷 T h 錒系元素", "釷", "Th" ],
       "Size": [ 84, 84 ],
       "Position": [ 408, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/91 鏷 P a 錒系元素.box",
+      "Ans_KeyIn": [ "91 鏷 P a 錒系元素", "鏷", "Pa" ],
       "Size": [ 84, 84 ],
       "Position": [ 508, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/92 鈾 U 錒系元素.box",
+      "Ans_KeyIn": [ "92 鈾 U 錒系元素", "鈾", "U" ],
       "Size": [ 84, 84 ],
       "Position": [ 608, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/93 錼 N p 錒系元素.box",
+      "Ans_KeyIn": [ "93 錼 N p 錒系元素", "錼", "Np" ],
       "Size": [ 84, 84 ],
       "Position": [ 708, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/94 鈽 P u 錒系元素.box",
+      "Ans_KeyIn": [ "94 鈽 P u 錒系元素", "鈽", "Pu" ],
       "Size": [ 84, 84 ],
       "Position": [ 808, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/95 鋂 A m 錒系元素.box",
+      "Ans_KeyIn": [ "95 鋂 A m 錒系元素", "鋂", "Am" ],
       "Size": [ 84, 84 ],
       "Position": [ 908, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/96 鋦 C m 錒系元素.box",
+      "Ans_KeyIn": [ "96 鋦 C m 錒系元素", "鋦", "Cm" ],
       "Size": [ 84, 84 ],
       "Position": [ 1008, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/97 鉳 B k 錒系元素.box",
+      "Ans_KeyIn": [ "97 鉳 B k 錒系元素", "鉳", "Bk" ],
       "Size": [ 84, 84 ],
       "Position": [ 1108, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/98 鉲 C f 錒系元素.box",
+      "Ans_KeyIn": [ "98 鉲 C f 錒系元素", "鉲", "Cf" ],
       "Size": [ 84, 84 ],
       "Position": [ 1208, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/99 鑀 E s 錒系元素.box",
+      "Ans_KeyIn": [ "99 鑀 E s 錒系元素", "鑀", "Es" ],
       "Size": [ 84, 84 ],
       "Position": [ 1308, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/100 鐨 F m 錒系元素.box",
+      "Ans_KeyIn": [ "100 鐨 F m 錒系元素", "鐨", "Fm" ],
       "Size": [ 84, 84 ],
       "Position": [ 1408, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/101 鍆 M d 錒系元素.box",
+      "Ans_KeyIn": [ "101 鍆 M d 錒系元素", "鍆", "Md" ],
       "Size": [ 84, 84 ],
       "Position": [ 1508, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/102 鍩 N o 錒系元素.box",
+      "Ans_KeyIn": [ "102 鍩 N o 錒系元素", "鍩", "No" ],
       "Size": [ 84, 84 ],
       "Position": [ 1608, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/103 鐒 L r 錒系元素.box",
+      "Ans_KeyIn": [ "103 鐒 L r 錒系元素", "鐒", "Lr" ],
       "Size": [ 84, 84 ],
       "Position": [ 1708, 1008 ]
     },
     {
       "FileName": "../B族元素/104 鑪 R f 過渡金屬.box",
+      "Ans_KeyIn": [ "104 鑪 Rf 過渡金屬", "鑪", "Rf" ],
       "Position": [ 408, 708 ],
       "Size": [ 84, 84 ]
     }
@@ -539,7 +651,7 @@
       "width": "2000px",
       "height": "1200px",
       "opacity": "0.3",
-      "background": "url('/Samples/週期表20160714/MYCBackground.png')",
+      "background-image": "/MYCBackground.png",
       "background-size": "cover",
       "background-repeat": "no-repeat"
     }

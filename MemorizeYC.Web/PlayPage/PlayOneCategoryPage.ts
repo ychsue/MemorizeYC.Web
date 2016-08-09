@@ -587,8 +587,7 @@ class PlayOneCategoryPageController{
         if (PlayOneCategoryPageController.Current.selWCard)
             PlayOneCategoryPageController.Current.PlayAudio(PlayOneCategoryPageController.Current.selWCard);
 
-        if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence && PlayOneCategoryPageController.Current.selWCard.cardInfo.Dictate.trim().
-            indexOf(PlayOneCategoryPageController.Current.recInputSentence.trim()) === 0) {
+        var anniWCard = () => {
             $(PlayOneCategoryPageController.Current.selWCard.viewCard).animate({ opacity: 0.1 }, {
                 duration: 100,
                 step: function (now, fx) {
@@ -599,7 +598,7 @@ class PlayOneCategoryPageController{
                     if (GlobalVariables.isTutorMode)
                         $(PlayOneCategoryPageController.Current.cvMain).trigger(GlobalVariables.RemoveAWCardKey);
 
-                    if(PlayOneCategoryPageController.Current.selWCard)
+                    if (PlayOneCategoryPageController.Current.selWCard)
                         PlayOneCategoryPageController.Current.selWCard.RemoveThisWCard();
                     PlayOneCategoryPageController.Current.selWCard = null;
                     if (WCard.showedWCards.length === 0)
@@ -611,11 +610,26 @@ class PlayOneCategoryPageController{
                     }
                 }
             });
+        };
+        if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence) {
+            var Answers = PlayOneCategoryPageController.Current.selWCard.cardInfo.Ans_KeyIn;
+            var stInput = PlayOneCategoryPageController.Current.recInputSentence.trim();
+            var isCorrect = false;
+            for (var i0: number = 0; i0 < Answers.length; i0++) {
+                if (Answers[i0].trim() === stInput) {
+                    anniWCard();
+                    isCorrect = true;
+                    break;
+                }
+            }
+            if (!isCorrect) {
+                alert("Your answer is wrong.");
+                PlayOneCategoryPageController.Current.totalScore -= 3;
+            }
         }
         else {
             if (PlayOneCategoryPageController.Current.selWCard) {
-                alert("Your answer is wrong.");
-                PlayOneCategoryPageController.Current.totalScore -= 3;
+                alert("Please input the answer.");
             }
             else {
                 alert("Click a card at first.");
@@ -641,7 +655,12 @@ class PlayOneCategoryPageController{
             if (GlobalVariables.isHavingSpeechRecognier && selWCard) {
                 var SR = GlobalVariables.speechRecognizer;
                 var grammar: string = "#JSGF V1.0; grammar sentences; public <x> =" +
-                    SpeechRecognizerHelper.SentenceToGrammarString(selWCard.cardInfo.Dictate) + ";";
+                    SpeechRecognizerHelper.SentenceToGrammarString(selWCard.cardInfo.Ans_Recog[0]);
+                for (var i0: number = 1; i0 < selWCard.cardInfo.Ans_Recog.length; i0++) {
+                    grammar += "|" + selWCard.cardInfo.Ans_Recog[i0];
+                }
+                grammar += ";";
+
                 var sRList = new GlobalVariables.SpeechGrammarList() as SpeechGrammarList;
                 sRList.addFromString(grammar, 1);
                 SR.grammars = sRList;
@@ -660,7 +679,7 @@ class PlayOneCategoryPageController{
                         PlayOneCategoryPageController.scope.$apply(() => {
                             PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript;
                             if (hasGot)
-                                PlayOneCategoryPageController.Current.recInputSentence = selWCard.cardInfo.Dictate;
+                                PlayOneCategoryPageController.Current.recInputSentence = selWCard.cardInfo.Ans_KeyIn[0];
                             PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
                         });
                     }

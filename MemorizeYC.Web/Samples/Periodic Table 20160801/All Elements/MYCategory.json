@@ -1,0 +1,659 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "../A, main group elements/1, Hydrogen, H, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "1, Hydrogen, H, Diatomic nonmetal", "Hydrogen", "H" ],
+      "Position": [ 108, 108 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/2, Helium, H e, Noble gas.box",
+      "Ans_KeyIn": [ "2, Helium, He, Noble gas", "Helium", "He" ],
+      "Position": [ 1808, 108 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/3, Lithium, L I, Alkali metal.box",
+      "Ans_KeyIn": [ "3, Lithium, Li, Alkali metal", "Lithium", "Li" ],
+      "Position": [ 108, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/4, Beryllium, B e, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "4, Beryllium, Be, Alkaline earth metal", "Beryllium", "Be" ],
+      "Position": [ 208, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/5, Boron, B, Metalloid.box",
+      "Ans_KeyIn": [ "5, Boron, B, Metalloid", "Boron", "B" ],
+      "Position": [ 1308, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/6, Carbon, C, Polyatomic nonmetal.box",
+      "Ans_KeyIn": [ "6, Carbon, C, Polyatomic nonmetal", "Carbon", "C" ],
+      "Position": [ 1408, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/7, Nitrogen, N, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "7, Nitrogen, N, Diatomic nonmetal", "Nitrogen", "N" ],
+      "Position": [ 1508, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/8, Oxygen, O, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "8, Oxygen, O, Diatomic nonmetal", "Oxygen", "O" ],
+      "Position": [ 1608, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/9, Fluorine, F, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "9, Fluorine, F, Diatomic nonmetal", "Fluorine", "F" ],
+      "Position": [ 1708, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/10, Neon, N e, Noble gas.box",
+      "Ans_KeyIn": [ "10, Neon, Ne, Noble gas", "Neon", "Ne" ],
+      "Position": [ 1808, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/11, Sodium, N a, Alkali metal.box",
+      "Ans_KeyIn": [ "11, Sodium, Na, Alkali metal", "Sodium", "Na" ],
+      "Position": [ 108, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/12, Magnesium, M g, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "12, Magnesium, Mg, Alkaline earth metal", "Magnesium", "Mg" ],
+      "Position": [ 208, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/13, Aluminium, A l, Post-transition metal.box",
+      "Ans_KeyIn": [ "13, Aluminium, Al, Post-transition metal", "Aluminium", "Al" ],
+      "Position": [ 1308, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/14, Silicon, S I, Metalloid.box",
+      "Ans_KeyIn": [ "14, Silicon, Si, Metalloid", "Silicon", "Si" ],
+      "Position": [ 1408, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/15, Phosphorus, P, Polyatomic nonmetal.box",
+      "Ans_KeyIn": [ "15, Phosphorus, P, Polyatomic nonmetal", "Phosphorus", "P" ],
+      "Position": [ 1508, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/16, Sulfur, S, Polyatomic nonmetal.box",
+      "Ans_KeyIn": [ "16, Sulfur, S, Polyatomic nonmetal", "Sulfur", "S" ],
+      "Position": [ 1608, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/17, Chlorine, C l, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "17, Chlorine, Cl, Diatomic nonmetal", "Chlorine", "Cl" ],
+      "Position": [ 1708, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/18, Argon, A r, Noble gas.box",
+      "Ans_KeyIn": [ "18, Argon, Ar, Noble gas", "Argon", "Ar" ],
+      "Position": [ 1808, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/19, Potassium, K, Alkali metal.box",
+      "Ans_KeyIn": [ "19, Potassium, K, Alkali metal", "Potassium", "K" ],
+      "Position": [ 108, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/20, Calcium, C a, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "20, Calcium, Ca, Alkaline earth metal", "Calcium", "Ca" ],
+      "Position": [ 208, 408 ],
+      "Size": [ 84, 84 ]
+    },
+
+    {
+      "FileName": "../B, transition elements/21, Scandium, S c, Transition metal.box",
+      "Ans_KeyIn": [ "21, Scandium, Sc, Transition metal", "Scandium", "Sc" ],
+      "Position": [ 308, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/22, Titanium, T I, Transition metal.box",
+      "Ans_KeyIn": [ "22, Titanium, Ti, Transition metal", "Titanium", "Ti" ],
+      "Position": [ 408, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/23, Vanadium, V, Transition metal.box",
+      "Ans_KeyIn": [ "23, Vanadium, V, Transition metal", "Vanadium", "V" ],
+      "Position": [ 508, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/24, Chromium, C r, Transition metal.box",
+      "Ans_KeyIn": [ "24, Chromium, Cr, Transition metal", "Chromium", "Cr" ],
+      "Position": [ 608, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/25, Manganese, M n, Transition metal.box",
+      "Ans_KeyIn": [ "25, Manganese, Mn, Transition metal", "Manganese", "Mn" ],
+      "Position": [ 708, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/26, Iron, F e, Transition metal.box",
+      "Ans_KeyIn": [ "26, Iron, Fe, Transition metal", "Iron", "Fe" ],
+      "Position": [ 808, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/27, Cobalt, C o, Transition metal.box",
+      "Ans_KeyIn": [ "27, Cobalt, Co, Transition metal", "Cobalt", "Co" ],
+      "Position": [ 908, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/28, Nickel, N I, Transition metal.box",
+      "Ans_KeyIn": [ "28, Nickel, Ni, Transition metal", "Nickel", "Ni" ],
+      "Position": [ 1008, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/29, Copper, C u, Transition metal.box",
+      "Ans_KeyIn": [ "29, Copper, Cu, Transition metal", "Copper", "Cu" ],
+      "Position": [ 1108, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/30, Zinc, Z n, Transition metal.box",
+      "Ans_KeyIn": [ "30, Zinc, Zn, Transition metal", "Zinc", "Zn" ],
+      "Position": [ 1208, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/31, Gallium, G a, Post-transition metal.box",
+      "Ans_KeyIn": [ "31, Gallium, Ga, Post-transition metal", "Gallium", "Ga" ],
+      "Position": [ 1308, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/32, Germanium, G e, Metalloid.box",
+      "Ans_KeyIn": [ "32, Germanium, Ge, Metalloid", "Germanium", "Ge" ],
+      "Position": [ 1408, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/33, Arsenic, A s, Metalloid.box",
+      "Ans_KeyIn": [ "33, Arsenic, As, Metalloid", "Arsenic", "As" ],
+      "Position": [ 1508, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/34, Selenium, S e, Polyatomic nonmetal.box",
+      "Ans_KeyIn": [ "34, Selenium, Se, Polyatomic nonmetal", "Selenium", "Se" ],
+      "Position": [ 1608, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/35, Bromine, B r, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "35, Bromine, Br, Diatomic nonmetal", "Bromine", "Br" ],
+      "Position": [ 1708, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/36, Krypton, K r, Noble gas.box",
+      "Ans_KeyIn": [ "36, Krypton, Kr, Noble gas", "Krypton", "Kr" ],
+      "Position": [ 1808, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/37, Rubidium, R b, Alkali metal.box",
+      "Ans_KeyIn": [ "37, Rubidium, Rb, Alkali metal", "Rubidium", "Rb" ],
+      "Position": [ 108, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/38, Strontium, S r, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "38, Strontium, Sr, Alkaline earth metal", "Strontium", "Sr" ],
+      "Position": [ 208, 508 ],
+      "Size": [ 84, 84 ]
+    },
+
+    {
+      "FileName": "../B, transition elements/39,Yttrium, Y, Transition metal.box",
+      "Ans_KeyIn": [ "39,Yttrium, Y, Transition metal", "Yttrium", "Y" ],
+      "Position": [ 308, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/40, Zirconium, Z r, Transition metal.box",
+      "Ans_KeyIn": [ "40, Zirconium, Zr, Transition metal", "Zirconium", "Zr" ],
+      "Position": [ 408, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/41, Niobium, N b, Transition metal.box",
+      "Ans_KeyIn": [ "41, Niobium, Nb, Transition metal", "Niobium", "Nb" ],
+      "Position": [ 508, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/42, Molybdenum, M o, Transition metal.box",
+      "Ans_KeyIn": [ "42, Molybdenum, Mo, Transition metal", "Molybdenum", "Mo" ],
+      "Position": [ 608, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/43, Technetium, T c, Transition metal.box",
+      "Ans_KeyIn": [ "43, Technetium, Tc, Transition metal", "Technetium", "Tc" ],
+      "Position": [ 708, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/44, Ruthenium, R u, Transition metal.box",
+      "Ans_KeyIn": [ "44, Ruthenium, Ru, Transition metal", "Ruthenium", "Ru" ],
+      "Position": [ 808, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/45, Rhodium, R h, Transition metal.box",
+      "Ans_KeyIn": [ "45, Rhodium, Rh, Transition metal", "Rhodium", "Rh" ],
+      "Position": [ 908, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/46, Palladium, P d, Transition metal.box",
+      "Ans_KeyIn": [ "46, Palladium, Pd, Transition metal", "Palladium", "Pd" ],
+      "Position": [ 1008, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/47, Silver, A g, Transition metal.box",
+      "Ans_KeyIn": [ "47, Silver, Ag, Transition metal", "Silver", "Ag" ],
+      "Position": [ 1108, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/48, Cadmium, C d, Transition metal.box",
+      "Ans_KeyIn": [ "48, Cadmium, Cd, Transition metal", "Cadmium", "Cd" ],
+      "Position": [ 1208, 508 ],
+      "Size": [ 84, 84 ]
+    },
+
+    {
+      "FileName": "../A, main group elements/49, Indium, I n, Post-transition metal.box",
+      "Ans_KeyIn": [ "49, Indium, In, Post-transition metal", "Indium", "In" ],
+      "Position": [ 1308, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/50, Tin, S n, Post-transition metal.box",
+      "Ans_KeyIn": [ "50, Tin, Sn, Post-transition metal", "Tin", "Sn" ],
+      "Position": [ 1408, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/51, Antimony, S b, Metalloid.box",
+      "Ans_KeyIn": [ "51, Antimony, Sb, Metalloid", "Antimony", "Sb" ],
+      "Position": [ 1508, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/52, Tellurium, T e, Metalloid.box",
+      "Ans_KeyIn": [ "52, Tellurium, Te, Metalloid", "Tellurium", "Te" ],
+      "Position": [ 1608, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/53,Iodine, I, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "53,Iodine, I, Diatomic nonmetal", "Iodine", "I" ],
+      "Position": [ 1708, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/54, Xenon, X e, Noble gas.box",
+      "Ans_KeyIn": [ "54, Xenon, Xe, Noble gas", "Xenon", "Xe" ],
+      "Position": [ 1808, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/55, Caesium, C s, Alkali metal.box",
+      "Ans_KeyIn": [ "55, Caesium, Cs, Alkali metal", "Caesium", "Cs" ],
+      "Position": [ 108, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/56, Barium, B a, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "56, Barium, Ba, Alkaline earth metal", "Barium", "Ba" ],
+      "Position": [ 208, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/57 To 71, Lanthanide.box",
+      "Position": [ 308, 608 ],
+      "Size": [ 84, 84 ]
+    },
+
+    {
+      "FileName": "../Lanthanide and Actinide/57, Lanthanum, L a, Lanthanide.box",
+      "Ans_KeyIn": [ "57, Lanthanum, La, Lanthanide", "Lanthanum", "La" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 308, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/58, Cerium, C e, Lanthanide.box",
+      "Ans_KeyIn": [ "58, Cerium, Ce, Lanthanide", "Cerium", "Ce" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 408, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/59, Praseodymium, P r, Lanthanide.box",
+      "Ans_KeyIn": [ "59, Praseodymium, Pr, Lanthanide", "Praseodymium", "Pr" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 508, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/60, Neodymium, N d, Lanthanide.box",
+      "Ans_KeyIn": [ "60, Neodymium, Nd, Lanthanide", "Neodymium", "Nd" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 608, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/61, Promethium, P m, Lanthanide.box",
+      "Ans_KeyIn": [ "61, Promethium, Pm, Lanthanide", "Promethium", "Pm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 708, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/62, Samarium, S m, Lanthanide.box",
+      "Ans_KeyIn": [ "62, Samarium, Sm, Lanthanide", "Samarium", "Sm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 808, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/63, Europium, E u, Lanthanide.box",
+      "Ans_KeyIn": [ "63, Europium, Eu, Lanthanide", "Europium", "Eu" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 908, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/64, Gadolinium, G d, Lanthanide.box",
+      "Ans_KeyIn": [ "64, Gadolinium, Gd, Lanthanide", "Gadolinium", "Gd" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1008, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/65, Terbium, T b, Lanthanide.box",
+      "Ans_KeyIn": [ "65, Terbium, Tb, Lanthanide", "Terbium", "Tb" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1108, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/66, Dysprosium, D y, Lanthanide.box",
+      "Ans_KeyIn": [ "66, Dysprosium, Dy, Lanthanide", "Dysprosium", "Dy" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1208, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/67, Holmium, H o, Lanthanide.box",
+      "Ans_KeyIn": [ "67, Holmium, Ho, Lanthanide", "Holmium", "Ho" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1308, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/68, Erbium, E r, Lanthanide.box",
+      "Ans_KeyIn": [ "68, Erbium, Er, Lanthanide", "Erbium", "Er" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1408, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/69, Thulium, T m, Lanthanide.box",
+      "Ans_KeyIn": [ "69, Thulium, Tm, Lanthanide", "Thulium", "Tm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1508, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/70, Ytterbium, Y b, Lanthanide.box",
+      "Ans_KeyIn": [ "70, Ytterbium, Yb, Lanthanide", "Ytterbium", "Yb" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1608, 908 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/71, Lutetium, L u, Lanthanide.box",
+      "Ans_KeyIn": [ "71, Lutetium, Lu, Lanthanide", "Lutetium", "Lu" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1708, 908 ]
+    },
+
+    {
+      "FileName": "../B, transition elements/72, Hafnium, H f, Transition metal.box",
+      "Ans_KeyIn": [ "72, Hafnium, Hf, Transition metal", "Hafnium", "Hf" ],
+      "Position": [ 408, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/73, Tantalum, T a, Transition metal.box",
+      "Ans_KeyIn": [ "73, Tantalum, Ta, Transition metal", "Tantalum", "Ta" ],
+      "Position": [ 508, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/74, Tungsten, W, Transition metal.box",
+      "Ans_KeyIn": [ "74, Tungsten, W, Transition metal", "Tungsten", "W" ],
+      "Position": [ 608, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/75, Rhenium, R e, Transition metal.box",
+      "Ans_KeyIn": [ "75, Rhenium, Re, Transition metal", "Rhenium", "Re" ],
+      "Position": [ 708, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/76, Osmium, O s, Transition metal.box",
+      "Ans_KeyIn": [ "76, Osmium, Os, Transition metal", "Osmium", "Os" ],
+      "Position": [ 808, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/77, Iridium, I r, Transition metal.box",
+      "Ans_KeyIn": [ "77, Iridium, Ir, Transition metal", "Iridium", "Ir" ],
+      "Position": [ 908, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/78, Platinum, P t, Transition metal.box",
+      "Ans_KeyIn": [ "78, Platinum, Pt, Transition metal", "Platinum", "Pt" ],
+      "Position": [ 1008, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/79, Gold, A u, Transition metal.box",
+      "Ans_KeyIn": [ "79, Gold, Au, Transition metal", "Gold", "Au" ],
+      "Position": [ 1108, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/80, Mercury, H g, Transition metal.box",
+      "Ans_KeyIn": [ "80, Mercury, Hg, Transition metal", "Mercury", "Hg" ],
+      "Position": [ 1208, 608 ],
+      "Size": [ 84, 84 ]
+    },
+
+    {
+      "FileName": "../A, main group elements/81, Thallium, T l, Post-transition metal.box",
+      "Ans_KeyIn": [ "81, Thallium, Tl, Post-transition metal", "Thallium", "Tl" ],
+      "Position": [ 1308, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/82, Lead, P b, Post-transition metal.box",
+      "Ans_KeyIn": [ "82, Lead, Pb, Post-transition metal", "Lead", "Pb" ],
+      "Position": [ 1408, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/83, Bismuth, B I, Post-transition metal.box",
+      "Ans_KeyIn": [ "83, Bismuth, Bi, Post-transition metal", "Bismuth", "Bi" ],
+      "Position": [ 1508, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/84, Polonium, P o, Post-transition metal.box",
+      "Ans_KeyIn": [ "84, Polonium, Po, Post-transition metal", "Polonium", "Po" ],
+      "Position": [ 1608, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/85, Astatine, A t, Metalloid.box",
+      "Ans_KeyIn": [ "85, Astatine, At, Metalloid", "Astatine", "At" ],
+      "Position": [ 1708, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/86, Radon, R n, Noble gas.box",
+      "Ans_KeyIn": [ "86, Radon, Rn, Noble gas", "Radon", "Rn" ],
+      "Position": [ 1808, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/87, Francium, F r, Alkali metal.box",
+      "Ans_KeyIn": [ "87, Francium, Fr, Alkali metal", "Francium", "Fr" ],
+      "Position": [ 108, 708 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../A, main group elements/88, Radium, R a, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "88, Radium, Ra, Alkaline earth metal", "Radium", "Ra" ],
+      "Position": [ 208, 708 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "../B, transition elements/89 To 103, Actinide.box",
+      "Position": [ 308, 708 ],
+      "Size": [ 84, 84 ]
+    },
+
+    {
+      "FileName": "../Lanthanide and Actinide/89, Actinium, A c, Actinide.box",
+      "Ans_KeyIn": [ "89, Actinium, Ac, Actinide", "Actinium", "Ac" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 308, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/90, Thorium, T h, Actinide.box",
+      "Ans_KeyIn": [ "90, Thorium, Th, Actinide", "Thorium", "Th" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 408, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/91, Protactinium, P a, Actinide.box",
+      "Ans_KeyIn": [ "91, Protactinium, Pa, Actinide", "Protactinium", "Pa" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 508, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/92, Uranium, U, Actinide.box",
+      "Ans_KeyIn": [ "92, Uranium, U, Actinide", "Uranium", "U" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 608, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/93, Neptunium, N p, Actinide.box",
+      "Ans_KeyIn": [ "93, Neptunium, Np, Actinide", "Neptunium", "Np" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 708, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/94, Plutonium, P u, Actinide.box",
+      "Ans_KeyIn": [ "94, Plutonium, Pu, Actinide", "Plutonium", "Pu" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 808, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/95, Americium, A m, Actinide.box",
+      "Ans_KeyIn": [ "95, Americium, Am, Actinide", "Americium", "Am" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 908, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/96, Curium, C m, Actinide.box",
+      "Ans_KeyIn": [ "96, Curium, Cm, Actinide", "Curium", "Cm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1008, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/97, Berkelium, B k, Actinide.box",
+      "Ans_KeyIn": [ "97, Berkelium, Bk, Actinide", "Berkelium", "Bk" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1108, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/98, Californium, C f, Actinide.box",
+      "Ans_KeyIn": [ "98, Californium, Cf, Actinide", "Californium", "Cf" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1208, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/99, Einsteinium, E s, Actinide.box",
+      "Ans_KeyIn": [ "99, Einsteinium, Es, Actinide", "Einsteinium", "Es" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1308, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/100, Fermium, F m, Actinide.box",
+      "Ans_KeyIn": [ "100, Fermium, Fm, Actinide", "Fermium", "Fm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1408, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/101, Mendelevium, M d, Actinide.box",
+      "Ans_KeyIn": [ "101, Mendelevium, Md, Actinide", "Mendelevium", "Md" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1508, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/102, Nobelium, N o, Actinide.box",
+      "Ans_KeyIn": [ "102, Nobelium, No, Actinide", "Nobelium", "No" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1608, 1008 ]
+    },
+    {
+      "FileName": "../Lanthanide and Actinide/103, Lawrencium, L r, Actinide.box",
+      "Ans_KeyIn": [ "103, Lawrencium, Lr, Actinide", "Lawrencium", "Lr" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1708, 1008 ]
+    },
+    {
+      "FileName": "../B, transition elements/104, Rutherfordium, R f, Transition metal.box",
+      "Ans_KeyIn": [ "104, Rutherfordium, Rf, Transition metal", "Rutherfordium", "Rf" ],
+      "Position": [ 408, 708 ],
+      "Size": [ 84, 84 ]
+    }
+
+  ],
+  "Link": "https://en.wikipedia.org/wiki/Periodic_table",
+  "SynLang": "en-US",
+  "Background": {
+    "ImgStyle": {
+      "width": "2000px",
+      "height": "1200px",
+      "opacity": "0.3",
+      "background-image": "/MYCBackground.png",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    }
+  },
+  "numWCardShown": 106
+}

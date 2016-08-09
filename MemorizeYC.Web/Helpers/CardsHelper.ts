@@ -132,7 +132,12 @@ class CardsHelper {
                     des.Dictate = des.Dictate.substring(iDot + 1).trim();
                 }
             }
-
+        }
+        if (!des.Ans_KeyIn && des.Dictate) {
+            des.Ans_KeyIn = [des.Dictate];
+        }
+        if (!des.Ans_Recog && des.Dictate) {
+            des.Ans_Recog = [des.Dictate];
         }
     }
 
@@ -226,8 +231,8 @@ class CardsHelper {
     public static CorrectBackgroundStyle(myStyle: Object, stContainer:string, stCFolder:string):Object {
         var bgImgStyle: string = myStyle["background-image"] as string;
         if (bgImgStyle && bgImgStyle.indexOf("url(") < 0) {
-            var newBgImgStyle = "url(" + CardsHelper.GetTreatablePath(bgImgStyle, stContainer, stCFolder) + ")";
-            newBgImgStyle = encodeURI(newBgImgStyle);
+            var newBgImgStyle = "url('" + CardsHelper.GetTreatablePath(bgImgStyle, stContainer, stCFolder) + "')";
+            //newBgImgStyle = encodeURI(newBgImgStyle);
             myStyle["background-image"] = newBgImgStyle;
         }
 

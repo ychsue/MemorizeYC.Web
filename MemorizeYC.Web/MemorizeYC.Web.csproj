@@ -124,6 +124,11 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Samples\Periodic Table 20160801\All Elements\BoxFiles\57 To 71, Lanthanide.txt" />
+    <Content Include="Samples\Periodic Table 20160801\All Elements\BoxFiles\89 To 103, Actinide.txt" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\BoxFiles\57 To 71, Lanthanide.txt" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\BoxFiles\89 To 103, Actinide.txt" />
+    <Content Include="Samples\Periodic Table 20160801\MYCBackground.png" />
     <Content Include="Samples\中醫經絡\手太陰肺經\BoxFiles\DarkBlueBall.png" />
     <Content Include="Samples\中醫經絡\手太陰肺經\BoxFiles\手太陰肺經Background.png" />
     <Content Include="Samples\中醫經絡\手太陰肺經\BoxFiles\route.png" />
@@ -830,7 +835,7 @@
     <Content Include="Samples\週期表20160714\A族元素\88 鐳 R a 鹼土金屬.box" />
     <Content Include="Samples\週期表20160714\A族元素\9 氟 F 鹵素.box" />
     <Content Include="Samples\週期表20160714\B族元素\104 鑪 R f 過渡金屬.box" />
-    <Content Include="Samples\週期表20160714\B族元素\21 鈧 S c 過渡金屬 .box" />
+    <Content Include="Samples\週期表20160714\B族元素\21 鈧 S c 過渡金屬.box" />
     <Content Include="Samples\週期表20160714\B族元素\22 鈦 T i 過渡金屬.box" />
     <Content Include="Samples\週期表20160714\B族元素\23 釩 V 過渡金屬.box" />
     <Content Include="Samples\週期表20160714\B族元素\24 鉻 C r 過渡金屬.box" />
@@ -1132,6 +1137,127 @@
     <Content Include="Samples\出口成章\十四 東床快婿\MYCategory.json" />
     <Content Include="Samples\出口成章\四 管仲與鮑叔牙\MYCategory.json" />
     <Content Include="Samples\週期表20160714\全\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\1, Hydrogen, H, Diatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\10, Neon, N e, Noble gas.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\11, Sodium, N a, Alkali metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\12, Magnesium, M g, Alkaline earth metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\13, Aluminium, A l, Post-transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\14, Silicon, S I, Metalloid.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\15, Phosphorus, P, Polyatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\16, Sulfur, S, Polyatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\17, Chlorine, C l, Diatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\18, Argon, A r, Noble gas.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\19, Potassium, K, Alkali metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\2, Helium, H e, Noble gas.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\20, Calcium, C a, Alkaline earth metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\3, Lithium, L I, Alkali metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\31, Gallium, G a, Post-transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\32, Germanium, G e, Metalloid.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\33, Arsenic, A s, Metalloid.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\34, Selenium, S e, Polyatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\35, Bromine, B r, Diatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\36, Krypton, K r, Noble gas.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\37, Rubidium, R b, Alkali metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\38, Strontium, S r, Alkaline earth metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\4, Beryllium, B e, Alkaline earth metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\49, Indium, I n, Post-transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\5, Boron, B, Metalloid.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\50, Tin, S n, Post-transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\51, Antimony, S b, Metalloid.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\52, Tellurium, T e, Metalloid.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\53,Iodine, I, Diatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\54, Xenon, X e, Noble gas.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\55, Caesium, C s, Alkali metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\56, Barium, B a, Alkaline earth metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\6, Carbon, C, Polyatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\7, Nitrogen, N, Diatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\8, Oxygen, O, Diatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\81, Thallium, T l, Post-transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\82, Lead, P b, Post-transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\83, Bismuth, B I, Post-transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\84, Polonium, P o, Post-transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\85, Astatine, A t, Metalloid.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\86, Radon, R n, Noble gas.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\87, Francium, F r, Alkali metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\88, Radium, R a, Alkaline earth metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\9, Fluorine, F, Diatomic nonmetal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\104, Rutherfordium, R f, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\21, Scandium, S c, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\22, Titanium, T I, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\23, Vanadium, V, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\24, Chromium, C r, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\25, Manganese, M n, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\26, Iron, F e, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\27, Cobalt, C o, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\28, Nickel, N I, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\29, Copper, C u, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\30, Zinc, Z n, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\39,Yttrium, Y, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\40, Zirconium, Z r, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\41, Niobium, N b, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\42, Molybdenum, M o, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\43, Technetium, T c, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\44, Ruthenium, R u, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\45, Rhodium, R h, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\46, Palladium, P d, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\47, Silver, A g, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\48, Cadmium, C d, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\57 To 71, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\72, Hafnium, H f, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\73, Tantalum, T a, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\74, Tungsten, W, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\75, Rhenium, R e, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\76, Osmium, O s, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\77, Iridium, I r, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\78, Platinum, P t, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\79, Gold, A u, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\80, Mercury, H g, Transition metal.box" />
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\89 To 103, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\100, Fermium, F m, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\101, Mendelevium, M d, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\102, Nobelium, N o, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\103, Lawrencium, L r, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\57, Lanthanum, L a, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\58, Cerium, C e, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\59, Praseodymium, P r, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\60, Neodymium, N d, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\61, Promethium, P m, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\62, Samarium, S m, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\63, Europium, E u, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\64, Gadolinium, G d, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\65, Terbium, T b, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\66, Dysprosium, D y, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\67, Holmium, H o, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\68, Erbium, E r, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\69, Thulium, T m, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\70, Ytterbium, Y b, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\71, Lutetium, L u, Lanthanide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\89, Actinium, A c, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\90, Thorium, T h, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\91, Protactinium, P a, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\92, Uranium, U, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\93, Neptunium, N p, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\94, Plutonium, P u, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\95, Americium, A m, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\96, Curium, C m, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\97, Berkelium, B k, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\98, Californium, C f, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\99, Einsteinium, E s, Actinide.box" />
+    <Content Include="Samples\Periodic Table 20160801\MYContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\Periodic Table 20160801\A, main group elements\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\Periodic Table 20160801\B, transition elements\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\Periodic Table 20160801\Lanthanide and Actinide\MYCategory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\Periodic Table 20160801\All Elements\MYCategory.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />

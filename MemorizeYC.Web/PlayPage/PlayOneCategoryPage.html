@@ -25,6 +25,7 @@
 
 <div class="cvMain" role="main" style="position:absolute">
     <div id="imgBackground"></div>
+    <div style="height:80px;"></div> <!--Because the cards or background might be covered by status bar, I need to add an extra height for the background.-->
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom" style="position:fixed;bottom:0; height:50px;" id="bottomNavbar">
@@ -37,7 +38,7 @@
             <button id="btSynNext" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click($event)">
                 <span class="glyphicon glyphicon-step-forward" />
             </button>
-            <div class="col-xs-10" style="font-size:large" ng-bind="ctrl.synAnsWCard.cardInfo.Dictate"></div>
+            <div class="col-xs-10" style="font-size:large" ng-bind="ctrl.synAnsWCard.cardInfo.Ans_KeyIn[0]"></div>
         </div>
     </div>
 
@@ -58,7 +59,7 @@
         <div class="row">
             <button class="col-xs-1 glyphicon glyphicon-exclamation-sign btn btn-default" type="button" id="btAudioAllPlay" ng-click="ctrl.onPlayAllViewableWCard()"></button>
             <button class="col-xs-1 glyphicon glyphicon-pause btn btn-default" type="button" id="btPauseAudio"></button>
-            <div class="col-xs-10 text-center" style="display:table-cell; vertical-align:central; font-size:x-large">{{ctrl.selWCard.cardInfo.Dictate}}</div>
+            <div class="col-xs-10 text-center" style="display:table-cell; vertical-align:central; font-size:x-large">{{ctrl.selWCard.cardInfo.Ans_KeyIn[0]}}</div>
         </div>
     </div>
 

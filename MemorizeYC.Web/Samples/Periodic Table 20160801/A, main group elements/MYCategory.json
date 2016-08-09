@@ -1,0 +1,281 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "1, Hydrogen, H, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "1, Hydrogen, H, Diatomic nonmetal", "Hydrogen", "H" ],
+      "Position": [ 108, 108 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "2, Helium, H e, Noble gas.box",
+      "Ans_KeyIn": [ "2, Helium, He, Noble gas", "Helium", "He" ],
+      "Position": [ 1808, 108 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "3, Lithium, L I, Alkali metal.box",
+      "Ans_KeyIn": [ "3, Lithium, Li, Alkali metal", "Lithium", "Li" ],
+      "Position": [ 108, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "4, Beryllium, B e, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "4, Beryllium, Be, Alkaline earth metal", "Beryllium", "Be" ],
+      "Position": [ 208, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "5, Boron, B, Metalloid.box",
+      "Ans_KeyIn": [ "5, Boron, B, Metalloid", "Boron", "B" ],
+      "Position": [ 1308, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "6, Carbon, C, Polyatomic nonmetal.box",
+      "Ans_KeyIn": [ "6, Carbon, C, Polyatomic nonmetal", "Carbon", "C" ],
+      "Position": [ 1408, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "7, Nitrogen, N, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "7, Nitrogen, N, Diatomic nonmetal", "Nitrogen", "N" ],
+      "Position": [ 1508, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "8, Oxygen, O, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "8, Oxygen, O, Diatomic nonmetal", "Oxygen", "O" ],
+      "Position": [ 1608, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "9, Fluorine, F, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "9, Fluorine, F, Diatomic nonmetal", "Fluorine", "F" ],
+      "Position": [ 1708, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "10, Neon, N e, Noble gas.box",
+      "Ans_KeyIn": [ "10, Neon, Ne, Noble gas", "Neon", "Ne" ],
+      "Position": [ 1808, 208 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "11, Sodium, N a, Alkali metal.box",
+      "Ans_KeyIn": [ "11, Sodium, Na, Alkali metal", "Sodium", "Na" ],
+      "Position": [ 108, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "12, Magnesium, M g, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "12, Magnesium, Mg, Alkaline earth metal", "Magnesium", "Mg" ],
+      "Position": [ 208, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "13, Aluminium, A l, Post-transition metal.box",
+      "Ans_KeyIn": [ "13, Aluminium, Al, Post-transition metal", "Aluminium", "Al" ],
+      "Position": [ 1308, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "14, Silicon, S I, Metalloid.box",
+      "Ans_KeyIn": [ "14, Silicon, Si, Metalloid", "Silicon", "Si" ],
+      "Position": [ 1408, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "15, Phosphorus, P, Polyatomic nonmetal.box",
+      "Ans_KeyIn": [ "15, Phosphorus, P, Polyatomic nonmetal", "Phosphorus", "P" ],
+      "Position": [ 1508, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "16, Sulfur, S, Polyatomic nonmetal.box",
+      "Ans_KeyIn": [ "16, Sulfur, S, Polyatomic nonmetal", "Sulfur", "S" ],
+      "Position": [ 1608, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "17, Chlorine, C l, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "17, Chlorine, Cl, Diatomic nonmetal", "Chlorine", "Cl" ],
+      "Position": [ 1708, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "18, Argon, A r, Noble gas.box",
+      "Ans_KeyIn": [ "18, Argon, Ar, Noble gas", "Argon", "Ar" ],
+      "Position": [ 1808, 308 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "19, Potassium, K, Alkali metal.box",
+      "Ans_KeyIn": [ "19, Potassium, K, Alkali metal", "Potassium", "K" ],
+      "Position": [ 108, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "20, Calcium, C a, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "20, Calcium, Ca, Alkaline earth metal", "Calcium", "Ca" ],
+      "Position": [ 208, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "31, Gallium, G a, Post-transition metal.box",
+      "Ans_KeyIn": [ "31, Gallium, Ga, Post-transition metal", "Gallium", "Ga" ],
+      "Position": [ 1308, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "32, Germanium, G e, Metalloid.box",
+      "Ans_KeyIn": [ "32, Germanium, Ge, Metalloid", "Germanium", "Ge" ],
+      "Position": [ 1408, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "33, Arsenic, A s, Metalloid.box",
+      "Ans_KeyIn": [ "33, Arsenic, As, Metalloid", "Arsenic", "As" ],
+      "Position": [ 1508, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "34, Selenium, S e, Polyatomic nonmetal.box",
+      "Ans_KeyIn": [ "34, Selenium, Se, Polyatomic nonmetal", "Selenium", "Se" ],
+      "Position": [ 1608, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "35, Bromine, B r, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "35, Bromine, Br, Diatomic nonmetal", "Bromine", "Br" ],
+      "Position": [ 1708, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "36, Krypton, K r, Noble gas.box",
+      "Ans_KeyIn": [ "36, Krypton, Kr, Noble gas", "Krypton", "Kr" ],
+      "Position": [ 1808, 408 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "37, Rubidium, R b, Alkali metal.box",
+      "Ans_KeyIn": [ "37, Rubidium, Rb, Alkali metal", "Rubidium", "Rb" ],
+      "Position": [ 108, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "38, Strontium, S r, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "38, Strontium, Sr, Alkaline earth metal", "Strontium", "Sr" ],
+      "Position": [ 208, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "49, Indium, I n, Post-transition metal.box",
+      "Ans_KeyIn": [ "49, Indium, In, Post-transition metal", "Indium", "In" ],
+      "Position": [ 1308, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "50, Tin, S n, Post-transition metal.box",
+      "Ans_KeyIn": [ "50, Tin, Sn, Post-transition metal", "Tin", "Sn" ],
+      "Position": [ 1408, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "51, Antimony, S b, Metalloid.box",
+      "Ans_KeyIn": [ "51, Antimony, Sb, Metalloid", "Antimony", "Sb" ],
+      "Position": [ 1508, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "52, Tellurium, T e, Metalloid.box",
+      "Ans_KeyIn": [ "52, Tellurium, Te, Metalloid", "Tellurium", "Te" ],
+      "Position": [ 1608, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "53,Iodine, I, Diatomic nonmetal.box",
+      "Ans_KeyIn": [ "53,Iodine, I, Diatomic nonmetal", "Iodine", "I" ],
+      "Position": [ 1708, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "54, Xenon, X e, Noble gas.box",
+      "Ans_KeyIn": [ "54, Xenon, Xe, Noble gas", "Xenon", "Xe" ],
+      "Position": [ 1808, 508 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "55, Caesium, C s, Alkali metal.box",
+      "Ans_KeyIn": [ "55, Caesium, Cs, Alkali metal", "Caesium", "Cs" ],
+      "Position": [ 108, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "56, Barium, B a, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "56, Barium, Ba, Alkaline earth metal", "Barium", "Ba" ],
+      "Position": [ 208, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "81, Thallium, T l, Post-transition metal.box",
+      "Ans_KeyIn": [ "81, Thallium, Tl, Post-transition metal", "Thallium", "Tl" ],
+      "Position": [ 1308, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "82, Lead, P b, Post-transition metal.box",
+      "Ans_KeyIn": [ "82, Lead, Pb, Post-transition metal", "Lead", "Pb" ],
+      "Position": [ 1408, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "83, Bismuth, B I, Post-transition metal.box",
+      "Ans_KeyIn": [ "83, Bismuth, Bi, Post-transition metal", "Bismuth", "Bi" ],
+      "Position": [ 1508, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "84, Polonium, P o, Post-transition metal.box",
+      "Ans_KeyIn": [ "84, Polonium, Po, Post-transition metal", "Polonium", "Po" ],
+      "Position": [ 1608, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "85, Astatine, A t, Metalloid.box",
+      "Ans_KeyIn": [ "85, Astatine, At, Metalloid", "Astatine", "At" ],
+      "Position": [ 1708, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "86, Radon, R n, Noble gas.box",
+      "Ans_KeyIn": [ "86, Radon, Rn, Noble gas", "Radon", "Rn" ],
+      "Position": [ 1808, 608 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "87, Francium, F r, Alkali metal.box",
+      "Ans_KeyIn": [ "87, Francium, Fr, Alkali metal", "Francium", "Fr" ],
+      "Position": [ 108, 708 ],
+      "Size": [ 84, 84 ]
+    },
+    {
+      "FileName": "88, Radium, R a, Alkaline earth metal.box",
+      "Ans_KeyIn": [ "88, Radium, Ra, Alkaline earth metal", "Radium", "Ra" ],
+      "Position": [ 208, 708 ],
+      "Size": [ 84, 84 ]
+    }
+  ],
+  "Link": "https://en.wikipedia.org/wiki/Periodic_table",
+  "SynLang": "en-US",
+  "Background": {
+    "ImgStyle": {
+      "width": "2000px",
+      "height": "1200px",
+      "opacity": "0.3",
+      "background-image": "/MYCBackground.png",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    }
+  },
+  "numWCardShown": 50
+}

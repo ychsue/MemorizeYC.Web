@@ -1405,8 +1405,7 @@ var PlayOneCategoryPageController = (function () {
                 return;
             if (PlayOneCategoryPageController.Current.selWCard)
                 PlayOneCategoryPageController.Current.PlayAudio(PlayOneCategoryPageController.Current.selWCard);
-            if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence && PlayOneCategoryPageController.Current.selWCard.cardInfo.Dictate.trim().
-                indexOf(PlayOneCategoryPageController.Current.recInputSentence.trim()) === 0) {
+            var anniWCard = function () {
                 $(PlayOneCategoryPageController.Current.selWCard.viewCard).animate({ opacity: 0.1 }, {
                     duration: 100,
                     step: function (now, fx) {
@@ -1426,11 +1425,26 @@ var PlayOneCategoryPageController = (function () {
                         }
                     }
                 });
+            };
+            if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence) {
+                var Answers = PlayOneCategoryPageController.Current.selWCard.cardInfo.Ans_KeyIn;
+                var stInput = PlayOneCategoryPageController.Current.recInputSentence.trim();
+                var isCorrect = false;
+                for (var i0 = 0; i0 < Answers.length; i0++) {
+                    if (Answers[i0].trim() === stInput) {
+                        anniWCard();
+                        isCorrect = true;
+                        break;
+                    }
+                }
+                if (!isCorrect) {
+                    alert("Your answer is wrong.");
+                    PlayOneCategoryPageController.Current.totalScore -= 3;
+                }
             }
             else {
                 if (PlayOneCategoryPageController.Current.selWCard) {
-                    alert("Your answer is wrong.");
-                    PlayOneCategoryPageController.Current.totalScore -= 3;
+                    alert("Please input the answer.");
                 }
                 else {
                     alert("Click a card at first.");
@@ -1739,7 +1753,11 @@ var PlayOneCategoryPageController = (function () {
             if (GlobalVariables.isHavingSpeechRecognier && selWCard) {
                 var SR = GlobalVariables.speechRecognizer;
                 var grammar = "#JSGF V1.0; grammar sentences; public <x> =" +
-                    SpeechRecognizerHelper.SentenceToGrammarString(selWCard.cardInfo.Dictate) + ";";
+                    SpeechRecognizerHelper.SentenceToGrammarString(selWCard.cardInfo.Ans_Recog[0]);
+                for (var i0 = 1; i0 < selWCard.cardInfo.Ans_Recog.length; i0++) {
+                    grammar += "|" + selWCard.cardInfo.Ans_Recog[i0];
+                }
+                grammar += ";";
                 var sRList = new GlobalVariables.SpeechGrammarList();
                 sRList.addFromString(grammar, 1);
                 SR.grammars = sRList;
@@ -1758,7 +1776,7 @@ var PlayOneCategoryPageController = (function () {
                         PlayOneCategoryPageController.scope.$apply(function () {
                             PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript;
                             if (hasGot)
-                                PlayOneCategoryPageController.Current.recInputSentence = selWCard.cardInfo.Dictate;
+                                PlayOneCategoryPageController.Current.recInputSentence = selWCard.cardInfo.Ans_KeyIn[0];
                             PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
                         });
                     }
@@ -2507,6 +2525,12 @@ var CardsHelper = (function () {
                 }
             }
         }
+        if (!des.Ans_KeyIn && des.Dictate) {
+            des.Ans_KeyIn = [des.Dictate];
+        }
+        if (!des.Ans_Recog && des.Dictate) {
+            des.Ans_Recog = [des.Dictate];
+        }
     };
     CardsHelper.MoveArrayElements = function (from, to, numToMove, isRandomly, myAppendTo) {
         if (isRandomly === void 0) { isRandomly = false; }
@@ -2580,8 +2604,7 @@ var CardsHelper = (function () {
     CardsHelper.CorrectBackgroundStyle = function (myStyle, stContainer, stCFolder) {
         var bgImgStyle = myStyle["background-image"];
         if (bgImgStyle && bgImgStyle.indexOf("url(") < 0) {
-            var newBgImgStyle = "url(" + CardsHelper.GetTreatablePath(bgImgStyle, stContainer, stCFolder) + ")";
-            newBgImgStyle = encodeURI(newBgImgStyle);
+            var newBgImgStyle = "url('" + CardsHelper.GetTreatablePath(bgImgStyle, stContainer, stCFolder) + "')";
             myStyle["background-image"] = newBgImgStyle;
         }
         return myStyle;

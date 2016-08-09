@@ -1,0 +1,197 @@
+﻿{
+  "Cards": [
+    {
+      "FileName": "57, Lanthanum, L a, Lanthanide.box",
+      "Ans_KeyIn": [ "57, Lanthanum, La, Lanthanide", "Lanthanum", "La" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 308, 908 ]
+    },
+    {
+      "FileName": "58, Cerium, C e, Lanthanide.box",
+      "Ans_KeyIn": [ "58, Cerium, Ce, Lanthanide", "Cerium", "Ce" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 408, 908 ]
+    },
+    {
+      "FileName": "59, Praseodymium, P r, Lanthanide.box",
+      "Ans_KeyIn": [ "59, Praseodymium, Pr, Lanthanide", "Praseodymium", "Pr" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 508, 908 ]
+    },
+    {
+      "FileName": "60, Neodymium, N d, Lanthanide.box",
+      "Ans_KeyIn": [ "60, Neodymium, Nd, Lanthanide", "Neodymium", "Nd" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 608, 908 ]
+    },
+    {
+      "FileName": "61, Promethium, P m, Lanthanide.box",
+      "Ans_KeyIn": [ "61, Promethium, Pm, Lanthanide", "Promethium", "Pm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 708, 908 ]
+    },
+    {
+      "FileName": "62, Samarium, S m, Lanthanide.box",
+      "Ans_KeyIn": [ "62, Samarium, Sm, Lanthanide", "Samarium", "Sm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 808, 908 ]
+    },
+    {
+      "FileName": "63, Europium, E u, Lanthanide.box",
+      "Ans_KeyIn": [ "63, Europium, Eu, Lanthanide", "Europium", "Eu" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 908, 908 ]
+    },
+    {
+      "FileName": "64, Gadolinium, G d, Lanthanide.box",
+      "Ans_KeyIn": [ "64, Gadolinium, Gd, Lanthanide", "Gadolinium", "Gd" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1008, 908 ]
+    },
+    {
+      "FileName": "65, Terbium, T b, Lanthanide.box",
+      "Ans_KeyIn": [ "65, Terbium, Tb, Lanthanide", "Terbium", "Tb" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1108, 908 ]
+    },
+    {
+      "FileName": "66, Dysprosium, D y, Lanthanide.box",
+      "Ans_KeyIn": [ "66, Dysprosium, Dy, Lanthanide", "Dysprosium", "Dy" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1208, 908 ]
+    },
+    {
+      "FileName": "67, Holmium, H o, Lanthanide.box",
+      "Ans_KeyIn": [ "67, Holmium, Ho, Lanthanide", "Holmium", "Ho" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1308, 908 ]
+    },
+    {
+      "FileName": "68, Erbium, E r, Lanthanide.box",
+      "Ans_KeyIn": [ "68, Erbium, Er, Lanthanide", "Erbium", "Er" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1408, 908 ]
+    },
+    {
+      "FileName": "69, Thulium, T m, Lanthanide.box",
+      "Ans_KeyIn": [ "69, Thulium, Tm, Lanthanide", "Thulium", "Tm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1508, 908 ]
+    },
+    {
+      "FileName": "70, Ytterbium, Y b, Lanthanide.box",
+      "Ans_KeyIn": [ "70, Ytterbium, Yb, Lanthanide", "Ytterbium", "Yb" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1608, 908 ]
+    },
+    {
+      "FileName": "71, Lutetium, L u, Lanthanide.box",
+      "Ans_KeyIn": [ "71, Lutetium, Lu, Lanthanide", "Lutetium", "Lu" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1708, 908 ]
+    },
+    {
+      "FileName": "89, Actinium, A c, Actinide.box",
+      "Ans_KeyIn": [ "89, Actinium, Ac, Actinide", "Actinium", "Ac" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 308, 1008 ]
+    },
+    {
+      "FileName": "90, Thorium, T h, Actinide.box",
+      "Ans_KeyIn": [ "90, Thorium, Th, Actinide", "Thorium", "Th" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 408, 1008 ]
+    },
+    {
+      "FileName": "91, Protactinium, P a, Actinide.box",
+      "Ans_KeyIn": [ "91, Protactinium, Pa, Actinide", "Protactinium", "Pa" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 508, 1008 ]
+    },
+    {
+      "FileName": "92, Uranium, U, Actinide.box",
+      "Ans_KeyIn": [ "92, Uranium, U, Actinide", "Uranium", "U" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 608, 1008 ]
+    },
+    {
+      "FileName": "93, Neptunium, N p, Actinide.box",
+      "Ans_KeyIn": [ "93, Neptunium, Np, Actinide", "Neptunium", "Np" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 708, 1008 ]
+    },
+    {
+      "FileName": "94, Plutonium, P u, Actinide.box",
+      "Ans_KeyIn": [ "94, Plutonium, Pu, Actinide", "Plutonium", "Pu" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 808, 1008 ]
+    },
+    {
+      "FileName": "95, Americium, A m, Actinide.box",
+      "Ans_KeyIn": [ "95, Americium, Am, Actinide", "Americium", "Am" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 908, 1008 ]
+    },
+    {
+      "FileName": "96, Curium, C m, Actinide.box",
+      "Ans_KeyIn": [ "96, Curium, Cm, Actinide", "Curium", "Cm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1008, 1008 ]
+    },
+    {
+      "FileName": "97, Berkelium, B k, Actinide.box",
+      "Ans_KeyIn": [ "97, Berkelium, Bk, Actinide", "Berkelium", "Bk" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1108, 1008 ]
+    },
+    {
+      "FileName": "98, Californium, C f, Actinide.box",
+      "Ans_KeyIn": [ "98, Californium, Cf, Actinide", "Californium", "Cf" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1208, 1008 ]
+    },
+    {
+      "FileName": "99, Einsteinium, E s, Actinide.box",
+      "Ans_KeyIn": [ "99, Einsteinium, Es, Actinide", "Einsteinium", "Es" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1308, 1008 ]
+    },
+    {
+      "FileName": "100, Fermium, F m, Actinide.box",
+      "Ans_KeyIn": [ "100, Fermium, Fm, Actinide", "Fermium", "Fm" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1408, 1008 ]
+    },
+    {
+      "FileName": "101, Mendelevium, M d, Actinide.box",
+      "Ans_KeyIn": [ "101, Mendelevium, Md, Actinide", "Mendelevium", "Md" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1508, 1008 ]
+    },
+    {
+      "FileName": "102, Nobelium, N o, Actinide.box",
+      "Ans_KeyIn": [ "102, Nobelium, No, Actinide", "Nobelium", "No" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1608, 1008 ]
+    },
+    {
+      "FileName": "103, Lawrencium, L r, Actinide.box",
+      "Ans_KeyIn": [ "103, Lawrencium, Lr, Actinide", "Lawrencium", "Lr" ],
+      "Size": [ 84, 84 ],
+      "Position": [ 1708, 1008 ]
+    }
+  ],
+  "Link": "https://en.wikipedia.org/wiki/Periodic_table",
+  "SynLang": "en-US",
+  "Background": {
+    "ImgStyle": {
+      "width": "2000px",
+      "height": "1200px",
+      "opacity": "0.3",
+      "background-image": "/MYCBackground.png",
+      "background-size": "cover",
+      "background-repeat": "no-repeat"
+    }
+  },
+  "numWCardShown": 50
+}

@@ -2,221 +2,265 @@
   "Cards": [
     {
       "FileName": "1 氫 H 非金屬.box",
+      "Ans_KeyIn": [ "1 氫 H 非金屬","氫","H" ],
       "Position": [ 108, 108 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "2 氦 H e 惰性氣體.box",
+      "Ans_KeyIn": [ "2 氦 He 惰性氣體", "氦","He" ],
       "Position": [ 1808, 108 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "3 鋰 L i 鹼金屬.box",
+      "Ans_KeyIn": [ "3 鋰 Li 鹼金屬", "鋰","Li" ],
       "Position": [ 108, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "4 鈹 B e 鹼土金屬.box",
+      "Ans_KeyIn": [ "4 鈹 Be 鹼土金屬", "鈹","Be" ],
       "Position": [ 208, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "5 硼 B 類金屬.box",
+      "Ans_KeyIn": [ "5 硼 B 類金屬", "硼", "B" ],
       "Position": [ 1308, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "6 碳 C 非金屬.box",
+      "Ans_KeyIn": [ "6 碳 C 非金屬", "碳", "C" ],
       "Position": [ 1408, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "7 氮 N 非金屬.box",
+      "Ans_KeyIn": [ "7 氮 N 非金屬", "氮", "N" ],
       "Position": [ 1508, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "8 氧 O 非金屬.box",
+      "Ans_KeyIn": [ "8 氧 O 非金屬", "氧", "O" ],
       "Position": [ 1608, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "9 氟 F 鹵素.box",
+      "Ans_KeyIn": [ "9 氟 F 鹵素", "氟", "F" ],
       "Position": [ 1708, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "10 氖 N e 惰性氣體.box",
+      "Ans_KeyIn": [ "10 氖 Ne 惰性氣體", "氖","Ne" ],
       "Position": [ 1808, 208 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "11 鈉 N a 鹼金屬.box",
+      "Ans_KeyIn": [ "11 鈉 Na 鹼金屬", "鈉" ,"Na"],
       "Position": [ 108, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "12 鎂 M g 鹼土金屬.box",
+      "Ans_KeyIn": [ "12 鎂 Mg 鹼土金屬", "鎂", "Mg" ],
       "Position": [ 208, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "13 鋁 A l 金屬.box",
+      "Ans_KeyIn": [ "13 鋁 Al 金屬", "鋁", "Al" ],
       "Position": [ 1308, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "14 矽 S I 類金屬.box",
+      "Ans_KeyIn": [ "14 矽 Si 類金屬", "矽", "Si" ],
       "Position": [ 1408, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "15 磷 P 非金屬.box",
+      "Ans_KeyIn": [ "15 磷 P 非金屬", "磷", "P" ],
       "Position": [ 1508, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "16 硫 S 非金屬.box",
+      "Ans_KeyIn": [ "16 硫 S 非金屬", "硫", "S" ],
       "Position": [ 1608, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "17 氯 C l 鹵素.box",
+      "Ans_KeyIn": [ "17 氯 Cl 鹵素", "氯" ,"Cl"],
       "Position": [ 1708, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "18 氬 A r 惰性氣體.box",
+      "Ans_KeyIn": [ "18 氬 Ar 惰性氣體", "氬", "Ar" ],
       "Position": [ 1808, 308 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "19 鉀 K 鹼金屬.box",
+      "Ans_KeyIn": [ "19 鉀 K 鹼金屬", "鉀", "K" ],
       "Position": [ 108, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "20 鈣 C a 鹼土金屬.box",
+      "Ans_KeyIn": [ "20 鈣 Ca 鹼土金屬", "鈣", "Ca" ],
       "Position": [ 208, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "31 鎵 G a 金屬.box",
+      "Ans_KeyIn": [ "31 鎵 Ga 金屬", "鎵", "Ga" ],
       "Position": [ 1308, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "32 鍺 G e 類金屬.box",
+      "Ans_KeyIn": [ "32 鍺 Ge 類金屬", "鍺", "Ge" ],
       "Position": [ 1408, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "33 砷 A s 非金屬.box",
+      "Ans_KeyIn": [ "33 砷 As 非金屬", "砷" ,"As"],
       "Position": [ 1508, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "34 硒 S e 非金屬.box",
+      "Ans_KeyIn": [ "34 硒 Se 非金屬", "硒", "Se" ],
       "Position": [ 1608, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "35 溴 B r 鹵素.box",
+      "Ans_KeyIn": [ "35 溴 Br 鹵素", "溴", "Br" ],
       "Position": [ 1708, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "36 氪 K r 惰性氣體.box",
+      "Ans_KeyIn": [ "36 氪 Kr 惰性氣體", "氪", "Kr" ],
       "Position": [ 1808, 408 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "37 銣 R b 鹼金屬.box",
+      "Ans_KeyIn": [ "37 銣 Rb 鹼金屬", "銣", "Rb" ],
       "Position": [ 108, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "38 鍶 S r 鹼土金屬.box",
+      "Ans_KeyIn": [ "38 鍶 Sr 鹼土金屬", "鍶" ,"Sr"],
       "Position": [ 208, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "49 銦 I n 金屬.box",
+      "Ans_KeyIn": [ "49 銦 In 金屬", "銦", "In" ],
       "Position": [ 1308, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "50 錫 S n 金屬.box",
+      "Ans_KeyIn": [ "50 錫 Sn 金屬", "錫", "Sn" ],
       "Position": [ 1408, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "51 銻 S b 類金屬.box",
+      "Ans_KeyIn": [ "51 銻 Sb 類金屬", "銻", "Sb" ],
       "Position": [ 1508, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "52 碲 T e 類金屬.box",
+      "Ans_KeyIn": [ "52 碲 Te 類金屬", "碲" , "Te"],
       "Position": [ 1608, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "53 碘 I 鹵素.box",
+      "Ans_KeyIn": [ "53 碘 I 鹵素", "碘", "I" ],
       "Position": [ 1708, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "54 氙 X e 惰性氣體.box",
+      "Ans_KeyIn": [ "54 氙 Xe 惰性氣體", "氙", "Xe" ],
       "Position": [ 1808, 508 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "55 銫 C s 鹼金屬.box",
+      "Ans_KeyIn": [ "55 銫 Cs 鹼金屬", "銫", "Cs" ],
       "Position": [ 108, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "56 鋇 B a 鹼土金屬.box",
+      "Ans_KeyIn": [ "56 鋇 Ba 鹼土金屬", "鋇", "Ba" ],
       "Position": [ 208, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "81 鉈 T l 金屬.box",
+      "Ans_KeyIn": [ "81 鉈 Tl 金屬", "鉈", "Tl" ],
       "Position": [ 1308, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "82 鉛 P b 金屬.box",
+      "Ans_KeyIn": [ "82 鉛 Pb 金屬", "鉛", "Pb" ],
       "Position": [ 1408, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "83 鉍 B i 金屬.box",
+      "Ans_KeyIn": [ "83 鉍 Bi 金屬", "鉍", "Bi" ],
       "Position": [ 1508, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "84 釙 P o 金屬.box",
+      "Ans_KeyIn": [ "84 釙 Po 金屬", "釙", "Po" ],
       "Position": [ 1608, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "85 砈 A t 鹵素、金屬.box",
+      "Ans_KeyIn": [ "85 砈 At 鹵素、金屬", "砈", "At" ],
       "Position": [ 1708, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "86 氡 R n 惰性氣體.box",
+      "Ans_KeyIn": [ "86 氡 Rn 惰性氣體", "氡", "Rn" ],
       "Position": [ 1808, 608 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "87 鍅 F r 鹼金屬.box",
+      "Ans_KeyIn": [ "87 鍅 Fr 鹼金屬", "鍅", "Fr" ],
       "Position": [ 108, 708 ],
       "Size": [ 84, 84 ]
     },
     {
       "FileName": "88 鐳 R a 鹼土金屬.box",
+      "Ans_KeyIn": [ "88 鐳 Ra 鹼土金屬", "鐳", "Ra" ],
       "Position": [ 208, 708 ],
       "Size": [ 84, 84 ]
     }
