@@ -43,6 +43,7 @@ class PlayOneCategoryPageController{
     public defaultCardStyle: Object = { width: "16vw", height: "16vh" };
     public level: number;
 
+    public nImgLoad: number = 0;
     //* [2016-05-27 16:01] Timer for scores
     //#region totalScore
     public _totalScore: number;
@@ -224,11 +225,16 @@ class PlayOneCategoryPageController{
         $(GlobalVariables.gdTutorElements.gdMain).hide(0);
         $(PlayOneCategoryPageController.Current.btPauseAudio).off('click');
         $(GlobalVariables.synUtterance).off('start error end pause');
+        $(document).off(GlobalVariables.AViewCardShownKey,PlayOneCategoryPageController.Current.onAViewCardShown);
     }
 
     constructor($scope, $routeParams) {
         //* [2016-06-06 12:04] Reload the web page if needed.
         VersionHelper.ReloadIfNeeded();
+
+        PlayOneCategoryPageController.oneOverNWindow = 5; //Initialize it to avoid the value gotten from other Category.
+        //* [2016-08-01 11:12] RearrangeCards if some images are loaded
+        $(document).on(GlobalVariables.AViewCardShownKey, this.onAViewCardShown);
 
         SpeechRecognizerHelper.iniSpeechRecognition();
 
@@ -322,10 +328,9 @@ class PlayOneCategoryPageController{
             ShowWCardsAndEventsCallback);
 
         $(window).on("resize", PlayOneCategoryPageController.Current.onWindowResize);
-        //* [2016-06-08 09:44] Force it to rearrange all the cards after 2.5 second.
-        setTimeout(function () {
-            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true);
-        }, 2500);
+        //* [2016-06-11 15:46] Show it in a suitable size
+        if ($(window).height() > $(window).width())
+            PlayOneCategoryPageController.oneOverNWindow *= $(window).width() / $(window).height();
 
         //* [2016-07-19 12:21] Launched when the user leave this Play Page
         IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord);
@@ -348,6 +353,22 @@ class PlayOneCategoryPageController{
     }
 
     //#region *EVENTS
+    public onAViewCardShown(ev: Event) {
+        PlayOneCategoryPageController.Current.nImgLoad++;
+        if (PlayOneCategoryPageController.Current.nImgLoad === 1) {
+            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true);
+            //* [2016-08-11 13:16] Because almost all the cards will be loaded at the same time, I delayed the rearrangement to 1 second later to avoid useless Rearragement.
+            setTimeout(() => {
+                var nCurrent = PlayOneCategoryPageController.Current.nImgLoad;
+                PlayOneCategoryPageController.Current.nImgLoad = 0;
+                if (nCurrent <= 1)
+                    return;
+                else
+                    PlayOneCategoryPageController.Current.onAViewCardShown(ev);
+            }, 1000);
+        }
+    };
+
     public onPlayAllViewableWCard(ev) {
         if(GlobalVariables.synthesis)
             GlobalVariables.synthesis.cancel();

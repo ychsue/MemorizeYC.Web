@@ -198,7 +198,7 @@
       "width": "2000px",
       "height": "1200px",
       "opacity": "0.3",
-      "background": "url('/Samples/週期表20160714/MYCBackground.png')",
+      "background-image": "/MYCBackground.png",
       "background-size": "cover",
       "background-repeat": "no-repeat"
     }

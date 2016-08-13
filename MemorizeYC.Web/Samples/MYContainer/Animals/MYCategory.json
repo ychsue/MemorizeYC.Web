@@ -29,11 +29,12 @@
   "Background": 
   {
     "ImgStyle": {
-      "height": "800px",
+      "height": "100vh",
+      "width": "100vw",
       "opacity": "0.3",
-      "background": "url(http://www.publicdomainpictures.net/pictures/120000/t2/rural-landscape-1432032406Jkz.jpg)",
+      "background": "url('http://www.publicdomainpictures.net/pictures/120000/t2/rural-landscape-1432032406Jkz.jpg')",
       "background-size": "cover",
-      "background-repeat": "no-repeat"
+      "background-repeat": "repeat"
     },
     "AudioProperties": {
       "src": "http://www.freeinfosociety.com/media/sounds/4154.mp3",

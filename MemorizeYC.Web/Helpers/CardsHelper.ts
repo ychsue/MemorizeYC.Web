@@ -3,9 +3,11 @@
 /// <reference path="../models/mycategoryjson.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
 class CardsHelper {
-    public static RearrangeCards(wcards: WCard[], nCol: number = 5, isRandom:boolean=false, isOptimizeSize:boolean = true, expandRatio:number = 1, justFixed:boolean = false) {
-        if (!wcards || wcards.length === 0)
+    public static RearrangeCards(wcards: WCard[], nCol: number = 5, isRandom: boolean = false, isOptimizeSize: boolean = true, expandRatio: number = 1, justFixed: boolean = false) {
+
+        if (!wcards || wcards.length === 0) {
             return;
+        }
         var topOfTop: number = 50;
         var currentPosition: number[] = [0, 0];
         var wWidth: number = window.innerWidth;

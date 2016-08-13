@@ -70,4 +70,5 @@ class GlobalVariables {
      */
     public static PageTextsJSONFName: string = "Resources.json";
 
+    public static AViewCardShownKey: string = "AViewCardShown";
 }

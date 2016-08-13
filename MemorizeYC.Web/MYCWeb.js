@@ -601,6 +601,7 @@ var GlobalVariables = (function () {
     GlobalVariables.AudioPauseKey = "AudioPause";
     GlobalVariables.PageTextChangeKey = "PageTextChange";
     GlobalVariables.PageTextsJSONFName = "Resources.json";
+    GlobalVariables.AViewCardShownKey = "AViewCardShown";
     return GlobalVariables;
 }());
 var PageTextHelper = (function () {
@@ -853,7 +854,9 @@ var WCard = (function () {
             var oldCards = this.viewCard.getElementsByClassName(WCard.cardMainKey);
             if (oldCards.length != 0)
                 this.viewCard.removeChild(oldCards[0]);
+            var isNewCard = false;
             if (!this.cCards[value]) {
+                isNewCard = true;
                 this.cCards[value] = this.GetcCardFromPath.call(this, this.cardsPath[value], true);
                 if (!this.cCards[value]) {
                     this.cCards[value] = this.CardForMessage(WCard.cardMainKey, this.cardsPath[value] + " cannot be opened.");
@@ -865,11 +868,15 @@ var WCard = (function () {
             if (!this.cardInfo.IsSizeFixed) {
                 this.viewSize = [this.viewSize[0], bufHeight];
             }
+            else
+                this.viewSize = this.viewSize;
             this.cCards[value].style.zIndex = "1";
             this.viewCard.appendChild(this.cCards[value]);
             var tbIth = this.viewCard.getElementsByClassName('tbIth')[0];
             if (tbIth)
                 tbIth.innerText = (value + 1).toString() + "/" + this.cCards.length.toString();
+            if (!isNewCard)
+                $(document).trigger(GlobalVariables.AViewCardShownKey, this.cCards[value]);
         },
         enumerable: true,
         configurable: true
@@ -1007,6 +1014,9 @@ var WCard = (function () {
         switch (fileType) {
             case (FileTypeEnum.Image):
                 var img = new Image();
+                $(img).one("load", function (ev) {
+                    $(document).trigger(GlobalVariables.AViewCardShownKey, ev);
+                });
                 img.className = WCard.cardMainKey;
                 img.src = CardsHelper.GetTreatablePath(cardPath, this.mainFolder, this.categoryFolder);
                 vWHRatio = img.naturalWidth / img.naturalHeight;
@@ -1018,6 +1028,7 @@ var WCard = (function () {
                 tbArea.readOnly = true;
                 MyFileHelper.ShowTextFromTxtFile(CardsHelper.GetTreatablePath(cardPath, this.mainFolder, this.categoryFolder), tbArea);
                 resObj = tbArea;
+                $(document).trigger(GlobalVariables.AViewCardShownKey, tbArea);
                 break;
             case (FileTypeEnum.Box):
                 if (!isInsideBox) {
@@ -1267,6 +1278,7 @@ var PlayOneCategoryPageController = (function () {
         this.isSpeechRecognitionRunning = false;
         this.isBGAlsoChange = true;
         this.defaultCardStyle = { width: "16vw", height: "16vh" };
+        this.nImgLoad = 0;
         this.maxDelScore = 20;
         this.pgScore = document.getElementById('pgScore');
         this.isHighest = false;
@@ -1452,6 +1464,8 @@ var PlayOneCategoryPageController = (function () {
             }
         };
         VersionHelper.ReloadIfNeeded();
+        PlayOneCategoryPageController.oneOverNWindow = 5;
+        $(document).on(GlobalVariables.AViewCardShownKey, this.onAViewCardShown);
         SpeechRecognizerHelper.iniSpeechRecognition();
         PlayOneCategoryPageController.Current = this;
         PlayOneCategoryPageController.scope = $scope;
@@ -1517,9 +1531,8 @@ var PlayOneCategoryPageController = (function () {
             console.log("PlayOneCategoryPage:constructor:pathOrUri= " + pathOrUri);
         MyFileHelper.FeedTextFromTxtFileToACallBack(pathOrUri, WCard.restWCards, ShowWCardsAndEventsCallback);
         $(window).on("resize", PlayOneCategoryPageController.Current.onWindowResize);
-        setTimeout(function () {
-            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true);
-        }, 2500);
+        if ($(window).height() > $(window).width())
+            PlayOneCategoryPageController.oneOverNWindow *= $(window).width() / $(window).height();
         IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord);
     }
     Object.defineProperty(PlayOneCategoryPageController.prototype, "totalScore", {
@@ -1690,7 +1703,23 @@ var PlayOneCategoryPageController = (function () {
         $(GlobalVariables.gdTutorElements.gdMain).hide(0);
         $(PlayOneCategoryPageController.Current.btPauseAudio).off('click');
         $(GlobalVariables.synUtterance).off('start error end pause');
+        $(document).off(GlobalVariables.AViewCardShownKey, PlayOneCategoryPageController.Current.onAViewCardShown);
     };
+    PlayOneCategoryPageController.prototype.onAViewCardShown = function (ev) {
+        PlayOneCategoryPageController.Current.nImgLoad++;
+        if (PlayOneCategoryPageController.Current.nImgLoad === 1) {
+            CardsHelper.RearrangeCards(WCard.showedWCards, PlayOneCategoryPageController.oneOverNWindow, false, true);
+            setTimeout(function () {
+                var nCurrent = PlayOneCategoryPageController.Current.nImgLoad;
+                PlayOneCategoryPageController.Current.nImgLoad = 0;
+                if (nCurrent <= 1)
+                    return;
+                else
+                    PlayOneCategoryPageController.Current.onAViewCardShown(ev);
+            }, 1000);
+        }
+    };
+    ;
     PlayOneCategoryPageController.prototype.onPlayAllViewableWCard = function (ev) {
         if (GlobalVariables.synthesis)
             GlobalVariables.synthesis.cancel();
@@ -2413,8 +2442,9 @@ var CardsHelper = (function () {
         if (isOptimizeSize === void 0) { isOptimizeSize = true; }
         if (expandRatio === void 0) { expandRatio = 1; }
         if (justFixed === void 0) { justFixed = false; }
-        if (!wcards || wcards.length === 0)
+        if (!wcards || wcards.length === 0) {
             return;
+        }
         var topOfTop = 50;
         var currentPosition = [0, 0];
         var wWidth = window.innerWidth;

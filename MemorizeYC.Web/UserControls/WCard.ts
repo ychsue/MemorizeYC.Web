@@ -72,7 +72,9 @@ class WCard {
         if (oldCards.length != 0)
             this.viewCard.removeChild(oldCards[0]);
 
+        var isNewCard = false;
         if (!this.cCards[value]) {
+            isNewCard = true;
             //** [2016-03-17 11:23] If this card does not exist, create it.
             this.cCards[value] = this.GetcCardFromPath.call(this, this.cardsPath[value], true);
             if (!this.cCards[value]) {
@@ -85,13 +87,17 @@ class WCard {
         var bufHeight = (isNaN(this.viewWHRatio[value])) ? this.viewSize[1] : (this.viewSize[0] / this.viewWHRatio[value]);
         if (!this.cardInfo.IsSizeFixed) {
             this.viewSize = [this.viewSize[0], bufHeight];
-        }
+        } else
+            this.viewSize = this.viewSize;
         this.cCards[value].style.zIndex = "1";
         //** [2016-03-17 11:16] If this card exists, append the new one.
         this.viewCard.appendChild(this.cCards[value]);
         var tbIth: HTMLDivElement = this.viewCard.getElementsByClassName('tbIth')[0] as HTMLDivElement;
         if (tbIth)
-            tbIth.innerText = (value+1).toString() + "/" + this.cCards.length.toString();
+            tbIth.innerText = (value + 1).toString() + "/" + this.cCards.length.toString();
+
+        if (!isNewCard)
+            $(document).trigger(GlobalVariables.AViewCardShownKey, this.cCards[value]);
     }
     //#endregion boxIndex. It will set a new Image or textarea
     
@@ -177,7 +183,7 @@ class WCard {
         var fileName = cardInfo.FileName;
         //var theCard: HTMLElement = this.GetcCardFromPath(fileName);
         var theCard: HTMLElement = this.GetcCardFromPath.call(this,fileName);
-        if (theCard) {
+        if (theCard) { // When it is an image or text file
             if (!this.cCards)
                 this.cCards = new Array(1);
             this.cCards[0] = theCard;
@@ -307,6 +313,12 @@ class WCard {
         switch (fileType) {
             case (FileTypeEnum.Image):
                 var img = new Image();
+
+                //* [2016-08-11 10:57] Used to notice the system that the image is loaded
+                $(img).one("load", (ev) => {
+                    $(document).trigger(GlobalVariables.AViewCardShownKey, ev);
+                });
+
                 img.className = WCard.cardMainKey;
                 img.src = CardsHelper.GetTreatablePath(cardPath,this.mainFolder,this.categoryFolder);
                 vWHRatio = img.naturalWidth / img.naturalHeight;
@@ -319,6 +331,8 @@ class WCard {
                 MyFileHelper.ShowTextFromTxtFile(CardsHelper.GetTreatablePath(cardPath, this.mainFolder, this.categoryFolder)
                     , tbArea);
                 resObj = tbArea;
+                //* [2016-08-13 14:28] Announce the system that this textArea is created.
+                $(document).trigger(GlobalVariables.AViewCardShownKey, tbArea);
                 break;
             case (FileTypeEnum.Box):
                 if (!isInsideBox) {
