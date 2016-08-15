@@ -653,6 +653,8 @@ var PageTextHelper = (function () {
             "stBackTo0": "<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
             "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
             "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+            "stMarkForSpeech": "反白想要聽的字，再按Play就可以播放了：",
+            "stHideTbSyn": "將語音模擬的文字列隱藏。",
             "stHighestScore": "最高分！",
             "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
             "stSynVoice": "語音模擬的聲音：",
@@ -1263,6 +1265,7 @@ var PlayOneCategoryPageController = (function () {
         this.meBackground = document.getElementById('meBackground');
         this.dlDblClickWCard = document.getElementById('dlDblClickWCard');
         this.dlFinish = document.getElementById('dlFinish');
+        this.dlDictateSelected = document.getElementById('dlDictateSelected');
         this.ddSettings = document.getElementById('ddSettings');
         this.imgBackground = document.getElementById('imgBackground');
         this.btSynPlay = document.getElementById('btSynPlay');
@@ -1273,6 +1276,8 @@ var PlayOneCategoryPageController = (function () {
         this.btAudioAllPlay = document.getElementById('btAudioAllPlay');
         this.topNavbar = document.getElementById('topNavbar');
         this.bottomNavbar = document.getElementById('bottomNavbar');
+        this.isHiddingSynTB = false;
+        this.selTextsForSyn = "";
         this.isBackAudioStartLoad = false;
         this.isAudioPlaying = false;
         this.isSpeechRecognitionRunning = false;
@@ -1518,6 +1523,24 @@ var PlayOneCategoryPageController = (function () {
                     }
                 }]
         });
+        $(this.dlDictateSelected).dialog({
+            autoOpen: false, modal: true,
+            buttons: [{
+                    icons: { primary: "ui-icon-triangle-1-e" },
+                    text: "Play",
+                    click: function () {
+                        if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
+                            if (GlobalVariables.synthesis.paused)
+                                GlobalVariables.synthesis.resume();
+                            SpeechSynthesisHelper.Speak(PlayOneCategoryPageController.Current.selTextsForSyn, PlayOneCategoryPageController.Current.SynLang, PlayOneCategoryPageController.Current.currentSynVoice, Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN));
+                        }
+                    }
+                }]
+        });
+        $(this.dlDictateSelected).children(".tbSentence").select(function (ev) {
+            var target = ev.target;
+            PlayOneCategoryPageController.Current.selTextsForSyn = target.value.substring(target.selectionStart, target.selectionEnd);
+        });
         if ($routeParams["Container"] != undefined)
             GlobalVariables.currentMainFolder = $routeParams["Container"];
         if ($routeParams["CFolder"] != undefined)
@@ -1704,7 +1727,31 @@ var PlayOneCategoryPageController = (function () {
         $(PlayOneCategoryPageController.Current.btPauseAudio).off('click');
         $(GlobalVariables.synUtterance).off('start error end pause');
         $(document).off(GlobalVariables.AViewCardShownKey, PlayOneCategoryPageController.Current.onAViewCardShown);
+        $(PlayOneCategoryPageController.Current.dlDictateSelected).children(".tbSentence").off("select");
     };
+    PlayOneCategoryPageController.prototype.onTB_Click = function () {
+        var pPage = PlayOneCategoryPageController.Current;
+        var tBJQuery = $(pPage.dlDictateSelected).children(".tbSentence");
+        var texts;
+        switch (pPage.playType) {
+            case "syn":
+                texts = $("#tbSyn").text();
+                tBJQuery.text(texts);
+                break;
+            case "hint":
+                texts = $("#tbHint").text();
+                tBJQuery.text(texts);
+                break;
+            default:
+                break;
+        }
+        ;
+        $(pPage.dlDictateSelected).dialog("open");
+        tBJQuery[0].selectionStart = 0;
+        tBJQuery[0].selectionEnd = texts.length;
+        tBJQuery.select();
+    };
+    ;
     PlayOneCategoryPageController.prototype.onAViewCardShown = function (ev) {
         PlayOneCategoryPageController.Current.nImgLoad++;
         if (PlayOneCategoryPageController.Current.nImgLoad === 1) {

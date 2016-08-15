@@ -10,6 +10,9 @@
     "stNoteForKeyIn": "<h4>Note: In <b>KeyIn</b> mode, you will get higher score.</h4>",
     "stHandWriting": "<h4>How about use hand writing to input the answer?</h4>",
 
+    "stMarkForSpeech": "Mark word(s) to synthesize it:",
+    "stHideTbSyn": "Hide the text bar of synthesis.",
+
     "stHighestScore": "NUMBER 1!",
 
     "stWaitUtterDone": "I'm uttering. Please wait.",

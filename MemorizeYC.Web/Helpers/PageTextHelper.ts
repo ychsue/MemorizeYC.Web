@@ -16,6 +16,9 @@ interface PlayOneCategoryPageJSON {
     stNoteForKeyIn: string;
     stHandWriting: string;
 
+    stMarkForSpeech: string;
+    stHideTbSyn: string;
+
     stHighestScore: string;
 
     stWaitUtterDone: string;
@@ -157,6 +160,9 @@ class PageTextHelper {
             "stBackTo0":"<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
             "stNoteForKeyIn":"<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
             "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+
+            "stMarkForSpeech": "反白想要聽的字，再按Play就可以播放了：",
+            "stHideTbSyn": "將語音模擬的文字列隱藏。",
 
             "stHighestScore":"最高分！",
 

@@ -21,6 +21,7 @@ class PlayOneCategoryPageController{
     public meBackground: HTMLAudioElement = document.getElementById('meBackground') as HTMLAudioElement;
     public dlDblClickWCard: HTMLDivElement = document.getElementById('dlDblClickWCard') as HTMLDivElement;
     public dlFinish: HTMLDivElement = document.getElementById('dlFinish') as HTMLDivElement;
+    public dlDictateSelected: HTMLDivElement = document.getElementById('dlDictateSelected') as HTMLDivElement;
     public ddSettings: HTMLElement = document.getElementById('ddSettings') as HTMLElement;
     public imgBackground: HTMLDivElement = document.getElementById('imgBackground') as HTMLDivElement;
     public btSynPlay: HTMLButtonElement = document.getElementById('btSynPlay') as HTMLButtonElement;
@@ -31,6 +32,10 @@ class PlayOneCategoryPageController{
     public btAudioAllPlay: HTMLButtonElement = document.getElementById('btAudioAllPlay') as HTMLButtonElement;
     public topNavbar: HTMLElement = document.getElementById('topNavbar') as HTMLElement;
     public bottomNavbar: HTMLElement = document.getElementById('bottomNavbar') as HTMLElement;
+
+    public isHiddingSynTB: boolean = false;
+
+    public selTextsForSyn: string = "";
 
     public isBackAudioStartLoad: boolean = false;
     public isAudioPlaying: boolean = false;
@@ -225,7 +230,8 @@ class PlayOneCategoryPageController{
         $(GlobalVariables.gdTutorElements.gdMain).hide(0);
         $(PlayOneCategoryPageController.Current.btPauseAudio).off('click');
         $(GlobalVariables.synUtterance).off('start error end pause');
-        $(document).off(GlobalVariables.AViewCardShownKey,PlayOneCategoryPageController.Current.onAViewCardShown);
+        $(document).off(GlobalVariables.AViewCardShownKey, PlayOneCategoryPageController.Current.onAViewCardShown);
+        $(PlayOneCategoryPageController.Current.dlDictateSelected).children(".tbSentence").off("select");
     }
 
     constructor($scope, $routeParams) {
@@ -308,6 +314,28 @@ class PlayOneCategoryPageController{
                     }
                 }]
         });
+        $(this.dlDictateSelected).dialog(<JQueryUI.DialogOptions>{
+            autoOpen: false, modal: true,
+            buttons: [{
+                icons: { primary: "ui-icon-triangle-1-e" },
+                text:"Play",
+                click: () => {
+                    if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
+                        if (GlobalVariables.synthesis.paused)
+                            GlobalVariables.synthesis.resume();
+                        SpeechSynthesisHelper.Speak(PlayOneCategoryPageController.Current.selTextsForSyn,
+                            PlayOneCategoryPageController.Current.SynLang,
+                            PlayOneCategoryPageController.Current.currentSynVoice,
+                            Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN)
+                        );
+                    }
+                }
+            }]
+        });
+        $(this.dlDictateSelected).children(".tbSentence").select((ev) => {
+            var target: HTMLTextAreaElement = ev.target as HTMLTextAreaElement;
+            PlayOneCategoryPageController.Current.selTextsForSyn = target.value.substring(target.selectionStart, target.selectionEnd);
+        });
         //$(document).tooltip();
 
         if ($routeParams["Container"] != undefined)
@@ -353,6 +381,28 @@ class PlayOneCategoryPageController{
     }
 
     //#region *EVENTS
+    public onTB_Click() {
+        var pPage = PlayOneCategoryPageController.Current;
+        var tBJQuery = $(pPage.dlDictateSelected).children(".tbSentence");
+        var texts: string;
+        switch (pPage.playType) {
+            case "syn":
+                texts = $("#tbSyn").text();
+                tBJQuery.text(texts);
+                break;
+            case "hint":
+                texts = $("#tbHint").text();
+                tBJQuery.text(texts);
+                break;
+            default:
+                break;
+        };
+
+        $(pPage.dlDictateSelected).dialog("open");
+        (<HTMLTextAreaElement>tBJQuery[0]).selectionStart = 0;
+        (<HTMLTextAreaElement>tBJQuery[0]).selectionEnd = texts.length;
+        tBJQuery.select();
+    };
     public onAViewCardShown(ev: Event) {
         PlayOneCategoryPageController.Current.nImgLoad++;
         if (PlayOneCategoryPageController.Current.nImgLoad === 1) {
