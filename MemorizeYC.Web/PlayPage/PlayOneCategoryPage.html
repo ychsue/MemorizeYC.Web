@@ -5,7 +5,7 @@
 <div id="dlDictateSelected" style="font-size:large" title="Synthesize words">
     <div style="font-size:medium;margin:12px;">{{ctrl.thisPageTexts.stMarkForSpeech}}</div>
     <textarea class="tbSentence" style="overflow:auto;margin:12px;border:4px groove red"></textarea>
-    <input type="range" ng-model="ctrl.rate2PowN" min="-2" max="2" />
+    <input type="range" ng-model="ctrl.rate2PowN" min="-2" max="2" step="0.5" />
     <label style="margin:12px;" ng-show="ctrl.playType==='syn'"><input type="checkbox" ng-model="ctrl.isHiddingSynTB" />{{ctrl.thisPageTexts.stHideTbSyn}}</label>
 </div>
 
@@ -50,12 +50,12 @@
     <div class="container-fluid" ng-show="ctrl.playType==='rec'">
         <div class="row">
             <button class="col-xs-1 btn btn-default" ng-click="ctrl.StartSpeechRecognition_Click($event)" ng-disabled="!ctrl.isHavingSpeechRecognier">
-                <img src="./Images/microphone.svg" alt="microphone" style="height:40px" ng-hide="ctrl.isSpeechRecognitionRunning" />
-                <svg height="40" width="40" ng-show="ctrl.isSpeechRecognitionRunning">
+                <img src="./Images/microphone.svg" alt="microphone" style="height:40px" ng-hide="ctrl.speechRecogMetadata.isSpeechRecognitionRunning" />
+                <svg height="40" width="40" ng-show="ctrl.speechRecogMetadata.isSpeechRecognitionRunning">
                     <circle cx="20" cy="20" r="12" stroke="black" stroke-width="3" fill="red" />
                 </svg>
             </button>
-            <input id="tbKeyIn" type="text" name="tbRecSentence" class="col-xs-9" style="margin:8px;" ng-model="ctrl.recInputSentence" ng-keyup="ctrl.recCheckAnswer_Click($event)" />
+            <input id="tbKeyIn" type="text" name="tbRecSentence" class="col-xs-9" style="margin:8px;" ng-model="ctrl.speechRecogMetadata.recInputSentence" ng-keyup="ctrl.recCheckAnswer_Click($event)" />
             <button class="glyphicon glyphicon-upload col-xs-1 navbar-right" style="height:45px;font-size:20px" ng-click="ctrl.recCheckAnswer_Click($event)"></button>
         </div>
     </div>
@@ -84,7 +84,7 @@
                             <h4><span class="glyphicon-headphones glyphicon"></span>{{ctrl.thisPageTexts.stSynVoice}}</h4>
                         </li>
                         <li>
-                            <select id="cbSynAllVoices" ng-model="ctrl.currentSynVoice" ng-options="c.name for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer"></select>
+                            <select id="cbSynAllVoices" ng-model="ctrl.currentSynVoice" ng-options="c.name+'('+c.lang+')' for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer"></select>
                             <button ng-click="ctrl.onReloadSynVoices();" class="glyphicon glyphicon-refresh"></button>
                         </li>
                         <li role="separator" class="divider" />
@@ -177,7 +177,7 @@
                     <li class="dropdown-header">{{ctrl.thisPageTexts.stAudioRate}}</li>
                     <li class="container">
                         <div class="col-xs-12">
-                            <input type="range" id="rgAudioRate" ng-model="ctrl.rate2PowN" min="-2" max="2" />
+                            <input type="range" id="rgAudioRate" ng-model="ctrl.rate2PowN" min="-2" max="2" step="0.5" />
                         </div>
                     </li>
                     <li role="separator" class="divider"></li>

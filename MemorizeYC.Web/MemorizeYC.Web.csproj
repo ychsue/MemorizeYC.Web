@@ -61,6 +61,7 @@
     <Content Include="CSSs\WCard.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="GSPages\ChooseAContainerPage.html" />
+    <Content Include="GSPages\SpeechTestPage.html" />
     <Content Include="Images\button_downward.svg" />
     <Content Include="Images\button_upward.svg" />
     <Content Include="Images\Category.png" />
@@ -1300,6 +1301,7 @@
     <TypeScriptCompile Include="App.ts" />
     <TypeScriptCompile Include="GlobalVariables\GlobalVariables.ts" />
     <TypeScriptCompile Include="GSPages\ChooseAContainerPage.ts" />
+    <TypeScriptCompile Include="GSPages\SpeechTestPage.ts" />
     <TypeScriptCompile Include="Helpers\CardsHelper.ts" />
     <TypeScriptCompile Include="Helpers\IndexedDBHelper.ts" />
     <TypeScriptCompile Include="Helpers\mathhelper.ts" />

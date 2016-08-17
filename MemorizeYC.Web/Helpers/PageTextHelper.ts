@@ -3,6 +3,15 @@
 interface PageTextsInterface {
     PlayOneCategoryPageJSON: PlayOneCategoryPageJSON;
     ChooseAContainerPageJSON: ChooseAContainerPageJSON;
+    SpeechTestPageJSON: SpeechTestPageJSON;
+}
+
+interface SpeechTestPageJSON {
+    stSyn: string;
+    stRecg: string;
+    stLang: string;
+    stRate: string;
+    stIsUseSentence: string;
 }
 
 interface PlayOneCategoryPageJSON {
@@ -15,6 +24,10 @@ interface PlayOneCategoryPageJSON {
     stBackTo0: string;
     stNoteForKeyIn: string;
     stHandWriting: string;
+
+    stAns: string;
+    stLink: string;
+    stShowAns: string;
 
     stMarkForSpeech: string;
     stHideTbSyn: string;
@@ -90,6 +103,7 @@ interface ChooseAContainerPageJSON {
     stSelContainer: string;
     stSelCategory: string;
     stSelLang: string;
+    stSpeechTest: string;
 }
 //#endregion PageTextsInterface
 //#region LangInStrings
@@ -160,6 +174,10 @@ class PageTextHelper {
             "stBackTo0":"<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
             "stNoteForKeyIn":"<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
             "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+
+            "stAns": "看答案(-15)",
+            "stLink":"超連結",
+            "stShowAns": "允許的答案有：\n{0}",
 
             "stMarkForSpeech": "反白想要聽的字，再按Play就可以播放了：",
             "stHideTbSyn": "將語音模擬的文字列隱藏。",
@@ -233,7 +251,15 @@ class PageTextHelper {
             "stPlay": "玩",
             "stSelContainer": "1. 選個容器吧：",
             "stSelCategory": "2. 再選容器中的一個類別吧：",
-            "stSelLang": "3. 設定用來顯示頁面的語言："
+            "stSelLang": "3. 設定用來顯示頁面的語言：",
+            "stSpeechTest": "語音測試"
+        },
+        "SpeechTestPageJSON": {
+            "stRecg": "語音辨識",
+            "stSyn": "語音模擬",
+            "stLang": "選語言：",
+            "stRate": "調速率：",
+            "stIsUseSentence": "用您輸入的句子當答案："
         }
     };
 }

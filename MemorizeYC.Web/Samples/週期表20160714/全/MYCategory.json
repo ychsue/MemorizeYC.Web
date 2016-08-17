@@ -360,79 +360,79 @@
     },
     {
       "FileName": "../鑭系與錒系元素/59 鐠 P r 稀土元素.box",
-      "Ans_KeyIn": [ "59 鐠 P r 稀土元素", "鐠", "Pr" ],
+      "Ans_KeyIn": [ "59 鐠 Pr 稀土元素", "鐠", "Pr" ],
       "Size": [ 84, 84 ],
       "Position": [ 508, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/60 釹 N d 稀土元素.box",
-      "Ans_KeyIn": [ "60 釹 N d 稀土元素", "釹", "Nd" ],
+      "Ans_KeyIn": [ "60 釹 Nd 稀土元素", "釹", "Nd" ],
       "Size": [ 84, 84 ],
       "Position": [ 608, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/61 鉕 P m 稀土元素.box",
-      "Ans_KeyIn": [ "61 鉕 P m 稀土元素", "鉕", "Pm" ],
+      "Ans_KeyIn": [ "61 鉕 Pm 稀土元素", "鉕", "Pm" ],
       "Size": [ 84, 84 ],
       "Position": [ 708, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/62 釤 S m 稀土元素.box",
-      "Ans_KeyIn": [ "62 釤 S m 稀土元素", "釤", "Sm" ],
+      "Ans_KeyIn": [ "62 釤 Sm 稀土元素", "釤", "Sm" ],
       "Size": [ 84, 84 ],
       "Position": [ 808, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/63 銪 E u 稀土元素.box",
-      "Ans_KeyIn": [ "63 銪 E u 稀土元素", "銪", "Eu" ],
+      "Ans_KeyIn": [ "63 銪 Eu 稀土元素", "銪", "Eu" ],
       "Size": [ 84, 84 ],
       "Position": [ 908, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/64 釓 G d 稀土元素.box",
-      "Ans_KeyIn": [ "64 釓 G d 稀土元素", "釓", "Gd" ],
+      "Ans_KeyIn": [ "64 釓 Gd 稀土元素", "釓", "Gd" ],
       "Size": [ 84, 84 ],
       "Position": [ 1008, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/65 鋱 T b 稀土元素.box",
-      "Ans_KeyIn": [ "65 鋱 T b 稀土元素", "鋱", "Tb" ],
+      "Ans_KeyIn": [ "65 鋱 Tb 稀土元素", "鋱", "Tb" ],
       "Size": [ 84, 84 ],
       "Position": [ 1108, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/66 鏑 D y 稀土元素.box",
-      "Ans_KeyIn": [ "66 鏑 D y 稀土元素", "鏑", "Dy" ],
+      "Ans_KeyIn": [ "66 鏑 Dy 稀土元素", "鏑", "Dy" ],
       "Size": [ 84, 84 ],
       "Position": [ 1208, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/67 鈥 H o 稀土元素.box",
-      "Ans_KeyIn": [ "67 鈥 H o 稀土元素", "鈥", "Ho" ],
+      "Ans_KeyIn": [ "67 鈥 Ho 稀土元素", "鈥", "Ho" ],
       "Size": [ 84, 84 ],
       "Position": [ 1308, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/68 鉺 E r 稀土元素.box",
-      "Ans_KeyIn": [ "68 鉺 E r 稀土元素", "鉺", "Er" ],
+      "Ans_KeyIn": [ "68 鉺 Er 稀土元素", "鉺", "Er" ],
       "Size": [ 84, 84 ],
       "Position": [ 1408, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/69 銩 T m 稀土元素.box",
-      "Ans_KeyIn": [ "69 銩 T m 稀土元素", "銩", "Tm" ],
+      "Ans_KeyIn": [ "69 銩 Tm 稀土元素", "銩", "Tm" ],
       "Size": [ 84, 84 ],
       "Position": [ 1508, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/70 鐿 Y b 稀土元素.box",
-      "Ans_KeyIn": [ "70 鐿 Y b 稀土元素", "鐿", "Yb" ],
+      "Ans_KeyIn": [ "70 鐿 Yb 稀土元素", "鐿", "Yb" ],
       "Size": [ 84, 84 ],
       "Position": [ 1608, 908 ]
     },
     {
       "FileName": "../鑭系與錒系元素/71 鎦 L u 稀土元素.box",
-      "Ans_KeyIn": [ "71 鎦 L u 稀土元素", "鎦", "Lu" ],
+      "Ans_KeyIn": [ "71 鎦 Lu 稀土元素", "鎦", "Lu" ],
       "Size": [ 84, 84 ],
       "Position": [ 1708, 908 ]
     },
@@ -548,19 +548,19 @@
 
     {
       "FileName": "../鑭系與錒系元素/89 錒 A c 錒系元素.box",
-      "Ans_KeyIn": [ "89 錒 A c 錒系元素", "錒", "Ac" ],
+      "Ans_KeyIn": [ "89 錒 Ac 錒系元素", "錒", "Ac" ],
       "Size": [ 84, 84 ],
       "Position": [ 308, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/90 釷 T h 錒系元素.box",
-      "Ans_KeyIn": [ "90 釷 T h 錒系元素", "釷", "Th" ],
+      "Ans_KeyIn": [ "90 釷 Th 錒系元素", "釷", "Th" ],
       "Size": [ 84, 84 ],
       "Position": [ 408, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/91 鏷 P a 錒系元素.box",
-      "Ans_KeyIn": [ "91 鏷 P a 錒系元素", "鏷", "Pa" ],
+      "Ans_KeyIn": [ "91 鏷 Pa 錒系元素", "鏷", "Pa" ],
       "Size": [ 84, 84 ],
       "Position": [ 508, 1008 ]
     },
@@ -572,67 +572,67 @@
     },
     {
       "FileName": "../鑭系與錒系元素/93 錼 N p 錒系元素.box",
-      "Ans_KeyIn": [ "93 錼 N p 錒系元素", "錼", "Np" ],
+      "Ans_KeyIn": [ "93 錼 Np 錒系元素", "錼", "Np" ],
       "Size": [ 84, 84 ],
       "Position": [ 708, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/94 鈽 P u 錒系元素.box",
-      "Ans_KeyIn": [ "94 鈽 P u 錒系元素", "鈽", "Pu" ],
+      "Ans_KeyIn": [ "94 鈽 Pu 錒系元素", "鈽", "Pu" ],
       "Size": [ 84, 84 ],
       "Position": [ 808, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/95 鋂 A m 錒系元素.box",
-      "Ans_KeyIn": [ "95 鋂 A m 錒系元素", "鋂", "Am" ],
+      "Ans_KeyIn": [ "95 鋂 Am 錒系元素", "鋂", "Am" ],
       "Size": [ 84, 84 ],
       "Position": [ 908, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/96 鋦 C m 錒系元素.box",
-      "Ans_KeyIn": [ "96 鋦 C m 錒系元素", "鋦", "Cm" ],
+      "Ans_KeyIn": [ "96 鋦 Cm 錒系元素", "鋦", "Cm" ],
       "Size": [ 84, 84 ],
       "Position": [ 1008, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/97 鉳 B k 錒系元素.box",
-      "Ans_KeyIn": [ "97 鉳 B k 錒系元素", "鉳", "Bk" ],
+      "Ans_KeyIn": [ "97 鉳 Bk 錒系元素", "鉳", "Bk" ],
       "Size": [ 84, 84 ],
       "Position": [ 1108, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/98 鉲 C f 錒系元素.box",
-      "Ans_KeyIn": [ "98 鉲 C f 錒系元素", "鉲", "Cf" ],
+      "Ans_KeyIn": [ "98 鉲 Cf 錒系元素", "鉲", "Cf" ],
       "Size": [ 84, 84 ],
       "Position": [ 1208, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/99 鑀 E s 錒系元素.box",
-      "Ans_KeyIn": [ "99 鑀 E s 錒系元素", "鑀", "Es" ],
+      "Ans_KeyIn": [ "99 鑀 Es 錒系元素", "鑀", "Es" ],
       "Size": [ 84, 84 ],
       "Position": [ 1308, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/100 鐨 F m 錒系元素.box",
-      "Ans_KeyIn": [ "100 鐨 F m 錒系元素", "鐨", "Fm" ],
+      "Ans_KeyIn": [ "100 鐨 Fm 錒系元素", "鐨", "Fm" ],
       "Size": [ 84, 84 ],
       "Position": [ 1408, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/101 鍆 M d 錒系元素.box",
-      "Ans_KeyIn": [ "101 鍆 M d 錒系元素", "鍆", "Md" ],
+      "Ans_KeyIn": [ "101 鍆 Md 錒系元素", "鍆", "Md" ],
       "Size": [ 84, 84 ],
       "Position": [ 1508, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/102 鍩 N o 錒系元素.box",
-      "Ans_KeyIn": [ "102 鍩 N o 錒系元素", "鍩", "No" ],
+      "Ans_KeyIn": [ "102 鍩 No 錒系元素", "鍩", "No" ],
       "Size": [ 84, 84 ],
       "Position": [ 1608, 1008 ]
     },
     {
       "FileName": "../鑭系與錒系元素/103 鐒 L r 錒系元素.box",
-      "Ans_KeyIn": [ "103 鐒 L r 錒系元素", "鐒", "Lr" ],
+      "Ans_KeyIn": [ "103 鐒 Lr 錒系元素", "鐒", "Lr" ],
       "Size": [ 84, 84 ],
       "Position": [ 1708, 1008 ]
     },

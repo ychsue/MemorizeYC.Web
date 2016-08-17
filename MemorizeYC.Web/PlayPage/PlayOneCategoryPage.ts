@@ -16,7 +16,6 @@ class PlayOneCategoryPageController{
     public selWCard: WCard;
     public synAnsWCard: WCard;
     public hyperLink: string;
-    public recInputSentence: string;
     public meCardsAudio: HTMLAudioElement = document.getElementById('meCardsAudio') as HTMLAudioElement;
     public meBackground: HTMLAudioElement = document.getElementById('meBackground') as HTMLAudioElement;
     public dlDblClickWCard: HTMLDivElement = document.getElementById('dlDblClickWCard') as HTMLDivElement;
@@ -39,7 +38,16 @@ class PlayOneCategoryPageController{
 
     public isBackAudioStartLoad: boolean = false;
     public isAudioPlaying: boolean = false;
-    public isSpeechRecognitionRunning: boolean = false;
+
+    //#region speechRecogMetadata
+    private _speechRecogMetadata: SpeechRecgMetadata = {confidence:0, isSpeechRecognitionRunning:false, recInputSentence:""};
+    get speechRecogMetadata(): SpeechRecgMetadata {
+        return this._speechRecogMetadata;
+    }
+    set speechRecogMetadata(value: SpeechRecgMetadata) {
+        this._speechRecogMetadata = value;
+    }
+    //#endregion speechRecogMetadata
 
     public isBGAlsoChange: boolean = true;
 
@@ -334,7 +342,7 @@ class PlayOneCategoryPageController{
         });
         $(this.dlDictateSelected).children(".tbSentence").select((ev) => {
             var target: HTMLTextAreaElement = ev.target as HTMLTextAreaElement;
-            PlayOneCategoryPageController.Current.selTextsForSyn = target.value.substring(target.selectionStart, target.selectionEnd);
+            PlayOneCategoryPageController.Current.selTextsForSyn = $(target).text().substring(target.selectionStart, target.selectionEnd);
         });
         //$(document).tooltip();
 
@@ -360,23 +368,17 @@ class PlayOneCategoryPageController{
         if ($(window).height() > $(window).width())
             PlayOneCategoryPageController.oneOverNWindow *= $(window).width() / $(window).height();
 
-        //* [2016-07-19 12:21] Launched when the user leave this Play Page
-        IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord);
-        //$(window).one('popstate', (ev) => {
-        //    var isAdd = (PlayOneCategoryPageController.Current.eachRecord.history === '[]') ? true : false;
-
-        //    var lv: LVsTime = {
-        //        slv: PlayOneCategoryPageController.Current.level,
-        //        score: PlayOneCategoryPageController.Current.totalScore,
-        //        ts: Date.now()
-        //    };
-
-        //    var lvs = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history) as Array<LVsTime>;
-        //    lvs.push(lv);
-        //    PlayOneCategoryPageController.Current.eachRecord.history = JSON.stringify(lvs);
-
-        //    IndexedDBHelper.PutARecordAsync(PlayOneCategoryPageController.Current.eachRecord,isAdd);
-        //});
+        //* [2016-07-19 12:21] Get the record and recommand the user to use recode mode if their stage level is higher than 5.
+        IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord,
+            () => {
+                var history = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history) as Array<LVsTime>;
+                var playType: string;
+                if (history && history.length > 0 && history[history.length-1].slv > 5) {
+                    playType = PlayTypeEnum.rec;
+                } else
+                    playType = PlayTypeEnum.syn;
+                PlayOneCategoryPageController.Current.playType = playType;
+            });
         
     }
 
@@ -386,11 +388,11 @@ class PlayOneCategoryPageController{
         var tBJQuery = $(pPage.dlDictateSelected).children(".tbSentence");
         var texts: string;
         switch (pPage.playType) {
-            case "syn":
+            case PlayTypeEnum.syn:
                 texts = $("#tbSyn").text();
                 tBJQuery.text(texts);
                 break;
-            case "hint":
+            case PlayTypeEnum.hint:
                 texts = $("#tbHint").text();
                 tBJQuery.text(texts);
                 break;
@@ -652,7 +654,7 @@ class PlayOneCategoryPageController{
     public recCheckAnswer_Click = function (ev: Event) {
         if (ev.type === "keyup" && (<KeyboardEvent>ev).key.toLowerCase() !== "enter")
             return;
-        if (PlayOneCategoryPageController.Current.isSpeechRecognitionRunning)
+        if (PlayOneCategoryPageController.Current.speechRecogMetadata.isSpeechRecognitionRunning)
             return;
         //* [2016-07-21 11:54] In order to make people easier to remember the stuff by their hearing, force it to pronounce it.
         if (PlayOneCategoryPageController.Current.selWCard)
@@ -682,9 +684,9 @@ class PlayOneCategoryPageController{
                 }
             });
         };
-        if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence) {
+        if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.speechRecogMetadata.recInputSentence) {
             var Answers = PlayOneCategoryPageController.Current.selWCard.cardInfo.Ans_KeyIn;
-            var stInput = PlayOneCategoryPageController.Current.recInputSentence.trim();
+            var stInput = PlayOneCategoryPageController.Current.speechRecogMetadata.recInputSentence.trim();
             var isCorrect = false;
             for (var i0: number = 0; i0 < Answers.length; i0++) {
                 if (Answers[i0].trim() === stInput) {
@@ -716,55 +718,16 @@ class PlayOneCategoryPageController{
         }
         if (!GlobalVariables.isHavingSpeechRecognier)
             return;
-        if (PlayOneCategoryPageController.Current.isSpeechRecognitionRunning) {
-            GlobalVariables.speechRecognizer.stop();
-            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
-            return;
-        } else {
-            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = true;
-            var selWCard = this.selWCard;
-            if (GlobalVariables.isHavingSpeechRecognier && selWCard) {
-                var SR = GlobalVariables.speechRecognizer;
-                var grammar: string = "#JSGF V1.0; grammar sentences; public <x> =" +
-                    SpeechRecognizerHelper.SentenceToGrammarString(selWCard.cardInfo.Ans_Recog[0]);
-                for (var i0: number = 1; i0 < selWCard.cardInfo.Ans_Recog.length; i0++) {
-                    grammar += "|" + selWCard.cardInfo.Ans_Recog[i0];
-                }
-                grammar += ";";
 
-                var sRList = new GlobalVariables.SpeechGrammarList() as SpeechGrammarList;
-                sRList.addFromString(grammar, 1);
-                SR.grammars = sRList;
-                SR.lang = PlayOneCategoryPageController.Current.SynLang;
-                SR.continuous = false;
-                SR.interimResults = true;
-                SR.maxAlternatives = 1;
-                var hasGot = false;
-                SR.onresult = (ev1: SpeechRecognitionEvent) => {
-                    PlayOneCategoryPageController.scope.$apply(() => {
-                        if (ev1.results[0][0].confidence > 0.9)
-                            hasGot = true;
-                        PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript+" "+ev1.results[0][0].confidence;
-                    });
-                    if (ev1.results[0].isFinal) {
-                        PlayOneCategoryPageController.scope.$apply(() => {
-                            PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript;
-                            if (hasGot)
-                                PlayOneCategoryPageController.Current.recInputSentence = selWCard.cardInfo.Ans_KeyIn[0];
-                            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
-                        });
-                    }
-                };
-                var onEnd = (ev) => {
-                    PlayOneCategoryPageController.scope.$apply(() => {
-                        PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
-                    });
-                };
-                $(SR).one("end", onEnd);
-
-                SR.start();
-            }
-        }
+        var selWCard = this.selWCard;
+        if(selWCard)
+            SpeechRecognizerHelper.StartSpeechRecognition(
+                PlayOneCategoryPageController.Current.speechRecogMetadata,
+                selWCard.cardInfo.Ans_Recog,
+                selWCard.cardInfo.Ans_KeyIn,
+                PlayOneCategoryPageController.Current.SynLang,
+                PlayOneCategoryPageController.scope
+            );
     }
     //#endregion *EVENTS
 

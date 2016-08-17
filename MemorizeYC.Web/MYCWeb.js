@@ -21,6 +21,58 @@ var SpeechRecognizerHelper = (function () {
         var newString = oldString.toLowerCase().replace(/[,\.\/;\'\":<>\`~!@#$%\^\&\*\(\)\-\_\+\=\[\]\{\}\\\|]/g, "");
         return newString;
     };
+    SpeechRecognizerHelper.StartSpeechRecognition = function (refMetaData, Ans_Recog, Ans_KeyIn, lang, scope) {
+        if (refMetaData.isSpeechRecognitionRunning) {
+            GlobalVariables.speechRecognizer.stop();
+            refMetaData.isSpeechRecognitionRunning = false;
+            return;
+        }
+        else {
+            refMetaData.isSpeechRecognitionRunning = true;
+            if (GlobalVariables.isHavingSpeechRecognier) {
+                var SR = GlobalVariables.speechRecognizer;
+                var grammar = "#JSGF V1.0; grammar sentences;";
+                if (Ans_Recog && Ans_Recog.length > 0) {
+                    grammar += " public <x> =" + Ans_Recog[0];
+                    for (var i0 = 1; i0 < Ans_Recog.length; i0++) {
+                        grammar += "|" + Ans_Recog[i0];
+                    }
+                }
+                grammar += ";";
+                var sRList = new GlobalVariables.SpeechGrammarList();
+                sRList.addFromString(grammar, 1);
+                SR.grammars = sRList;
+                SR.lang = lang;
+                SR.continuous = false;
+                SR.interimResults = true;
+                SR.maxAlternatives = 1;
+                var hasGot = false;
+                SR.onresult = function (ev1) {
+                    scope.$apply(function () {
+                        if (ev1.results[0][0].confidence > 0.9)
+                            hasGot = true;
+                        refMetaData.recInputSentence = ev1.results[0][0].transcript;
+                        refMetaData.confidence = ev1.results[0][0].confidence;
+                    });
+                    if (ev1.results[0].isFinal) {
+                        scope.$apply(function () {
+                            refMetaData.recInputSentence = ev1.results[0][0].transcript;
+                            if (hasGot && Ans_KeyIn && Ans_KeyIn.length > 0)
+                                refMetaData.recInputSentence = Ans_KeyIn[0];
+                            refMetaData.isSpeechRecognitionRunning = false;
+                        });
+                    }
+                };
+                var onEnd = function (ev) {
+                    scope.$apply(function () {
+                        refMetaData.isSpeechRecognitionRunning = false;
+                    });
+                };
+                $(SR).one("end", onEnd);
+                SR.start();
+            }
+        }
+    };
     return SpeechRecognizerHelper;
 }());
 var SpeechSynthesisHelper = (function () {
@@ -144,6 +196,141 @@ var SpeechSynthesisHelper = (function () {
         { name: "Mei-Jia", voiceURI: "com.apple.ttsbundle.Mei-Jia-compact", lang: "zh-TW", localService: true, "default": true }
     ];
     return SpeechSynthesisHelper;
+}());
+var PageTextHelper = (function () {
+    function PageTextHelper() {
+    }
+    PageTextHelper.InitPageTexts = function (callback, arg) {
+        if (callback === void 0) { callback = null; }
+        if (arg === void 0) { arg = null; }
+        MyFileHelper.FeedTextFromTxtFileToACallBack(PageTextHelper.GetLocaleSubFolder(GlobalVariables.SelPageTextLang.lang, GlobalVariables.LangsInStrings), null, function (stJson) {
+            GlobalVariables.PageTexts = JSON.parse(stJson);
+            if (callback)
+                callback(arg);
+        });
+    };
+    ;
+    PageTextHelper.GetLocaleSubFolder = function (lang, allLangs) {
+        var bLang = PageTextHelper.GetPageTextLang(lang, allLangs).lang;
+        var filePath = GlobalVariables.rootDir + 'Strings/' + bLang + '/' + GlobalVariables.PageTextsJSONFName;
+        return filePath;
+    };
+    PageTextHelper.InitLangsInStrings = function () {
+        var array = [];
+        array.push({ lang: 'zh-TW', name: '中文' });
+        array.push({ lang: 'en-US', name: 'English' });
+        return array;
+    };
+    PageTextHelper.GetPageTextLang = function (lang, allLangs) {
+        var bufLang = (lang && lang.match(/^zh/i)) ? 'zh-TW' : lang;
+        bufLang = bufLang.replace(/_/g, '-').toLowerCase();
+        for (var i0 = 0; i0 < allLangs.length; i0++) {
+            var eachLang = allLangs[i0];
+            if (bufLang && bufLang.length > 0 && bufLang.indexOf(eachLang.lang.toLowerCase().replace(/_/g, '-')) > -1)
+                return eachLang;
+        }
+        for (var i0 = 0; i0 < allLangs.length; i0++) {
+            var eachLang = allLangs[i0];
+            if (eachLang.lang === 'en-US')
+                return eachLang;
+        }
+    };
+    PageTextHelper.defaultPageTexts = {
+        "PlayOneCategoryPageJSON": {
+            "stShowScore": "<h2>你的得分為{0}，而滿分為{1}</h2>",
+            "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
+            "stNewBackTo0": "<h3>看來你對這個部分沒啥概念，建議你切換到<b>提示</b>模式，等有點概念後再玩配對。</h3>",
+            "stIncLVNotYet": "<h3>太棒了！請 {0} 天後再玩。</h3>",
+            "stIncLV": "<h3>恭喜！升級了！請 {0} 天後再玩。</h3>",
+            "stKeepLV": "<h3>雖然你有進步，可惜還不夠升級，請 {0} 天後再玩一次。</h3>",
+            "stBackTo0": "<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
+            "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
+            "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+            "stAns": "看答案(-15)",
+            "stLink": "超連結",
+            "stShowAns": "允許的答案有：\n{0}",
+            "stMarkForSpeech": "反白想要聽的字，再按Play就可以播放了：",
+            "stHideTbSyn": "將語音模擬的文字列隱藏。",
+            "stHighestScore": "最高分！",
+            "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
+            "stSynVoice": "語音模擬的聲音：",
+            "stContributor": "貢獻者",
+            "stRest": "尚隱藏的卡數：",
+            "stNumWCardShown": "張卡會被顯示",
+            "stckTakeCardRandomly": "隨機取卡",
+            "stCkResizeBg": "連同背景一起縮放",
+            "stResize": "縮放：",
+            "stPlayType": "使用類型",
+            "stHint": "提示",
+            "stPair": "配對",
+            "stKeyIn": "鍵入正解",
+            "stArrange": "排列卡片",
+            "stAudioRate": "音效撥放速率",
+            "stTutor": "互動教學",
+            "stBasic": "基礎",
+            "stStop": "停止",
+            "stHyperLink": "超連結",
+            "stMyLink": "本類別的連結",
+            "stTut0_1_1": "你現在在教學模式下。",
+            "stTut0_1_2": "先按{0}然後選<b>基礎</b>開始本教學。",
+            "stTut0_1_3": "或按{0}來停止此互動教學。",
+            "stTut0To1": "好了！讓我們開始吧！",
+            "stTut1_1": "1.1基礎 - 放大所有卡片",
+            "stTut1_1_1": "按{1}裏頭的{0}來放大所有卡片。",
+            "stTut1_1To2": "太棒了！\n你做到了！",
+            "stTut1_2": "1.2 基礎 - 縮小所有卡片",
+            "stTut1_2_1": "按{1}裏頭的{0}來縮小所有卡片。",
+            "stTut1_2To3": "做得好！",
+            "stTut1_3": "1.3 基礎 - 配對",
+            "stTut1_3_0": "請先按 {0}<sub>播放</sub> 或 {1}<sub>撥下個</sub>。",
+            "stTut1_3_1": "1.3.1 配對 - 點相應的卡",
+            "stTut1_3_1_1": "因為要點相應的卡好消掉該卡，請點 {0}<sub>Hide</sub> 來隱藏此教學。",
+            "stTut1_3To4": "做得好！",
+            "stTut1_4_Title": "1.4 基礎 - 換語音模擬的語音",
+            "stTut1_4_Content": "按一下{1}鈕，然後選{0}鈕旁邊的下拉式選單選擇語音。",
+            "stTut1_4_1_Title": "1.4.1 基礎 - 語音已經換了。",
+            "stTut1_4_1_Content": "按{0}將用你新選的語音來撥放句子。",
+            "stTut1_4To5": "現在你已經知道怎麼換語音了。",
+            "stTut1_5_Title": "1.5 基礎 - 換卡",
+            "stTut1_5_Content": "因為怕卡片一次顯示太多會不好找，所以限定一次只顯示'{0}'張卡，若要立刻顯示未顯示的，請按{2}中的{1}來換卡。此外，顯示卡數'{0}'是可以自己修改的喔！",
+            "stTut1_5To6": "現在，你知道怎麼換卡了！",
+            "stTut1_6_Title": "1.6 基礎 - 顯示額外訊息",
+            "stTut1_6_Content": "首先，請先點{0}<sub>Hide</sub>鈕隱藏本教學。<br/> 然後對任何卡雙擊({1})就會跳出一個畫面顯示額外的訊息了。<br/>",
+            "stTut1_6To7": "照理說，它會跳出一個Popup顯示額外訊息，如果沒有，那就是該卡片沒有額外訊息。",
+            "stTut2_0_Title": "2.1 提示： 取得卡片的訊息",
+            "stTut2_0_Content": "按{1}裡的{0}<sub>提示</sub>鈕來進入提示模式。",
+            "stTut2_1_Title": "2.1 提示： 顯示單張卡的訊息",
+            "stTut2_1_Content": "先按{0}後，然後請按任意一張卡片。它會顯示它的相應句子。",
+            "stTut2_1To2": "等一下就會在下方的文字列看到相對應的句子。",
+            "stTut2_2_Title": "2.2 提示：依序顯示卡片們相應訊息",
+            "stTut2_2_Content": "首先，按{0}會依序由<b>2.1</b>所選的卡片開始撥放卡片訊息。<br/> 按{1}則會暫停依序播放。",
+            "stTut2_2To3": "現在，你已經知道怎麼依序顯示卡片們相應的句子了。",
+            "stTut3_0_Title": "3. 鍵入正解： 利用鍵入正解消除卡片",
+            "stTut3_0_Content": "按{1}裡的{0}<sub>鍵入正解</sub>鈕來進入鍵入正解模式。",
+            "stTut3_1_Title": "3.1 鍵入正解： 點選一張卡",
+            "stTut3_1_Content": "先按{0}鈕，然後在選任一張卡片吧！",
+            "stTut3_1_2_Title": "3.1.2 鍵入正解：將正確答案鍵入",
+            "stTut3_1_2_Content": " 請將 <b>{0}</b> 鍵入下面的文字方塊裡，然後按Enter鍵送出答案。",
+            "stTut3_1To2": "做得好！",
+            "stTut_End_Title": "太棒了！全部完成！",
+            "stTut_End_Content": "按{0}來停止本教學。謝謝。"
+        },
+        "ChooseAContainerPageJSON": {
+            "stPlay": "玩",
+            "stSelContainer": "1. 選個容器吧：",
+            "stSelCategory": "2. 再選容器中的一個類別吧：",
+            "stSelLang": "3. 設定用來顯示頁面的語言：",
+            "stSpeechTest": "語音測試"
+        },
+        "SpeechTestPageJSON": {
+            "stRecg": "語音辨識",
+            "stSyn": "語音模擬",
+            "stLang": "選語言：",
+            "stRate": "調速率：",
+            "stIsUseSentence": "用您輸入的句子當答案："
+        }
+    };
+    return PageTextHelper;
 }());
 var PlayTypeEnum = (function () {
     function PlayTypeEnum() {
@@ -603,130 +790,6 @@ var GlobalVariables = (function () {
     GlobalVariables.PageTextsJSONFName = "Resources.json";
     GlobalVariables.AViewCardShownKey = "AViewCardShown";
     return GlobalVariables;
-}());
-var PageTextHelper = (function () {
-    function PageTextHelper() {
-    }
-    PageTextHelper.InitPageTexts = function (callback, arg) {
-        if (callback === void 0) { callback = null; }
-        if (arg === void 0) { arg = null; }
-        MyFileHelper.FeedTextFromTxtFileToACallBack(PageTextHelper.GetLocaleSubFolder(GlobalVariables.SelPageTextLang.lang, GlobalVariables.LangsInStrings), null, function (stJson) {
-            GlobalVariables.PageTexts = JSON.parse(stJson);
-            if (callback)
-                callback(arg);
-        });
-    };
-    ;
-    PageTextHelper.GetLocaleSubFolder = function (lang, allLangs) {
-        var bLang = PageTextHelper.GetPageTextLang(lang, allLangs).lang;
-        var filePath = GlobalVariables.rootDir + 'Strings/' + bLang + '/' + GlobalVariables.PageTextsJSONFName;
-        return filePath;
-    };
-    PageTextHelper.InitLangsInStrings = function () {
-        var array = [];
-        array.push({ lang: 'zh-TW', name: '中文' });
-        array.push({ lang: 'en-US', name: 'English' });
-        return array;
-    };
-    PageTextHelper.GetPageTextLang = function (lang, allLangs) {
-        var bufLang = (lang && lang.match(/^zh/i)) ? 'zh-TW' : lang;
-        bufLang = bufLang.replace(/_/g, '-').toLowerCase();
-        for (var i0 = 0; i0 < allLangs.length; i0++) {
-            var eachLang = allLangs[i0];
-            if (bufLang && bufLang.length > 0 && bufLang.indexOf(eachLang.lang.toLowerCase().replace(/_/g, '-')) > -1)
-                return eachLang;
-        }
-        for (var i0 = 0; i0 < allLangs.length; i0++) {
-            var eachLang = allLangs[i0];
-            if (eachLang.lang === 'en-US')
-                return eachLang;
-        }
-    };
-    PageTextHelper.defaultPageTexts = {
-        "PlayOneCategoryPageJSON": {
-            "stShowScore": "<h2>你的得分為{0}，而滿分為{1}</h2>",
-            "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
-            "stNewBackTo0": "<h3>看來你對這個部分沒啥概念，建議你切換到<b>提示</b>模式，等有點概念後再玩配對。</h3>",
-            "stIncLVNotYet": "<h3>太棒了！請 {0} 天後再玩。</h3>",
-            "stIncLV": "<h3>恭喜！升級了！請 {0} 天後再玩。</h3>",
-            "stKeepLV": "<h3>雖然你有進步，可惜還不夠升級，請 {0} 天後再玩一次。</h3>",
-            "stBackTo0": "<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
-            "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
-            "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
-            "stMarkForSpeech": "反白想要聽的字，再按Play就可以播放了：",
-            "stHideTbSyn": "將語音模擬的文字列隱藏。",
-            "stHighestScore": "最高分！",
-            "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
-            "stSynVoice": "語音模擬的聲音：",
-            "stContributor": "貢獻者",
-            "stRest": "尚隱藏的卡數：",
-            "stNumWCardShown": "張卡會被顯示",
-            "stckTakeCardRandomly": "隨機取卡",
-            "stCkResizeBg": "連同背景一起縮放",
-            "stResize": "縮放：",
-            "stPlayType": "使用類型",
-            "stHint": "提示",
-            "stPair": "配對",
-            "stKeyIn": "鍵入正解",
-            "stArrange": "排列卡片",
-            "stAudioRate": "音效撥放速率",
-            "stTutor": "互動教學",
-            "stBasic": "基礎",
-            "stStop": "停止",
-            "stHyperLink": "超連結",
-            "stMyLink": "本類別的連結",
-            "stTut0_1_1": "你現在在教學模式下。",
-            "stTut0_1_2": "先按{0}然後選<b>基礎</b>開始本教學。",
-            "stTut0_1_3": "或按{0}來停止此互動教學。",
-            "stTut0To1": "好了！讓我們開始吧！",
-            "stTut1_1": "1.1基礎 - 放大所有卡片",
-            "stTut1_1_1": "按{1}裏頭的{0}來放大所有卡片。",
-            "stTut1_1To2": "太棒了！\n你做到了！",
-            "stTut1_2": "1.2 基礎 - 縮小所有卡片",
-            "stTut1_2_1": "按{1}裏頭的{0}來縮小所有卡片。",
-            "stTut1_2To3": "做得好！",
-            "stTut1_3": "1.3 基礎 - 配對",
-            "stTut1_3_0": "請先按 {0}<sub>播放</sub> 或 {1}<sub>撥下個</sub>。",
-            "stTut1_3_1": "1.3.1 配對 - 點相應的卡",
-            "stTut1_3_1_1": "因為要點相應的卡好消掉該卡，請點 {0}<sub>Hide</sub> 來隱藏此教學。",
-            "stTut1_3To4": "做得好！",
-            "stTut1_4_Title": "1.4 基礎 - 換語音模擬的語音",
-            "stTut1_4_Content": "按一下{1}鈕，然後選{0}鈕旁邊的下拉式選單選擇語音。",
-            "stTut1_4_1_Title": "1.4.1 基礎 - 語音已經換了。",
-            "stTut1_4_1_Content": "按{0}將用你新選的語音來撥放句子。",
-            "stTut1_4To5": "現在你已經知道怎麼換語音了。",
-            "stTut1_5_Title": "1.5 基礎 - 換卡",
-            "stTut1_5_Content": "因為怕卡片一次顯示太多會不好找，所以限定一次只顯示'{0}'張卡，若要立刻顯示未顯示的，請按{2}中的{1}來換卡。此外，顯示卡數'{0}'是可以自己修改的喔！",
-            "stTut1_5To6": "現在，你知道怎麼換卡了！",
-            "stTut1_6_Title": "1.6 基礎 - 顯示額外訊息",
-            "stTut1_6_Content": "首先，請先點{0}<sub>Hide</sub>鈕隱藏本教學。<br/> 然後對任何卡雙擊({1})就會跳出一個畫面顯示額外的訊息了。<br/>",
-            "stTut1_6To7": "照理說，它會跳出一個Popup顯示額外訊息，如果沒有，那就是該卡片沒有額外訊息。",
-            "stTut2_0_Title": "2.1 提示： 取得卡片的訊息",
-            "stTut2_0_Content": "按{1}裡的{0}<sub>提示</sub>鈕來進入提示模式。",
-            "stTut2_1_Title": "2.1 提示： 顯示單張卡的訊息",
-            "stTut2_1_Content": "先按{0}後，然後請按任意一張卡片。它會顯示它的相應句子。",
-            "stTut2_1To2": "等一下就會在下方的文字列看到相對應的句子。",
-            "stTut2_2_Title": "2.2 提示：依序顯示卡片們相應訊息",
-            "stTut2_2_Content": "首先，按{0}會依序由<b>2.1</b>所選的卡片開始撥放卡片訊息。<br/> 按{1}則會暫停依序播放。",
-            "stTut2_2To3": "現在，你已經知道怎麼依序顯示卡片們相應的句子了。",
-            "stTut3_0_Title": "3. 鍵入正解： 利用鍵入正解消除卡片",
-            "stTut3_0_Content": "按{1}裡的{0}<sub>鍵入正解</sub>鈕來進入鍵入正解模式。",
-            "stTut3_1_Title": "3.1 鍵入正解： 點選一張卡",
-            "stTut3_1_Content": "先按{0}鈕，然後在選任一張卡片吧！",
-            "stTut3_1_2_Title": "3.1.2 鍵入正解：將正確答案鍵入",
-            "stTut3_1_2_Content": " 請將 <b>{0}</b> 鍵入下面的文字方塊裡，然後按Enter鍵送出答案。",
-            "stTut3_1To2": "做得好！",
-            "stTut_End_Title": "太棒了！全部完成！",
-            "stTut_End_Content": "按{0}來停止本教學。謝謝。"
-        },
-        "ChooseAContainerPageJSON": {
-            "stPlay": "玩",
-            "stSelContainer": "1. 選個容器吧：",
-            "stSelCategory": "2. 再選容器中的一個類別吧：",
-            "stSelLang": "3. 設定用來顯示頁面的語言："
-        }
-    };
-    return PageTextHelper;
 }());
 var MyFileHelper = (function () {
     function MyFileHelper() {
@@ -1280,7 +1343,7 @@ var PlayOneCategoryPageController = (function () {
         this.selTextsForSyn = "";
         this.isBackAudioStartLoad = false;
         this.isAudioPlaying = false;
-        this.isSpeechRecognitionRunning = false;
+        this._speechRecogMetadata = { confidence: 0, isSpeechRecognitionRunning: false, recInputSentence: "" };
         this.isBGAlsoChange = true;
         this.defaultCardStyle = { width: "16vw", height: "16vh" };
         this.nImgLoad = 0;
@@ -1418,7 +1481,7 @@ var PlayOneCategoryPageController = (function () {
         this.recCheckAnswer_Click = function (ev) {
             if (ev.type === "keyup" && ev.key.toLowerCase() !== "enter")
                 return;
-            if (PlayOneCategoryPageController.Current.isSpeechRecognitionRunning)
+            if (PlayOneCategoryPageController.Current.speechRecogMetadata.isSpeechRecognitionRunning)
                 return;
             if (PlayOneCategoryPageController.Current.selWCard)
                 PlayOneCategoryPageController.Current.PlayAudio(PlayOneCategoryPageController.Current.selWCard);
@@ -1443,9 +1506,9 @@ var PlayOneCategoryPageController = (function () {
                     }
                 });
             };
-            if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.recInputSentence) {
+            if (PlayOneCategoryPageController.Current.selWCard && PlayOneCategoryPageController.Current.speechRecogMetadata.recInputSentence) {
                 var Answers = PlayOneCategoryPageController.Current.selWCard.cardInfo.Ans_KeyIn;
-                var stInput = PlayOneCategoryPageController.Current.recInputSentence.trim();
+                var stInput = PlayOneCategoryPageController.Current.speechRecogMetadata.recInputSentence.trim();
                 var isCorrect = false;
                 for (var i0 = 0; i0 < Answers.length; i0++) {
                     if (Answers[i0].trim() === stInput) {
@@ -1539,7 +1602,7 @@ var PlayOneCategoryPageController = (function () {
         });
         $(this.dlDictateSelected).children(".tbSentence").select(function (ev) {
             var target = ev.target;
-            PlayOneCategoryPageController.Current.selTextsForSyn = target.value.substring(target.selectionStart, target.selectionEnd);
+            PlayOneCategoryPageController.Current.selTextsForSyn = $(target).text().substring(target.selectionStart, target.selectionEnd);
         });
         if ($routeParams["Container"] != undefined)
             GlobalVariables.currentMainFolder = $routeParams["Container"];
@@ -1556,8 +1619,27 @@ var PlayOneCategoryPageController = (function () {
         $(window).on("resize", PlayOneCategoryPageController.Current.onWindowResize);
         if ($(window).height() > $(window).width())
             PlayOneCategoryPageController.oneOverNWindow *= $(window).width() / $(window).height();
-        IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord);
+        IndexedDBHelper.GetARecordAsync(PlayOneCategoryPageController.Current.eachRecord, function () {
+            var history = JSON.parse(PlayOneCategoryPageController.Current.eachRecord.history);
+            var playType;
+            if (history && history.length > 0 && history[history.length - 1].slv > 5) {
+                playType = PlayTypeEnum.rec;
+            }
+            else
+                playType = PlayTypeEnum.syn;
+            PlayOneCategoryPageController.Current.playType = playType;
+        });
     }
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "speechRecogMetadata", {
+        get: function () {
+            return this._speechRecogMetadata;
+        },
+        set: function (value) {
+            this._speechRecogMetadata = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(PlayOneCategoryPageController.prototype, "totalScore", {
         get: function () {
             return this._totalScore;
@@ -1734,11 +1816,11 @@ var PlayOneCategoryPageController = (function () {
         var tBJQuery = $(pPage.dlDictateSelected).children(".tbSentence");
         var texts;
         switch (pPage.playType) {
-            case "syn":
+            case PlayTypeEnum.syn:
                 texts = $("#tbSyn").text();
                 tBJQuery.text(texts);
                 break;
-            case "hint":
+            case PlayTypeEnum.hint:
                 texts = $("#tbHint").text();
                 tBJQuery.text(texts);
                 break;
@@ -1818,54 +1900,9 @@ var PlayOneCategoryPageController = (function () {
         }
         if (!GlobalVariables.isHavingSpeechRecognier)
             return;
-        if (PlayOneCategoryPageController.Current.isSpeechRecognitionRunning) {
-            GlobalVariables.speechRecognizer.stop();
-            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
-            return;
-        }
-        else {
-            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = true;
-            var selWCard = this.selWCard;
-            if (GlobalVariables.isHavingSpeechRecognier && selWCard) {
-                var SR = GlobalVariables.speechRecognizer;
-                var grammar = "#JSGF V1.0; grammar sentences; public <x> =" +
-                    SpeechRecognizerHelper.SentenceToGrammarString(selWCard.cardInfo.Ans_Recog[0]);
-                for (var i0 = 1; i0 < selWCard.cardInfo.Ans_Recog.length; i0++) {
-                    grammar += "|" + selWCard.cardInfo.Ans_Recog[i0];
-                }
-                grammar += ";";
-                var sRList = new GlobalVariables.SpeechGrammarList();
-                sRList.addFromString(grammar, 1);
-                SR.grammars = sRList;
-                SR.lang = PlayOneCategoryPageController.Current.SynLang;
-                SR.continuous = false;
-                SR.interimResults = true;
-                SR.maxAlternatives = 1;
-                var hasGot = false;
-                SR.onresult = function (ev1) {
-                    PlayOneCategoryPageController.scope.$apply(function () {
-                        if (ev1.results[0][0].confidence > 0.9)
-                            hasGot = true;
-                        PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript + " " + ev1.results[0][0].confidence;
-                    });
-                    if (ev1.results[0].isFinal) {
-                        PlayOneCategoryPageController.scope.$apply(function () {
-                            PlayOneCategoryPageController.Current.recInputSentence = ev1.results[0][0].transcript;
-                            if (hasGot)
-                                PlayOneCategoryPageController.Current.recInputSentence = selWCard.cardInfo.Ans_KeyIn[0];
-                            PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
-                        });
-                    }
-                };
-                var onEnd = function (ev) {
-                    PlayOneCategoryPageController.scope.$apply(function () {
-                        PlayOneCategoryPageController.Current.isSpeechRecognitionRunning = false;
-                    });
-                };
-                $(SR).one("end", onEnd);
-                SR.start();
-            }
-        }
+        var selWCard = this.selWCard;
+        if (selWCard)
+            SpeechRecognizerHelper.StartSpeechRecognition(PlayOneCategoryPageController.Current.speechRecogMetadata, selWCard.cardInfo.Ans_Recog, selWCard.cardInfo.Ans_KeyIn, PlayOneCategoryPageController.Current.SynLang, PlayOneCategoryPageController.scope);
     };
     PlayOneCategoryPageController.prototype.SetGlobalScore = function (wcards) {
         this.glScore = this.maxDelScore * wcards.length;
@@ -2418,9 +2455,75 @@ var AContainer = (function () {
     ;
     return AContainer;
 }());
+var SpeechTestPageController = (function () {
+    function SpeechTestPageController($scope, $routeParams) {
+        this.rate2PowN = 0;
+        this.sentence = "This is a test.";
+        this.RecogMetaData = { confidence: 0, isSpeechRecognitionRunning: false, recInputSentence: "" };
+        this.isUseSentenceForRecog = false;
+        SpeechTestPageController.Current = this;
+        SpeechTestPageController.scope = $scope;
+        $scope["Math"] = window["Math"];
+        if (GlobalVariables.synthesis)
+            SpeechSynthesisHelper.getAllVoices(function () {
+                SpeechTestPageController.scope.$apply(function () {
+                    SpeechTestPageController.Current.allSynVoices = GlobalVariables.allVoices;
+                    var voice;
+                    if (GlobalVariables.allVoices && GlobalVariables.allVoices.length > 0)
+                        voice = SpeechSynthesisHelper.getSynVoiceFromLang('en-US');
+                    if (voice)
+                        SpeechTestPageController.Current.currentSynVoice = voice;
+                });
+            });
+        var renewPageTexts = function () {
+            SpeechTestPageController.scope.$apply(function () {
+                SpeechTestPageController.Current.thisPageTexts = null;
+            });
+            $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        };
+        $(document).off(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        $(document).on(GlobalVariables.PageTextChangeKey, renewPageTexts);
+        SpeechRecognizerHelper.iniSpeechRecognition();
+    }
+    Object.defineProperty(SpeechTestPageController.prototype, "thisPageTexts", {
+        get: function () {
+            if (!GlobalVariables.PageTexts)
+                GlobalVariables.PageTexts = PageTextHelper.defaultPageTexts;
+            return GlobalVariables.PageTexts.SpeechTestPageJSON;
+        },
+        set: function (value) {
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SpeechTestPageController.prototype, "isHavingSpeechRecognier", {
+        get: function () {
+            return GlobalVariables.isHavingSpeechRecognier;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    SpeechTestPageController.prototype.onSynPlay_Click = function () {
+        if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
+            if (!SpeechTestPageController.Current.sentence || SpeechTestPageController.Current.sentence.length === 0) {
+                alert('Input something at first.');
+                return;
+            }
+            if (GlobalVariables.synthesis.paused)
+                GlobalVariables.synthesis.resume();
+            SpeechSynthesisHelper.Speak(SpeechTestPageController.Current.sentence, SpeechTestPageController.Current.currentSynVoice.lang, SpeechTestPageController.Current.currentSynVoice, Math.pow(2, SpeechTestPageController.Current.rate2PowN));
+        }
+    };
+    SpeechTestPageController.prototype.onRecog_Click = function () {
+        var arrayForRecog = (SpeechTestPageController.Current.isUseSentenceForRecog) ? [SpeechTestPageController.Current.sentence] : [];
+        SpeechRecognizerHelper.StartSpeechRecognition(SpeechTestPageController.Current.RecogMetaData, arrayForRecog, arrayForRecog, SpeechTestPageController.Current.currentSynVoice.lang, SpeechTestPageController.scope);
+    };
+    return SpeechTestPageController;
+}());
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 app.controller('PlayOneCategoryPageController', ['$scope', '$routeParams', PlayOneCategoryPageController]);
 app.controller('ChooseAContainerPageController', ['$scope', '$routeParams', ChooseAContainerPageController]);
+app.controller('SpeechTestPageController', ['$scope', '$routeParams', SpeechTestPageController]);
 app.config(function ($routeProvider, $locationProvider) {
     if (typeof (Storage) !== "undefined" && localStorage[GlobalVariables.IsShownTutorKey] === undefined) {
         localStorage[GlobalVariables.IsShownTutorKey] = GlobalVariables.isTutorMode;
@@ -2446,6 +2549,11 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/', {
         templateUrl: GlobalVariables.chooseAContainerHtml,
         controller: 'ChooseAContainerPageController',
+        controllerAs: 'ctrl'
+    })
+        .when('/SpeechTest', {
+        templateUrl: GlobalVariables.speechTestHtml,
+        controller: 'SpeechTestPageController',
         controllerAs: 'ctrl'
     });
 });
@@ -2637,6 +2745,7 @@ var CardsHelper = (function () {
         var btns = new Array();
         var isLinking = false;
         var isDescripted = false;
+        var isRecMode = (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.rec);
         var inStr1, inStr2;
         if (wcard.cardInfo.Link) {
             inStr1 = wcard.cardInfo.Link;
@@ -2650,7 +2759,8 @@ var CardsHelper = (function () {
             isLinking = false;
         if (isLinking) {
             btns.push({
-                text: 'Link',
+                text: PlayOneCategoryPageController.Current.thisPageTexts.stLink,
+                icons: { primary: "ui-icon-link" },
                 click: function () {
                     window.open(inStr1);
                     $(diEle).dialog('close');
@@ -2667,7 +2777,24 @@ var CardsHelper = (function () {
         }
         else
             isDescripted = false;
-        if (isLinking || isDescripted) {
+        if (isRecMode) {
+            btns.push({
+                text: PlayOneCategoryPageController.Current.thisPageTexts.stAns,
+                icons: { primary: "ui-icon-comment" },
+                click: function () {
+                    var answers = "\"" + wcard.cardInfo.Ans_KeyIn[0] + "\"";
+                    for (var i0 = 1; i0 < wcard.cardInfo.Ans_KeyIn.length; i0++) {
+                        answers += "\n" + "\"" + wcard.cardInfo.Ans_KeyIn[i0] + "\"";
+                    }
+                    PlayOneCategoryPageController.scope.$apply(function () {
+                        PlayOneCategoryPageController.Current.totalScore -= 15;
+                    });
+                    window.alert(PlayOneCategoryPageController.Current.thisPageTexts.stShowAns.replace('{0}', answers));
+                    $(diEle).dialog('close');
+                }
+            });
+        }
+        if (isLinking || isDescripted || isRecMode) {
             $(diEle).dialog({
                 buttons: btns
             });

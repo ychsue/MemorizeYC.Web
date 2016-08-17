@@ -7,6 +7,10 @@
             <h3 ng-bind="ctrl.thisPageTexts.stSelLang"></h3>
             <select ng-model="ctrl.SelPageTextLang" ng-click="$event.stopPropagation();"
                     ng-options="c.name for c in ctrl.LangsInString"></select>
+            <h3 ng-bind="ctrl.thisPageTexts.stSpeechTest"></h3>
+            <div>
+                <a href="#/SpeechTest">Speech Test</a>
+            </div>
         </div>
     </div>
 </nav>

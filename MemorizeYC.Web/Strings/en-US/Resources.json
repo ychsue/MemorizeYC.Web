@@ -10,6 +10,10 @@
     "stNoteForKeyIn": "<h4>Note: In <b>KeyIn</b> mode, you will get higher score.</h4>",
     "stHandWriting": "<h4>How about use hand writing to input the answer?</h4>",
 
+    "stAns": "Ans(-15)",
+    "stLink": "Link",
+    "stShowAns": "Available answers:\n{0}",
+
     "stMarkForSpeech": "Mark word(s) to synthesize it:",
     "stHideTbSyn": "Hide the text bar of synthesis.",
 
@@ -82,6 +86,14 @@
     "stPlay": "Play",
     "stSelContainer": "1. Select a Container:",
     "stSelCategory": "2. Select a Category:",
-    "stSelLang": "3. Select a Langage for Pages' view:"
+    "stSelLang": "3. Select a Langage for Pages' view:",
+    "stSpeechTest": "Speech Test"
+  },
+  "SpeechTestPageJSON": {
+    "stRecg": "Speech Recognition:",
+    "stSyn": "Speech Synthesis:",
+    "stLang": "Language:",
+    "stRate": "Rate:",
+    "stIsUseSentence": "Use your input sentence as the answer:"
   }
 }

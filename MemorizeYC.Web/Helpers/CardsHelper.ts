@@ -170,6 +170,7 @@ class CardsHelper {
         var btns = new Array();
         var isLinking = false;
         var isDescripted = false;
+        var isRecMode = (PlayOneCategoryPageController.Current.playType===PlayTypeEnum.rec);
         var inStr1, inStr2: string;
         //* [2016-05-26 10:18] Check whether it has a link
         if (wcard.cardInfo.Link) {
@@ -185,7 +186,8 @@ class CardsHelper {
 
         if (isLinking) {
             btns.push({
-                text: 'Link',
+                text: PlayOneCategoryPageController.Current.thisPageTexts.stLink,
+                icons: { primary: "ui-icon-link" },
                 click: function () {
                     window.open(inStr1);
                     $(diEle).dialog('close');
@@ -205,18 +207,26 @@ class CardsHelper {
         else
             isDescripted = false;
 
-        //if (isDescripted) {
-        //    btns.push({
-        //        text: 'Description',
-        //        click: function () {
-        //            window.alert(inStr2);
-        //            $(diEle).dialog('close');
-        //        }
-        //    });
-        //}
+        if (isRecMode) {
+            btns.push({
+                text: PlayOneCategoryPageController.Current.thisPageTexts.stAns,
+                icons: { primary: "ui-icon-comment"},
+                click: function () {
+                    var answers = "\"" + wcard.cardInfo.Ans_KeyIn[0] + "\"";
+                    for (var i0: number = 1; i0 < wcard.cardInfo.Ans_KeyIn.length; i0++) {
+                        answers += "\n" + "\"" + wcard.cardInfo.Ans_KeyIn[i0] + "\"";
+                    }
+                    PlayOneCategoryPageController.scope.$apply(() => {
+                        PlayOneCategoryPageController.Current.totalScore -= 15;
+                    });
+                    window.alert(PlayOneCategoryPageController.Current.thisPageTexts.stShowAns.replace('{0}',answers));
+                    $(diEle).dialog('close');
+                }
+            });
+        }
 
         //* [2016-05-26 10:23] Open the dialog
-        if (isLinking || isDescripted) {
+        if (isLinking || isDescripted ||isRecMode) {
             $(diEle).dialog({
                 buttons: btns
             });

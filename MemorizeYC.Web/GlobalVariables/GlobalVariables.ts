@@ -18,6 +18,7 @@ class GlobalVariables {
     public static rootDir: string;
     public static playOneCategoryHtml: string;
     public static chooseAContainerHtml: string;
+    public static speechTestHtml: string;
     public static containers: Array<AContainer>;
     public static currentMainFolder: string;
     public static currentCategoryFolder: string;

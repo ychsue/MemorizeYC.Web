@@ -1,0 +1,23 @@
+﻿<h1>{{ctrl.thisPageTexts.stSyn}}</h1>
+<span>{{ctrl.thisPageTexts.stLang}}</span>
+<select ng-model="ctrl.currentSynVoice" ng-options="voice.name+'('+voice.lang+')' for voice in ctrl.allSynVoices">
+</select>
+<button ng-click="ctrl.onSynPlay_Click()" ng-show="ctrl.currentSynVoice">Play</button>
+<textarea style="max-height:50vh;width:100vw;" ng-model="ctrl.sentence">This is a test.</textarea>
+<h3>{{ctrl.thisPageTexts.stRate}}<span ng-bind="Math.pow(2,ctrl.rate2PowN)" style="margin-left:4px;"></span></h3>
+<input type="range" min="-2" max="2" step="0.5" ng-model="ctrl.rate2PowN"/>
+<div ng-show="ctrl.isHavingSpeechRecognier">
+    <h1>{{ctrl.thisPageTexts.stRecg}}</h1>
+    <button ng-click="ctrl.onRecog_Click()">
+        <img src="./Images/microphone.svg" alt="microphone" style="height:40px" ng-hide="ctrl.RecogMetaData.isSpeechRecognitionRunning" />
+        <svg height="40" width="40" ng-show="ctrl.RecogMetaData.isSpeechRecognitionRunning">
+            <circle cx="20" cy="20" r="12" stroke="black" stroke-width="3" fill="red" />
+        </svg>
+    </button>
+    <div>Confidence:{{ctrl.RecogMetaData.confidence}}</div>
+    <label>
+        <input type="checkbox" ng-model="ctrl.isUseSentenceForRecog" />
+        {{ctrl.thisPageTexts.stIsUseSentence}}
+    </label>
+    <div style="max-height:20vh;border:4px groove red;"> {{ctrl.RecogMetaData.recInputSentence}}</div>
+</div>

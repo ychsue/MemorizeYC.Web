@@ -5,12 +5,14 @@
 /// <reference path="gspages/chooseacontainerpage.ts" />
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="helpers/indexeddbhelper.ts" />
+/// <reference path="gspages/speechtestpage.ts" />
 
 var app = angular.module('MYCWeb', ['ngRoute', 'ngAnimate']);
 
 //Controllers
 app.controller('PlayOneCategoryPageController', ['$scope','$routeParams', PlayOneCategoryPageController]);
 app.controller('ChooseAContainerPageController', ['$scope','$routeParams',ChooseAContainerPageController]);
+app.controller('SpeechTestPageController', ['$scope', '$routeParams', SpeechTestPageController]);
 
 //Config
 app.config(function ($routeProvider, $locationProvider) {
@@ -38,7 +40,7 @@ app.config(function ($routeProvider, $locationProvider) {
         btStop: $("#gdTutorial #btStop").get(0) as HTMLButtonElement
     };
 
-    $routeProvider
+    (<angular.route.IRouteProvider>$routeProvider)
         .when('/Play', {
             templateUrl: GlobalVariables.playOneCategoryHtml,
             controller: 'PlayOneCategoryPageController',
@@ -47,6 +49,11 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/', {
             templateUrl: GlobalVariables.chooseAContainerHtml,
             controller: 'ChooseAContainerPageController',
+            controllerAs: 'ctrl'
+        })
+        .when('/SpeechTest', <ng.route.IRoute>{
+            templateUrl: GlobalVariables.speechTestHtml,
+            controller: 'SpeechTestPageController',
             controllerAs: 'ctrl'
         });
 
