@@ -72,9 +72,18 @@ class CardsHelper {
         PlayOneCategoryPageController.Current.defaultCardWidth = wcards[0].viewCard.clientWidth;
     }
 
+    /**
+     * Because I want to let the @mainFolder(Container) as the root directory / and @categoryFolder as its local directory, this function is used to do this translation
+     * @param cardPath It is the path that you want to translate to the real address
+     * @param mainFolder The folder of the container
+     * @param categoryFolder The subFolder of the category
+     */
     public static GetTreatablePath(cardPath: string, mainFolder: string = "", categoryFolder: string = ""):string {
         var newPath: string;
         var hasProtocol: boolean = true;
+
+        if (!cardPath)
+            return cardPath;
 
         if (cardPath.toLowerCase().indexOf("http://") === 0 || cardPath.toLowerCase().indexOf("https://") === 0)
             newPath = cardPath;

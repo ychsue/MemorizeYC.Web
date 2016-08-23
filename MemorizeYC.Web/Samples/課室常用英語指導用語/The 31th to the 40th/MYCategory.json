@@ -1,15 +1,16 @@
 ﻿{
   "Cards": [
-    {"FileName":"Don't stare out the window..box"},
-    {"FileName":"Please turn off the light and fans..box"},
-    {"FileName":"Please turn on the light and fans..box"},
-    {"FileName":"Plug in the microphone..box"},
-    {"FileName":"Plug in the projector..box"},
-    {"FileName":"Switch off the microphone..box"},
-    {"FileName":"Switch off the projector..box"},
-    {"FileName":"Switch on the microphone..box"},
-    {"FileName":"Switch on the projector..box"},
+    { "FileName": "Don't stare out the window..box" },
+    { "FileName": "Please turn off the light and fans..box" },
+    { "FileName": "Please turn on the light and fans..box" },
+    { "FileName": "Plug in the microphone..box" },
+    { "FileName": "Plug in the projector..box" },
+    { "FileName": "Switch off the microphone..box" },
+    { "FileName": "Switch off the projector..box" },
+    { "FileName": "Switch on the microphone..box" },
+    { "FileName": "Switch on the projector..box" },
     { "FileName": "Try to concentrate now..box" }
   ],
+  "Link": "/課室常用英語指導用語.html",
   "SynLang": "en-US"
 }

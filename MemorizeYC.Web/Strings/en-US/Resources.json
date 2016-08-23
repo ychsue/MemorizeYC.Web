@@ -1,5 +1,6 @@
 ﻿{
   "PlayOneCategoryPageJSON": {
+    "stBack": "Back",
     "stShowScore": "<h2>Your score is {0}/{1}</h2>",
     "stNewUpToOne": "<h3>Congradulation! Your level is 1 now. Play again tomorrow.</h3>",
     "stNewBackTo0": "<h3>It seems that you have no idea about this category. You have better to switch to <b>Hint mode</b> to get a more clear concept of this category. </h3>",

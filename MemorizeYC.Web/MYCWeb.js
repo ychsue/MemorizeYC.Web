@@ -237,6 +237,7 @@ var PageTextHelper = (function () {
     };
     PageTextHelper.defaultPageTexts = {
         "PlayOneCategoryPageJSON": {
+            "stBack": "回上頁",
             "stShowScore": "<h2>你的得分為{0}，而滿分為{1}</h2>",
             "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
             "stNewBackTo0": "<h3>看來你對這個部分沒啥概念，建議你切換到<b>提示</b>模式，等有點概念後再玩配對。</h3>",
@@ -1343,7 +1344,7 @@ var PlayOneCategoryPageController = (function () {
         this.selTextsForSyn = "";
         this.isBackAudioStartLoad = false;
         this.isAudioPlaying = false;
-        this._speechRecogMetadata = { confidence: 0, isSpeechRecognitionRunning: false, recInputSentence: "" };
+        this.speechRecogMetadata = { confidence: 0, isSpeechRecognitionRunning: false, recInputSentence: "" };
         this.isBGAlsoChange = true;
         this.defaultCardStyle = { width: "16vw", height: "16vh" };
         this.nImgLoad = 0;
@@ -1569,10 +1570,7 @@ var PlayOneCategoryPageController = (function () {
                     text: "OK",
                     icons: { primary: "ui-icon-check" },
                     click: function () {
-                        if (history.length > 1)
-                            history.back();
-                        else
-                            location.href = "/";
+                        PlayOneCategoryPageController.Current.onGoBack();
                         $(PlayOneCategoryPageController.Current.dlFinish).dialog('close');
                     }
                 }, {
@@ -1630,16 +1628,6 @@ var PlayOneCategoryPageController = (function () {
             PlayOneCategoryPageController.Current.playType = playType;
         });
     }
-    Object.defineProperty(PlayOneCategoryPageController.prototype, "speechRecogMetadata", {
-        get: function () {
-            return this._speechRecogMetadata;
-        },
-        set: function (value) {
-            this._speechRecogMetadata = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(PlayOneCategoryPageController.prototype, "totalScore", {
         get: function () {
             return this._totalScore;
@@ -1811,6 +1799,12 @@ var PlayOneCategoryPageController = (function () {
         $(document).off(GlobalVariables.AViewCardShownKey, PlayOneCategoryPageController.Current.onAViewCardShown);
         $(PlayOneCategoryPageController.Current.dlDictateSelected).children(".tbSentence").off("select");
     };
+    PlayOneCategoryPageController.prototype.onGoBack = function () {
+        if (history.length > 1)
+            history.back();
+        else
+            location.href = "/";
+    };
     PlayOneCategoryPageController.prototype.onTB_Click = function () {
         var pPage = PlayOneCategoryPageController.Current;
         var tBJQuery = $(pPage.dlDictateSelected).children(".tbSentence");
@@ -1895,7 +1889,7 @@ var PlayOneCategoryPageController = (function () {
     PlayOneCategoryPageController.prototype.StartSpeechRecognition_Click = function (ev) {
         ev.stopPropagation();
         if (!this.selWCard) {
-            this.recCheckAnswer_Click(null);
+            this.recCheckAnswer_Click(ev);
             return;
         }
         if (!GlobalVariables.isHavingSpeechRecognier)
@@ -2113,7 +2107,7 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
         });
     });
     CardsHelper.GetWCardsCallback(jObj, restWcards);
-    PlayOneCategoryPageController.Current.hyperLink = jObj.Link;
+    PlayOneCategoryPageController.Current.hyperLink = CardsHelper.GetTreatablePath(jObj.Link, PlayOneCategoryPageController.Current.Container, PlayOneCategoryPageController.Current.CFolder);
     if (jObj["Background"]) {
         var bgSettings = jObj.Background;
         if (bgSettings.ImgStyle) {
@@ -2661,6 +2655,8 @@ var CardsHelper = (function () {
         if (categoryFolder === void 0) { categoryFolder = ""; }
         var newPath;
         var hasProtocol = true;
+        if (!cardPath)
+            return cardPath;
         if (cardPath.toLowerCase().indexOf("http://") === 0 || cardPath.toLowerCase().indexOf("https://") === 0)
             newPath = cardPath;
         else if (cardPath.toLowerCase().indexOf("file://") === 0)

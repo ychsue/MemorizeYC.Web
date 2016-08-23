@@ -712,16 +712,6 @@
     <Content Include="Samples\課室常用英語指導用語\The 51th to the 60th\Repeat after me, please..box" />
     <Content Include="Samples\課室常用英語指導用語\The 51th to the 60th\Sit still!.box" />
     <Content Include="Samples\課室常用英語指導用語\The 51th to the 60th\You may have a 10-minute break..box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Can those in the back see it clearly.box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Don%27t be afraid to make mistakes..box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Don%27t just sit there daydreaming..box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Don%27t zone out..box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Just guess if you are not sure..box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Look at this picture..box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Tell me what you see in this picture..box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\There%27s some room for improvement..box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Who would like to read the sentence.box" />
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\You can take a break when you finish..box" />
     <Content Include="Samples\課室常用英語指導用語\The 71th to the 80th\Don%27t look at others%27 paper..box" />
     <Content Include="Samples\課室常用英語指導用語\The 71th to the 80th\Let me check your answer..box" />
     <Content Include="Samples\課室常用英語指導用語\The 71th to the 80th\Let me check your work..box" />
@@ -753,9 +743,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\課室常用英語指導用語\The 51th to the 60th\MYCategory.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\MYCategory.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\課室常用英語指導用語\The 71th to the 80th\MYCategory.json">
@@ -1261,6 +1248,17 @@
     <Content Include="Samples\Periodic Table 20160801\All Elements\MYCategory.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Can those in the back see it clearly.box" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Don%27t be afraid to make mistakes..box" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Don%27t just sit there daydreaming..box" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Don%27t zone out..box" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Just guess if you are not sure..box" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Look at this picture..box" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\MYCategory.json" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Tell me what you see in this picture..box" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\There%27s some room for improvement..box" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\Who would like to read the sentence.box" />
+    <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\You can take a break when you finish..box" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />

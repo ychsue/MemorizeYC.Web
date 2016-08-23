@@ -4,18 +4,19 @@
       "FileName": "Can anyone point out the mistake.box",
       "Dictate": "Can anyone point out the mistake?"
     },
-			   {"FileName":"Clap your hands..box"},
-			   {"FileName":"Come up and write your answer on the blackboard..box"},
-			   {"FileName":"Copy down these words on your paper..box"},
+    { "FileName": "Clap your hands..box" },
+    { "FileName": "Come up and write your answer on the blackboard..box" },
+    { "FileName": "Copy down these words on your paper..box" },
     {
       "FileName": "Everyone, what do you think.box",
       "Dictate": "Everyone, what do you think?"
     },
-			   {"FileName":"I'm sorry. That's O.K..box"},
-			   {"FileName":"Let's read the article on page 1..box"},
-			   {"FileName":"Let's read the sentence on page 1..box"},
+    { "FileName": "I'm sorry. That's O.K..box" },
+    { "FileName": "Let's read the article on page 1..box" },
+    { "FileName": "Let's read the sentence on page 1..box" },
     { "FileName": "Remember to write your name at the top of the sheet..box" },
     { "FileName": "Write down these words on your paper..box" }
   ],
+  "Link": "/課室常用英語指導用語.html",
   "SynLang": "en-US"
 }

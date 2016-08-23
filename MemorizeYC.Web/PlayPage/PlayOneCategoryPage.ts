@@ -40,13 +40,7 @@ class PlayOneCategoryPageController{
     public isAudioPlaying: boolean = false;
 
     //#region speechRecogMetadata
-    private _speechRecogMetadata: SpeechRecgMetadata = {confidence:0, isSpeechRecognitionRunning:false, recInputSentence:""};
-    get speechRecogMetadata(): SpeechRecgMetadata {
-        return this._speechRecogMetadata;
-    }
-    set speechRecogMetadata(value: SpeechRecgMetadata) {
-        this._speechRecogMetadata = value;
-    }
+    public speechRecogMetadata: SpeechRecgMetadata = {confidence:0, isSpeechRecognitionRunning:false, recInputSentence:""};
     //#endregion speechRecogMetadata
 
     public isBGAlsoChange: boolean = true;
@@ -300,10 +294,7 @@ class PlayOneCategoryPageController{
                 text: "OK",
                 icons: {primary: "ui-icon-check"},
                 click: function () {
-                    if (history.length > 1)
-                        history.back();
-                    else
-                        location.href = "/";
+                    PlayOneCategoryPageController.Current.onGoBack();
                     $(PlayOneCategoryPageController.Current.dlFinish).dialog('close');
                 }
             }, {
@@ -383,6 +374,12 @@ class PlayOneCategoryPageController{
     }
 
     //#region *EVENTS
+    public onGoBack() {
+        if (history.length > 1)
+            history.back();
+        else
+            location.href = "/";
+    }
     public onTB_Click() {
         var pPage = PlayOneCategoryPageController.Current;
         var tBJQuery = $(pPage.dlDictateSelected).children(".tbSentence");
@@ -713,7 +710,7 @@ class PlayOneCategoryPageController{
     public StartSpeechRecognition_Click(ev: Event) {
         ev.stopPropagation();
         if (!this.selWCard) {
-            this.recCheckAnswer_Click(null);
+            this.recCheckAnswer_Click(ev);
             return;
         }
         if (!GlobalVariables.isHavingSpeechRecognier)
@@ -951,7 +948,9 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     });
 
     CardsHelper.GetWCardsCallback(jObj, restWcards); //Get WCards
-    PlayOneCategoryPageController.Current.hyperLink = jObj.Link; //Get HyperLink
+    //PlayOneCategoryPageController.Current.hyperLink = jObj.Link; //Get HyperLink
+    PlayOneCategoryPageController.Current.hyperLink = CardsHelper.GetTreatablePath(jObj.Link,
+        PlayOneCategoryPageController.Current.Container,PlayOneCategoryPageController.Current.CFolder);
     if (jObj["Background"]) {
         var bgSettings = jObj.Background;
         if (bgSettings.ImgStyle) {

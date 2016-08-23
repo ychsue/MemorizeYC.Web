@@ -205,10 +205,12 @@
                         </div>
                     </li>
 
+                    <!--6. For HyperLinks-->
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-header">{{ctrl.thisPageTexts.stHyperLink}}</li>
                     <li>
                         <button class="btn btn-default" ng-click="ctrl.OpenHyperLink_Click()" ng-show="ctrl.hyperLink">{{ctrl.thisPageTexts.stMyLink}}</button>
+                        <button class="btn btn-default" ng-click="ctrl.onGoBack()">{{ctrl.thisPageTexts.stBack}}</button>
                     </li>
                 </ul>
             </div>

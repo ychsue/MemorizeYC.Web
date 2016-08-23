@@ -15,6 +15,7 @@ interface SpeechTestPageJSON {
 }
 
 interface PlayOneCategoryPageJSON {
+    stBack: string;
     stShowScore: string;
     stNewUpToOne: string;
     stNewBackTo0: string;
@@ -165,6 +166,7 @@ class PageTextHelper {
 
     public static defaultPageTexts: PageTextsInterface = {
         "PlayOneCategoryPageJSON": {
+            "stBack": "回上頁",
             "stShowScore": "<h2>你的得分為{0}，而滿分為{1}</h2>",
             "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
             "stNewBackTo0": "<h3>看來你對這個部分沒啥概念，建議你切換到<b>提示</b>模式，等有點概念後再玩配對。</h3>",
