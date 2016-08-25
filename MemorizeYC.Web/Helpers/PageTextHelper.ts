@@ -26,6 +26,8 @@ interface PlayOneCategoryPageJSON {
     stNoteForKeyIn: string;
     stHandWriting: string;
 
+    stClickPlayAtFirst: string;
+
     stAns: string;
     stLink: string;
     stShowAns: string;
@@ -176,6 +178,8 @@ class PageTextHelper {
             "stBackTo0":"<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
             "stNoteForKeyIn":"<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
             "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+
+            "stClickPlayAtFirst": "請先按左下角的'播放'({0})再來配對相應的圖卡。",
 
             "stAns": "看答案(-15)",
             "stLink":"超連結",

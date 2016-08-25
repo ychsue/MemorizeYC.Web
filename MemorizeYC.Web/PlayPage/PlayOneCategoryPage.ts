@@ -387,10 +387,14 @@ class PlayOneCategoryPageController{
         switch (pPage.playType) {
             case PlayTypeEnum.syn:
                 texts = $("#tbSyn").text();
+                if (!texts)
+                    return;
                 tBJQuery.text(texts);
                 break;
             case PlayTypeEnum.hint:
                 texts = $("#tbHint").text();
+                if (!texts)
+                    return;
                 tBJQuery.text(texts);
                 break;
             default:
@@ -441,6 +445,7 @@ class PlayOneCategoryPageController{
             $(WCard.showedWCards[ith].viewCard).removeClass('selWCard');
 
             if (isPausing) {
+                $(WCard.showedWCards[ith].viewCard).addClass('selWCard');
                 return;
             }
 
@@ -1017,11 +1022,9 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
                 else {
                     //** [2016-05-27 16:35] If no synAnsWCard, show a popup to warn the user that they didn't click the play yet.
                     if (!PlayOneCategoryPageController.Current.synAnsWCard) {
-                        //$('#btSynPlay').tooltip({
-                        //    content: "You need to click this button at first!"
-                        //})
-                        //    .tooltip('open');
-
+                        alert(PlayOneCategoryPageController.Current.thisPageTexts.stClickPlayAtFirst
+                            .replace('{0}', "\u25BA")
+                        );
                         return;
                     }
 
@@ -1053,14 +1056,16 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             }
             //* [2016-05-24 10:51] else if it is under recognizer mode
             else if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.rec) {
-                if (prevWCard)
-                    $(prevWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
+                $(".WCard").removeClass(PlayOneCategoryPageController.styleSelWCard);
+                //if (prevWCard)
+                //    $(prevWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
                 $(selWCard.viewCard).addClass(PlayOneCategoryPageController.styleSelWCard);
             }
             //* [2016-05-24 14:40] else if it is under hint mode
             else if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.hint) {
-                if (prevWCard)
-                    $(prevWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
+                $(".WCard").removeClass(PlayOneCategoryPageController.styleSelWCard);
+                //if (prevWCard)
+                //    $(prevWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
                 $(selWCard.viewCard).addClass(PlayOneCategoryPageController.styleSelWCard);
                 PlayOneCategoryPageController.Current.PlayAudio(selWCard);
             }

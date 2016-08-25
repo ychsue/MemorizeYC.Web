@@ -247,6 +247,7 @@ var PageTextHelper = (function () {
             "stBackTo0": "<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
             "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
             "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+            "stClickPlayAtFirst": "請先按左下角的'播放'({0})再來配對相應的圖卡。",
             "stAns": "看答案(-15)",
             "stLink": "超連結",
             "stShowAns": "允許的答案有：\n{0}",
@@ -1812,10 +1813,14 @@ var PlayOneCategoryPageController = (function () {
         switch (pPage.playType) {
             case PlayTypeEnum.syn:
                 texts = $("#tbSyn").text();
+                if (!texts)
+                    return;
                 tBJQuery.text(texts);
                 break;
             case PlayTypeEnum.hint:
                 texts = $("#tbHint").text();
+                if (!texts)
+                    return;
                 tBJQuery.text(texts);
                 break;
             default:
@@ -1861,6 +1866,7 @@ var PlayOneCategoryPageController = (function () {
         var nextPlay = function (ev) {
             $(WCard.showedWCards[ith].viewCard).removeClass('selWCard');
             if (isPausing) {
+                $(WCard.showedWCards[ith].viewCard).addClass('selWCard');
                 return;
             }
             ith++;
@@ -2157,6 +2163,8 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
                 }
                 else {
                     if (!PlayOneCategoryPageController.Current.synAnsWCard) {
+                        alert(PlayOneCategoryPageController.Current.thisPageTexts.stClickPlayAtFirst
+                            .replace('{0}', "\u25BA"));
                         return;
                     }
                     if (PlayOneCategoryPageController.Current.scoreTimerId) {
@@ -2184,13 +2192,11 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
                 }
             }
             else if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.rec) {
-                if (prevWCard)
-                    $(prevWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
+                $(".WCard").removeClass(PlayOneCategoryPageController.styleSelWCard);
                 $(selWCard.viewCard).addClass(PlayOneCategoryPageController.styleSelWCard);
             }
             else if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.hint) {
-                if (prevWCard)
-                    $(prevWCard.viewCard).removeClass(PlayOneCategoryPageController.styleSelWCard);
+                $(".WCard").removeClass(PlayOneCategoryPageController.styleSelWCard);
                 $(selWCard.viewCard).addClass(PlayOneCategoryPageController.styleSelWCard);
                 PlayOneCategoryPageController.Current.PlayAudio(selWCard);
             }

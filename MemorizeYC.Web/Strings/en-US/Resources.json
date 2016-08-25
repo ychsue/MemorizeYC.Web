@@ -11,6 +11,8 @@
     "stNoteForKeyIn": "<h4>Note: In <b>KeyIn</b> mode, you will get higher score.</h4>",
     "stHandWriting": "<h4>How about use hand writing to input the answer?</h4>",
 
+    "stClickPlayAtFirst": "Click 'Play'({0}) button at bottom left at first then tap the matched card.",
+
     "stAns": "Ans(-15)",
     "stLink": "Link",
     "stShowAns": "Available answers:\n{0}",
