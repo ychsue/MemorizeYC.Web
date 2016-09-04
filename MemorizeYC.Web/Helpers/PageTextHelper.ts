@@ -107,6 +107,7 @@ interface ChooseAContainerPageJSON {
     stSelCategory: string;
     stSelLang: string;
     stSpeechTest: string;
+    stUserGuide: string;
 }
 //#endregion PageTextsInterface
 //#region LangInStrings
@@ -258,7 +259,8 @@ class PageTextHelper {
             "stSelContainer": "1. 選個容器吧：",
             "stSelCategory": "2. 再選容器中的一個類別吧：",
             "stSelLang": "3. 設定用來顯示頁面的語言：",
-            "stSpeechTest": "語音測試"
+            "stSpeechTest": "語音測試",
+            "stUserGuide": "使用說明"
         },
         "SpeechTestPageJSON": {
             "stRecg": "語音辨識",

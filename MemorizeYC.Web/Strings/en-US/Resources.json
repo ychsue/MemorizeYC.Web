@@ -90,7 +90,8 @@
     "stSelContainer": "1. Select a Container:",
     "stSelCategory": "2. Select a Category:",
     "stSelLang": "3. Select a Langage for Pages' view:",
-    "stSpeechTest": "Speech Test"
+    "stSpeechTest": "Speech Test",
+    "stUserGuide": "User Guide"
   },
   "SpeechTestPageJSON": {
     "stRecg": "Speech Recognition:",
