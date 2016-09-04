@@ -934,8 +934,8 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     //* [2016-06-17 16:59] Initialize the settings inside the dropdown
     PlayOneCategoryPageController.scope.$apply(function () {
         if (jObj.numWCardShown) PlayOneCategoryPageController.numWCardShown = jObj.numWCardShown;
-        if (jObj.isBGAlsoChange) PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
-        if (jObj.isPickWCardsRandomly) PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
+        if (jObj.isBGAlsoChange!=undefined) PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
+        if (jObj.isPickWCardsRandomly!=undefined) PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
     });
     PlayOneCategoryPageController.Current.SynLang = jObj.SynLang;
     SpeechSynthesisHelper.getAllVoices(() => {
@@ -1113,6 +1113,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     //    newRate = $(window).height() / ($(document).height() * 1.1);
     newRate = Math.min($(window).height() / ($(document).height() * 1), $(window).width() / ($(document).width() * 1));
     CardsHelper.RearrangeCards(showedWcards, PlayOneCategoryPageController.oneOverNWindow,false,true,newRate,false);
+    CardsHelper.RearrangeCards(restWcards, PlayOneCategoryPageController.oneOverNWindow, false, true, newRate, false);
 
     if (PlayOneCategoryPageController.Current.isBGAlsoChange) {
         var bGObj = PlayOneCategoryPageController.Current.imgBackground;

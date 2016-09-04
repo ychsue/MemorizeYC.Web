@@ -2,8 +2,8 @@
 # Script.ps1
 #
 #$rootDir = Read-Host "Please enter the folder"
-$rootDir = "D:\Documents\"
-$TheContainer = "English For Children A"
+$rootDir = "D:\Coding\Projects\MemorizeYC.Web\MemorizeYC.Web\Samples\"
+$TheContainer = "Japanese 日語"
 $ContainerDir =$rootDir+$TheContainer
 
 #Get the Html
