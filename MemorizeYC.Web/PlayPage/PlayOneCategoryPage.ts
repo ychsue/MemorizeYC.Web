@@ -38,6 +38,7 @@ class PlayOneCategoryPageController{
 
     public isBackAudioStartLoad: boolean = false;
     public isAudioPlaying: boolean = false;
+    public isAudioInterruptable: boolean = false;
 
     //#region speechRecogMetadata
     public speechRecogMetadata: SpeechRecgMetadata = {confidence:0, isSpeechRecognitionRunning:false, recInputSentence:""};
@@ -488,10 +489,10 @@ class PlayOneCategoryPageController{
                     stVoice += key +": "+ PlayOneCategoryPageController.Current.currentSynVoice[key] + ";\n";
                 }
                 stVoice += "}";
-                alert("SynLang: " + PlayOneCategoryPageController.Current.SynLang + " ." + "Has allVoices." + "\n" +
+                GlobalVariables.alert("SynLang: " + PlayOneCategoryPageController.Current.SynLang + " ." + "Has allVoices." + "\n" +
                     "CurrentVoice: "+stVoice);
             } else
-                alert("No Voice."+" isIOS="+GlobalVariables.isIOS);
+                GlobalVariables.alert("No Voice."+" isIOS="+GlobalVariables.isIOS);
         });
     }
 
@@ -698,16 +699,16 @@ class PlayOneCategoryPageController{
                 }
             }
             if (!isCorrect) {
-                alert("Your answer is wrong.");
+                GlobalVariables.alert("Your answer is wrong.");
                 PlayOneCategoryPageController.Current.totalScore -= 3;
             }
         }
         else {
             if (PlayOneCategoryPageController.Current.selWCard) {
-                alert("Please input the answer.");
+                GlobalVariables.alert("Please input the answer.");
             }
             else {
-                alert("Click a card at first.");
+                GlobalVariables.alert("Click a card at first.");
             }
         }
     };
@@ -936,6 +937,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         if (jObj.numWCardShown) PlayOneCategoryPageController.numWCardShown = jObj.numWCardShown;
         if (jObj.isBGAlsoChange!=undefined) PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
         if (jObj.isPickWCardsRandomly!=undefined) PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
+        if (jObj.isAudioInterruptable!=undefined) PlayOneCategoryPageController.Current.isAudioInterruptable = jObj.isAudioInterruptable;
     });
     PlayOneCategoryPageController.Current.SynLang = jObj.SynLang;
     SpeechSynthesisHelper.getAllVoices(() => {
@@ -989,8 +991,8 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             //* [2016-05-23 15:45] If it is under synthesizer mode
             if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.syn) {
                 //* [2016-07-21 12:26] Force the user to listen up the whole sentence before they can select the correct card.
-                if (PlayOneCategoryPageController.Current.isAudioPlaying) {
-                    alert(PlayOneCategoryPageController.Current.thisPageTexts.stWaitUtterDone);
+                if (PlayOneCategoryPageController.Current.isAudioPlaying && PlayOneCategoryPageController.Current.isAudioInterruptable) {
+                    GlobalVariables.alert(PlayOneCategoryPageController.Current.thisPageTexts.stWaitUtterDone);
                     return;
                 }
                 if (selWCard === PlayOneCategoryPageController.Current.synAnsWCard) {
@@ -1022,7 +1024,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
                 else {
                     //** [2016-05-27 16:35] If no synAnsWCard, show a popup to warn the user that they didn't click the play yet.
                     if (!PlayOneCategoryPageController.Current.synAnsWCard) {
-                        alert(PlayOneCategoryPageController.Current.thisPageTexts.stClickPlayAtFirst
+                        GlobalVariables.alert(PlayOneCategoryPageController.Current.thisPageTexts.stClickPlayAtFirst
                             .replace('{0}', "\u25BA")
                         );
                         return;

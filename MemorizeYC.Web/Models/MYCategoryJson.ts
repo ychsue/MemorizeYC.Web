@@ -8,6 +8,7 @@ interface MYCategoryJson {
     numWCardShown?: number;
     isPickWCardsRandomly?: boolean;
     isBGAlsoChange?: boolean;
+    isAudioInterruptable?: boolean;
     Link?: string;
 
     //* [2016-06-29 14:40] Added for Speech

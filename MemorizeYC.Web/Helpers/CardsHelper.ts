@@ -228,7 +228,7 @@ class CardsHelper {
                     PlayOneCategoryPageController.scope.$apply(() => {
                         PlayOneCategoryPageController.Current.totalScore -= 15;
                     });
-                    window.alert(PlayOneCategoryPageController.Current.thisPageTexts.stShowAns.replace('{0}',answers));
+                    GlobalVariables.alert(PlayOneCategoryPageController.Current.thisPageTexts.stShowAns.replace('{0}',answers));
                     $(diEle).dialog('close');
                 }
             });

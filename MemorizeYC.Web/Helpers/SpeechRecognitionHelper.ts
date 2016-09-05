@@ -13,7 +13,7 @@
         if (GlobalVariables.isHavingSpeechRecognier && winSR!==undefined) {
             GlobalVariables.speechRecognizer = new winSR() as SpeechRecognition;
             GlobalVariables.speechRecognizer.onerror = (ev: SpeechRecognitionError) => {
-                alert("Speech Recognition Error: " + ev.error);
+                GlobalVariables.alert("Speech Recognition Error: " + ev.error);
             }
             var SG = window["SpeechGrammarList"] || window["msSpeechGrammarList"] || window["webkitSpeechGrammarList"] || window["mosSpeechGrammarList"];
             if(SG)

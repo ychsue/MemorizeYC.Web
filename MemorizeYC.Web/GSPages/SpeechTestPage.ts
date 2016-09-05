@@ -61,7 +61,7 @@ class SpeechTestPageController {
     public onSynPlay_Click() {
         if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
             if (!SpeechTestPageController.Current.sentence || SpeechTestPageController.Current.sentence.length === 0) {
-                alert('Input something at first.');
+                GlobalVariables.alert('Input something at first.');
                 return;
             }
             

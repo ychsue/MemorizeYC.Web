@@ -72,7 +72,7 @@ class TutorialHelper {
                     $(".glyphicon-remove-sign").removeClass('blink');
                     $(PlayOneCategoryPageController.Current.rdTutorType).removeClass('blink');
                     $('#dpPlaySettings').removeClass('open');
-                    alert(thisPageTexts.stTut0To1);
+                    GlobalVariables.alert(thisPageTexts.stTut0To1);
                     $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                 };
                 $(PlayOneCategoryPageController.Current.rdTutorType).off(GlobalVariables.TutorTypeChangeKey, onStateChange);
@@ -102,7 +102,7 @@ class TutorialHelper {
                                 //* [2016-07-06 09:53] Blink the buttons
                                 $(".glyphicon-menu-hamburger").removeClass('blink');
                                 $(".glyphicon-plus").removeClass('blink');
-                                alert(thisPageTexts.stTut1_1To2);
+                                GlobalVariables.alert(thisPageTexts.stTut1_1To2);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -135,7 +135,7 @@ class TutorialHelper {
                                 $(".glyphicon-menu-hamburger").removeClass('blink');
                                 $(".glyphicon-minus").removeClass('blink');
 
-                                alert(thisPageTexts.stTut1_2To3);
+                                GlobalVariables.alert(thisPageTexts.stTut1_2To3);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -177,7 +177,7 @@ class TutorialHelper {
                             //* [2016-07-06 11:16] 
                             var onRemove = (ev) => {
                                 $(GlobalVariables.gdTutorElements.gdMain).hide(0);
-                                alert(thisPageTexts.stTut1_3To4);
+                                GlobalVariables.alert(thisPageTexts.stTut1_3To4);
                                 $("#btSynPlay").off(GlobalVariables.RemoveAWCardKey, onRemove);
                                 $("#gdTutorial #btHide").removeClass('blink');
 
@@ -233,7 +233,7 @@ class TutorialHelper {
                                 $('.glyphicon-play').off('click', onPlay);
                                 $('.glyphicon-play').removeClass('blink');
                                 $(GlobalVariables.gdTutorElements.gdMain).hide(0);
-                                alert(thisPageTexts.stTut1_4To5);
+                                GlobalVariables.alert(thisPageTexts.stTut1_4To5);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -270,7 +270,7 @@ class TutorialHelper {
                                 //* [2016-07-06 09:53] Blink the buttons
                                 $(".glyphicon-menu-hamburger").removeClass('blink');
                                 $("#btChangeCards").removeClass('blink');
-                                alert(thisPageTexts.stTut1_5To6);
+                                GlobalVariables.alert(thisPageTexts.stTut1_5To6);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -294,7 +294,7 @@ class TutorialHelper {
                         $(GlobalVariables.gdTutorElements.btHide).addClass('blink');
 
                         var onShownInfo = (ev) => {
-                            alert(thisPageTexts.stTut1_6To7);
+                            GlobalVariables.alert(thisPageTexts.stTut1_6To7);
                             $('.cvMain .WCard').off(GlobalVariables.onDoubleClick, onShownInfo);
                             $(GlobalVariables.gdTutorElements.btHide).removeClass('blink');
 
@@ -349,7 +349,7 @@ class TutorialHelper {
                             $(GlobalVariables.gdTutorElements.btHide).addClass('blink');
                             //* [2016-07-07 13:15] Now show another tutorial when any one card is clicked.
                             var onCardClicked = (ev) => {
-                                alert(thisPageTexts.stTut2_1To2);
+                                GlobalVariables.alert(thisPageTexts.stTut2_1To2);
                                 $(GlobalVariables.gdTutorElements.btHide).removeClass('blink');
                                 $('.cvMain .WCard').off(GlobalVariables.onSingleClick, onCardClicked);
 
@@ -389,7 +389,7 @@ class TutorialHelper {
                             $("button.glyphicon-pause,button.glyphicon-exclamation-sign").removeClass('blink');
                             
                             if (audioState === AudioSequenceStateEnum.End || audioState === AudioSequenceStateEnum.Pause)
-                                alert(thisPageTexts.stTut2_2To3);
+                                GlobalVariables.alert(thisPageTexts.stTut2_2To3);
                             if (GlobalVariables.isTutorMode) {
                                 GlobalVariables.tutorState.Step++;
                                 TutorialHelper.Action(GlobalVariables.tutorState);
@@ -478,7 +478,7 @@ class TutorialHelper {
                         //* [2016-07-06 11:16] If the answer is right, this event will be triggered
                         var onRemove = (ev) => {
                             $(GlobalVariables.gdTutorElements.gdMain).hide(0);
-                            alert(thisPageTexts.stTut3_1To2);
+                            GlobalVariables.alert(thisPageTexts.stTut3_1To2);
                             $(PlayOneCategoryPageController.Current.cvMain).off(GlobalVariables.RemoveAWCardKey, onRemove);
                             $("#gdTutorial #btHide").removeClass('blink');
                             $("#tbKeyIn").removeClass('blink-background');

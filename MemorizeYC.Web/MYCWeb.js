@@ -10,7 +10,7 @@ var SpeechRecognizerHelper = (function () {
         if (GlobalVariables.isHavingSpeechRecognier && winSR !== undefined) {
             GlobalVariables.speechRecognizer = new winSR();
             GlobalVariables.speechRecognizer.onerror = function (ev) {
-                alert("Speech Recognition Error: " + ev.error);
+                GlobalVariables.alert("Speech Recognition Error: " + ev.error);
             };
             var SG = window["SpeechGrammarList"] || window["msSpeechGrammarList"] || window["webkitSpeechGrammarList"] || window["mosSpeechGrammarList"];
             if (SG)
@@ -403,7 +403,7 @@ var TutorialHelper = (function () {
                     $(".glyphicon-remove-sign").removeClass('blink');
                     $(PlayOneCategoryPageController.Current.rdTutorType).removeClass('blink');
                     $('#dpPlaySettings').removeClass('open');
-                    alert(thisPageTexts.stTut0To1);
+                    GlobalVariables.alert(thisPageTexts.stTut0To1);
                     $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                 };
                 $(PlayOneCategoryPageController.Current.rdTutorType).off(GlobalVariables.TutorTypeChangeKey, onStateChange);
@@ -426,7 +426,7 @@ var TutorialHelper = (function () {
                                 $('#dpPlaySettings').removeClass('open');
                                 $(".glyphicon-menu-hamburger").removeClass('blink');
                                 $(".glyphicon-plus").removeClass('blink');
-                                alert(thisPageTexts.stTut1_1To2);
+                                GlobalVariables.alert(thisPageTexts.stTut1_1To2);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -451,7 +451,7 @@ var TutorialHelper = (function () {
                                 $('#dpPlaySettings').removeClass('open');
                                 $(".glyphicon-menu-hamburger").removeClass('blink');
                                 $(".glyphicon-minus").removeClass('blink');
-                                alert(thisPageTexts.stTut1_2To3);
+                                GlobalVariables.alert(thisPageTexts.stTut1_2To3);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -481,7 +481,7 @@ var TutorialHelper = (function () {
                             $(".glyphicon-step-forward").removeClass('blink');
                             var onRemove = function (ev) {
                                 $(GlobalVariables.gdTutorElements.gdMain).hide(0);
-                                alert(thisPageTexts.stTut1_3To4);
+                                GlobalVariables.alert(thisPageTexts.stTut1_3To4);
                                 $("#btSynPlay").off(GlobalVariables.RemoveAWCardKey, onRemove);
                                 $("#gdTutorial #btHide").removeClass('blink');
                                 if (GlobalVariables.isTutorMode) {
@@ -527,7 +527,7 @@ var TutorialHelper = (function () {
                                 $('.glyphicon-play').off('click', onPlay);
                                 $('.glyphicon-play').removeClass('blink');
                                 $(GlobalVariables.gdTutorElements.gdMain).hide(0);
-                                alert(thisPageTexts.stTut1_4To5);
+                                GlobalVariables.alert(thisPageTexts.stTut1_4To5);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -556,7 +556,7 @@ var TutorialHelper = (function () {
                                 $('#dpPlaySettings').removeClass('open');
                                 $(".glyphicon-menu-hamburger").removeClass('blink');
                                 $("#btChangeCards").removeClass('blink');
-                                alert(thisPageTexts.stTut1_5To6);
+                                GlobalVariables.alert(thisPageTexts.stTut1_5To6);
                                 if (GlobalVariables.isTutorMode) {
                                     GlobalVariables.tutorState.Step++;
                                     TutorialHelper.Action(GlobalVariables.tutorState);
@@ -574,7 +574,7 @@ var TutorialHelper = (function () {
                             + " </div>");
                         $(GlobalVariables.gdTutorElements.btHide).addClass('blink');
                         var onShownInfo = function (ev) {
-                            alert(thisPageTexts.stTut1_6To7);
+                            GlobalVariables.alert(thisPageTexts.stTut1_6To7);
                             $('.cvMain .WCard').off(GlobalVariables.onDoubleClick, onShownInfo);
                             $(GlobalVariables.gdTutorElements.btHide).removeClass('blink');
                             if (GlobalVariables.isTutorMode) {
@@ -621,7 +621,7 @@ var TutorialHelper = (function () {
                             $(PlayOneCategoryPageController.Current.ddSettings).off(GlobalVariables.PlayTypeChangeKey, onChange);
                             $(GlobalVariables.gdTutorElements.btHide).addClass('blink');
                             var onCardClicked = function (ev) {
-                                alert(thisPageTexts.stTut2_1To2);
+                                GlobalVariables.alert(thisPageTexts.stTut2_1To2);
                                 $(GlobalVariables.gdTutorElements.btHide).removeClass('blink');
                                 $('.cvMain .WCard').off(GlobalVariables.onSingleClick, onCardClicked);
                                 if (GlobalVariables.isTutorMode) {
@@ -653,7 +653,7 @@ var TutorialHelper = (function () {
                             $(PlayOneCategoryPageController.Current.btPauseAudio).off(GlobalVariables.AudioPauseKey, onAudioStop);
                             $("button.glyphicon-pause,button.glyphicon-exclamation-sign").removeClass('blink');
                             if (audioState === AudioSequenceStateEnum.End || audioState === AudioSequenceStateEnum.Pause)
-                                alert(thisPageTexts.stTut2_2To3);
+                                GlobalVariables.alert(thisPageTexts.stTut2_2To3);
                             if (GlobalVariables.isTutorMode) {
                                 GlobalVariables.tutorState.Step++;
                                 TutorialHelper.Action(GlobalVariables.tutorState);
@@ -725,7 +725,7 @@ var TutorialHelper = (function () {
                         $("#tbKeyIn").addClass('blink-background');
                         var onRemove = function (ev) {
                             $(GlobalVariables.gdTutorElements.gdMain).hide(0);
-                            alert(thisPageTexts.stTut3_1To2);
+                            GlobalVariables.alert(thisPageTexts.stTut3_1To2);
                             $(PlayOneCategoryPageController.Current.cvMain).off(GlobalVariables.RemoveAWCardKey, onRemove);
                             $("#gdTutorial #btHide").removeClass('blink');
                             $("#tbKeyIn").removeClass('blink-background');
@@ -761,6 +761,12 @@ var TutorialHelper = (function () {
 var GlobalVariables = (function () {
     function GlobalVariables() {
     }
+    GlobalVariables.alert = function (msg) {
+        var divAlert = $("#gdAlert");
+        divAlert.text(msg)
+            .dialog({ modal: true });
+    };
+    ;
     GlobalVariables.categoryListFileName = "MYCategory.json";
     GlobalVariables.containerListFileName = "MYContainer.json";
     GlobalVariables.isHostNameShown = true;
@@ -1346,6 +1352,7 @@ var PlayOneCategoryPageController = (function () {
         this.selTextsForSyn = "";
         this.isBackAudioStartLoad = false;
         this.isAudioPlaying = false;
+        this.isAudioInterruptable = false;
         this.speechRecogMetadata = { confidence: 0, isSpeechRecognitionRunning: false, recInputSentence: "" };
         this.isBGAlsoChange = true;
         this.defaultCardStyle = { width: "16vw", height: "16vh" };
@@ -1368,11 +1375,11 @@ var PlayOneCategoryPageController = (function () {
                         stVoice += key + ": " + PlayOneCategoryPageController.Current.currentSynVoice[key] + ";\n";
                     }
                     stVoice += "}";
-                    alert("SynLang: " + PlayOneCategoryPageController.Current.SynLang + " ." + "Has allVoices." + "\n" +
+                    GlobalVariables.alert("SynLang: " + PlayOneCategoryPageController.Current.SynLang + " ." + "Has allVoices." + "\n" +
                         "CurrentVoice: " + stVoice);
                 }
                 else
-                    alert("No Voice." + " isIOS=" + GlobalVariables.isIOS);
+                    GlobalVariables.alert("No Voice." + " isIOS=" + GlobalVariables.isIOS);
             });
         };
         this.onWindowResize = function (ev) {
@@ -1521,16 +1528,16 @@ var PlayOneCategoryPageController = (function () {
                     }
                 }
                 if (!isCorrect) {
-                    alert("Your answer is wrong.");
+                    GlobalVariables.alert("Your answer is wrong.");
                     PlayOneCategoryPageController.Current.totalScore -= 3;
                 }
             }
             else {
                 if (PlayOneCategoryPageController.Current.selWCard) {
-                    alert("Please input the answer.");
+                    GlobalVariables.alert("Please input the answer.");
                 }
                 else {
-                    alert("Click a card at first.");
+                    GlobalVariables.alert("Click a card at first.");
                 }
             }
         };
@@ -2100,6 +2107,8 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
             PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
         if (jObj.isPickWCardsRandomly != undefined)
             PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
+        if (jObj.isAudioInterruptable != undefined)
+            PlayOneCategoryPageController.Current.isAudioInterruptable = jObj.isAudioInterruptable;
     });
     PlayOneCategoryPageController.Current.SynLang = jObj.SynLang;
     SpeechSynthesisHelper.getAllVoices(function () {
@@ -2136,8 +2145,8 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
                 PlayOneCategoryPageController.Current.selWCard = selWCard;
             });
             if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.syn) {
-                if (PlayOneCategoryPageController.Current.isAudioPlaying) {
-                    alert(PlayOneCategoryPageController.Current.thisPageTexts.stWaitUtterDone);
+                if (PlayOneCategoryPageController.Current.isAudioPlaying && PlayOneCategoryPageController.Current.isAudioInterruptable) {
+                    GlobalVariables.alert(PlayOneCategoryPageController.Current.thisPageTexts.stWaitUtterDone);
                     return;
                 }
                 if (selWCard === PlayOneCategoryPageController.Current.synAnsWCard) {
@@ -2164,7 +2173,7 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
                 }
                 else {
                     if (!PlayOneCategoryPageController.Current.synAnsWCard) {
-                        alert(PlayOneCategoryPageController.Current.thisPageTexts.stClickPlayAtFirst
+                        GlobalVariables.alert(PlayOneCategoryPageController.Current.thisPageTexts.stClickPlayAtFirst
                             .replace('{0}', "\u25BA"));
                         return;
                     }
@@ -2508,7 +2517,7 @@ var SpeechTestPageController = (function () {
     SpeechTestPageController.prototype.onSynPlay_Click = function () {
         if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
             if (!SpeechTestPageController.Current.sentence || SpeechTestPageController.Current.sentence.length === 0) {
-                alert('Input something at first.');
+                GlobalVariables.alert('Input something at first.');
                 return;
             }
             if (GlobalVariables.synthesis.paused)
@@ -2793,7 +2802,7 @@ var CardsHelper = (function () {
                     PlayOneCategoryPageController.scope.$apply(function () {
                         PlayOneCategoryPageController.Current.totalScore -= 15;
                     });
-                    window.alert(PlayOneCategoryPageController.Current.thisPageTexts.stShowAns.replace('{0}', answers));
+                    GlobalVariables.alert(PlayOneCategoryPageController.Current.thisPageTexts.stShowAns.replace('{0}', answers));
                     $(diEle).dialog('close');
                 }
             });
