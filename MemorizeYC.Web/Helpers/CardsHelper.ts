@@ -3,41 +3,67 @@
 /// <reference path="../models/mycategoryjson.ts" />
 /// <reference path="../usercontrols/wcard.ts" />
 class CardsHelper {
-    public static RearrangeCards(wcards: WCard[], nCol: number = 5, isRandom: boolean = false, isOptimizeSize: boolean = true, expandRatio: number = 1, justFixed: boolean = false) {
+    public static RearrangeCards(wcards: WCard[], nCol: number = 5, isRandom: boolean = false,
+        isOptimizeSize: boolean = true, expandRatio: number = 1, justFixed: boolean = false):void {
 
         if (!wcards || wcards.length === 0) {
             return;
         }
-        var topOfTop: number = 50;
-        var currentPosition: number[] = [0, 0];
-        var wWidth: number = window.innerWidth;
-        var wHeight: number = window.innerHeight - topOfTop; //For bottom bar
+        // * [2016-11-17 11:09] To show cards as a list
+        var isShownAsList: boolean = PlayOneCategoryPageController.Current.IsShownAsList;
 
-        //* [2016-03-16 13:59] get the order of cards.
-        if (isRandom)
+        var topOfTop: number = 50;
+        var wWidth: number = window.innerWidth;
+        var wHeight: number = window.innerHeight - topOfTop; // for bottom bar
+        var currentPosition: number[] = [wWidth*0.04, 0];
+
+        // * [2016-03-16 13:59] get the order of cards.
+        if (isRandom) {
             MathHelper.Permute(wcards);
-        //* [2016-03-16 14:06] Rearrange the cards.
+        }
+        // * [2016-03-16 14:06] Rearrange the cards.
         var maxWidth: number = 0;
         for (var i1: number = 0; i1 < wcards.length; i1++) {
             var card: WCard = wcards[i1];
-            if (!card.cardInfo.IsSizeFixed && !justFixed) { //Recalculate its size if its size is changeable
-                var size = [wWidth / nCol, wHeight / nCol];
-                //* [2016-05-05 20:05] Initialize card.viewWHRatio
-                if (!card.viewWHRatio)
+            if (isShownAsList === true && $(card.cCards[card.boxIndex]).text() != "") {
+                //'+' is used to change a string to be a number as mentioned in 
+                // http://stackoverflow.com/questions/14667713/typescript-converting-a-string-to-a-number
+                var fSize: number = +$(card.cCards[card.boxIndex]).css("font-size").replace("px", ""); 
+                $(card.cCards[card.boxIndex]).css("font-size", Math.ceil(fSize * expandRatio));
+            }
+            if (!card.cardInfo.IsSizeFixed && !justFixed) { // recalculate its size if its size is changeable
+                var size :number[] = [wWidth / nCol, wHeight / nCol];
+                // * [2016-05-05 20:05] Initialize card.viewWHRatio
+                if (!card.viewWHRatio) {
                     card.viewWHRatio = new Array();
-                if (card.cCards != undefined && card.cCards[card.boxIndex] != undefined && isNaN(card.viewWHRatio[card.boxIndex])) {
-                    var nWidth = card.cCards[card.boxIndex]["naturalWidth"];
-                    var nHeight = card.cCards[card.boxIndex]["naturalHeight"];
-                    if (nWidth != undefined && nWidth > 0 && nHeight > 0)
+                }
+                if (card.cCards !== undefined && card.cCards[card.boxIndex] !== undefined && isNaN(card.viewWHRatio[card.boxIndex])) {
+                    var nWidth:number = card.cCards[card.boxIndex]["naturalWidth"];
+                    var nHeight:number = card.cCards[card.boxIndex]["naturalHeight"];
+                    if (nWidth !== undefined && nWidth > 0 && nHeight > 0) {
                         card.viewWHRatio[card.boxIndex] = nWidth / nHeight;
+                    }
                 }
                 if (card.viewWHRatio && !isNaN(card.viewWHRatio[card.boxIndex])) {
                     size[1] = size[0] / card.viewWHRatio[card.boxIndex];
+                } else if (isShownAsList && $(card.cCards[card.boxIndex]).text()!=="") {
+                    size[0] = wWidth * 0.92;
                 }
-                if (isOptimizeSize)
-                    card.viewSize = size; //This step will reset its size.
+
+                if (isOptimizeSize) {
+                    card.viewSize = size; // this step will reset its size.
+                }
+
+                if (isShownAsList && $(card.cCards[card.boxIndex]).text()!=="") {
+                    card.viewSize = [size[0], 0];   // if the height is larger than scrollHeight, 
+                                                    // the scrollHeight will be changed to that height.
+                    if (card.cCards[card.boxIndex].scrollHeight > 0) {
+                        size[1] = card.cCards[card.boxIndex].scrollHeight + 4;
+                        card.viewSize = size;
+                    }
+                }
             }
-            else if (card.cardInfo.IsSizeFixed){
+            else if (card.cardInfo.IsSizeFixed) {
                 for (var i0: number = 0; i0 < card.viewSize.length; i0++) {
                     card.viewSize[i0] *= expandRatio;
                 }
@@ -45,19 +71,20 @@ class CardsHelper {
             }
 
             if ((!card.cardInfo.IsXPosFixed || !card.cardInfo.IsYPosFixed) && !justFixed) { //Update its position only if their positions are changeable.
-                var predictTop = currentPosition[1] + card.viewSize[1] + topOfTop;
-                if (predictTop > wHeight) {
-                    currentPosition = [currentPosition[0] + maxWidth + 20, 0];
-                    maxWidth = card.viewSize[0];
+                if (isShownAsList === true) {
+                    ;
+                } else {
+                    var predictTop = currentPosition[1] + card.viewSize[1] + topOfTop;
+                    if (predictTop > wHeight) {
+                        currentPosition = [currentPosition[0] + maxWidth + 20, 0];
+                        maxWidth = card.viewSize[0];
+                    }
+                    else {
+                        maxWidth = Math.max(maxWidth, card.viewSize[0]);
+                    }
                 }
-                else {
-                    maxWidth = Math.max(maxWidth, card.viewSize[0]);
-                }
-                card.viewPosition = currentPosition;
+                card.viewPosition = currentPosition; // under this line, current position is for next card
                 //* [2016-03-16 14:52] Renew its position for next one
-                if (predictTop < wHeight)
-                    currentPosition[1] = predictTop;
-                else
                     currentPosition[1] += card.viewSize[1] + 20;
             }
             else if (card.cardInfo.IsXPosFixed && card.cardInfo.IsYPosFixed) {

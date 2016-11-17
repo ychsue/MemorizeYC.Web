@@ -40,7 +40,19 @@ class PlayOneCategoryPageController{
     public isAudioPlaying: boolean = false;
     public isAudioInterruptable: boolean = false;
     //* [2016-11-16 10:48] Added for showing cards as a list and dictate sentences in Hint mode
-    public IsShownAsList: boolean = false;
+    //#region IsShownAsList
+    public _IsShownAsList: boolean = false;
+    public get IsShownAsList(): boolean {
+        return PlayOneCategoryPageController.Current._IsShownAsList;
+    }
+    public set IsShownAsList(value: boolean) {
+        PlayOneCategoryPageController.Current._IsShownAsList = value;
+
+        if (WCard.showedWCards.length !== 0) {
+            CardsHelper.RearrangeCards(WCard.showedWCards);
+        }
+    }
+    //#endregion IsShownAsList
     //#region     IsDictateTextContentInHint, IsDictateAnsInHint
     private _IsDictateTextContentInHint: boolean = false;
     public get IsDictateTextContentInHint(): boolean {
@@ -277,7 +289,10 @@ class PlayOneCategoryPageController{
         //* [2016-07-16 13:57] Shift all the cards
         $(PlayOneCategoryPageController.Current.cvMain).css({
             top:
-            $(PlayOneCategoryPageController.Current.topNavbar).height() + "px"
+            $(PlayOneCategoryPageController.Current.topNavbar).height() + "px",
+            height:
+            (window.innerHeight - $(PlayOneCategoryPageController.Current.bottomNavbar).height()
+                - $(PlayOneCategoryPageController.Current.topNavbar).height()) + "px"
         });
 
         //* [2016-07-11 15:02] Because its language might not ready, I use a trigger to tell me that it is done
@@ -521,7 +536,10 @@ class PlayOneCategoryPageController{
     public onWindowResize = function (ev) {
         $(PlayOneCategoryPageController.Current.cvMain).css({
             top:
-            $(PlayOneCategoryPageController.Current.topNavbar).height()+"px"
+            $(PlayOneCategoryPageController.Current.topNavbar).height() + "px",
+            height:
+            (window.innerHeight - $(PlayOneCategoryPageController.Current.bottomNavbar).height()
+                - $(PlayOneCategoryPageController.Current.topNavbar).height()) + "px"
         });
         //* [2016-05-20 11:40] Resize only when the document's size is changed.
         if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
