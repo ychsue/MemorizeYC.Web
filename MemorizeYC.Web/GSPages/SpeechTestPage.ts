@@ -21,7 +21,7 @@ class SpeechTestPageController {
     public currentSynVoice: SpeechSynthesisVoice_Instance;
     public sentence: string = "This is a test.";
     public RecogMetaData: SpeechRecgMetadata = {confidence:0,isSpeechRecognitionRunning:false,recInputSentence:""};
-    public isUseSentenceForRecog:boolean = false;
+    public isUseSentenceForRecog:boolean = true;
 
     public static Current:SpeechTestPageController;
     public static scope:angular.IScope;

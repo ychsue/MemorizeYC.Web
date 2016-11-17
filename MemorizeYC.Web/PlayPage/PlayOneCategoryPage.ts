@@ -39,6 +39,28 @@ class PlayOneCategoryPageController{
     public isBackAudioStartLoad: boolean = false;
     public isAudioPlaying: boolean = false;
     public isAudioInterruptable: boolean = false;
+    //* [2016-11-16 10:48] Added for showing cards as a list and dictate sentences in Hint mode
+    public IsShownAsList: boolean = false;
+    //#region     IsDictateTextContentInHint, IsDictateAnsInHint
+    private _IsDictateTextContentInHint: boolean = false;
+    public get IsDictateTextContentInHint(): boolean {
+        return PlayOneCategoryPageController.Current._IsDictateTextContentInHint;
+    }
+    public set IsDictateTextContentInHint(value: boolean) {
+        if (value === false && PlayOneCategoryPageController.Current._IsDictateAnsInHint === false)
+            PlayOneCategoryPageController.Current.IsDictateAnsInHint = true; //Notice it is changed back.
+        PlayOneCategoryPageController.Current._IsDictateTextContentInHint = value;
+    }
+    private _IsDictateAnsInHint: boolean = true;
+    public get IsDictateAnsInHint(): boolean {
+        return PlayOneCategoryPageController.Current._IsDictateAnsInHint;
+    }
+    public set IsDictateAnsInHint(value: boolean) {
+        if (value === false && PlayOneCategoryPageController.Current._IsDictateTextContentInHint === false)
+            PlayOneCategoryPageController.Current.IsDictateTextContentInHint = true;
+        PlayOneCategoryPageController.Current._IsDictateAnsInHint = value;
+    }
+    //#endregion     IsDictateTextContentInHint, IsDictateAnsInHint
 
     //#region speechRecogMetadata
     public speechRecogMetadata: SpeechRecgMetadata = {confidence:0, isSpeechRecognitionRunning:false, recInputSentence:""};
@@ -884,7 +906,7 @@ class PlayOneCategoryPageController{
      * @param callback handler: (JQueryEventObject)=>any. It will be called when the audio play is complete
      */
     public PlayAudio(wCard: WCard, callback:any=null) {
-        if (wCard.cardInfo.AudioFilePathOrUri) {
+        if (wCard.cardInfo.AudioFilePathOrUri && (PlayOneCategoryPageController.Current.playType==="hint" && PlayOneCategoryPageController.Current.IsDictateTextContentInHint === true)===false) {
             var meAud = PlayOneCategoryPageController.Current.meCardsAudio;
             meAud.src = CardsHelper.GetTreatablePath(wCard.cardInfo.AudioFilePathOrUri,
                 PlayOneCategoryPageController.Current.Container,
@@ -905,7 +927,12 @@ class PlayOneCategoryPageController{
         } else if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
             if (GlobalVariables.synthesis.paused)
                 GlobalVariables.synthesis.resume();
-            SpeechSynthesisHelper.Speak(wCard.cardInfo.Dictate,
+            var sentence = wCard.cardInfo.Dictate;
+            if (PlayOneCategoryPageController.Current.playType === "hint") {
+                sentence = ((PlayOneCategoryPageController.Current.IsDictateAnsInHint) ? wCard.cardInfo.Dictate : "") +
+                    ((PlayOneCategoryPageController.Current.IsDictateTextContentInHint) ? $(wCard.cCards[wCard.boxIndex]).text() : "");
+            }
+            SpeechSynthesisHelper.Speak(sentence,
                 PlayOneCategoryPageController.Current.SynLang,
                 PlayOneCategoryPageController.Current.currentSynVoice,
                 Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN)
@@ -937,7 +964,11 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
         if (jObj.numWCardShown) PlayOneCategoryPageController.numWCardShown = jObj.numWCardShown;
         if (jObj.isBGAlsoChange!=undefined) PlayOneCategoryPageController.Current.isBGAlsoChange = jObj.isBGAlsoChange;
         if (jObj.isPickWCardsRandomly!=undefined) PlayOneCategoryPageController.isPickWCardsRandomly = jObj.isPickWCardsRandomly;
-        if (jObj.isAudioInterruptable!=undefined) PlayOneCategoryPageController.Current.isAudioInterruptable = jObj.isAudioInterruptable;
+        if (jObj.isAudioInterruptable != undefined) PlayOneCategoryPageController.Current.isAudioInterruptable = jObj.isAudioInterruptable;
+        //* [2016-11-16 10:46] Added for List View of Cards and Dictate sentences in Hint mode
+        if (jObj.IsShownAsList != undefined) PlayOneCategoryPageController.Current.IsShownAsList = jObj.IsShownAsList;
+        if (jObj.IsDictateTextContentInHint != undefined) PlayOneCategoryPageController.Current.IsDictateTextContentInHint = jObj.IsDictateTextContentInHint;
+        if (jObj.IsDictateAnsInHint != undefined) PlayOneCategoryPageController.Current.IsDictateAnsInHint = jObj.IsDictateAnsInHint;
     });
     PlayOneCategoryPageController.Current.SynLang = jObj.SynLang;
     SpeechSynthesisHelper.getAllVoices(() => {

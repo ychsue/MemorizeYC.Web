@@ -13,4 +13,8 @@ interface MYCategoryJson {
 
     //* [2016-06-29 14:40] Added for Speech
     SynLang?: string;
+    //* [2016-11-16 10:39] Added for list view of cards
+    IsShownAsList?: boolean;
+    IsDictateTextContentInHint?: boolean;
+    IsDictateAnsInHint?: boolean;
 }
