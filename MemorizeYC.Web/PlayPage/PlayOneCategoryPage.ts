@@ -1032,6 +1032,13 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
 
         //* [2016-05-10 17:23] For singleClick   :TODO:
         $(restWcards[i0]).on(GlobalVariables.onSingleClick, { thisWCard: restWcards[i0] }, function (ev) {
+            if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.hint) {
+                if ($('button.glyphicon-exclamation-sign').prop('disabled') === true) {
+                    $(PlayOneCategoryPageController.Current.btPauseAudio).trigger('click');
+                    return;
+                }
+            }
+
             var prevWCard = PlayOneCategoryPageController.Current.selWCard;
             var selWCard = ev.data.thisWCard as WCard;
             PlayOneCategoryPageController.scope.$apply(function () {
@@ -1139,7 +1146,7 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
             $(restWcards[i0].viewCard).resizable();
 
         $(restWcards[i0].viewCard).on("resize", function (ev, ui) {
-            ev.bubbles = false;
+            ev.stopPropagation();
             var thisWCard = WCard.FindWCardFromViewCard(this);
             thisWCard.viewSize = [ui.size.width, ui.size.height];
         });

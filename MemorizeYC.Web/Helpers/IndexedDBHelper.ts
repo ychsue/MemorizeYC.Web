@@ -15,7 +15,7 @@ class IndexedDBHelper {
     public static myDataBase: IDBDatabase;
 
     public static InitIDB() {
-        IndexedDBHelper.myIDB = indexedDB || msIndexedDB || window["webkitIndexedDB"] || window["mozIndexedDB"];
+        IndexedDBHelper.myIDB = indexedDB || window["webkitIndexedDB"] || window["mozIndexedDB"];
         IndexedDBHelper.myIDBTransaction = window["IDBTransaction"] || window["webkitIDBTransaction"] || window["msIDBTransaction"];
         IndexedDBHelper.myIDBKeyRange = window["IDBKeyRange"] || window["webkitIDBKeyRange"] || window["msIDBKeyRange"];
     }

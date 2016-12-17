@@ -153,50 +153,50 @@ var SpeechSynthesisHelper = (function () {
         GlobalVariables.synthesis.cancel();
         GlobalVariables.synthesis.speak(GlobalVariables.synUtterance);
     };
-    SpeechSynthesisHelper.ith = 0;
-    SpeechSynthesisHelper.callbacks = [];
-    SpeechSynthesisHelper._iOS9Voices = [
-        { name: "Maged", voiceURI: "com.apple.ttsbundle.Maged-compact", lang: "ar-SA", localService: true, "default": true },
-        { name: "Zuzana", voiceURI: "com.apple.ttsbundle.Zuzana-compact", lang: "cs-CZ", localService: true, "default": true },
-        { name: "Sara", voiceURI: "com.apple.ttsbundle.Sara-compact", lang: "da-DK", localService: true, "default": true },
-        { name: "Anna", voiceURI: "com.apple.ttsbundle.Anna-compact", lang: "de-DE", localService: true, "default": true },
-        { name: "Melina", voiceURI: "com.apple.ttsbundle.Melina-compact", lang: "el-GR", localService: true, "default": true },
-        { name: "Karen", voiceURI: "com.apple.ttsbundle.Karen-compact", lang: "en-AU", localService: true, "default": true },
-        { name: "Daniel", voiceURI: "com.apple.ttsbundle.Daniel-compact", lang: "en-GB", localService: true, "default": true },
-        { name: "Moira", voiceURI: "com.apple.ttsbundle.Moira-compact", lang: "en-IE", localService: true, "default": true },
-        { name: "Samantha (Enhanced)", voiceURI: "com.apple.ttsbundle.Samantha-premium", lang: "en-US", localService: true, "default": true },
-        { name: "Samantha", voiceURI: "com.apple.ttsbundle.Samantha-compact", lang: "en-US", localService: true, "default": true },
-        { name: "Tessa", voiceURI: "com.apple.ttsbundle.Tessa-compact", lang: "en-ZA", localService: true, "default": true },
-        { name: "Monica", voiceURI: "com.apple.ttsbundle.Monica-compact", lang: "es-ES", localService: true, "default": true },
-        { name: "Paulina", voiceURI: "com.apple.ttsbundle.Paulina-compact", lang: "es-MX", localService: true, "default": true },
-        { name: "Satu", voiceURI: "com.apple.ttsbundle.Satu-compact", lang: "fi-FI", localService: true, "default": true },
-        { name: "Amelie", voiceURI: "com.apple.ttsbundle.Amelie-compact", lang: "fr-CA", localService: true, "default": true },
-        { name: "Thomas", voiceURI: "com.apple.ttsbundle.Thomas-compact", lang: "fr-FR", localService: true, "default": true },
-        { name: "Carmit", voiceURI: "com.apple.ttsbundle.Carmit-compact", lang: "he-IL", localService: true, "default": true },
-        { name: "Lekha", voiceURI: "com.apple.ttsbundle.Lekha-compact", lang: "hi-IN", localService: true, "default": true },
-        { name: "Mariska", voiceURI: "com.apple.ttsbundle.Mariska-compact", lang: "hu-HU", localService: true, "default": true },
-        { name: "Damayanti", voiceURI: "com.apple.ttsbundle.Damayanti-compact", lang: "id-ID", localService: true, "default": true },
-        { name: "Alice", voiceURI: "com.apple.ttsbundle.Alice-compact", lang: "it-IT", localService: true, "default": true },
-        { name: "Kyoko", voiceURI: "com.apple.ttsbundle.Kyoko-compact", lang: "ja-JP", localService: true, "default": true },
-        { name: "Yuna", voiceURI: "com.apple.ttsbundle.Yuna-compact", lang: "ko-KR", localService: true, "default": true },
-        { name: "Ellen", voiceURI: "com.apple.ttsbundle.Ellen-compact", lang: "nl-BE", localService: true, "default": true },
-        { name: "Xander", voiceURI: "com.apple.ttsbundle.Xander-compact", lang: "nl-NL", localService: true, "default": true },
-        { name: "Nora", voiceURI: "com.apple.ttsbundle.Nora-compact", lang: "no-NO", localService: true, "default": true },
-        { name: "Zosia", voiceURI: "com.apple.ttsbundle.Zosia-compact", lang: "pl-PL", localService: true, "default": true },
-        { name: "Luciana", voiceURI: "com.apple.ttsbundle.Luciana-compact", lang: "pt-BR", localService: true, "default": true },
-        { name: "Joana", voiceURI: "com.apple.ttsbundle.Joana-compact", lang: "pt-PT", localService: true, "default": true },
-        { name: "Ioana", voiceURI: "com.apple.ttsbundle.Ioana-compact", lang: "ro-RO", localService: true, "default": true },
-        { name: "Milena", voiceURI: "com.apple.ttsbundle.Milena-compact", lang: "ru-RU", localService: true, "default": true },
-        { name: "Laura", voiceURI: "com.apple.ttsbundle.Laura-compact", lang: "sk-SK", localService: true, "default": true },
-        { name: "Alva", voiceURI: "com.apple.ttsbundle.Alva-compact", lang: "sv-SE", localService: true, "default": true },
-        { name: "Kanya", voiceURI: "com.apple.ttsbundle.Kanya-compact", lang: "th-TH", localService: true, "default": true },
-        { name: "Yelda", voiceURI: "com.apple.ttsbundle.Yelda-compact", lang: "tr-TR", localService: true, "default": true },
-        { name: "Ting-Ting", voiceURI: "com.apple.ttsbundle.Ting-Ting-compact", lang: "zh-CN", localService: true, "default": true },
-        { name: "Sin-Ji", voiceURI: "com.apple.ttsbundle.Sin-Ji-compact", lang: "zh-HK", localService: true, "default": true },
-        { name: "Mei-Jia", voiceURI: "com.apple.ttsbundle.Mei-Jia-compact", lang: "zh-TW", localService: true, "default": true }
-    ];
     return SpeechSynthesisHelper;
 }());
+SpeechSynthesisHelper.ith = 0;
+SpeechSynthesisHelper.callbacks = [];
+SpeechSynthesisHelper._iOS9Voices = [
+    { name: "Maged", voiceURI: "com.apple.ttsbundle.Maged-compact", lang: "ar-SA", localService: true, "default": true },
+    { name: "Zuzana", voiceURI: "com.apple.ttsbundle.Zuzana-compact", lang: "cs-CZ", localService: true, "default": true },
+    { name: "Sara", voiceURI: "com.apple.ttsbundle.Sara-compact", lang: "da-DK", localService: true, "default": true },
+    { name: "Anna", voiceURI: "com.apple.ttsbundle.Anna-compact", lang: "de-DE", localService: true, "default": true },
+    { name: "Melina", voiceURI: "com.apple.ttsbundle.Melina-compact", lang: "el-GR", localService: true, "default": true },
+    { name: "Karen", voiceURI: "com.apple.ttsbundle.Karen-compact", lang: "en-AU", localService: true, "default": true },
+    { name: "Daniel", voiceURI: "com.apple.ttsbundle.Daniel-compact", lang: "en-GB", localService: true, "default": true },
+    { name: "Moira", voiceURI: "com.apple.ttsbundle.Moira-compact", lang: "en-IE", localService: true, "default": true },
+    { name: "Samantha (Enhanced)", voiceURI: "com.apple.ttsbundle.Samantha-premium", lang: "en-US", localService: true, "default": true },
+    { name: "Samantha", voiceURI: "com.apple.ttsbundle.Samantha-compact", lang: "en-US", localService: true, "default": true },
+    { name: "Tessa", voiceURI: "com.apple.ttsbundle.Tessa-compact", lang: "en-ZA", localService: true, "default": true },
+    { name: "Monica", voiceURI: "com.apple.ttsbundle.Monica-compact", lang: "es-ES", localService: true, "default": true },
+    { name: "Paulina", voiceURI: "com.apple.ttsbundle.Paulina-compact", lang: "es-MX", localService: true, "default": true },
+    { name: "Satu", voiceURI: "com.apple.ttsbundle.Satu-compact", lang: "fi-FI", localService: true, "default": true },
+    { name: "Amelie", voiceURI: "com.apple.ttsbundle.Amelie-compact", lang: "fr-CA", localService: true, "default": true },
+    { name: "Thomas", voiceURI: "com.apple.ttsbundle.Thomas-compact", lang: "fr-FR", localService: true, "default": true },
+    { name: "Carmit", voiceURI: "com.apple.ttsbundle.Carmit-compact", lang: "he-IL", localService: true, "default": true },
+    { name: "Lekha", voiceURI: "com.apple.ttsbundle.Lekha-compact", lang: "hi-IN", localService: true, "default": true },
+    { name: "Mariska", voiceURI: "com.apple.ttsbundle.Mariska-compact", lang: "hu-HU", localService: true, "default": true },
+    { name: "Damayanti", voiceURI: "com.apple.ttsbundle.Damayanti-compact", lang: "id-ID", localService: true, "default": true },
+    { name: "Alice", voiceURI: "com.apple.ttsbundle.Alice-compact", lang: "it-IT", localService: true, "default": true },
+    { name: "Kyoko", voiceURI: "com.apple.ttsbundle.Kyoko-compact", lang: "ja-JP", localService: true, "default": true },
+    { name: "Yuna", voiceURI: "com.apple.ttsbundle.Yuna-compact", lang: "ko-KR", localService: true, "default": true },
+    { name: "Ellen", voiceURI: "com.apple.ttsbundle.Ellen-compact", lang: "nl-BE", localService: true, "default": true },
+    { name: "Xander", voiceURI: "com.apple.ttsbundle.Xander-compact", lang: "nl-NL", localService: true, "default": true },
+    { name: "Nora", voiceURI: "com.apple.ttsbundle.Nora-compact", lang: "no-NO", localService: true, "default": true },
+    { name: "Zosia", voiceURI: "com.apple.ttsbundle.Zosia-compact", lang: "pl-PL", localService: true, "default": true },
+    { name: "Luciana", voiceURI: "com.apple.ttsbundle.Luciana-compact", lang: "pt-BR", localService: true, "default": true },
+    { name: "Joana", voiceURI: "com.apple.ttsbundle.Joana-compact", lang: "pt-PT", localService: true, "default": true },
+    { name: "Ioana", voiceURI: "com.apple.ttsbundle.Ioana-compact", lang: "ro-RO", localService: true, "default": true },
+    { name: "Milena", voiceURI: "com.apple.ttsbundle.Milena-compact", lang: "ru-RU", localService: true, "default": true },
+    { name: "Laura", voiceURI: "com.apple.ttsbundle.Laura-compact", lang: "sk-SK", localService: true, "default": true },
+    { name: "Alva", voiceURI: "com.apple.ttsbundle.Alva-compact", lang: "sv-SE", localService: true, "default": true },
+    { name: "Kanya", voiceURI: "com.apple.ttsbundle.Kanya-compact", lang: "th-TH", localService: true, "default": true },
+    { name: "Yelda", voiceURI: "com.apple.ttsbundle.Yelda-compact", lang: "tr-TR", localService: true, "default": true },
+    { name: "Ting-Ting", voiceURI: "com.apple.ttsbundle.Ting-Ting-compact", lang: "zh-CN", localService: true, "default": true },
+    { name: "Sin-Ji", voiceURI: "com.apple.ttsbundle.Sin-Ji-compact", lang: "zh-HK", localService: true, "default": true },
+    { name: "Mei-Jia", voiceURI: "com.apple.ttsbundle.Mei-Jia-compact", lang: "zh-TW", localService: true, "default": true }
+];
 var PageTextHelper = (function () {
     function PageTextHelper() {
     }
@@ -235,114 +235,114 @@ var PageTextHelper = (function () {
                 return eachLang;
         }
     };
-    PageTextHelper.defaultPageTexts = {
-        "PlayOneCategoryPageJSON": {
-            "stBack": "回上頁",
-            "stShowScore": "<h2>你的得分為{0}，而滿分為{1}</h2>",
-            "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
-            "stNewBackTo0": "<h3>看來你對這個部分沒啥概念，建議你切換到<b>提示</b>模式，等有點概念後再玩配對。</h3>",
-            "stIncLVNotYet": "<h3>太棒了！請 {0} 天後再玩。</h3>",
-            "stIncLV": "<h3>恭喜！升級了！請 {0} 天後再玩。</h3>",
-            "stKeepLV": "<h3>雖然你有進步，可惜還不夠升級，請 {0} 天後再玩一次。</h3>",
-            "stBackTo0": "<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
-            "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
-            "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
-            "stClickPlayAtFirst": "請先按左下角的'播放'({0})再來配對相應的圖卡。",
-            "stAns": "看答案(-15)",
-            "stLink": "超連結",
-            "stShowAns": "允許的答案有：\n{0}",
-            "stMarkForSpeech": "反白想要聽的字，再按Play就可以播放了：",
-            "stHideTbSyn": "將語音模擬的文字列隱藏。",
-            "stHighestScore": "最高分！",
-            "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
-            "stSynVoice": "語音模擬的聲音：",
-            "stContributor": "貢獻者",
-            "stRest": "尚隱藏的卡數：",
-            "stNumWCardShown": "張卡會被顯示",
-            "stckTakeCardRandomly": "隨機取卡",
-            "stCkResizeBg": "連同背景一起縮放",
-            "stResize": "縮放：",
-            "stPlayType": "使用類型",
-            "stHint": "提示",
-            "stPair": "配對",
-            "stKeyIn": "鍵入正解",
-            "stArrange": "排列卡片",
-            "stAudioRate": "音效撥放速率",
-            "stTutor": "互動教學",
-            "stBasic": "基礎",
-            "stStop": "停止",
-            "stHyperLink": "超連結",
-            "stMyLink": "本類別的連結",
-            "stTut0_1_1": "你現在在教學模式下。",
-            "stTut0_1_2": "先按{0}然後選<b>基礎</b>開始本教學。",
-            "stTut0_1_3": "或按{0}來停止此互動教學。",
-            "stTut0To1": "好了！讓我們開始吧！",
-            "stTut1_1": "1.1基礎 - 放大所有卡片",
-            "stTut1_1_1": "按{1}裏頭的{0}來放大所有卡片。",
-            "stTut1_1To2": "太棒了！\n你做到了！",
-            "stTut1_2": "1.2 基礎 - 縮小所有卡片",
-            "stTut1_2_1": "按{1}裏頭的{0}來縮小所有卡片。",
-            "stTut1_2To3": "做得好！",
-            "stTut1_3": "1.3 基礎 - 配對",
-            "stTut1_3_0": "請先按 {0}<sub>播放</sub> 或 {1}<sub>撥下個</sub>。",
-            "stTut1_3_1": "1.3.1 配對 - 點相應的卡",
-            "stTut1_3_1_1": "因為要點相應的卡好消掉該卡，請點 {0}<sub>Hide</sub> 來隱藏此教學。",
-            "stTut1_3To4": "做得好！",
-            "stTut1_4_Title": "1.4 基礎 - 換語音模擬的語音",
-            "stTut1_4_Content": "按一下{1}鈕，然後選{0}鈕旁邊的下拉式選單選擇語音。",
-            "stTut1_4_1_Title": "1.4.1 基礎 - 語音已經換了。",
-            "stTut1_4_1_Content": "按{0}將用你新選的語音來撥放句子。",
-            "stTut1_4To5": "現在你已經知道怎麼換語音了。",
-            "stTut1_5_Title": "1.5 基礎 - 換卡",
-            "stTut1_5_Content": "因為怕卡片一次顯示太多會不好找，所以限定一次只顯示'{0}'張卡，若要立刻顯示未顯示的，請按{2}中的{1}來換卡。此外，顯示卡數'{0}'是可以自己修改的喔！",
-            "stTut1_5To6": "現在，你知道怎麼換卡了！",
-            "stTut1_6_Title": "1.6 基礎 - 顯示額外訊息",
-            "stTut1_6_Content": "首先，請先點{0}<sub>Hide</sub>鈕隱藏本教學。<br/> 然後對任何卡雙擊({1})就會跳出一個畫面顯示額外的訊息了。<br/>",
-            "stTut1_6To7": "照理說，它會跳出一個Popup顯示額外訊息，如果沒有，那就是該卡片沒有額外訊息。",
-            "stTut2_0_Title": "2.1 提示： 取得卡片的訊息",
-            "stTut2_0_Content": "按{1}裡的{0}<sub>提示</sub>鈕來進入提示模式。",
-            "stTut2_1_Title": "2.1 提示： 顯示單張卡的訊息",
-            "stTut2_1_Content": "先按{0}後，然後請按任意一張卡片。它會顯示它的相應句子。",
-            "stTut2_1To2": "等一下就會在下方的文字列看到相對應的句子。",
-            "stTut2_2_Title": "2.2 提示：依序顯示卡片們相應訊息",
-            "stTut2_2_Content": "首先，按{0}會依序由<b>2.1</b>所選的卡片開始撥放卡片訊息。<br/> 按{1}則會暫停依序播放。",
-            "stTut2_2To3": "現在，你已經知道怎麼依序顯示卡片們相應的句子了。",
-            "stTut3_0_Title": "3. 鍵入正解： 利用鍵入正解消除卡片",
-            "stTut3_0_Content": "按{1}裡的{0}<sub>鍵入正解</sub>鈕來進入鍵入正解模式。",
-            "stTut3_1_Title": "3.1 鍵入正解： 點選一張卡",
-            "stTut3_1_Content": "先按{0}鈕，然後在選任一張卡片吧！",
-            "stTut3_1_2_Title": "3.1.2 鍵入正解：將正確答案鍵入",
-            "stTut3_1_2_Content": " 請將 <b>{0}</b> 鍵入下面的文字方塊裡，然後按Enter鍵送出答案。",
-            "stTut3_1To2": "做得好！",
-            "stTut_End_Title": "太棒了！全部完成！",
-            "stTut_End_Content": "按{0}來停止本教學。謝謝。"
-        },
-        "ChooseAContainerPageJSON": {
-            "stPlay": "玩",
-            "stSelContainer": "1. 選個容器吧：",
-            "stSelCategory": "2. 再選容器中的一個類別吧：",
-            "stSelLang": "3. 設定用來顯示頁面的語言：",
-            "stSpeechTest": "語音測試",
-            "stUserGuide": "使用說明"
-        },
-        "SpeechTestPageJSON": {
-            "stRecg": "語音辨識",
-            "stSyn": "語音模擬",
-            "stLang": "選語言：",
-            "stRate": "調速率：",
-            "stIsUseSentence": "用您輸入的句子當答案："
-        }
-    };
     return PageTextHelper;
 }());
+PageTextHelper.defaultPageTexts = {
+    "PlayOneCategoryPageJSON": {
+        "stBack": "回上頁",
+        "stShowScore": "<h2>你的得分為{0}，而滿分為{1}</h2>",
+        "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
+        "stNewBackTo0": "<h3>看來你對這個部分沒啥概念，建議你切換到<b>提示</b>模式，等有點概念後再玩配對。</h3>",
+        "stIncLVNotYet": "<h3>太棒了！請 {0} 天後再玩。</h3>",
+        "stIncLV": "<h3>恭喜！升級了！請 {0} 天後再玩。</h3>",
+        "stKeepLV": "<h3>雖然你有進步，可惜還不夠升級，請 {0} 天後再玩一次。</h3>",
+        "stBackTo0": "<h3>很抱歉，你的等級要退回等級0然後明天再玩一次。</h3>",
+        "stNoteForKeyIn": "<h4>注意：在<b>鍵入正解</b>模式下，你可以得更高分。</h4>",
+        "stHandWriting": "<h4>要否用手寫輸入讓手指也參與記憶？</h4>",
+        "stClickPlayAtFirst": "請先按左下角的'播放'({0})再來配對相應的圖卡。",
+        "stAns": "看答案(-15)",
+        "stLink": "超連結",
+        "stShowAns": "允許的答案有：\n{0}",
+        "stMarkForSpeech": "反白想要聽的字，再按Play就可以播放了：",
+        "stHideTbSyn": "將語音模擬的文字列隱藏。",
+        "stHighestScore": "最高分！",
+        "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
+        "stSynVoice": "語音模擬的聲音：",
+        "stContributor": "貢獻者",
+        "stRest": "尚隱藏的卡數：",
+        "stNumWCardShown": "張卡會被顯示",
+        "stckTakeCardRandomly": "隨機取卡",
+        "stCkResizeBg": "連同背景一起縮放",
+        "stResize": "縮放：",
+        "stPlayType": "使用類型",
+        "stHint": "提示",
+        "stPair": "配對",
+        "stKeyIn": "鍵入正解",
+        "stArrange": "排列卡片",
+        "stAudioRate": "音效撥放速率",
+        "stTutor": "互動教學",
+        "stBasic": "基礎",
+        "stStop": "停止",
+        "stHyperLink": "超連結",
+        "stMyLink": "本類別的連結",
+        "stTut0_1_1": "你現在在教學模式下。",
+        "stTut0_1_2": "先按{0}然後選<b>基礎</b>開始本教學。",
+        "stTut0_1_3": "或按{0}來停止此互動教學。",
+        "stTut0To1": "好了！讓我們開始吧！",
+        "stTut1_1": "1.1基礎 - 放大所有卡片",
+        "stTut1_1_1": "按{1}裏頭的{0}來放大所有卡片。",
+        "stTut1_1To2": "太棒了！\n你做到了！",
+        "stTut1_2": "1.2 基礎 - 縮小所有卡片",
+        "stTut1_2_1": "按{1}裏頭的{0}來縮小所有卡片。",
+        "stTut1_2To3": "做得好！",
+        "stTut1_3": "1.3 基礎 - 配對",
+        "stTut1_3_0": "請先按 {0}<sub>播放</sub> 或 {1}<sub>撥下個</sub>。",
+        "stTut1_3_1": "1.3.1 配對 - 點相應的卡",
+        "stTut1_3_1_1": "因為要點相應的卡好消掉該卡，請點 {0}<sub>Hide</sub> 來隱藏此教學。",
+        "stTut1_3To4": "做得好！",
+        "stTut1_4_Title": "1.4 基礎 - 換語音模擬的語音",
+        "stTut1_4_Content": "按一下{1}鈕，然後選{0}鈕旁邊的下拉式選單選擇語音。",
+        "stTut1_4_1_Title": "1.4.1 基礎 - 語音已經換了。",
+        "stTut1_4_1_Content": "按{0}將用你新選的語音來撥放句子。",
+        "stTut1_4To5": "現在你已經知道怎麼換語音了。",
+        "stTut1_5_Title": "1.5 基礎 - 換卡",
+        "stTut1_5_Content": "因為怕卡片一次顯示太多會不好找，所以限定一次只顯示'{0}'張卡，若要立刻顯示未顯示的，請按{2}中的{1}來換卡。此外，顯示卡數'{0}'是可以自己修改的喔！",
+        "stTut1_5To6": "現在，你知道怎麼換卡了！",
+        "stTut1_6_Title": "1.6 基礎 - 顯示額外訊息",
+        "stTut1_6_Content": "首先，請先點{0}<sub>Hide</sub>鈕隱藏本教學。<br/> 然後對任何卡雙擊({1})就會跳出一個畫面顯示額外的訊息了。<br/>",
+        "stTut1_6To7": "照理說，它會跳出一個Popup顯示額外訊息，如果沒有，那就是該卡片沒有額外訊息。",
+        "stTut2_0_Title": "2.1 提示： 取得卡片的訊息",
+        "stTut2_0_Content": "按{1}裡的{0}<sub>提示</sub>鈕來進入提示模式。",
+        "stTut2_1_Title": "2.1 提示： 顯示單張卡的訊息",
+        "stTut2_1_Content": "先按{0}後，然後請按任意一張卡片。它會顯示它的相應句子。",
+        "stTut2_1To2": "等一下就會在下方的文字列看到相對應的句子。",
+        "stTut2_2_Title": "2.2 提示：依序顯示卡片們相應訊息",
+        "stTut2_2_Content": "首先，按{0}會依序由<b>2.1</b>所選的卡片開始撥放卡片訊息。<br/> 按{1}則會暫停依序播放。",
+        "stTut2_2To3": "現在，你已經知道怎麼依序顯示卡片們相應的句子了。",
+        "stTut3_0_Title": "3. 鍵入正解： 利用鍵入正解消除卡片",
+        "stTut3_0_Content": "按{1}裡的{0}<sub>鍵入正解</sub>鈕來進入鍵入正解模式。",
+        "stTut3_1_Title": "3.1 鍵入正解： 點選一張卡",
+        "stTut3_1_Content": "先按{0}鈕，然後在選任一張卡片吧！",
+        "stTut3_1_2_Title": "3.1.2 鍵入正解：將正確答案鍵入",
+        "stTut3_1_2_Content": " 請將 <b>{0}</b> 鍵入下面的文字方塊裡，然後按Enter鍵送出答案。",
+        "stTut3_1To2": "做得好！",
+        "stTut_End_Title": "太棒了！全部完成！",
+        "stTut_End_Content": "按{0}來停止本教學。謝謝。"
+    },
+    "ChooseAContainerPageJSON": {
+        "stPlay": "玩",
+        "stSelContainer": "1. 選個容器吧：",
+        "stSelCategory": "2. 再選容器中的一個類別吧：",
+        "stSelLang": "3. 設定用來顯示頁面的語言：",
+        "stSpeechTest": "語音測試",
+        "stUserGuide": "使用說明"
+    },
+    "SpeechTestPageJSON": {
+        "stRecg": "語音辨識",
+        "stSyn": "語音模擬",
+        "stLang": "選語言：",
+        "stRate": "調速率：",
+        "stIsUseSentence": "用您輸入的句子當答案："
+    }
+};
 var PlayTypeEnum = (function () {
     function PlayTypeEnum() {
     }
-    PlayTypeEnum.syn = "syn";
-    PlayTypeEnum.rec = "rec";
-    PlayTypeEnum.hint = "hint";
     return PlayTypeEnum;
 }());
+PlayTypeEnum.syn = "syn";
+PlayTypeEnum.rec = "rec";
+PlayTypeEnum.hint = "hint";
 ;
 var TutorMainEnum;
 (function (TutorMainEnum) {
@@ -767,39 +767,39 @@ var GlobalVariables = (function () {
             .dialog({ modal: true });
     };
     ;
-    GlobalVariables.categoryListFileName = "MYCategory.json";
-    GlobalVariables.containerListFileName = "MYContainer.json";
-    GlobalVariables.isHostNameShown = true;
-    GlobalVariables.isLog = false;
-    GlobalVariables.isIOS = /iP/i.test(navigator.userAgent);
-    GlobalVariables.currentUser = "MYC";
-    GlobalVariables.onSingleClick = "onSingleClick";
-    GlobalVariables.onDoubleClick = "onDoubleClick";
-    GlobalVariables.numCardClick = 0;
-    GlobalVariables.timerCardClickId = Number.NaN;
-    GlobalVariables.clickedViewCard = null;
-    GlobalVariables.PlayType = PlayTypeEnum.syn;
-    GlobalVariables.currentDocumentSize = [0, 0];
-    GlobalVariables.synthesis = window["speechSynthesis"];
-    GlobalVariables.allVoices = undefined;
-    GlobalVariables.currentSynVoice = undefined;
-    GlobalVariables.synUtterance = undefined;
-    GlobalVariables.isTutorMode = true;
-    GlobalVariables.IsShownTutorKey = "IsShownTutor";
-    GlobalVariables.tutorState = {
-        Main: TutorMainEnum.Begin,
-        Step: 0
-    };
-    GlobalVariables.RemoveAWCardKey = "RemoveAWCard";
-    GlobalVariables.SynVoiceChangeKey = "SynVoiceChange";
-    GlobalVariables.TutorTypeChangeKey = "TutorTypeChange";
-    GlobalVariables.PlayTypeChangeKey = "PlayTypeChange";
-    GlobalVariables.AudioPauseKey = "AudioPause";
-    GlobalVariables.PageTextChangeKey = "PageTextChange";
-    GlobalVariables.PageTextsJSONFName = "Resources.json";
-    GlobalVariables.AViewCardShownKey = "AViewCardShown";
     return GlobalVariables;
 }());
+GlobalVariables.categoryListFileName = "MYCategory.json";
+GlobalVariables.containerListFileName = "MYContainer.json";
+GlobalVariables.isHostNameShown = true;
+GlobalVariables.isLog = false;
+GlobalVariables.isIOS = /iP/i.test(navigator.userAgent);
+GlobalVariables.currentUser = "MYC";
+GlobalVariables.onSingleClick = "onSingleClick";
+GlobalVariables.onDoubleClick = "onDoubleClick";
+GlobalVariables.numCardClick = 0;
+GlobalVariables.timerCardClickId = Number.NaN;
+GlobalVariables.clickedViewCard = null;
+GlobalVariables.PlayType = PlayTypeEnum.syn;
+GlobalVariables.currentDocumentSize = [0, 0];
+GlobalVariables.synthesis = window["speechSynthesis"];
+GlobalVariables.allVoices = undefined;
+GlobalVariables.currentSynVoice = undefined;
+GlobalVariables.synUtterance = undefined;
+GlobalVariables.isTutorMode = true;
+GlobalVariables.IsShownTutorKey = "IsShownTutor";
+GlobalVariables.tutorState = {
+    Main: TutorMainEnum.Begin,
+    Step: 0
+};
+GlobalVariables.RemoveAWCardKey = "RemoveAWCard";
+GlobalVariables.SynVoiceChangeKey = "SynVoiceChange";
+GlobalVariables.TutorTypeChangeKey = "TutorTypeChange";
+GlobalVariables.PlayTypeChangeKey = "PlayTypeChange";
+GlobalVariables.AudioPauseKey = "AudioPause";
+GlobalVariables.PageTextChangeKey = "PageTextChange";
+GlobalVariables.PageTextsJSONFName = "Resources.json";
+GlobalVariables.AViewCardShownKey = "AViewCardShown";
 var MyFileHelper = (function () {
     function MyFileHelper() {
     }
@@ -815,25 +815,25 @@ var MyFileHelper = (function () {
         };
         request.send();
     };
-    MyFileHelper.ShowTextFromTxtFile = function (pathOrUrl, tbResult) {
-        var request = new XMLHttpRequest();
-        request.open("GET", pathOrUrl, true);
-        request.onloadend = function (ev) {
-            tbResult.innerText = request.responseText;
-        };
-        request.send();
-    };
     return MyFileHelper;
 }());
+MyFileHelper.ShowTextFromTxtFile = function (pathOrUrl, tbResult) {
+    var request = new XMLHttpRequest();
+    request.open("GET", pathOrUrl, true);
+    request.onloadend = function (ev) {
+        tbResult.innerText = request.responseText;
+    };
+    request.send();
+};
 var FileTypeEnum = (function () {
     function FileTypeEnum() {
     }
-    FileTypeEnum.Image = 1;
-    FileTypeEnum.Text = 2;
-    FileTypeEnum.Box = 4;
-    FileTypeEnum.Undefined = 8;
     return FileTypeEnum;
 }());
+FileTypeEnum.Image = 1;
+FileTypeEnum.Text = 2;
+FileTypeEnum.Box = 4;
+FileTypeEnum.Undefined = 8;
 var WCard = (function () {
     function WCard(cardInfo, mainFolder, categoryFolder) {
         if (mainFolder === void 0) { mainFolder = ""; }
@@ -1164,18 +1164,18 @@ var WCard = (function () {
             }
         }
     };
-    WCard.showedWCards = new Array();
-    WCard.restWCards = new Array();
-    WCard.cardMainKey = "cardMain";
-    WCard.btLeftClickKey = "btLeftClick";
-    WCard.btRightClickKey = "btRightClick";
     return WCard;
 }());
+WCard.showedWCards = new Array();
+WCard.restWCards = new Array();
+WCard.cardMainKey = "cardMain";
+WCard.btLeftClickKey = "btLeftClick";
+WCard.btRightClickKey = "btRightClick";
 var IndexedDBHelper = (function () {
     function IndexedDBHelper() {
     }
     IndexedDBHelper.InitIDB = function () {
-        IndexedDBHelper.myIDB = indexedDB || msIndexedDB || window["webkitIndexedDB"] || window["mozIndexedDB"];
+        IndexedDBHelper.myIDB = indexedDB || window["webkitIndexedDB"] || window["mozIndexedDB"];
         IndexedDBHelper.myIDBTransaction = window["IDBTransaction"] || window["webkitIDBTransaction"] || window["msIDBTransaction"];
         IndexedDBHelper.myIDBKeyRange = window["IDBKeyRange"] || window["webkitIDBKeyRange"] || window["msIDBKeyRange"];
     };
@@ -1323,14 +1323,14 @@ var IndexedDBHelper = (function () {
             IndexedDBHelper.OpenADBAsync(getRefCC);
     };
     ;
-    IndexedDBHelper.IDBDBKey = "MYCIDB";
-    IndexedDBHelper.IDBUCCKey = "UserConCategory";
-    IndexedDBHelper.ReadyTriggerKey = "IDBIsReady";
-    IndexedDBHelper.GetIDBRecordKey = "GetIDBRecord";
-    IndexedDBHelper.isReady = false;
-    IndexedDBHelper.myVersion = 1;
     return IndexedDBHelper;
 }());
+IndexedDBHelper.IDBDBKey = "MYCIDB";
+IndexedDBHelper.IDBUCCKey = "UserConCategory";
+IndexedDBHelper.ReadyTriggerKey = "IDBIsReady";
+IndexedDBHelper.GetIDBRecordKey = "GetIDBRecord";
+IndexedDBHelper.isReady = false;
+IndexedDBHelper.myVersion = 1;
 var PlayOneCategoryPageController = (function () {
     function PlayOneCategoryPageController($scope, $routeParams) {
         this.meCardsAudio = document.getElementById('meCardsAudio');
@@ -2141,10 +2141,10 @@ var PlayOneCategoryPageController = (function () {
             GlobalVariables.synthesis.cancel();
     };
     ;
-    PlayOneCategoryPageController.oneOverNWindow = 5;
-    PlayOneCategoryPageController.styleSelWCard = "selWCard";
     return PlayOneCategoryPageController;
 }());
+PlayOneCategoryPageController.oneOverNWindow = 5;
+PlayOneCategoryPageController.styleSelWCard = "selWCard";
 function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
     var showedWcards = WCard.showedWCards;
     var ith = 0;
@@ -2194,6 +2194,12 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
     PlayOneCategoryPageController.Current.SetGlobalScore(restWcards);
     for (var i0 = 0; i0 < restWcards.length; i0++) {
         $(restWcards[i0]).on(GlobalVariables.onSingleClick, { thisWCard: restWcards[i0] }, function (ev) {
+            if (PlayOneCategoryPageController.Current.playType === PlayTypeEnum.hint) {
+                if ($('button.glyphicon-exclamation-sign').prop('disabled') === true) {
+                    $(PlayOneCategoryPageController.Current.btPauseAudio).trigger('click');
+                    return;
+                }
+            }
             var prevWCard = PlayOneCategoryPageController.Current.selWCard;
             var selWCard = ev.data.thisWCard;
             PlayOneCategoryPageController.scope.$apply(function () {
@@ -2278,7 +2284,7 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
         if (!restWcards[i0].cardInfo.IsSizeFixed)
             $(restWcards[i0].viewCard).resizable();
         $(restWcards[i0].viewCard).on("resize", function (ev, ui) {
-            ev.bubbles = false;
+            ev.stopPropagation();
             var thisWCard = WCard.FindWCardFromViewCard(this);
             thisWCard.viewSize = [ui.size.width, ui.size.height];
         });
@@ -2640,20 +2646,20 @@ var MathHelper = (function () {
         }
         return -1;
     };
-    MathHelper.Permute = function (oldSet) {
-        var newSet = new Array();
-        while (oldSet.length > 0) {
-            var i0 = MathHelper.MyRandomN(0, oldSet.length - 1);
-            newSet.push(oldSet[i0]);
-            oldSet.splice(i0, 1);
-        }
-        for (var i0 = 0; i0 < newSet.length; i0++) {
-            oldSet.push(newSet[i0]);
-        }
-        return newSet;
-    };
     return MathHelper;
 }());
+MathHelper.Permute = function (oldSet) {
+    var newSet = new Array();
+    while (oldSet.length > 0) {
+        var i0 = MathHelper.MyRandomN(0, oldSet.length - 1);
+        newSet.push(oldSet[i0]);
+        oldSet.splice(i0, 1);
+    }
+    for (var i0 = 0; i0 < newSet.length; i0++) {
+        oldSet.push(newSet[i0]);
+    }
+    return newSet;
+};
 var CardsHelper = (function () {
     function CardsHelper() {
     }

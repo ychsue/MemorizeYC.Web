@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -169,10 +169,6 @@
     <Content Include="Samples\MYContainer\Shape and color\秉燭夜遊.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Samples\Periodic Table 20160801\All Elements\BoxFiles\57 To 71, Lanthanide.txt" />
     <Content Include="Samples\Periodic Table 20160801\All Elements\BoxFiles\89 To 103, Actinide.txt" />
     <Content Include="Samples\Periodic Table 20160801\B, transition elements\BoxFiles\57 To 71, Lanthanide.txt" />
@@ -545,16 +541,6 @@
     <Content Include="Samples\週期表20160714\B族元素\BoxFiles\89到103 錒系元素.txt" />
     <Content Include="Samples\週期表20160714\全\BoxFiles\57到71 鑭系元素.txt" />
     <Content Include="Samples\週期表20160714\全\BoxFiles\89到103 錒系元素.txt" />
-    <Content Include="Scripts\angular-animate.js" />
-    <Content Include="Scripts\angular-animate.min.js" />
-    <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular-route.js" />
-    <Content Include="Scripts\angular-route.min.js" />
-    <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Samples\健康操\眼睛操\MYCategory.json" />
     <Content Include="Samples\健康操\低頭族需要的簡易運動\MYCategory.json" />
     <Content Include="Samples\健康操\MYContainer.json" />
@@ -570,10 +556,6 @@
     <Content Include="Samples\MYContainer\Animals\MYCategory.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Samples\自然發音\字母發音A到I\a, apple.box" />
     <Content Include="Samples\自然發音\字母發音A到I\b, book.box" />
     <Content Include="Samples\自然發音\字母發音A到I\c, cat.box" />
@@ -681,6 +663,35 @@
     <Content Include="ChiMeiMuseum\繪畫 Paintings\繪畫1~10\MYCategory.json" />
     <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑1~10\MYCategory.json" />
     <Content Include="ChiMeiMuseum\雕塑 Sculptures\雕塑11~20\MYCategory.json" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Scripts\angular-animate.js" />
+    <Content Include="Scripts\angular-animate.min.js" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-route.js" />
+    <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="走馬瀨農場\Images\Category.png" />
     <Content Include="走馬瀨農場\Images\CategoryAnimate.gif" />
     <Content Include="走馬瀨農場\Images\EmptyContainer.png" />
@@ -1309,15 +1320,6 @@
     <Content Include="Samples\課室常用英語指導用語\The 61th to the 70th\You can take a break when you finish..box" />
     <Content Include="Documents\MemorizeYC.Web_Guide_enUS.docx" />
     <Content Include="Documents\MemorizeYC.Web_Guide_zhTW.docx" />
-    <None Include="Scripts\jquery-2.2.3.intellisense.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-2.2.3.js" />
-    <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="web.config" />
     <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Chicken 雞.box" />
     <Content Include="走馬瀨農場\綠色區\Cute Zoo 可愛動物園\Crocodile 鱷魚.box" />
@@ -1385,10 +1387,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Scripts\jquery-2.2.3.min.map" />
     <Content Include="version.json" />
     <Content Include="Strings\en-US\Resources.json" />
     <Content Include="Strings\zh-TW\Resources.json" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
       <SubType>Designer</SubType>
