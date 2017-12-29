@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,7 +28,7 @@
 
     <script>
         GlobalVariables.rootDir = "/"; //Change it if you put this SPA at a subdirectory.
-        GlobalVariables.version = "v2016.1117.10";
+        GlobalVariables.version = "v2017.1229.10";
         GlobalVariables.versionFile = GlobalVariables.rootDir + "version.json";
         GlobalVariables.containers = [
             new AContainer(GlobalVariables.rootDir + "Samples/Periodic Table 20160801"),
@@ -37,9 +38,9 @@
             new AContainer(GlobalVariables.rootDir + "Samples/課室常用英語指導用語"),
             new AContainer(GlobalVariables.rootDir + "Samples/自然發音"),
             new AContainer(GlobalVariables.rootDir + "Samples/General Physics"),
-        new AContainer(GlobalVariables.rootDir + "Samples/健康操"),
-        new AContainer(GlobalVariables.rootDir + "Samples/海洋生物"),
-        new AContainer(GlobalVariables.rootDir + "Samples/geography 地理"),
+            new AContainer(GlobalVariables.rootDir + "Samples/健康操"),
+            new AContainer(GlobalVariables.rootDir + "Samples/海洋生物"),
+            new AContainer(GlobalVariables.rootDir + "Samples/geography 地理"),
             new AContainer(GlobalVariables.rootDir + "Samples/MYContainer")
         ];
         GlobalVariables.playOneCategoryHtml = GlobalVariables.rootDir + 'PlayPage/PlayOneCategoryPage.html';
@@ -49,6 +50,7 @@
 
     <title>MemorizeYC Web version Demo</title>
 </head>
+
 <body ng-app="MYCWeb" role="document">
     <div ng-view></div>
 
@@ -61,4 +63,5 @@
     </div>
 
 </body>
+
 </html>

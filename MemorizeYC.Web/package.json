@@ -1,0 +1,20 @@
+{
+    "name": "MemorizeYC.Web",
+    "version": "0.1.0",
+    "description": "This one is the Web version of MemorizeYC based on AngularJS v1(2.1)",
+    "author": {
+        "name": "Young-Chung Hsue",
+        "email": "hsuy1234@hotmail.com",
+        "url": "http://memorizeYC.AzureWebsites.net"
+    },
+    "license": "MIT",
+    "scripts": {
+        "start": "npm run build-ts && npm run serve",
+        "build-ts": "tsc",
+        "serve": "http-server"
+    },
+    "dependencies": {
+        "typescript": "2.1.x",
+        "http-server": "^0.10.0"
+    }
+}

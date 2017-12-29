@@ -388,18 +388,18 @@ var TutorialHelper = (function () {
                     thisPageTexts.stTut0_1_1 +
                     "<br/>" +
                     thisPageTexts.stTut0_1_2.replace(/\{0\}/g, function (st) {
-                        return "<span class='glyphicon glyphicon-menu-hamburger' > </span>";
+                        return "<span class='glyphicon glyphicon-cog' > </span>";
                     }) + "<br/>" +
                     thisPageTexts.stTut0_1_3.replace(/\{0\}/g, function (st) {
                         return "<span class='glyphicon glyphicon-remove-sign'></span><sub>Stop</sub>";
                     }) +
                     "</div>");
-                $(".glyphicon-menu-hamburger").addClass('blink');
+                $(".glyphicon-cog").addClass('blink');
                 $(".glyphicon-remove-sign").addClass('blink');
                 $(PlayOneCategoryPageController.Current.rdTutorType).addClass('blink');
                 var onStateChange = function (ev) {
                     $(PlayOneCategoryPageController.Current.rdTutorType).off(GlobalVariables.TutorTypeChangeKey, onStateChange);
-                    $(".glyphicon-menu-hamburger").removeClass('blink');
+                    $(".glyphicon-cog").removeClass('blink');
                     $(".glyphicon-remove-sign").removeClass('blink');
                     $(PlayOneCategoryPageController.Current.rdTutorType).removeClass('blink');
                     $('#dpPlaySettings').removeClass('open');
@@ -417,14 +417,14 @@ var TutorialHelper = (function () {
                             thisPageTexts.stTut1_1 +
                             "</div>" +
                             "<div style='text-align:center; font-size:3vh;'>" +
-                            thisPageTexts.stTut1_1_1.replace('{0}', "<span class='glyphicon glyphicon-plus' style='color:red; font-size:4vw;'></span>").replace('{1}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span>") + "</div>");
-                        $(".glyphicon-menu-hamburger").addClass('blink');
+                            thisPageTexts.stTut1_1_1.replace('{0}', "<span class='glyphicon glyphicon-plus' style='color:red; font-size:4vw;'></span>").replace('{1}', "<span class='glyphicon glyphicon-cog' style='color:red; font-size:4vw;'></span>") + "</div>");
+                        $(".glyphicon-cog").addClass('blink');
                         $(".glyphicon-plus").addClass('blink');
                         $("#ddSettings .glyphicon-plus").one('click', function (ev) {
                             setTimeout(function () {
                                 $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                                 $('#dpPlaySettings').removeClass('open');
-                                $(".glyphicon-menu-hamburger").removeClass('blink');
+                                $(".glyphicon-cog").removeClass('blink');
                                 $(".glyphicon-plus").removeClass('blink');
                                 GlobalVariables.alert(thisPageTexts.stTut1_1To2);
                                 if (GlobalVariables.isTutorMode) {
@@ -441,15 +441,15 @@ var TutorialHelper = (function () {
                             "</div>" +
                             "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut1_2_1
                             .replace('{0}', "<span class='glyphicon glyphicon-minus' style='color:red; font-size:4vw;'></span>")
-                            .replace('{1}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span>")
+                            .replace('{1}', "<span class='glyphicon glyphicon-cog' style='color:red; font-size:4vw;'></span>")
                             + "</div>");
-                        $(".glyphicon-menu-hamburger").addClass('blink');
+                        $(".glyphicon-cog").addClass('blink');
                         $(".glyphicon-minus").addClass('blink');
                         $("#ddSettings .glyphicon-minus").one('click', function (ev) {
                             setTimeout(function () {
                                 $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                                 $('#dpPlaySettings').removeClass('open');
-                                $(".glyphicon-menu-hamburger").removeClass('blink');
+                                $(".glyphicon-cog").removeClass('blink');
                                 $(".glyphicon-minus").removeClass('blink');
                                 GlobalVariables.alert(thisPageTexts.stTut1_2To3);
                                 if (GlobalVariables.isTutorMode) {
@@ -546,15 +546,15 @@ var TutorialHelper = (function () {
                             "<div style='text-align:left; font-size:2vh;'>" +
                             thisPageTexts.stTut1_5_Content.replace(/\{0\}/g, PlayOneCategoryPageController.Current.numWCardShown.toString())
                                 .replace('{1}', "<button>Rest:<br /><span class='badge'>" + PlayOneCategoryPageController.Current.numRestWCards + "</span></button>")
-                                .replace('{2}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:3vh;'></span><br/>") +
+                                .replace('{2}', "<span class='glyphicon glyphicon-cog' style='color:red; font-size:3vh;'></span><br/>") +
                             "</div>");
-                        $(".glyphicon-menu-hamburger").addClass('blink');
+                        $(".glyphicon-cog").addClass('blink');
                         $("#btChangeCards").addClass('blink');
                         $("#btChangeCards").one('click', function (ev) {
                             setTimeout(function () {
                                 $(GlobalVariables.gdTutorElements.gdMain).hide(0);
                                 $('#dpPlaySettings').removeClass('open');
-                                $(".glyphicon-menu-hamburger").removeClass('blink');
+                                $(".glyphicon-cog").removeClass('blink');
                                 $("#btChangeCards").removeClass('blink');
                                 GlobalVariables.alert(thisPageTexts.stTut1_5To6);
                                 if (GlobalVariables.isTutorMode) {
@@ -601,14 +601,14 @@ var TutorialHelper = (function () {
                         $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut2_0_Title
                             + "</div>" +
                             "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut2_0_Content.replace('{0}', "<input type='radio'/>")
-                            .replace('{1}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span>")
+                            .replace('{1}', "<span class='glyphicon glyphicon-cog' style='color:red; font-size:4vw;'></span>")
                             + "</div>");
-                        $(".glyphicon-menu-hamburger").addClass('blink');
+                        $(".glyphicon-cog").addClass('blink');
                         $("#lbHint").addClass('blink');
                         var onChange = function (ev) {
                             if (PlayOneCategoryPageController.Current.playType != 'hint')
                                 return;
-                            $(".glyphicon-menu-hamburger").removeClass('blink');
+                            $(".glyphicon-cog").removeClass('blink');
                             $("#lbHint").removeClass('blink');
                             $('#dpPlaySettings').removeClass('open');
                             $(GlobalVariables.gdTutorElements.gdMain).hide(0);
@@ -677,14 +677,14 @@ var TutorialHelper = (function () {
                         $(GlobalVariables.gdTutorElements.gdContent).html("<div style='text-align:center; font-size:5vh;'>" + thisPageTexts.stTut3_0_Title
                             + "</div>" +
                             "<div style='text-align:center; font-size:3vh;'>" + thisPageTexts.stTut3_0_Content.replace('{0}', "<input type='radio'/>")
-                            .replace('{1}', "<span class='glyphicon glyphicon-menu-hamburger' style='color:red; font-size:4vw;'></span>")
+                            .replace('{1}', "<span class='glyphicon glyphicon-cog' style='color:red; font-size:4vw;'></span>")
                             + "</div>");
-                        $(".glyphicon-menu-hamburger").addClass('blink');
+                        $(".glyphicon-cog").addClass('blink');
                         $("#lbKeyIn").addClass('blink');
                         var onChange = function (ev) {
                             if (PlayOneCategoryPageController.Current.playType != 'rec')
                                 return;
-                            $(".glyphicon-menu-hamburger").removeClass('blink');
+                            $(".glyphicon-cog").removeClass('blink');
                             $("#lbKeyIn").removeClass('blink');
                             $('#dpPlaySettings').removeClass('open');
                             $(GlobalVariables.gdTutorElements.gdMain).hide(0);

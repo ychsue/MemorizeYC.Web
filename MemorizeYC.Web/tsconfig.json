@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "removeComments": true,
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "outFile": "MYCWeb.js",
+        "target": "es5"
+    }
+}
