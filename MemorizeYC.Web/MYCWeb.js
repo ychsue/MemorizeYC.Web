@@ -1348,6 +1348,10 @@ var PlayOneCategoryPageController = (function () {
         this.btAudioAllPlay = document.getElementById('btAudioAllPlay');
         this.topNavbar = document.getElementById('topNavbar');
         this.bottomNavbar = document.getElementById('bottomNavbar');
+        this.barProgress = document.getElementById('barProgress');
+        this.tbSyn = document.getElementById('tbSyn');
+        this.tbHint = document.getElementById('tbHint');
+        this.tbKeyIn = document.getElementById('tbKeyIn');
         this.isHiddingSynTB = false;
         this.selTextsForSyn = "";
         this.isBackAudioStartLoad = false;
@@ -1386,11 +1390,8 @@ var PlayOneCategoryPageController = (function () {
             });
         };
         this.onWindowResize = function (ev) {
-            $(PlayOneCategoryPageController.Current.cvMain).css({
-                top: $(PlayOneCategoryPageController.Current.topNavbar).height() + "px",
-                height: (window.innerHeight - $(PlayOneCategoryPageController.Current.bottomNavbar).height()
-                    - $(PlayOneCategoryPageController.Current.topNavbar).height()) + "px"
-            });
+            updateLayout(undefined);
+            console.log("window height:" + $(window).height());
             if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
                 return;
             GlobalVariables.currentDocumentSize[0] = $(document).innerWidth();
@@ -1547,6 +1548,12 @@ var PlayOneCategoryPageController = (function () {
             }
         };
         VersionHelper.ReloadIfNeeded();
+        $(this.barProgress).on("dragstart", barProgress_onDragStart);
+        $(this.barProgress).on("drag", barProgress_onDrag);
+        $(this.barProgress).on("dragend", barProgress_onDragEnd);
+        $(this.barProgress).on("touchstart", barProgress_onDragStart);
+        $(this.barProgress).on("touchmove", barProgress_onDrag);
+        $(this.barProgress).on("touchend", barProgress_onDragEnd);
         PlayOneCategoryPageController.oneOverNWindow = 5;
         $(document).on(GlobalVariables.AViewCardShownKey, this.onAViewCardShown);
         SpeechRecognizerHelper.iniSpeechRecognition();
@@ -1851,6 +1858,12 @@ var PlayOneCategoryPageController = (function () {
         $(GlobalVariables.synUtterance).off('start error end pause');
         $(document).off(GlobalVariables.AViewCardShownKey, PlayOneCategoryPageController.Current.onAViewCardShown);
         $(PlayOneCategoryPageController.Current.dlDictateSelected).children(".tbSentence").off("select");
+        $(this.barProgress).off("dragstart", barProgress_onDragStart);
+        $(this.barProgress).off("drag", barProgress_onDrag);
+        $(this.barProgress).off("dragend", barProgress_onDragEnd);
+        $(this.barProgress).off("touchstart", barProgress_onDragStart);
+        $(this.barProgress).off("touchmove", barProgress_onDrag);
+        $(this.barProgress).off("touchend", barProgress_onDragEnd);
     };
     PlayOneCategoryPageController.prototype.onGoBack = function () {
         if (history.length > 1)
@@ -2311,6 +2324,54 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
             'height': Math.round(bGObj.clientHeight * newRate) + "px"
         });
     }
+}
+function barProgress_onDragStart(ev) {
+}
+function barProgress_onDrag(ev) {
+    var bar = PlayOneCategoryPageController.Current.barProgress;
+    var clientY = getClientY(ev);
+    if (clientY > 100) {
+        updateLayout(clientY);
+    }
+}
+function barProgress_onDragEnd(ev) {
+}
+function getClientY(ev) {
+    var isTouch = ev.originalEvent["changedTouches"] != undefined;
+    var evBuf = (isTouch) ? ev.originalEvent["changedTouches"][0] : ev;
+    return evBuf.clientY;
+}
+function posInfo(ev) {
+    var isTouch = ev.originalEvent["changedTouches"] != undefined;
+    var evBuf = (isTouch) ? ev.originalEvent["changedTouches"][0] : ev;
+    return (isTouch) ? "Touch " : "Mouse " +
+        "cx::" + evBuf.clientX + ":" + evBuf.clientY + "," +
+        "ox::" + evBuf.offsetX + ":" + evBuf.offsetY + "," +
+        "px::" + evBuf.pageX + ":" + evBuf.pageY + "," +
+        "sx::" + evBuf.screenX + ":" + evBuf.screenY;
+}
+function updateLayout(clientY) {
+    var bar = PlayOneCategoryPageController.Current.barProgress;
+    var cvMain = PlayOneCategoryPageController.Current.cvMain;
+    var topBar = PlayOneCategoryPageController.Current.topNavbar;
+    var bottomBar = PlayOneCategoryPageController.Current.bottomNavbar;
+    var tbSyn = PlayOneCategoryPageController.Current.tbSyn;
+    var tbHint = PlayOneCategoryPageController.Current.tbHint;
+    var tbKeyIn = PlayOneCategoryPageController.Current.tbKeyIn;
+    var dHeight = $(window).innerHeight();
+    var bHeight = $(bar).height();
+    if (clientY == undefined) {
+        var iTop = parseInt($(bar).css("top"));
+        clientY = (iTop != NaN) ? iTop : dHeight - bHeight;
+    }
+    else
+        $(bar).css({ bottom: dHeight - clientY - bHeight });
+    $(cvMain).css("height", clientY - $(topBar).height());
+    var tbHeight = dHeight - clientY - bHeight;
+    $(bottomBar).height(tbHeight);
+    $(tbSyn).height(tbHeight);
+    $(tbHint).height(tbHeight);
+    $(tbKeyIn).height(tbHeight);
 }
 var myVersion = (function () {
     function myVersion() {

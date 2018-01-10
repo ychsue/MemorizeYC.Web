@@ -1,0 +1,3 @@
+{
+    "typescript.tsdk": "./MemorizeYC.Web/MemorizeYC.Web/node_modules/typescript/lib"
+}

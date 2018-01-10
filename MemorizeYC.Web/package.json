@@ -16,5 +16,8 @@
     "dependencies": {
         "typescript": "2.1.x",
         "http-server": "^0.10.0"
+    },
+    "devDependencies": {
+        "typescript": "2.1.x"        
     }
 }

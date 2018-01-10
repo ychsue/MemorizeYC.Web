@@ -31,6 +31,11 @@ class PlayOneCategoryPageController{
     public btAudioAllPlay: HTMLButtonElement = document.getElementById('btAudioAllPlay') as HTMLButtonElement;
     public topNavbar: HTMLElement = document.getElementById('topNavbar') as HTMLElement;
     public bottomNavbar: HTMLElement = document.getElementById('bottomNavbar') as HTMLElement;
+    //* [2018-01-09 21:30] Added for changing the size of Bottom area
+    public barProgress: HTMLDivElement = document.getElementById('barProgress') as HTMLDivElement;
+    public tbSyn: HTMLElement = document.getElementById('tbSyn') as HTMLElement;
+    public tbHint: HTMLElement = document.getElementById('tbHint') as HTMLElement;
+    public tbKeyIn: HTMLElement = document.getElementById('tbKeyIn') as HTMLElement;
 
     public isHiddingSynTB: boolean = false;
 
@@ -269,11 +274,30 @@ class PlayOneCategoryPageController{
         $(GlobalVariables.synUtterance).off('start error end pause');
         $(document).off(GlobalVariables.AViewCardShownKey, PlayOneCategoryPageController.Current.onAViewCardShown);
         $(PlayOneCategoryPageController.Current.dlDictateSelected).children(".tbSentence").off("select");
+
+        //* [2018-01-09 21:51] Added for dragging
+        $(this.barProgress).off("dragstart",barProgress_onDragStart);
+        $(this.barProgress).off("drag",barProgress_onDrag);
+        $(this.barProgress).off("dragend",barProgress_onDragEnd);
+        $(this.barProgress).off("touchstart",barProgress_onDragStart);
+        $(this.barProgress).off("touchmove",barProgress_onDrag);
+        $(this.barProgress).off("touchend",barProgress_onDragEnd);        
+        
     }
 
     constructor($scope, $routeParams) {
         //* [2016-06-06 12:04] Reload the web page if needed.
         VersionHelper.ReloadIfNeeded();
+
+        //* [2018-01-09 21:51] Added for dragging
+        // $(this.barProgress).on("mousedown",barProgress_onDragStart);
+        // $(this.barProgress).on("mousemove",barProgress_onDrag);
+        $(this.barProgress).on("dragstart",barProgress_onDragStart);
+        $(this.barProgress).on("drag",barProgress_onDrag);
+        $(this.barProgress).on("dragend",barProgress_onDragEnd);
+        $(this.barProgress).on("touchstart",barProgress_onDragStart);
+        $(this.barProgress).on("touchmove",barProgress_onDrag);
+        $(this.barProgress).on("touchend",barProgress_onDragEnd);
 
         PlayOneCategoryPageController.oneOverNWindow = 5; //Initialize it to avoid the value gotten from other Category.
         //* [2016-08-01 11:12] RearrangeCards if some images are loaded
@@ -534,13 +558,15 @@ class PlayOneCategoryPageController{
     }
 
     public onWindowResize = function (ev) {
-        $(PlayOneCategoryPageController.Current.cvMain).css({
-            top:
-            $(PlayOneCategoryPageController.Current.topNavbar).height() + "px",
-            height:
-            (window.innerHeight - $(PlayOneCategoryPageController.Current.bottomNavbar).height()
-                - $(PlayOneCategoryPageController.Current.topNavbar).height()) + "px"
-        });
+        updateLayout(undefined);
+        console.log("window height:"+$(window).height()); //Debug
+        // $(PlayOneCategoryPageController.Current.cvMain).css({
+        //     top:
+        //     $(PlayOneCategoryPageController.Current.topNavbar).height() + "px",
+        //     height:
+        //     (window.innerHeight - $(PlayOneCategoryPageController.Current.bottomNavbar).height()
+        //         - $(PlayOneCategoryPageController.Current.topNavbar).height()) + "px"
+        // });
         //* [2016-05-20 11:40] Resize only when the document's size is changed.
         if (GlobalVariables.currentDocumentSize[0] === $(document).innerWidth() && GlobalVariables.currentDocumentSize[1] === $(document).innerHeight())
             return;
@@ -1189,4 +1215,66 @@ function ShowWCardsAndEventsCallback(jsonTxt: string, restWcards: WCard[]) {
     //        height: PlayOneCategoryPageController.Current.defaultCardHeight + "px"
     //    };
     //}
+}
+
+//* [2018-01-10 10:28] Added for dragging :TODO
+function barProgress_onDragStart(ev:JQueryEventObject){
+    //console.log("start"+posInfo(ev)); //Debug
+}
+
+function barProgress_onDrag(ev:JQueryEventObject){
+    //console.log("moving"+posInfo(ev)); //Debug
+    var bar = PlayOneCategoryPageController.Current.barProgress;
+    var clientY = getClientY(ev);
+    if(clientY > 100){
+        updateLayout(clientY);
+    }
+}
+
+function barProgress_onDragEnd(ev:JQueryEventObject) {
+    //console.log("end"+posInfo(ev)); //Debug
+}
+
+function getClientY(ev:JQueryEventObject) : number {
+    var isTouch = ev.originalEvent["changedTouches"]!=undefined;
+    var evBuf :any = (isTouch)?ev.originalEvent["changedTouches"][0] : ev;
+    return evBuf.clientY;    
+}
+
+function posInfo(ev:JQueryEventObject) :string {
+    var isTouch = ev.originalEvent["changedTouches"]!=undefined;
+    var evBuf :any = (isTouch)?ev.originalEvent["changedTouches"][0] : ev;
+    return (isTouch)?"Touch ":"Mouse "+
+        "cx::"+evBuf.clientX+":"+evBuf.clientY+","+
+        "ox::"+evBuf.offsetX+":"+evBuf.offsetY+","+
+        "px::"+evBuf.pageX+":"+evBuf.pageY+","+
+        "sx::"+evBuf.screenX+":"+evBuf.screenY;
+}
+
+/// ClientY is the top of barProgress
+function updateLayout(clientY:number){
+    var bar = PlayOneCategoryPageController.Current.barProgress;
+    var cvMain = PlayOneCategoryPageController.Current.cvMain;
+    var topBar = PlayOneCategoryPageController.Current.topNavbar;
+    var bottomBar = PlayOneCategoryPageController.Current.bottomNavbar;
+    var tbSyn = PlayOneCategoryPageController.Current.tbSyn;
+    var tbHint = PlayOneCategoryPageController.Current.tbHint;
+    var tbKeyIn = PlayOneCategoryPageController.Current.tbKeyIn;
+
+    var dHeight = $(window).innerHeight();
+    var bHeight = $(bar).height();
+
+    if(clientY==undefined){
+        var iTop =parseInt($(bar).css("top"));
+        clientY =(iTop!=NaN)?iTop:dHeight-bHeight;
+    }
+    else
+        $(bar).css({bottom: dHeight-clientY-bHeight});
+
+    $(cvMain).css("height",clientY - $(topBar).height());
+    var tbHeight =dHeight-clientY-bHeight;
+    $(bottomBar).height(tbHeight);
+    $(tbSyn).height(tbHeight);
+    $(tbHint).height(tbHeight);
+    $(tbKeyIn).height(tbHeight);
 }
