@@ -239,6 +239,12 @@ var PageTextHelper = (function () {
 }());
 PageTextHelper.defaultPageTexts = {
     "PlayOneCategoryPageJSON": {
+        "stShowAsList": "條列式顯示",
+        "stHintModeOption": "提示模式專屬",
+        "stDictateAnswer": "念答案(顯示於下方列)",
+        "stDictateContent": "念卡片內容",
+        "stAnswerFirst": "先念答案(顯示於下方列)",
+        "stRepairSyn": "修復語音問題",
         "stBack": "回上頁",
         "stShowScore": "<h2>你的得分為{0}，而滿分為{1}</h2>",
         "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
@@ -317,7 +323,8 @@ PageTextHelper.defaultPageTexts = {
         "stTut3_1_2_Content": " 請將 <b>{0}</b> 鍵入下面的文字方塊裡，然後按Enter鍵送出答案。",
         "stTut3_1To2": "做得好！",
         "stTut_End_Title": "太棒了！全部完成！",
-        "stTut_End_Content": "按{0}來停止本教學。謝謝。"
+        "stTut_End_Content": "按{0}來停止本教學。謝謝。",
+        "stContentSynVoice": "卡片內容語音模擬的聲音："
     },
     "ChooseAContainerPageJSON": {
         "stPlay": "玩",
@@ -1360,6 +1367,7 @@ var PlayOneCategoryPageController = (function () {
         this._IsShownAsList = false;
         this._IsDictateTextContentInHint = false;
         this._IsDictateAnsInHint = true;
+        this._isAnsFirst = false;
         this.speechRecogMetadata = { confidence: 0, isSpeechRecognitionRunning: false, recInputSentence: "" };
         this.isBGAlsoChange = true;
         this.defaultCardStyle = { width: "16vw", height: "16vh" };
@@ -1688,6 +1696,18 @@ var PlayOneCategoryPageController = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "isAnsFirst", {
+        get: function () {
+            return PlayOneCategoryPageController.Current._isAnsFirst;
+        },
+        set: function (v) {
+            PlayOneCategoryPageController.Current._isAnsFirst = v;
+            if (v == true)
+                PlayOneCategoryPageController.Current.IsDictateAnsInHint = true;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(PlayOneCategoryPageController.prototype, "totalScore", {
         get: function () {
             return this._totalScore;
@@ -1783,6 +1803,17 @@ var PlayOneCategoryPageController = (function () {
                 if (GlobalVariables.isTutorMode) {
                     $(PlayOneCategoryPageController.Current.btLangSettings).trigger(GlobalVariables.SynVoiceChangeKey);
                 }
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "currentContentSynVoice", {
+        get: function () { return this._currentContentSynVoice; },
+        set: function (value) {
+            if (value != this._currentContentSynVoice) {
+                this._currentContentSynVoice = value;
+                this.ContentSynLang = value.lang;
             }
         },
         enumerable: true,
@@ -1913,12 +1944,22 @@ var PlayOneCategoryPageController = (function () {
         }
     };
     ;
+    Object.defineProperty(PlayOneCategoryPageController.prototype, "isWCardUtterPausing", {
+        get: function () {
+            return PlayOneCategoryPageController.Current._isWCardUtterPausing;
+        },
+        set: function (v) {
+            PlayOneCategoryPageController.Current._isWCardUtterPausing = v;
+        },
+        enumerable: true,
+        configurable: true
+    });
     PlayOneCategoryPageController.prototype.onPlayAllViewableWCard = function (ev) {
         if (GlobalVariables.synthesis)
             GlobalVariables.synthesis.cancel();
-        var isPausing = false;
+        PlayOneCategoryPageController.Current.isWCardUtterPausing = false;
         var onClick = function (ev) {
-            isPausing = true;
+            PlayOneCategoryPageController.Current.isWCardUtterPausing = true;
             PlayOneCategoryPageController.Current.PauseAudio();
             $('button.glyphicon-exclamation-sign, #dropdownMenuPlayPageSettings').prop('disabled', false);
             $(PlayOneCategoryPageController.Current.btPauseAudio).trigger(GlobalVariables.AudioPauseKey, AudioSequenceStateEnum.Pause);
@@ -1929,8 +1970,9 @@ var PlayOneCategoryPageController = (function () {
         ith = (ith < 0) ? 0 : ith;
         var ith0 = ith;
         var nextPlay = function (ev) {
+            console.log("Debug" + " nextPlay " + ith);
             $(WCard.showedWCards[ith].viewCard).removeClass('selWCard');
-            if (isPausing) {
+            if (PlayOneCategoryPageController.Current.isWCardUtterPausing) {
                 $(WCard.showedWCards[ith].viewCard).addClass('selWCard');
                 return;
             }
@@ -1985,6 +2027,9 @@ var PlayOneCategoryPageController = (function () {
                 if (PlayOneCategoryPageController.Current.SynLang)
                     vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(PlayOneCategoryPageController.Current.SynLang);
                 PlayOneCategoryPageController.Current.currentSynVoice = (vVoice) ? vVoice : GlobalVariables.allVoices[0];
+                if (PlayOneCategoryPageController.Current.ContentSynLang)
+                    vVoice = SpeechSynthesisHelper.getSynVoiceFromLang(PlayOneCategoryPageController.Current.ContentSynLang);
+                PlayOneCategoryPageController.Current.currentContentSynVoice = (vVoice) ? vVoice : PlayOneCategoryPageController.Current.currentSynVoice;
             }
         });
     };
@@ -2131,15 +2176,47 @@ var PlayOneCategoryPageController = (function () {
         else if (GlobalVariables.synthesis && GlobalVariables.synUtterance) {
             if (GlobalVariables.synthesis.paused)
                 GlobalVariables.synthesis.resume();
+            var isHintMode = PlayOneCategoryPageController.Current.playType === "hint";
             var sentence = wCard.cardInfo.Dictate;
-            if (PlayOneCategoryPageController.Current.playType === "hint") {
-                sentence = ((PlayOneCategoryPageController.Current.IsDictateAnsInHint) ? wCard.cardInfo.Dictate : "") +
-                    ((PlayOneCategoryPageController.Current.IsDictateTextContentInHint) ? $(wCard.cCards[wCard.boxIndex]).text() : "");
+            var lang = PlayOneCategoryPageController.Current.SynLang;
+            var voice = PlayOneCategoryPageController.Current.currentSynVoice;
+            var sentences = [];
+            var langs = [];
+            var voices = [];
+            if (isHintMode) {
+                var contentSentence = $(wCard.cCards[wCard.boxIndex]).text();
+                var contentLang = (PlayOneCategoryPageController.Current.ContentSynLang) ? PlayOneCategoryPageController.Current.ContentSynLang : PlayOneCategoryPageController.Current.SynLang;
+                var contentVoice = (PlayOneCategoryPageController.Current.currentContentSynVoice) ? PlayOneCategoryPageController.Current.currentContentSynVoice : PlayOneCategoryPageController.Current.currentSynVoice;
+                var isAns = PlayOneCategoryPageController.Current.IsDictateAnsInHint;
+                var isContentSyn = PlayOneCategoryPageController.Current.IsDictateTextContentInHint;
+                var isAns1st = PlayOneCategoryPageController.Current.isAnsFirst;
+                if (isContentSyn == false || (isAns && (isAns1st == false))) {
+                    langs.push(lang);
+                    voices.push(voice);
+                    sentences.push(sentence);
+                    if (isContentSyn == true) {
+                        langs.push(contentLang);
+                        voices.push(contentVoice);
+                        sentences.push(contentSentence);
+                    }
+                }
+                else {
+                    langs.push(contentLang);
+                    voices.push(contentVoice);
+                    sentences.push(contentSentence);
+                    if (isAns == true) {
+                        langs.push(lang);
+                        voices.push(voice);
+                        sentences.push(sentence);
+                    }
+                }
             }
-            SpeechSynthesisHelper.Speak(sentence, PlayOneCategoryPageController.Current.SynLang, PlayOneCategoryPageController.Current.currentSynVoice, Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN));
-            if (callback) {
-                $(GlobalVariables.synUtterance).one("end", callback);
+            else {
+                langs.push(lang);
+                voices.push(voice);
+                sentences.push(sentence);
             }
+            PlayOneCategoryPageController.Current.speakRecursively(sentences, langs, voices, callback);
         }
         else {
             if (callback)
@@ -2147,6 +2224,38 @@ var PlayOneCategoryPageController = (function () {
         }
     };
     ;
+    PlayOneCategoryPageController.prototype.speakRecursively = function (sentences, langs, voices, callback) {
+        if (sentences.length <= 0) {
+            if (callback != null) {
+                callback();
+                console.log("Debug " + "speakRecursively callback end");
+            }
+        }
+        else {
+            var sentence = sentences.pop();
+            var lang = langs.pop();
+            var voice = voices.pop();
+            if (sentence != undefined) {
+                var s_1 = sentences.slice(0);
+                var l_1 = langs.slice(0);
+                var v_1 = voices.slice(0);
+                if (sentence == "") {
+                    PlayOneCategoryPageController.Current.speakRecursively(s_1, l_1, v_1, callback);
+                }
+                else {
+                    $(GlobalVariables.synUtterance).one("end", function () {
+                        if (PlayOneCategoryPageController.Current.isWCardUtterPausing == true && callback != null) {
+                            callback();
+                        }
+                        else {
+                            PlayOneCategoryPageController.Current.speakRecursively(s_1, l_1, v_1, callback);
+                        }
+                    });
+                    SpeechSynthesisHelper.Speak(sentence, lang, voice, Math.pow(2, PlayOneCategoryPageController.Current.rate2PowN));
+                }
+            }
+        }
+    };
     PlayOneCategoryPageController.prototype.PauseAudio = function () {
         if (PlayOneCategoryPageController.Current.meCardsAudio)
             PlayOneCategoryPageController.Current.meCardsAudio.pause();
@@ -2179,6 +2288,7 @@ function ShowWCardsAndEventsCallback(jsonTxt, restWcards) {
             PlayOneCategoryPageController.Current.IsDictateAnsInHint = jObj.IsDictateAnsInHint;
     });
     PlayOneCategoryPageController.Current.SynLang = jObj.SynLang;
+    PlayOneCategoryPageController.Current.ContentSynLang = jObj.ContentSynLang;
     SpeechSynthesisHelper.getAllVoices(function () {
         PlayOneCategoryPageController.Current.GetCurrentSynVoice();
         $(GlobalVariables.synUtterance).on('start', function (ev) {
@@ -2362,7 +2472,7 @@ function updateLayout(clientY) {
     var bHeight = $(bar).height();
     if (clientY == undefined) {
         var iTop = parseInt($(bar).css("top"));
-        clientY = (iTop != NaN) ? iTop : dHeight - bHeight;
+        clientY = (iTop != NaN) ? iTop : dHeight - bHeight - $(bottomBar).height();
     }
     else
         $(bar).css({ bottom: dHeight - clientY - bHeight });

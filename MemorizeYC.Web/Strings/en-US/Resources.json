@@ -1,5 +1,12 @@
 ﻿{
   "PlayOneCategoryPageJSON": {
+    "stShowAsList": "Show cards as a list",
+    "stHintModeOption":"Hint mode's options",
+    "stDictateAnswer": "Dictate answer(shown in bottom bar)",
+    "stDictateContent": "Dictate card's content",
+    "stAnswerFirst": "Dictate answer first",
+    "stRepairSyn": "Repair Synthesis's Problem",
+
     "stBack": "Back",
     "stShowScore": "<h2>Your score is {0}/{1}</h2>",
     "stNewUpToOne": "<h3>Congradulation! Your level is 1 now. Play again tomorrow.</h3>",
@@ -24,6 +31,7 @@
 
     "stWaitUtterDone": "I'm uttering. Please wait.",
     "stSynVoice": "Voice for Speech Synthesis:",
+    "stContentSynVoice": "Voice for Content's Speech Synthesis:",
     "stContributor": "Contributor",
     "stRest": "Rest:",
     "stNumWCardShown": " cards will be shown at once.",

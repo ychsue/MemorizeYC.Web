@@ -3,250 +3,278 @@
 <div id="dlDblClickWCard" title="Double clicked"></div>
 <div id="dlFinish" title="All Done!"></div>
 <div id="dlDictateSelected" style="font-size:large" title="Synthesize words">
-    <div style="font-size:medium;margin:12px;">{{ctrl.thisPageTexts.stMarkForSpeech}}</div>
-    <textarea class="tbSentence" style="overflow:auto;margin:12px;border:4px groove red"></textarea>
-    <input type="range" ng-model="ctrl.rate2PowN" min="-2" max="2" step="0.5" />
-    <label style="margin:12px;" ng-show="ctrl.playType==='syn'"><input type="checkbox" ng-model="ctrl.isHiddingSynTB" />{{ctrl.thisPageTexts.stHideTbSyn}}</label>
+	<div style="font-size:medium;margin:12px;">{{ctrl.thisPageTexts.stMarkForSpeech}}</div>
+	<textarea class="tbSentence" style="overflow:auto;margin:12px;border:4px groove red"></textarea>
+	<input type="range" ng-model="ctrl.rate2PowN" min="-2" max="2" step="0.5" />
+	<label style="margin:12px;" ng-show="ctrl.playType==='syn'"><input type="checkbox" ng-model="ctrl.isHiddingSynTB" />{{ctrl.thisPageTexts.stHideTbSyn}}</label>
 </div>
 
 <div id="divForChampion" ng-show="ctrl.isHighest" style="position:fixed;width:100vw;height:100vh; background-color:red;z-index:10">
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <img class="imgStar" src="./Images/star.svg" />
-    <div class="text-center" style="position:absolute;width:100vw;top:40vh;font-size:10vw;color:white;">
-        {{ctrl.thisPageTexts.stHighestScore}}
-    </div>
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<img class="imgStar" src="./Images/star.svg" />
+	<div class="text-center" style="position:absolute;width:100vw;top:40vh;font-size:10vw;color:white;">
+		{{ctrl.thisPageTexts.stHighestScore}}
+	</div>
 </div>
 
 
 <div class="cvMain" role="main" style="position:absolute;overflow:scroll;width:100vw;height:100vh">
-    <div id="imgBackground"></div>
-    <div style="height:80px;"></div> <!--Because the cards or background might be covered by status bar, I need to add an extra height for the background.-->
+	<div id="imgBackground"></div>
+	<div style="height:80px;"></div> <!--Because the cards or background might be covered by status bar, I need to add an extra height for the background.-->
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom" style="position:fixed;bottom:0; height:50px;" id="bottomNavbar">
-    <div class="container-fluid" ng-show="ctrl.playType==='syn'">
-        <div class="row">
-            <!--            <button id="btSynPlay" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()" title="Click me at first.">-->
-            <button id="btSynPlay" class="col-xs-1 btn btn-default">
-                <span class="glyphicon glyphicon-play" />
-            </button>
-            <button id="btSynNext" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click($event)">
-                <span class="glyphicon glyphicon-step-forward" />
-            </button>
-            <div class="col-xs-10" id="tbSyn" style="font-size:large;cursor:pointer" ng-style="{opacity:(ctrl.isHiddingSynTB)?0:1}" ng-bind="ctrl.synAnsWCard.cardInfo.Ans_KeyIn[0]" ng-click="ctrl.onTB_Click()"></div>
-        </div>
-    </div>
-
-    <div class="container-fluid" ng-show="ctrl.playType==='rec'">
-        <div class="row">
-            <button class="col-xs-1 btn btn-default" ng-click="ctrl.StartSpeechRecognition_Click($event)" ng-disabled="!ctrl.isHavingSpeechRecognier">
-                <img src="./Images/microphone.svg" alt="microphone" style="height:40px" ng-hide="ctrl.speechRecogMetadata.isSpeechRecognitionRunning" />
-                <svg height="40" width="40" ng-show="ctrl.speechRecogMetadata.isSpeechRecognitionRunning">
-                    <circle cx="20" cy="20" r="12" stroke="black" stroke-width="3" fill="red" />
-                </svg>
-            </button>
-            <input id="tbKeyIn" type="text" name="tbRecSentence" class="col-xs-9" style="margin:8px;" ng-model="ctrl.speechRecogMetadata.recInputSentence" ng-keyup="ctrl.recCheckAnswer_Click($event)" />
-            <button class="glyphicon glyphicon-upload col-xs-1 navbar-right" style="height:45px;font-size:20px" ng-click="ctrl.recCheckAnswer_Click($event)"></button>
-        </div>
-    </div>
-
-    <div class="container-fluid" ng-show="ctrl.playType==='hint'">
-        <div class="row">
-            <button class="col-xs-1 glyphicon glyphicon-exclamation-sign btn btn-default" type="button" id="btAudioAllPlay" ng-click="ctrl.onPlayAllViewableWCard()"></button>
-            <button class="col-xs-1 glyphicon glyphicon-pause btn btn-default" type="button" id="btPauseAudio"></button>
-            <div id="tbHint" class="col-xs-10 text-center" style="display:table-cell; vertical-align:central; font-size:x-large; cursor:pointer" ng-click="ctrl.onTB_Click()">{{ctrl.selWCard.cardInfo.Ans_KeyIn[0]}}</div>
-        </div>
-    </div>
-
-</nav>
-
-<nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
-    <div class="container-fluid">
-        <div class="row">
-            <div id="dpLangMain" class="dropdown">
-                <button class="col-xs-1 dropdown-toggle btn btn-default" role="button" type="button" id="dropdownLangSettings" data-toggle="dropdown" aria-haspopup="false" style="height:48px;">
-                    <img src="./Images/SpeechLang.png" alt="Choose a Language" style="width:32px" />
-                    <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-left" style="margin-left:12px;">
-                    <ul>
-                        <li class="dropdown-header">
-                            <h4><span class="glyphicon-headphones glyphicon"></span>{{ctrl.thisPageTexts.stSynVoice}}</h4>
-                        </li>
-                        <li>
-                            <select id="cbSynAllVoices" ng-model="ctrl.currentSynVoice" ng-options="c.name+'('+c.lang+')' for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer"></select>
-                            <button ng-click="ctrl.onReloadSynVoices();" class="glyphicon glyphicon-refresh"></button>
-                        </li>
-                        <li role="separator" class="divider" />
-                        <li class="dropdown-header">
-                            <h4>{{ctrl.thisPageTexts.stContributor}}</h4>
-                        </li>
-                        <li>
-                            <a href="http://memorizeyc.azurewebsites.net/">© MemorizeYC</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <h4 class="col-xs-9 text-center">{{ctrl.CFolder}}</h4>
-            <div id="dpPlaySettings" class="dropdown" style="opacity:0.95;">
-                <button class="btn btn-default dropdown-toggle col-xs-1 navbar-right" style="height:48px;" role="button" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <span class="glyphicon glyphicon-cog" style="font-size:32px" />
-                </button>
-                <ul id="ddSettings" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPlayPageSettings" style="max-width:90vw;max-height:96vh; overflow-y:scroll">
-                    <!--1. For cards' size, shown-->
-                    <li class="container">
-                        <div class="row">
-                            <button id="btChangeCards" ng-style="ctrl.defaultCardStyle" ng-click="ctrl.ShowNewWCards_Click()" style="float:left;margin:4px;">
-                                <div>
-                                    {{ctrl.thisPageTexts.stRest}} <br />
-                                    <span class="badge">{{ctrl.numRestWCards}}</span>
-                                </div>
-                            </button>
-                            <div style="margin:4px;float:left">
-                                <input type="number" style="width:40px" ng-model="ctrl.numWCardShown" min="1" /> {{ctrl.thisPageTexts.stNumWCardShown}}
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="cbPickRandomly" value="" ng-model="ctrl.isPickWCardsRandomly" />
-                                        {{ctrl.thisPageTexts.stckTakeCardRandomly}}
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="cbBGAlsoChange" value="" ng-model="ctrl.isBGAlsoChange" />
-                                        {{ctrl.thisPageTexts.stCkResizeBg}}
-                                    </label>
-                                </div>
-                                <div>
-                                    {{ctrl.thisPageTexts.stResize}}
-                                    <button class="glyphicon glyphicon-minus" ng-click="ctrl.Smaller_Click($event)"></button>
-                                    <button class="glyphicon glyphicon-plus" ng-click="ctrl.Larger_Click($event)"></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" ng-model="ctrl.IsShownAsList" />
-                                Show cards as a list
-                            </label>
-                        </div>
-                    </li>
-                    <li role="separator" class="divider"></li>
-
-                    <!--2. For Play Type-->
-                    <li class="dropdown-header">{{ctrl.thisPageTexts.stPlayType}}</li>
-                    <li class="container">
-                        <div class="row">
-                            <div class="radio col-xs-4" style="margin-top:auto">
-                                <label id="lbHint">
-                                    <input type="radio" name="gameType" value="hint" ng-model="ctrl.playType" />
-                                    {{ctrl.thisPageTexts.stHint}} <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-exclamation-sign"></span>
-                                </label>
-                            </div>
-                            <div class="radio col-xs-4" style="margin-top:auto">
-                                <label>
-                                    <input type="radio" name="gameType" value="syn" ng-model="ctrl.playType" /> <!--Definded in PlayTypeEnum-->
-                                    {{ctrl.thisPageTexts.stPair}} <span class="glyphicon glyphicon-play"></span>  <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-modal-window"></span>
-                                </label>
-                            </div><span></span>
-                            <div class="radio col-xs-4" style="margin-top:auto">
-                                <label id="lbKeyIn">
-                                    <input type="radio" name="gameType" value="rec" ng-model="ctrl.playType" />
-                                    {{ctrl.thisPageTexts.stKeyIn}}
-                                    <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span>   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keyboard-icon_Wikipedians.svg/800px-Keyboard-icon_Wikipedians.svg.png" style="height:20px" alt="key in answer" />
-                                </label>
-                            </div>
-                        </div>
-                    </li>
-                    <li role="separator" class="divider"></li>
-
-                    <!--2.1 For Hint Mode only-->
-                    <li class="dropdown-header" ng-show="ctrl.playType==='hint'"> Hint mode's options</li>
-                    <li class="container"  ng-show="ctrl.playType==='hint'">
-                        <div class="row" style="margin-left:8px;">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="" ng-model="ctrl.IsDictateAnsInHint"/>
-                                    Dictate answer
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="" ng-model="ctrl.IsDictateTextContentInHint" />
-                                    Dictate content
-                                </label>
-                            </div>
-                        </div>
-                    </li>
-                    <li role="separator" class="divider"></li>
-                    <!--3. For arrangement-->
-                    <li class="dropdown-header">{{ctrl.thisPageTexts.stArrange}}</li>
-                    <li class="container">
-                        <div class="row">
-                            <div class="col-xs-4"><button class="glyphicon glyphicon-th" ng-click="ctrl.Arrange_Click(false)"></button></div>
-                            <div class="col-xs-4"><button class="glyphicon glyphicon-random" ng-click="ctrl.Arrange_Click(true)"></button></div>
-                        </div>
-                    </li>
-                    <li role="separator" class="divider"></li>
-
-                    <!--4. Audio rate-->
-                    <li class="dropdown-header">{{ctrl.thisPageTexts.stAudioRate}}</li>
-                    <li class="container">
-                        <div class="col-xs-12">
-                            <input type="range" id="rgAudioRate" ng-model="ctrl.rate2PowN" min="-2" max="2" step="0.5" />
-                        </div>
-                    </li>
-                    <li role="separator" class="divider"></li>
-
-                    <!--5. Tutorial Mode-->
-                    <li class="dropdown-header">{{ctrl.thisPageTexts.stTutor}}</li>
-                    <li class="container">
-                        <div id="rdTutorType" class="row">
-                            <label class="col-xs-3">
-                                <input type="radio" name="tutorType" value="Basic" ng-model="ctrl.TutorType" />
-                                {{ctrl.thisPageTexts.stBasic}}
-                            </label>
-                            <label class="col-xs-3">
-                                <input type="radio" name="tutorType" value="Hint" ng-model="ctrl.TutorType" />
-                                {{ctrl.thisPageTexts.stHint}}
-                            </label>
-                            <label class="col-xs-3">
-                                <input type="radio" name="tutorType" value="KeyIn" ng-model="ctrl.TutorType" />
-                                {{ctrl.thisPageTexts.stKeyIn}}
-                            </label>
-                            <label class="col-xs-3">
-                                <input type="radio" name="tutorType" value="End" ng-model="ctrl.TutorType" />
-                                {{ctrl.thisPageTexts.stStop}}
-                            </label>
-                        </div>
-                    </li>
-
-                    <!--6. For HyperLinks-->
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">{{ctrl.thisPageTexts.stHyperLink}}</li>
-                    <li>
-                        <button class="btn btn-default" ng-click="ctrl.OpenHyperLink_Click()" ng-show="ctrl.hyperLink">{{ctrl.thisPageTexts.stMyLink}}</button>
-                        <button class="btn btn-default" ng-click="ctrl.onGoBack()">{{ctrl.thisPageTexts.stBack}}</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
-
-
-
-<div id="barProgress" class="progress" style="position:absolute;bottom: 32px; width:100%" draggable="true">
-    <div id="pgScore" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 100%; position:absolute; right:0">
-        {{ctrl.totalScore}}/{{ctrl.glScore}}
-    </div>
-</div>
+	<div class="container-fluid" ng-show="ctrl.playType==='syn'">
+		<div class="row">
+			<!--            <button id="btSynPlay" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlay_Click()" title="Click me at first.">-->
+				<button id="btSynPlay" class="col-xs-1 btn btn-default">
+					<span class="glyphicon glyphicon-play" />
+				</button>
+				<button id="btSynNext" class="col-xs-1 btn btn-default" ng-click="ctrl.synPlayNext_Click($event)">
+					<span class="glyphicon glyphicon-step-forward" />
+				</button>
+				<div class="col-xs-10" id="tbSyn" style="font-size:large;cursor:pointer" ng-style="{opacity:(ctrl.isHiddingSynTB)?0:1}" ng-bind="ctrl.synAnsWCard.cardInfo.Ans_KeyIn[0]" ng-click="ctrl.onTB_Click()"></div>
+			</div>
+		</div>
+		
+		<div class="container-fluid" ng-show="ctrl.playType==='rec'">
+			<div class="row">
+				<button class="col-xs-1 btn btn-default" ng-click="ctrl.StartSpeechRecognition_Click($event)" ng-disabled="!ctrl.isHavingSpeechRecognier">
+					<img src="./Images/microphone.svg" alt="microphone" style="height:40px" ng-hide="ctrl.speechRecogMetadata.isSpeechRecognitionRunning" />
+					<svg height="40" width="40" ng-show="ctrl.speechRecogMetadata.isSpeechRecognitionRunning">
+						<circle cx="20" cy="20" r="12" stroke="black" stroke-width="3" fill="red" />
+					</svg>
+				</button>
+				<input id="tbKeyIn" type="text" name="tbRecSentence" class="col-xs-9" style="margin:8px;" ng-model="ctrl.speechRecogMetadata.recInputSentence" ng-keyup="ctrl.recCheckAnswer_Click($event)" />
+				<button class="glyphicon glyphicon-upload col-xs-1 navbar-right" style="height:45px;font-size:20px" ng-click="ctrl.recCheckAnswer_Click($event)"></button>
+			</div>
+		</div>
+		
+		<div class="container-fluid" ng-show="ctrl.playType==='hint'">
+			<div class="row">
+				<button class="col-xs-1 glyphicon glyphicon-exclamation-sign btn btn-default" type="button" id="btAudioAllPlay" ng-click="ctrl.onPlayAllViewableWCard()"></button>
+				<button class="col-xs-1 glyphicon glyphicon-pause btn btn-default" type="button" id="btPauseAudio"></button>
+				<div id="tbHint" class="col-xs-10 text-center" style="display:table-cell; vertical-align:central; font-size:x-large; cursor:pointer" ng-click="ctrl.onTB_Click()">{{ctrl.selWCard.cardInfo.Ans_KeyIn[0]}}</div>
+			</div>
+		</div>
+		
+	</nav>
+	
+	<nav class="navbar navbar-default navbar-fixed-top" id="topNavbar">
+		<div class="container-fluid">
+			<div class="row">
+				<div id="dpLangMain" class="dropdown">
+					<button class="col-xs-1 dropdown-toggle btn btn-default" role="button" type="button" id="dropdownLangSettings" data-toggle="dropdown" aria-haspopup="false" style="height:48px;">
+						<img src="./Images/SpeechLang.png" alt="Choose a Language" style="width:32px" />
+						<span class="caret"></span>
+					</button>
+					<div class="dropdown-menu dropdown-menu-left" style="margin-left:12px;">
+						<ul>
+							<ul ng-show="ctrl.IsDictateAnsInHint">
+								<li class="dropdown-header">
+									<h4><span class="glyphicon-headphones glyphicon"></span>{{ctrl.thisPageTexts.stSynVoice}}</h4>
+								</li>
+								<li>
+									<select id="cbSynAllVoices" ng-model="ctrl.currentSynVoice" ng-options="c.name+'('+c.lang+')' for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer"></select>
+									<button ng-click="ctrl.onReloadSynVoices();" class="glyphicon glyphicon-refresh"></button>
+								</li>
+							</ul>
+							<li role="separator" class="divider" />
+							<!-- For Content's Speech Synthesis -->
+							<ul ng-show="ctrl.IsDictateTextContentInHint">
+									<li class="dropdown-header">
+										<h4><span class="glyphicon-headphones glyphicon"></span>{{ctrl.thisPageTexts.stContentSynVoice}}</h4>
+									</li>
+									<li>
+										<select id="cbSynAllVoices" ng-model="ctrl.currentContentSynVoice" ng-options="c.name+'('+c.lang+')' for c in ctrl.synAllVoices" ng-click="$event.stopPropagation();" style="cursor: pointer"></select>
+										<button ng-click="ctrl.onReloadSynVoices();" class="glyphicon glyphicon-refresh"></button>
+									</li>
+							</ul>
+							<li role="separator" class="divider" />
+							<ul>
+								<li>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" value="" ng-model="ctrl.isAnsFirst"/>
+											{{ctrl.thisPageTexts.stAnswerFirst}}
+										</label>
+									</div>
+									<button ng-click="ctrl.PauseAudio();">{{ctrl.thisPageTexts.stRepairSyn}}</button>	
+								</li>
+							</ul>
+							<li role="separator" class="divider" />
+							<ul>
+								<li class="dropdown-header">
+									<h4>{{ctrl.thisPageTexts.stContributor}}</h4>
+								</li>
+								<li>
+									<a href="http://memorizeyc.azurewebsites.net/">© MemorizeYC</a>
+								</li>	
+							</ul>							
+						</ul>
+					</div>
+				</div>
+				<h4 class="col-xs-9 text-center">{{ctrl.CFolder}}</h4>
+				<div id="dpPlaySettings" class="dropdown" style="opacity:0.95;">
+					<button class="btn btn-default dropdown-toggle col-xs-1 navbar-right" style="height:48px;" role="button" type="button" id="dropdownMenuPlayPageSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span class="glyphicon glyphicon-cog" style="font-size:32px" />
+					</button>
+					<ul id="ddSettings" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPlayPageSettings" style="max-width:90vw;max-height:96vh; overflow-y:scroll">
+						<!--1. For cards' size, shown-->
+						<li class="container">
+							<div class="row">
+								<button id="btChangeCards" ng-style="ctrl.defaultCardStyle" ng-click="ctrl.ShowNewWCards_Click()" style="float:left;margin:4px;">
+									<div>
+										{{ctrl.thisPageTexts.stRest}} <br />
+										<span class="badge">{{ctrl.numRestWCards}}</span>
+									</div>
+								</button>
+								<div style="margin:4px;float:left">
+									<input type="number" style="width:40px" ng-model="ctrl.numWCardShown" min="1" /> {{ctrl.thisPageTexts.stNumWCardShown}}
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" name="cbPickRandomly" value="" ng-model="ctrl.isPickWCardsRandomly" />
+											{{ctrl.thisPageTexts.stckTakeCardRandomly}}
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" name="cbBGAlsoChange" value="" ng-model="ctrl.isBGAlsoChange" />
+											{{ctrl.thisPageTexts.stCkResizeBg}}
+										</label>
+									</div>
+									<div>
+										{{ctrl.thisPageTexts.stResize}}
+										<button class="glyphicon glyphicon-minus" ng-click="ctrl.Smaller_Click($event)"></button>
+										<button class="glyphicon glyphicon-plus" ng-click="ctrl.Larger_Click($event)"></button>
+									</div>
+								</div>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" value="" ng-model="ctrl.IsShownAsList" />
+									{{ctrl.thisPageTexts.stShowAsList}}
+								</label>
+							</div>
+						</li>
+						<li role="separator" class="divider"></li>
+						
+						<!--2. For Play Type-->
+						<li class="dropdown-header">{{ctrl.thisPageTexts.stPlayType}}</li>
+						<li class="container">
+							<div class="row">
+								<div class="radio col-xs-4" style="margin-top:auto">
+									<label id="lbHint">
+										<input type="radio" name="gameType" value="hint" ng-model="ctrl.playType" />
+										{{ctrl.thisPageTexts.stHint}} <span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-exclamation-sign"></span>
+									</label>
+								</div>
+								<div class="radio col-xs-4" style="margin-top:auto">
+									<label>
+										<input type="radio" name="gameType" value="syn" ng-model="ctrl.playType" /> <!--Definded in PlayTypeEnum-->
+										{{ctrl.thisPageTexts.stPair}} <span class="glyphicon glyphicon-play"></span>  <span class="glyphicon glyphicon-arrow-right"></span> <span class="glyphicon glyphicon-modal-window"></span>
+									</label>
+								</div><span></span>
+								<div class="radio col-xs-4" style="margin-top:auto">
+									<label id="lbKeyIn">
+										<input type="radio" name="gameType" value="rec" ng-model="ctrl.playType" />
+										{{ctrl.thisPageTexts.stKeyIn}}
+										<span class="glyphicon glyphicon-modal-window"></span> <span class="glyphicon glyphicon-arrow-right"></span>   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Keyboard-icon_Wikipedians.svg/800px-Keyboard-icon_Wikipedians.svg.png" style="height:20px" alt="key in answer" />
+									</label>
+								</div>
+							</div>
+						</li>
+						<li role="separator" class="divider"></li>
+						
+						<!--2.1 For Hint Mode only-->
+						<li class="dropdown-header" ng-show="ctrl.playType==='hint'"> {{ctrl.thisPageTexts.stHintModeOption}}</li>
+						<li class="container"  ng-show="ctrl.playType==='hint'">
+							<div class="row" style="margin-left:8px;">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" value="" ng-model="ctrl.IsDictateAnsInHint"/>
+										{{ctrl.thisPageTexts.stDictateAnswer}}
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" value="" ng-model="ctrl.IsDictateTextContentInHint" />
+										{{ctrl.thisPageTexts.stDictateContent}}
+									</label>
+								</div>
+							</div>
+						</li>
+						<li role="separator" class="divider"></li>
+						<!--3. For arrangement-->
+						<li class="dropdown-header">{{ctrl.thisPageTexts.stArrange}}</li>
+						<li class="container">
+							<div class="row">
+								<div class="col-xs-4"><button class="glyphicon glyphicon-th" ng-click="ctrl.Arrange_Click(false)"></button></div>
+								<div class="col-xs-4"><button class="glyphicon glyphicon-random" ng-click="ctrl.Arrange_Click(true)"></button></div>
+							</div>
+						</li>
+						<li role="separator" class="divider"></li>
+						
+						<!--4. Audio rate-->
+						<li class="dropdown-header">{{ctrl.thisPageTexts.stAudioRate}}</li>
+						<li class="container">
+							<div class="col-xs-12">
+								<input type="range" id="rgAudioRate" ng-model="ctrl.rate2PowN" min="-2" max="2" step="0.5" />
+							</div>
+						</li>
+						<li role="separator" class="divider"></li>
+						
+						<!--5. Tutorial Mode-->
+						<li class="dropdown-header">{{ctrl.thisPageTexts.stTutor}}</li>
+						<li class="container">
+							<div id="rdTutorType" class="row">
+								<label class="col-xs-3">
+									<input type="radio" name="tutorType" value="Basic" ng-model="ctrl.TutorType" />
+									{{ctrl.thisPageTexts.stBasic}}
+								</label>
+								<label class="col-xs-3">
+									<input type="radio" name="tutorType" value="Hint" ng-model="ctrl.TutorType" />
+									{{ctrl.thisPageTexts.stHint}}
+								</label>
+								<label class="col-xs-3">
+									<input type="radio" name="tutorType" value="KeyIn" ng-model="ctrl.TutorType" />
+									{{ctrl.thisPageTexts.stKeyIn}}
+								</label>
+								<label class="col-xs-3">
+									<input type="radio" name="tutorType" value="End" ng-model="ctrl.TutorType" />
+									{{ctrl.thisPageTexts.stStop}}
+								</label>
+							</div>
+						</li>
+						
+						<!--6. For HyperLinks-->
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">{{ctrl.thisPageTexts.stHyperLink}}</li>
+						<li>
+							<button class="btn btn-default" ng-click="ctrl.OpenHyperLink_Click()" ng-show="ctrl.hyperLink">{{ctrl.thisPageTexts.stMyLink}}</button>
+							<button class="btn btn-default" ng-click="ctrl.onGoBack()">{{ctrl.thisPageTexts.stBack}}</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+	
+	
+	
+	<div id="barProgress" class="progress" style="position:absolute;bottom: 32px; width:100%" draggable="true">
+		<div id="pgScore" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 100%; position:absolute; right:0">
+			{{ctrl.totalScore}}/{{ctrl.glScore}}
+		</div>
+	</div>
+	

@@ -17,4 +17,8 @@ interface MYCategoryJson {
     IsShownAsList?: boolean;
     IsDictateTextContentInHint?: boolean;
     IsDictateAnsInHint?: boolean;
+
+    //* [2018-01-11 11:22]
+    ContentSynLang?: string;
+    isAnsFirst?: boolean;
 }

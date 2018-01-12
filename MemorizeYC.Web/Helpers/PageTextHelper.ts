@@ -15,6 +15,13 @@ interface SpeechTestPageJSON {
 }
 
 interface PlayOneCategoryPageJSON {
+    stShowAsList:    string;
+    stHintModeOption: string;
+    stDictateAnswer: string;
+    stDictateContent: string;
+    stAnswerFirst:   string;
+    stRepairSyn: string;
+
     stBack: string;
     stShowScore: string;
     stNewUpToOne: string;
@@ -99,6 +106,8 @@ interface PlayOneCategoryPageJSON {
     stTut3_1To2: string;
     stTut_End_Title: string;
     stTut_End_Content: string;
+    
+    stContentSynVoice: string;
 }
 
 interface ChooseAContainerPageJSON {
@@ -169,6 +178,13 @@ class PageTextHelper {
 
     public static defaultPageTexts: PageTextsInterface = {
         "PlayOneCategoryPageJSON": {
+            "stShowAsList": "條列式顯示",
+            "stHintModeOption":"提示模式專屬",
+            "stDictateAnswer": "念答案(顯示於下方列)",
+            "stDictateContent": "念卡片內容",
+            "stAnswerFirst": "先念答案(顯示於下方列)",
+            "stRepairSyn": "修復語音問題",
+
             "stBack": "回上頁",
             "stShowScore": "<h2>你的得分為{0}，而滿分為{1}</h2>",
             "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
@@ -252,7 +268,8 @@ class PageTextHelper {
             "stTut3_1_2_Content": " 請將 <b>{0}</b> 鍵入下面的文字方塊裡，然後按Enter鍵送出答案。",
             "stTut3_1To2": "做得好！",
             "stTut_End_Title": "太棒了！全部完成！",
-            "stTut_End_Content": "按{0}來停止本教學。謝謝。"
+            "stTut_End_Content": "按{0}來停止本教學。謝謝。",
+            "stContentSynVoice": "卡片內容語音模擬的聲音："
         },
         "ChooseAContainerPageJSON": {
             "stPlay": "玩",

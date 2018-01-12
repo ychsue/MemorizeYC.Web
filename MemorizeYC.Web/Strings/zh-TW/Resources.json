@@ -1,5 +1,12 @@
 ﻿{
   "PlayOneCategoryPageJSON": {
+    "stShowAsList": "條列式顯示",
+    "stHintModeOption":"提示模式專屬",
+    "stDictateAnswer": "念答案(顯示於下方列)",
+    "stDictateContent": "念卡片內容",
+    "stAnswerFirst": "先念答案(顯示於下方列)",
+    "stRepairSyn": "修復語音問題",
+
     "stBack": "回上頁",
     "stShowScore": "<h2>你的得分為{0}/{1}</h2>",
     "stNewUpToOne": "<h3>恭喜！你的等級升到1了。明天再玩吧！</h3>",
@@ -24,6 +31,7 @@
 
     "stWaitUtterDone": "稍安勿躁，請等我唸完再點選。",
     "stSynVoice": "語音模擬的聲音：",
+    "stContentSynVoice": "卡片內容語音模擬的聲音：",
     "stContributor": "貢獻者",
     "stRest": "尚隱藏的卡數：",
     "stNumWCardShown": "張卡會被顯示",
