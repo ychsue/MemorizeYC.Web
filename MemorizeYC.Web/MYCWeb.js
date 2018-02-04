@@ -1571,7 +1571,8 @@ var PlayOneCategoryPageController = (function () {
         $(PlayOneCategoryPageController.Current.cvMain).css({
             top: $(PlayOneCategoryPageController.Current.topNavbar).height() + "px",
             height: (window.innerHeight - $(PlayOneCategoryPageController.Current.bottomNavbar).height()
-                - $(PlayOneCategoryPageController.Current.topNavbar).height()) + "px"
+                - $(PlayOneCategoryPageController.Current.topNavbar).height()
+                - $(PlayOneCategoryPageController.Current.barProgress).height()) + "px"
         });
         var renewPageTexts = function () {
             PlayOneCategoryPageController.scope.$apply(function () {
@@ -2471,8 +2472,7 @@ function updateLayout(clientY) {
     var dHeight = $(window).innerHeight();
     var bHeight = $(bar).height();
     if (clientY == undefined) {
-        var iTop = parseInt($(bar).css("top"));
-        clientY = (iTop != NaN) ? iTop : dHeight - bHeight - $(bottomBar).height();
+        clientY = dHeight - bHeight - $(bottomBar).height();
     }
     else
         $(bar).css({ bottom: dHeight - clientY - bHeight });

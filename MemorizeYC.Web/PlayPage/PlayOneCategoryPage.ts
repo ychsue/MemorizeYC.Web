@@ -345,7 +345,8 @@ class PlayOneCategoryPageController{
             $(PlayOneCategoryPageController.Current.topNavbar).height() + "px",
             height:
             (window.innerHeight - $(PlayOneCategoryPageController.Current.bottomNavbar).height()
-            - $(PlayOneCategoryPageController.Current.topNavbar).height()) + "px"
+            - $(PlayOneCategoryPageController.Current.topNavbar).height()
+            - $(PlayOneCategoryPageController.Current.barProgress).height()) + "px"
         });
         
         //* [2016-07-11 15:02] Because its language might not ready, I use a trigger to tell me that it is done
@@ -1382,8 +1383,9 @@ class PlayOneCategoryPageController{
                                     var bHeight = $(bar).height();
                                     
                                     if(clientY==undefined){
-                                        var iTop =parseInt($(bar).css("top"));
-                                        clientY =(iTop!=NaN)?iTop:dHeight-bHeight-$(bottomBar).height();
+                                        // var iTop =parseInt($(bar).css("top"));
+                                        // clientY =(iTop!=NaN)?iTop:dHeight-bHeight-$(bottomBar).height();
+                                        clientY =dHeight-bHeight-$(bottomBar).height();
                                     }
                                     else
                                     $(bar).css({bottom: dHeight-clientY-bHeight});
