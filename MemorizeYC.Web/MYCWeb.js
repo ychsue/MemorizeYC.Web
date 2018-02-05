@@ -2181,6 +2181,22 @@ var PlayOneCategoryPageController = (function () {
             var sentence = wCard.cardInfo.Dictate;
             var lang = PlayOneCategoryPageController.Current.SynLang;
             var voice = PlayOneCategoryPageController.Current.currentSynVoice;
+            if (wCard.cardInfo.Ans_Lang) {
+                lang = wCard.cardInfo.Ans_Lang;
+                PlayOneCategoryPageController.Current.SynLang = lang;
+                var bufVoice = SpeechSynthesisHelper.getSynVoiceFromLang(lang);
+                if (bufVoice != null) {
+                    voice = bufVoice;
+                    try {
+                        PlayOneCategoryPageController.scope.$apply(function () {
+                            PlayOneCategoryPageController.Current.currentSynVoice = voice;
+                        });
+                    }
+                    catch (error) {
+                        PlayOneCategoryPageController.Current.currentSynVoice = voice;
+                    }
+                }
+            }
             var sentences = [];
             var langs = [];
             var voices = [];

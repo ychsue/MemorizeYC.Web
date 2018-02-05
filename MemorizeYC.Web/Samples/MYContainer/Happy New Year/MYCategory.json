@@ -1,0 +1,40 @@
+{
+    "Cards": [
+        {
+            "FileName": "S1. 1.txt",
+            "Dictate": "새해 복 많이 받으세요",
+            "Ans_Lang": "ko_KR"
+        },
+        {
+            "FileName": "S2. 2.txt",
+            "Dictate": "Bonne année",
+            "Ans_Lang": "fr"
+        },
+        {
+            "FileName": "S3. 3.txt",
+            "Dictate": "明けましておめでとう",
+            "Ans_Lang": "ja_JP"
+        },
+        {
+            "FileName": "S4. 4.txt",
+            "Dictate": "Frohes neues Jahr",
+            "Ans_Lang": "de"
+        },
+        {
+            "FileName": "S5. 5.txt",
+            "Dictate": "Feliz Año Nuevo",
+            "Ans_Lang": "es_ES"
+        },
+        {
+            "FileName": "S6. 6.txt",
+            "Dictate": "สุขสันต์วันปีใหม่",
+            "Ans_Lang": "th_TH"
+        },
+        {
+            "FileName": "S7. 7.txt",
+            "Dictate": "С Новым Годом ",
+            "Ans_Lang": "ru"
+        }
+    ],
+    "Link": "https://www.bing.com/translator?text=happy%20new%20year"
+}

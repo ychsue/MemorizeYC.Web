@@ -13,4 +13,5 @@
     IsHideShadow?: boolean;
     IsUsingAudioFileForDictating?: boolean;
     AudioFilePathOrUri?: string;
+    Ans_Lang?: string;
 }

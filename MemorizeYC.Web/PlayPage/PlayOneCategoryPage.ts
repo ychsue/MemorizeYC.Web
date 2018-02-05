@@ -1023,6 +1023,23 @@ class PlayOneCategoryPageController{
                                     var sentence = wCard.cardInfo.Dictate;
                                     var lang = PlayOneCategoryPageController.Current.SynLang;
                                     var voice = PlayOneCategoryPageController.Current.currentSynVoice;
+                                    if(wCard.cardInfo.Ans_Lang){
+                                        // PlayOneCategoryPageController.scope.$apply(()=>{
+                                        lang = wCard.cardInfo.Ans_Lang;
+                                        PlayOneCategoryPageController.Current.SynLang = lang;
+                                        let bufVoice = SpeechSynthesisHelper.getSynVoiceFromLang(lang);
+                                        if(bufVoice!=null){
+                                            voice = bufVoice;
+                                            try {
+                                                PlayOneCategoryPageController.scope.$apply(()=>{
+                                                    PlayOneCategoryPageController.Current.currentSynVoice = voice;
+                                                })                                                
+                                            } catch (error) {
+                                                PlayOneCategoryPageController.Current.currentSynVoice = voice;
+                                            }
+                                        }
+                                        // });
+                                    }
                                     var sentences: Array<string> =[] ;
                                     var langs:Array<string> =[];
                                     var voices: Array<SpeechSynthesisVoice_Instance> =[];
