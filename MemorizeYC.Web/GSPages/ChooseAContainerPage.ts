@@ -152,6 +152,37 @@ class ChooseAContainerPageController {
         ChooseAContainerPageController.Current.selCategory = ChooseAContainerPageController.Current.categories[id];
         $(ev.target).addClass('Show');
     }
+
+    public onCopyCont2Clipboard(){
+        var jInput =$("#bufForContainer");
+        let inputValue=this.selContainer.itsLocation;
+        if(/^http/.test(inputValue)===false){
+            inputValue = location.origin+inputValue;
+        }
+        jInput.val(inputValue);
+        jInput.select();
+        document.execCommand('copy');
+        jInput.animate({opacity: 1},1000,()=>{
+            jInput.val("");
+            jInput.css("opacity",0);
+        });
+    }
+    public onCopyCat2Clipboard(){
+        var jInput =$("#bufForCategory");
+        let contLoc = this.selContainer.itsLocation;
+        if(/^http/.test(contLoc)===false){
+            contLoc = location.origin+contLoc;
+        }
+
+        let inputValue=contLoc+"/"+this.selCategory.Folder;
+        jInput.val(inputValue);
+        jInput.select();
+        document.execCommand('copy');
+        jInput.animate({opacity: 1},1000,()=>{
+            jInput.val("");
+            jInput.css("opacity",0);
+        });
+    }
     //#endregion EVENTS
     //#region CALLBACKS
     public callbackShowNextTimeForContainer() {

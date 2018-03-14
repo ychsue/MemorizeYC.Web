@@ -31,6 +31,13 @@
         </div>
     </div>
     <h2 style="position:absolute;top:0;background-image:linear-gradient(red,yellow)" ng-bind="(ctrl.selContainer.showedName)?ctrl.selContainer.showedName:ctrl.thisPageTexts.stSelContainer"></h2>
+    <!-- 此button 用來複製所選的Container到剪貼簿 -->
+    <div style="position:absolute;bottom:0;left:0" ng-if="ctrl.selContainerID>=0">
+        <button ng-click="ctrl.onCopyCont2Clipboard()">
+            <span class="glyphicon glyphicon-copy"></span>
+        </button>
+        <input type="text" id="bufForContainer" style="min-width:0;opacity:0"/>
+    </div>
     <button id="btUpward" ng-click="ctrl.onHowToShowWholeCC_Click($event,1)"></button>
 </div>
 <!--DIV for Category-->
@@ -44,6 +51,13 @@
         </div>
     </div>
     <h2 style="position:absolute;top:0;background-image:linear-gradient(yellow,red)" ng-bind="(ctrl.selCategory.Folder)?ctrl.selCategory.Folder:ctrl.thisPageTexts.stSelCategory"></h2>
+    <!-- 此button 用來複製所選的Category到剪貼簿 -->
+    <div style="position:absolute;bottom:0;left:0" ng-if="ctrl.selCategory">
+        <button ng-click="ctrl.onCopyCat2Clipboard()">
+            <span class="glyphicon glyphicon-copy"></span>
+        </button>
+        <input type="text" id="bufForCategory" style="min-width:0;opacity:0"/>
+    </div>
     <button id="btDownward" ng-click="ctrl.onHowToShowWholeCC_Click($event,-1)"></button>
 </div>
 

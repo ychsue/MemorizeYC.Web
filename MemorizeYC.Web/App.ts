@@ -55,6 +55,9 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: GlobalVariables.speechTestHtml,
             controller: 'SpeechTestPageController',
             controllerAs: 'ctrl'
+        })
+        .when('/20180211',{
+            redirectTo: ()=> `/Play?Container=${encodeURI('/Samples/MYContainer')}&CFolder=${encodeURI('Animals')}`
         });
 
     //$locationProvider.html5Mode(true);

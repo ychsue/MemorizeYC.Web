@@ -2656,6 +2656,35 @@ var ChooseAContainerPageController = (function () {
         ChooseAContainerPageController.Current.selCategory = ChooseAContainerPageController.Current.categories[id];
         $(ev.target).addClass('Show');
     };
+    ChooseAContainerPageController.prototype.onCopyCont2Clipboard = function () {
+        var jInput = $("#bufForContainer");
+        var inputValue = this.selContainer.itsLocation;
+        if (/^http/.test(inputValue) === false) {
+            inputValue = location.origin + inputValue;
+        }
+        jInput.val(inputValue);
+        jInput.select();
+        document.execCommand('copy');
+        jInput.animate({ opacity: 1 }, 1000, function () {
+            jInput.val("");
+            jInput.css("opacity", 0);
+        });
+    };
+    ChooseAContainerPageController.prototype.onCopyCat2Clipboard = function () {
+        var jInput = $("#bufForCategory");
+        var contLoc = this.selContainer.itsLocation;
+        if (/^http/.test(contLoc) === false) {
+            contLoc = location.origin + contLoc;
+        }
+        var inputValue = contLoc + "/" + this.selCategory.Folder;
+        jInput.val(inputValue);
+        jInput.select();
+        document.execCommand('copy');
+        jInput.animate({ opacity: 1 }, 1000, function () {
+            jInput.val("");
+            jInput.css("opacity", 0);
+        });
+    };
     ChooseAContainerPageController.prototype.callbackShowNextTimeForContainer = function () {
         var CCFromIDB = ChooseAContainerPageController.Current.CCFromIDB;
         var containers = ChooseAContainerPageController.Current.containers;
@@ -2814,6 +2843,9 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: GlobalVariables.speechTestHtml,
         controller: 'SpeechTestPageController',
         controllerAs: 'ctrl'
+    })
+        .when('/20180211', {
+        redirectTo: function () { return "/Play?Container=" + encodeURI('/Samples/MYContainer') + "&CFolder=" + encodeURI('Animals'); }
     });
 });
 var MathHelper = (function () {
